@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="74" height="58" viewBox="0 0 74 58">
+  <g id="Rectangle_3" data-name="Rectangle 3" fill="none" stroke="#000" stroke-width="1">
+    <rect width="74" height="29" stroke="none"/>
+    <rect x="0.5" y="0.5" width="73" height="28" fill="none"/>
+  </g>
+  <text id="id" transform="translate(29 22)" font-size="20" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">id</tspan></text>
+  <text id="node_id" data-name="node id" transform="translate(3 54)" fill="#5e6365" font-size="20" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">node id</tspan></text>
+</svg>
