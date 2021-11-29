@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="styles-upload.css">
+<title>PhosProViz</title>
+<style type="text/css">
+
+  #text, #drawing, #button_center, #hidden-file-upload, #uploadButton, #button_center {
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    position: relative;
+  }
+
+  #uploadButton {
+    margin-top: 10px;
+      border: none; 
+      background: none; 
+      cursor: pointer;
+  }
+
+  #text{
+  margin-top: 100px;
+  width: 30%;
+  height: 30%;
+  }
+
+  #drawing{
+  margin-top: 30px;
+  }
+
+  #button_center{
+  margin-top: 10px;
+  width: 30%;
+  height: 30%;
+  }
+
+  #logo{
+      /* position: absolute; */
+  margin-top: 25px;
+  margin-left: -10px;
+  width: 15%;
+  height: 15%;
+  }
+
+  text {
+    font-family: Helvetica, sans-serif;
+  }
+
+  .tableCenter {
+    margin-left: -10px;
+    margin-right: auto;
+    margin-top: 25px;
+}
+
+</style>
+
+</head>
+ 
+<body onload="session_validate()">
+<script src="js/session_validate.js"></script> 
+<script src="js/source_target.js"></script>
+
+<!-- LOGO -->
+<table class="tableCenter">
+  <tr>
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <rect id="Rectangle_1488" data-name="Rectangle 1488" width="290" height="55"/>
+          <text id="PhosProViz" transform="translate(100 37)" fill="#fff" font-size="25" font-family="CenturyGothicPro-Bold, Century Gothic Pro, Helvetica" font-weight="700" letter-spacing="0.1em"><tspan x="-60.495" y="-3">PhosProViz</tspan></text>
+        </svg>
+      </div>
+    </td>
+    
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2251" data-name="Path 2251" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <text id="Source_-_Target" data-name="Source - Target" transform="translate(100 32)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-72.59" y="0">Source - Target</tspan></text>
+        </svg>
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2261" data-name="Path 2261" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4014" data-name="Group 4014" transform="translate(-432 -156)">
+            <text id="Source_Attributes" data-name="Source Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-82.15" y="0">Source Attributes</tspan></text>
+          </g>
+        </svg>
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2262" data-name="Path 2262" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4015" data-name="Group 4015" transform="translate(-432 -156)">
+            <text id="Source_Attributes" data-name="Target Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-82.15" y="0">Target Attributes</tspan></text>
+          </g>
+        </svg>          
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2263" data-name="Path 2263" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4016" data-name="Group 4016" transform="translate(-432 -156)">
+            <text id="Edge_Attributes" data-name="Edge Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-74.07" y="0">Edge Attributes</tspan></text>
+          </g>
+        </svg>                 
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2264" data-name="Path 2264" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4017" data-name="Group 4017" transform="translate(-432 -156)">
+            <text id="Number_of_States" data-name="Number of States" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-83.39" y="0">Number of States</tspan></text>
+          </g>
+        </svg>                        
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2265" data-name="Path 2265" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4018" data-name="Group 4018" transform="translate(-432 -156)">
+            <text id="Prepare_you_Data" data-name="Prepare you Data" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-84.84" y="0">Prepare you Data</tspan></text>
+          </g>
+        </svg>                               
+      </div>
+    </td>
+  </tr>
+</table>
+<!--  -->
+
+<svg id="text" xmlns="http://www.w3.org/2000/svg" width="536" height="132" viewBox="0 0 536 132">
+    <text id="Let_s_get_ready_to_visualize_some_sample_proteomics_network_data._Download_a_zip_folder_of_sample_data_here_You_should_now_have_a_folder_with_5_files._For_the_purposes_of_this_demo_we_will_be_walking_you_through_how_to_format_and_visualize_1_ToyData" data-name="Let’s get ready to visualize some sample proteomics network data. 
+  
+  Download a zip folder of sample data here ⬇️
+  
+  You should now have a folder with 5 files. For the purposes of this demo, we will be walking you through how to format and visualize 1_ToyData" fill="#5e6365" font-size="15" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="14">Let’s get ready to visualize some sample proteomics network data. </tspan><tspan x="0" y="31"></tspan><tspan x="0" y="53">Download a zip folder of sample data </tspan><tspan y="53" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700" text-decoration="underline"><a href="https://github.com/IreneFP/PhosProViz-DataExamples/archive/main.zip">here</a></tspan><tspan y="53" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"> </tspan><tspan y="53" font-family="AppleColorEmoji, Apple Color Emoji">⬇️</tspan><tspan y="53" font-family="HelveticaNeue-BoldItalic, Helvetica Neue" font-weight="700" font-style="italic"></tspan><tspan x="0" y="73"></tspan><tspan x="0" y="90">You should now have a folder with 5 files. For the purposes of this demo, we </tspan><tspan x="0" y="108">will be walking you through how to format and visualize</tspan><tspan y="108" xml:space="preserve" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"> 1_ToyDataset-All.csv.</tspan><tspan y="108"> </tspan></text>
+</svg>
+
+<div id="button_center">
+    <button class="button" id = "button_center" onclick="window.location.href = 'source-target-tutorial.html'">NEXT</button>
+</div>
+  
+
+</body>
+</html>
+ 

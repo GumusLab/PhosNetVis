@@ -1,0 +1,1306 @@
+<head>
+  <style> body { margin: 0; } </style>
+  <script src="libraries/3d-force-graph.js"></script>
+  <script src="libraries/index.min.js"></script>
+  <script src="libraries/three.js"></script>
+  <script src="libraries/three-spritetext.min.js"></script>
+  <script src="libraries/dat.gui.js"></script>
+  <script src="libraries/d3.v3.min.js" charset="utf-8"></script>
+  <script src="libraries/rainbowvis.js"></script>
+  <script src="https://github.com/mrdoob/three.js/blob/dev/examples/jsm/deprecated/Geometry.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
+  <script src="js/fstdropdown.js"></script>
+  <link rel="stylesheet" href="css/fstdropdown.css">
+  <a href="index.html"></a>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style type="text/css">
+    #gui {
+    position: absolute;
+    left: 2px;   /* position inside relatively positioned parent */
+    top: 140px;
+    z-index: 10;   /* adjust as needed */
+    }
+    #tp {
+    position: absolute;
+    left: 2px;   /* position inside relatively positioned parent */
+    top: 140px;
+    z-index: 10;   /* adjust as needed */
+    }
+
+    #logo{
+      position: absolute;
+      margin-top: 10px;
+      z-index:2;
+    }
+  
+    .button {
+  border: none;
+  color: white;
+  padding: 16px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  position: absolute;
+  left: 2px;   /* position inside relatively positioned parent */
+  top: 360px;
+  z-index: 10; 
+}
+
+.button1 {
+  background-color: rgb(47,49,55); 
+  color: rgb(167, 167, 167); 
+  border: 0px solid #000000;
+}
+
+.button2 {
+  border: none;
+  padding: 16px 45px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  position: absolute;
+  left: 140px;   /* position inside relatively positioned parent */
+  top: 360px;
+  z-index: 10; 
+}
+
+.button3 {
+  border: none;
+  padding: 16px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  position: absolute;
+  left: 2px;   /* position inside relatively positioned parent */
+  top: 420px;
+  z-index: 10; 
+}
+
+
+.button4 {
+  border: none;
+  padding: 16px 50px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  position: absolute;
+  left: 140px;   /* position inside relatively positioned parent */
+  top: 420px;
+  z-index: 10; 
+}
+
+
+.button1:hover {
+  background-color: #000000;
+  color: white;
+}
+
+.p1 {
+  font-family: Helvetica, sans-serif;
+  position: absolute;
+  font-size: 14px;
+  left: 8px;   /* position inside relatively positioned parent */
+  top: 267px;
+  z-index: 10; 
+}
+
+#openbutton{
+  font-family: Helvetica, sans-serif;
+  position: absolute;
+  font-size: 17px;
+  left: 2px;   /* position inside relatively positioned parent */
+  top: 70px;
+  z-index: 10; 
+  cursor:pointer;
+}
+
+#guiplace{
+  font-size: 55px;
+  position: absolute;
+  left: 2px;   /* position inside relatively positioned parent */
+  top: 150px;
+  z-index: 10; 
+  width: 270px;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+
+.overlay {
+  height: 100%;
+  width: 0;
+  position: absolute;
+  z-index: 15;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
+  </style>
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" id="logo" width="170" height="40" viewBox="0 0 230 54">
+    <rect id="Rectangle_1488" data-name="Rectangle 1488" width="230" height="54"/>
+    <text id="PhosProViz" transform="translate(113 37)" fill="#fff" font-size="30" font-family="Helvetica-Bold, Helvetica" font-weight="700" letter-spacing="0.1em"><tspan x="-96.586" y="0">PhosProViz</tspan></text>
+  </svg>
+
+  <div id="myNav" class="overlay">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div class="overlay-content">
+      <a href="#">Content will be here!</a>
+    </div>
+  </div>
+  
+  <span id = "openbutton" onclick="openNav()">&#9776; open</span>
+
+  <p class="p1">Node Query</p>
+  <p>
+    <select class='fstdropdown-select' id="nodequery" onchange="updateSearch()">
+        <option value="">--</option>
+    </select>
+</p>
+  <button class="button button1" onclick="screenshot()">SnapShot</button>
+
+  <button class="button2 button1" onclick="queryReset()">Reset</button>
+
+  <button class="button3 button1" onclick="animation()">Animation</button>
+
+  <button class="button4 button1" onclick="stopAnimation()">Stop</button>
+
+
+
+  <div id="guiplace"> </div>
+
+  <div id="3d-graph"></div>
+
+  <div class="dg ac">
+    <div class="dg main a" style="position: absolute;"> 
+      <img src="./img/Legend_3.png" alt="COVID Omics 3D Vizualization" style="width: 273px; margin-top: 500px; margin-left: 3px; z-index:2;" >
+      
+    </div>
+  </div>
+<script>
+
+function openNav() {
+  document.getElementById("myNav").style.width = "100%";
+}
+
+function closeNav() {
+  document.getElementById("myNav").style.width = "0%";
+}
+//////////////// DATA CREATION ////////////////
+
+function normalization (values, actual_bounds, desired_bounds) {
+  var final = []
+  for (var i in values){
+    final.push(desired_bounds[0] + (values[i] - actual_bounds[0]) * (desired_bounds[1] - desired_bounds[0]) / (actual_bounds[1] - actual_bounds[0]))
+  }
+  return final
+}
+
+function attribute_dict (dataframe, col_name_source_or_target, col_name_attribute_of_interest) {
+  var dictionary = {}
+  var data_length = dataframe.loc({columns: [col_name_source_or_target]}).size
+  var node, attribute;
+
+  for (var i = 0; i < data_length; i++) {
+    node = dataframe.loc({rows: [i], columns: [col_name_source_or_target]}).values[0][0]
+    if (dataframe.columns.includes(col_name_attribute_of_interest)) 
+    {
+      var min_val = Math.min.apply(Math, dataframe[col_name_attribute_of_interest].values)
+      var max_val = Math.max.apply(Math, dataframe[col_name_attribute_of_interest].values)
+      var actual_bounds = [min_val, max_val]
+      var desired_bounds = [0,1]
+
+      attribute = dataframe.loc({rows: [i], columns: [col_name_attribute_of_interest]}).values[0][0]
+      if (!(min_val == max_val))
+      dictionary[node] = normalization([attribute], actual_bounds, desired_bounds)[0]
+      else
+      dictionary[node] = 1
+    }
+    else
+    {
+      dictionary[node] = null
+    }
+  }
+  return dictionary
+}
+
+function links_info (dataframe, col_name_source, col_name_target){
+  var links = {}
+  var data_length = dataframe.loc({columns: [col_name_source]}).size
+  var source, target; 
+
+  for (var i = 0; i < data_length; i++){
+    source = dataframe.loc({rows: [i], columns: [col_name_source]}).values[0][0]
+    target = dataframe.loc({rows: [i], columns: [col_name_target]}).values[0][0]
+    if (source in links) {
+      var targetList = links[source]
+      if (!(targetList.includes(target))) {
+        links[source].push(target)
+      }
+    }
+    else {
+      var list = []  
+      list.push(target)
+      links[source] = list
+    }
+  }
+ return links
+}
+
+function partitions_dict (dataframe, col_name_target, col_name_partitions, col_name_attribute_of_interest){
+  var partitions = {}
+  var sites_repetition = {}
+  var data_length = dataframe.loc({columns: [col_name_target]}).size
+  var target, key_, value; 
+
+  if (dataframe.columns.includes(col_name_partitions))
+  {
+  for (var i = 0; i < data_length; i++) {
+    key_ = dataframe.loc({rows: [i], columns: [col_name_partitions]}).values[0][0]
+    value = dataframe.loc({rows: [i], columns: [col_name_attribute_of_interest]}).values[0][0]
+    target = dataframe.loc({rows: [i], columns: [col_name_target]}).values[0][0]
+    
+    if (target in partitions) {
+      if (!(sites_repetition[target].includes(key_))){
+        partitions[target].push({key_ : value})
+        sites_repetition[target].push(key_) 
+      }
+    } else {
+          partitions[target] = [{key_ : value}]
+          sites_repetition[target] = [key_]
+    }}}
+  return partitions
+}
+
+function parseCSV(file_name) {
+  let dict_to_json = {"nodes": [], "links": []}
+  
+  var userData = JSON.parse(window.localStorage.getItem(file_name));
+    var userDF = new dfd.DataFrame(userData)
+    var source_att_1 = attribute_dict(userDF, "SourceID", "SourceNodeColor") // source_attr_1 // -1, 1
+    var source_att_2 = attribute_dict(userDF, "SourceID", "SourceNodeSize") // source_attr_2 // 0, 1
+    var target_att_1 = attribute_dict(userDF, "TargetID", "TargetNodeColor") // TargetAttr1 // -1, 1
+    var target_att_2 = attribute_dict(userDF, "TargetID", "TargetNodeSize") // TargetAttr2 // 0, 1
+    var edge_att_1 = attribute_dict(userDF, "TargetID", "EdgeColor") // EdgeAttr1 // // -1, 1
+    var edge_att_2 = attribute_dict(userDF, "TargetID", "EdgeWeight") // EdgeAttr2 // 0, 1
+    var partitions = partitions_dict(userDF, "TargetID", "PhosphorylationSiteID", "TargetNodeColor") 
+    var links = links_info(userDF, "SourceID", "TargetID")
+    
+    var source = userDF["SourceID"].unique().values
+    var target = userDF["TargetID"].unique().values
+    
+
+    for (var s in source){
+      dict_to_json['nodes'].push({'id': source[s], "group": 1, "source_attr_1": source_att_1[source[s]], "source_attr_2": source_att_2[source[s]]})
+    }
+
+    for (var t in target){
+      var positionsObj; 
+      if (Object.keys(partitions).length === 0 && partitions.constructor === Object)
+      {
+        positions_or_target1 = [{key_: target_att_1[target[t]]}]
+      }
+      else
+      {
+        positions_or_target1 = partitions[target[t]]
+      }
+      dict_to_json['nodes'].push({'id': target[t], "group": 2, "target_attr_1": positions_or_target1, "target_attr_2": target_att_2[target[t]]})
+    }
+
+    for (var i in links){
+      var source_node = i
+      var target_nodes = links[i]
+      for (var i = 0; i < target_nodes.length; i++) {
+        var target_node = target_nodes[i]
+        dict_to_json['links'].push({"source": source_node, "target": target_node, "edge_attr_1": edge_att_1[target_node], "edge_attr_2": edge_att_2[target_node]})
+      }
+    }
+    dict_to_json['ids'] = source.concat(target)
+    return dict_to_json;
+    }
+
+    /// QUERY BOX FUNCTIONS ///
+  function removeOptions(selectElement) {
+   var i, L = selectElement.options.length - 1;
+   for(i = L; i >= 0; i--) {
+      selectElement.remove(i);
+   }
+   selectElement.fstdropdown.rebind()
+}
+
+function addOptions(addText, selectElement)
+    {
+        // Create an Option object       
+        var opt = document.createElement("option");        
+
+        // Assign text and value to Option object
+        opt.text = addText;
+        opt.value = addText;
+
+        // Add an Option object to Drop Down List Box
+        selectElement.options.add(opt);
+    }
+
+    //////////////// JSON FILE ////////////////
+    var file_names = JSON.parse(localStorage.getItem("file_names"));
+    var finalDataObj = parseCSV(localStorage.getItem(file_names[0]))
+    var nodesList = finalDataObj["ids"]
+
+    //////////////// GRAPH CREATION ////////////////
+    var directed = sessionStorage.getItem("directed")
+     var elem = document.getElementById('3d-graph');
+     var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer   : true}})
+        .backgroundColor("#ffffff")
+      (elem)
+        .graphData(finalDataObj)
+        // .nodeLabel(node => (true) 
+        //   ? (`<span style="color: purple">${node.id}</span>`)
+        //   : (`<span></span>`))
+        .nodeThreeObject(node => (node.group == '2')
+          ? CreateTarget(node) // SUBSTRATES
+          : CreateSource(node))   // KINASES
+        .onNodeDragEnd(node => {
+          node.fx = node.x;
+          node.fy = node.y;
+          node.fz = node.z; })
+        .linkWidth(link => (link.edge_attr_2 == null)
+          ? 0.5
+          : (link.edge_attr_2 + 0.1))
+        .linkColor(link => (link.edge_attr_1 == null)
+          ? "#808080"
+          : colors_general(link.edge_attr_1, true, 'cornflowerblue', 'blue', 'midnightblue', 'blueviolet', 'darkviolet'))
+          .linkDirectionalArrowLength(directed => (directed)
+          ? 5
+          : 0)        
+        .linkDirectionalArrowRelPos(0.5)
+        .linkOpacity(0.5)
+        // .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
+        .onNodeClick(node => {
+          // Aim at node from outside it
+          const distance = 40;
+          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+          Graph.cameraPosition(
+            { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+            node, // lookAt ({ x, y, z })
+            3000  // ms transition duration
+          );
+        });
+
+        nodesList = nodesList.sort()
+        var x = document.getElementById("nodequery");
+        var nodeindexes = 0
+        for(nodeindexes = 0; nodeindexes<nodesList.length;nodeindexes++){
+          var optext = nodesList[nodeindexes]
+          addOptions(optext,x)
+        }
+        
+        //////////////// XXXXXX ////////////////
+          
+        function CreateSource(node)
+        {
+          var node_size
+          if (node["source_attr_2"] == null){ // SourceNodeSize
+            node_size = 1
+          }
+          else{
+            var node_size = node["source_attr_2"] + 0.5
+          }
+          var mesh = (new THREE.Mesh(    
+          new THREE.SphereGeometry(node_size*8,25,25),
+          new THREE.MeshLambertMaterial({
+            transparent: false,
+            depthWrite: false,
+            opacity: 1 //changed 0.8 to 1 
+          })
+        ))
+
+        const sprite = new SpriteText(node.id);
+        sprite.color = 'rgb(0,0,0)';
+        sprite.textHeight = 5;
+        //sprite.position.y = 15;
+        mesh.add(sprite);
+        
+
+        var node_color
+          if (node['source_attr_1'] == null){ // SourceNodeColor
+            node_color = 0.5
+          }
+          else{
+            var node_color = node['source_attr_1']
+          }
+
+        mesh.material.color.setHex(colors_general(node_color, false, 'ffffb3', 'yellow', 'orange', '#ee9a00', '#ff8c00'));
+        return mesh
+        }
+
+        function CountPartitions(data)
+        {
+          var num_sites_dict = {}
+          for (var node in data['nodes'])
+          {
+            if (data['nodes'][node]['group'] == '2')
+             {
+              num_sites = Object.keys(data['nodes'][node]['target_attr_1']).length
+              var id = data['nodes'][node]['id']
+              num_sites_dict[id] = num_sites
+             }
+          }
+          return num_sites_dict
+        }
+
+        function CreateTarget(node)
+        {
+          var node_size
+          if (node["target_attr_2"] == null){ // TargetNodeSize
+            node_size = 1
+          }
+          else{
+            var node_size = node["target_attr_2"] + 0.5
+          }
+
+          var num_sites_dict = CountPartitions(finalDataObj)
+          if (num_sites_dict[node['id']] > 1) { // partitions
+            verticalPartitions = num_sites_dict[node['id']]
+          }
+          else // no partitions
+            verticalPartitions = 1
+          
+          radialPartitions = 25
+          var mesh = new THREE.Mesh(
+          new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
+          new THREE.MeshLambertMaterial({
+            transparent: false,
+            depthWrite: false,
+            opacity: 1,
+            wireframe: false,
+            emissive: "#181818",
+            vertexColors: THREE.FaceColors,
+          }));
+
+          if (!(verticalPartitions == 1))
+          {
+            for (var i = 0; i < radialPartitions*2*(verticalPartitions); i+=(verticalPartitions*2))
+            {
+                  j = 0
+                  for (var position in node['target_attr_1']) {
+                    target_attr_1 = Object.values(node['target_attr_1'][position])
+                    mesh.geometry.faces[i+(j*2)].color.setHex(colors_target(target_attr_1)); 
+                    mesh.geometry.faces[i+(j*2)+1].color.setHex(colors_target(target_attr_1));
+                    var x = 0
+                    for(x = i+(j*2)+2;x<i+(j*2)+27;x++){
+                      mesh.geometry.faces[x].color.setHex("0x949494");                  
+                    }
+                    for(x = i+(j*2)+27;x<i+(j*2)+52;x++){
+                      mesh.geometry.faces[x].color.setHex("0xcccccc");                  
+                    }
+  
+                    j = j + 1
+                    }
+            }
+          }
+          else
+          {
+            // TargetNodeColor does not exist 
+            if (Object.values(node['target_attr_1'][0])[0] == null)  { 
+              target_attr_1 = 2
+            }
+            else  { // TargetNodeColor exists  
+              target_attr_1 = Object.values(node['target_attr_1'][0])
+            }
+            var face = 0
+            for(face = 0; face<50;face++){
+              mesh.geometry.faces[face].color.setHex(colors_target(target_attr_1));
+            }
+            face = 0
+            for(face = 50; face<75;face++){
+              mesh.geometry.faces[face].color.setHex("0x949494");
+            }
+            for(face = 75; face<100;face++){
+              mesh.geometry.faces[face].color.setHex("0xcccccc");
+            }
+            //mesh.geometry.faces[55].color.setHex("0xcccccc");   
+            //mesh.material.color.setHex(colors_target(target_attr_1));
+
+          }
+
+        if(PARAMS.Labels)
+        {
+          const sprite = new SpriteText(node.id);
+          sprite.color = 'rgb(0,0,0)';
+          sprite.textHeight = 5;
+          //sprite.position.y = 15;
+          mesh.add(sprite);
+        }
+          return mesh
+          }
+
+        function colors_target (l2fc_value) {
+          // https://github.com/anomal/RainbowVis-JS look at example.html for usage
+          // https://stackoverflow.com/questions/3080421/javascript-color-gradient
+
+            var threshold_max = PARAMS.MaxFold // 1
+            var threshold_min = PARAMS.MinFold // -1
+            var rainbow = new Rainbow(); 
+            rainbow.setNumberRange(-3, 3);
+            rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044')
+
+            if (l2fc_value >= threshold_min && l2fc_value <= threshold_max) {
+              return "0xcccccc"
+            }
+            if (l2fc_value < threshold_min) {
+              var hexColour = rainbow.colourAt(l2fc_value-threshold_min);
+              var stringColor = '0x' + hexColour
+              return stringColor
+            } 
+            else {
+              var hexColour = rainbow.colourAt(l2fc_value-threshold_max);
+              var stringColor = '0x' + hexColour
+              return stringColor
+            } 
+        }
+
+        function colors_general (l2fc_value, isHexFlag, color1, color2, color3, color4, color5) {
+            var rainbow = new Rainbow(); 
+            thisColor1 = String(color1)
+            thisColor2 = String(color2)
+            thisColor3 = String(color3)
+            thisColor4 = String(color4)
+            thisColor5 = String(color5)
+            rainbow.setNumberRange(0, 1);
+            rainbow.setSpectrum(thisColor1, thisColor2, thisColor3, thisColor4, thisColor5)
+            var hexColour = rainbow.colourAt(l2fc_value);
+            var stringColor = '0x' + hexColour
+            if (isHexFlag){
+              var modcolor =  parseInt(hexColour, 16 )
+              return modcolor
+            }
+            else 
+              return stringColor
+          
+        }
+
+        function screenshot(){
+        var ImageBase64 = Graph.renderer().domElement.toDataURL("image/png");
+        var a = document.createElement("a"); //Create <a>
+        a.href = ImageBase64; //Image Base64 Goes here
+        a.download = "image.png"; //File name Here
+        a.click(); //Downloaded file
+        }
+
+    const CAMERA_DISTANCE2NODES_FACTOR = 170;
+
+  
+
+const fnames = {};
+ for (const key of file_names) {
+  fnames[key] = key;
+ }
+
+ const PARAMS = {
+  States: file_names[0],
+  MaxFold : 0,
+  MinFold : 0,
+  Background : "#ffffff",
+  Labels : true
+};
+
+const pane = new Tweakpane.Pane({
+  container: document.getElementById('guiplace'),
+});
+
+pane.addInput(PARAMS, 'States',{options: fnames}).on('change', (ev) => {
+  changeState();
+  });
+pane.addInput(PARAMS, 'MaxFold',{min: 0, max: 3}).on('change', (ev) => {
+  updateMaxL2FC();
+  });
+pane.addInput(PARAMS, 'MinFold',{min: -3, max: 0}).on('change', (ev) => {
+  updateMinL2FC();
+  });
+pane.addInput(PARAMS, 'Background').on('change', (ev) => {
+  updateBackground();
+  });
+pane.addInput(PARAMS, 'Labels').on('change', (ev) => {
+  toggleLabels();
+  });
+
+//////////////////////////////////////////////
+    function updateSearch() {
+      var x = document.getElementById("nodequery");
+      if(x.value == ""){
+        var nodenum = Graph.graphData().nodes.length
+        Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
+      }
+
+      Graph.nodeThreeObjectExtend(node => {
+        var selectedNode = x.value //change
+        if (selectedNode == node.id) {
+              {   const distance = 100;
+                  const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+                  Graph.cameraPosition(
+                      { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+                      node, // lookAt ({ x, y, z })
+                      3000  // ms transition duration
+                      );
+              }
+          }
+      })
+      }
+
+
+    function updateMaxL2FC() {
+      threshold_max = PARAMS.MaxFold
+      Graph.nodeThreeObject(node => (node.group == '2')
+    
+          ? CreateTarget(node) // SUBSTRATES
+          : CreateSource(node)) // KINASES
+        }
+
+    function updateMinL2FC() {
+      threshold_min = PARAMS.MinFold
+      Graph.nodeThreeObject(node => (node.group == '2')
+    
+          ? CreateTarget(node) // SUBSTRATES
+          : CreateSource(node)) // KINASES
+        }
+        
+    function updateBackground() {
+      Graph.backgroundColor(PARAMS.Background)
+
+    }
+
+    function toggleLabels() {
+      Graph.nodeThreeObject(node =>  (node.group == '2')
+      
+          ? CreateTarget(node) // SUBSTRATES
+          : CreateSource(node)) // KINASES
+
+    }
+
+
+    function changeState(){
+    var new_file_name = PARAMS.States
+    /////////////// JSON FILE ////////////////
+    finalDataObj = parseCSV(localStorage.getItem(new_file_name))
+    nodesList = finalDataObj["ids"]
+       Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer: true}})
+        .backgroundColor(PARAMS.Background)
+      (elem)
+        .graphData(finalDataObj)
+        .nodeThreeObject(node => (node.group == '2')
+          ? CreateTarget(node) // SUBSTRATES
+          : CreateSource(node))   // KINASES
+        .onNodeDragEnd(node => {
+          node.fx = node.x;
+          node.fy = node.y;
+          node.fz = node.z; })
+        .linkWidth(link => (link.edge_attr_2 == null)
+          ? 0.5
+          : (link.edge_attr_2 + 0.1))
+        .linkColor(link => (link.edge_attr_1 == null)
+          ? "#808080"
+          : colors_general(link.edge_attr_1, true, 'cornflowerblue', 'blue', 'midnightblue', 'blueviolet', 'darkviolet'))
+        .linkDirectionalArrowLength(directed => (directed)
+          ? 5
+          : 0)        
+        .linkDirectionalArrowRelPos(0.5)
+        .linkOpacity(0.5)
+        //.linkAutoColorBy('group')
+       // .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
+        
+        .onNodeClick(node => {
+          // Aim at node from outside it
+          const distance = 40;
+          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+          Graph.cameraPosition(
+            { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+            node, // lookAt ({ x, y, z })
+            3000  // ms transition duration
+          );
+          
+        });
+        var x = document.getElementById("nodequery");
+        removeOptions(x)
+
+        var option = document.createElement("option");
+        option.text = "--";
+        option.value = ""
+        x.add(option);
+        nodesList = nodesList.sort()
+        var nodeindexes = 0
+        for(nodeindexes = 0; nodeindexes<nodesList.length;nodeindexes++){
+          var optext = nodesList[nodeindexes]
+          addOptions(optext,x)
+          x.fstdropdown.rebind()
+        }
+        //////////////////////////////////////////////////////////////////////////
+    }
+
+
+    function queryReset(){
+      document.getElementById("nodequery").selectedIndex = 0;
+      document.getElementById("nodequery").fstdropdown.rebind()
+      var nodenum = Graph.graphData().nodes.length
+      Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
+
+    }
+
+
+/////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
+/////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
+/////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
+/////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
+/////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
+/////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
+var state;
+
+function attribute_dict_target (dataframe, col_name_source_or_target, col_name_attribute_of_interest) { // Function used for target_att_1 not particions to match the output of the funcion partitions_dict
+  var dictionary = {}
+  var data_length = dataframe.loc({columns: [col_name_source_or_target]}).size
+  var node, attribute;
+
+  for (var i = 0; i < data_length; i++) {
+    node = dataframe.loc({rows: [i], columns: [col_name_source_or_target]}).values[0][0]
+    if (dataframe.columns.includes(col_name_attribute_of_interest)) 
+    {
+      var min_val = Math.min.apply(Math, dataframe[col_name_attribute_of_interest].values)
+      var max_val = Math.max.apply(Math, dataframe[col_name_attribute_of_interest].values)
+      var actual_bounds = [min_val, max_val]
+      var desired_bounds = [0,1]
+
+      attribute = dataframe.loc({rows: [i], columns: [col_name_attribute_of_interest]}).values[0][0]
+      if (!(min_val == max_val))
+      dictionary[node] = [{key_:normalization([attribute], actual_bounds, desired_bounds)[0]}]
+      else
+      dictionary[node] = 1
+    }
+    else
+    {
+      dictionary[node] = null
+    }
+  }
+  return dictionary
+}
+function source_states (datasets, file_names_str){
+  var final = {}
+  var ks = new Set(datasets[0]["SourceID"]["data"]) /// Gets the ID's of ONLY the first dataset. For now, all dataset should have the same Source Id's. What varies are the color and size. Ideally, in the future this should be modified to account for datasets containing different ID's
+  var ks = [...ks] // transform set into array
+
+  for (var i in datasets){
+    var source_att_1 = attribute_dict(datasets[i], "SourceID", "SourceNodeColor")
+    var source_att_2 = attribute_dict(datasets[i], "SourceID", "SourceNodeSize")
+    for (var k in ks){
+      if (datasets[i]["SourceID"]['data'].includes(ks[k])){
+        if (ks[k] in final){
+          final[ks[k]].push({"dataset": file_names_str[i], "source_attr_1":source_att_1[ks[k]], "source_attr_2": source_att_2[ks[k]]})
+        }
+        else{
+          final[ks[k]] = [{"dataset": file_names_str[i], "source_attr_1":source_att_1[ks[k]], "source_attr_2": source_att_2[ks[k]]}]
+        }     
+      }
+      else{
+        if (!(ks[k] in final)){
+          final[ks[k]] = []
+        }           
+      }
+    }
+  }
+  return final
+}
+
+function target_states (datasets, file_names_str){
+  var final = {}
+  var ks = new Set(datasets[0]["TargetID"]["data"]) /// Gets the ID's of ONLY the first dataset. For now, all dataset should have the same Target Id's. What varies are the color and size. Ideally, in the future this should be modified to account for datasets containing different ID's
+  var ks = [...ks] // transform set into array
+
+  for (var i in datasets){
+    var target_att_2 = attribute_dict(datasets[i], "TargetID", "TargetNodeSize")
+    //console.log(target_att_2)
+    if (!(datasets[i]["PhosphorylationSiteID"] == null)){
+      var target_att_1 = partitions_dict(datasets[i], "TargetID", "PhosphorylationSiteID", "TargetNodeColor")
+    }
+    else{
+      var target_att_1 = attribute_dict_target(datasets[i], "TargetID", "TargetNodeColor")
+    }
+    //console.log(target_att_1)
+
+    for (var k in ks){
+      if (datasets[i]["TargetID"]['data'].includes(ks[k])){
+        if (ks[k] in final){
+          final[ks[k]].push({"dataset": file_names_str[i], "target_attr_1":target_att_1[ks[k]], "target_attr_2": target_att_2[ks[k]]})
+        }
+        else{
+          final[ks[k]] = [{"dataset": file_names_str[i], "target_attr_1":target_att_1[ks[k]], "target_attr_2": target_att_2[ks[k]]}]
+        }     
+      }
+      else{
+        if (!(ks[k] in final)){
+          final[ks[k]] = []
+        }           
+      }
+    }
+  }
+  return final
+}
+
+function edge_states (datasets, file_names_str) {
+  var final = {}
+  var ks = new Set(datasets[0]["TargetID"]["data"])  /// Gets the ID's of ONLY the first dataset. For now, all dataset should have the same Source Id's. What varies are the color and size. Ideally, in the future this should be modified to account for datasets containing different ID's
+  var ks = [...ks] // transform set into array
+
+  for (var i in datasets){
+    var edge_att_1 = attribute_dict(datasets[i], "TargetID", "EdgeColor")
+    var edge_att_2 = attribute_dict(datasets[i], "TargetID", "EdgeWeight")
+    for (var k in ks){
+      if (datasets[i]["TargetID"]['data'].includes(ks[k])){
+        if (ks[k] in final){
+          final[ks[k]].push({"dataset": file_names_str[i], "edge_att_1":edge_att_1[ks[k]], "edge_att_2": edge_att_2[ks[k]]})
+        }
+        else{
+          final[ks[k]] = [{"dataset": file_names_str[i], "edge_att_1":edge_att_1[ks[k]], "edge_att_2": edge_att_2[ks[k]]}]
+        }     
+      }
+      else{
+        if (!(ks[k] in final)){
+          final[ks[k]] = []
+        }           
+      }
+    }
+  }
+  return final
+}
+
+function parseCSV_animation() {
+  let dict_to_json = {"nodes": [], "links": []}
+
+  var file_names = JSON.parse(localStorage.getItem("all_files"));
+  var file_names_str = JSON.parse(localStorage.getItem("file_names"));
+
+    var length_datasets = file_names_str.length
+    var datasets = []
+    var init = new dfd.DataFrame(file_names[0]) 
+    var source_temp = [init["SourceID"].unique().values] 
+    var target_temp = [init["TargetID"].unique().values]
+    var source = source_temp[0]
+    var target = target_temp[0]
+    //console.log(source_temp,target_temp)
+    for (var i = 0; i < length_datasets; i++){
+      var d = new dfd.DataFrame(file_names[i])
+      datasets.push(d)
+      source_temp.concat(d["SourceID"].unique().values)
+      target_temp.concat(d["TargetID"].unique().values)
+      source_compare = [d["SourceID"].unique().values][0]
+      target_compare = [d["TargetID"].unique().values][0]
+      if(JSON.stringify(source) !== JSON.stringify(source_compare) ||JSON.stringify(target) !== JSON.stringify(target_compare)){
+        alert("Files do not have exact same sources and targets, animation cannot be achieved!")
+        return false;
+      }
+    }
+
+    var source_att = source_states(datasets, file_names_str)
+    var target_att = target_states(datasets, file_names_str)
+    var edge_att = edge_states(datasets, file_names_str)
+        
+    var links = links_info(new dfd.DataFrame(file_names[0]), "SourceID", "TargetID") /// Gets the links of the first dataset. For now, all dataset should have the same Source-Traget connections. What varies are the color and size. Ideally, in the future this should be modified to account for different ID connections in each dataset or state.
+    
+    for (var s in source){
+      dict_to_json['nodes'].push({'id': source[s], "group": 1, "source_attr": source_att[source[s]]})
+    }
+
+    for (var t in target){
+      dict_to_json['nodes'].push({'id': target[t], "group": 2, "target_attr": target_att[target[t]]})
+    }
+
+    for (var i in links){
+      var source_node = i
+      var target_nodes = links[i]
+      for (var i = 0; i < target_nodes.length; i++) {
+        var target_node = target_nodes[i]
+        dict_to_json['links'].push({"source": source_node, "target": target_node, "edge_attr": edge_att[target_node]})
+      }
+    }
+    dict_to_json['ids'] = source.concat(target)
+    return dict_to_json;
+    }
+
+    key_file_name = {}
+    for (i in file_names){
+      key_file_name[file_names[i]] = parseInt(i)
+    }
+
+    var finalDataObjAnimation;
+
+function LinkWidthA(link){
+          //var state = settings.States
+          var state_idx = key_file_name[state]
+          if (link.edge_attr[state_idx]["edge_att_2"] == null){ 
+            var link_width = 0.5
+          }
+          else{
+            var link_width = link.edge_attr[state_idx]["edge_att_2"] + 0.1
+          }
+        return link_width
+        }
+
+        function LinkColorA(link){
+          //var state = settings.States
+          var state_idx = key_file_name[state]
+          if (link.edge_attr[state_idx]["edge_att_1"] == null){ 
+            var link_color = "#808080"
+          }
+          else{
+            var link_color = colors_general(link.edge_attr[state_idx]["edge_att_1"], true, 'cornflowerblue', 'blue', 'midnightblue', 'blueviolet', 'darkviolet')
+          }
+        return link_color
+        }
+        
+function CreateSourceA(node)
+        {
+          var node_size
+          var state_idx = key_file_name[state]
+          if (node.source_attr[state_idx]["source_attr_2"] == null){ // SourceNodeSize
+            node_size = 1
+          }
+          else{
+            var node_size = node.source_attr[state_idx]["source_attr_2"] + 0.5
+          }
+          var mesh = (new THREE.Mesh(    
+          new THREE.SphereGeometry(node_size*8,25,25),
+          new THREE.MeshLambertMaterial({
+            transparent: false,
+            depthWrite: false,
+            opacity: 1 //changed 0.8 to 1 
+          })
+        ))
+
+        const sprite = new SpriteText(node.id);
+        sprite.color = 'rgb(0,0,0)';
+        sprite.textHeight = 5;
+        //sprite.position.y = 15;
+        mesh.add(sprite);
+        
+
+        var node_color
+          if (node.source_attr[state_idx]["source_attr_1"] == null){ // SourceNodeColor
+            node_color = 0.5
+          }
+          else{
+            var node_color = node.source_attr[state_idx]["source_attr_1"]
+          }
+
+        mesh.material.color.setHex(colors_general(node_color, false, 'ffffb3', 'yellow', 'orange', '#ee9a00', '#ff8c00'));
+        return mesh
+        }
+
+function CountPartitionsA(data)
+        {
+          var state_idx = key_file_name[state]
+          var num_sites_dict = {}
+          for (var node in data['nodes'])
+          {
+            if (data['nodes'][node]['group'] == '2')
+             {
+              var id = data['nodes'][node]['id']
+              if (data['nodes'][node].target_attr[state_idx]['target_attr_1'] == null) {
+                num_sites_dict[id] = 0
+              }
+              else{
+                num_sites = Object.keys(data['nodes'][node].target_attr[state_idx]['target_attr_1']).length
+                num_sites_dict[id] = num_sites
+              }
+             }
+          }
+          return num_sites_dict
+        }
+
+function CreateTargetA(node)
+        {
+          var node_size
+          var state_idx = key_file_name[state]
+          if (node.target_attr[state_idx]["target_attr_2"] == null){ // TargetNodeSize
+            node_size = 1
+          }
+          else{
+            var node_size = node.target_attr[state_idx]["target_attr_2"] + 0.5
+          }
+
+          var num_sites_dict = CountPartitionsA(finalDataObjAnimation)
+          if (num_sites_dict[node['id']] > 1) { // partitions
+            verticalPartitions = num_sites_dict[node['id']]
+          }
+          else // no partitions
+            verticalPartitions = 1
+          
+          radialPartitions = 25
+          var mesh = new THREE.Mesh(
+          new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
+          new THREE.MeshLambertMaterial({
+            transparent: false,
+            depthWrite: false,
+            opacity: 1,
+            wireframe: false,
+            emissive: "#181818",
+            vertexColors: THREE.FaceColors,
+          }));
+
+          if (!(verticalPartitions == 1))
+          {
+            for (var i = 0; i < radialPartitions*2*(verticalPartitions); i+=(verticalPartitions*2))
+            {
+                  j = 0
+                  for (var position in node.target_attr[state_idx]['target_attr_1']) {
+                    target_attr_1 = Object.values(node.target_attr[state_idx]['target_attr_1'][position])
+                    mesh.geometry.faces[i+(j*2)].color.setHex(colors_target(target_attr_1)); 
+                    mesh.geometry.faces[i+(j*2)+1].color.setHex(colors_target(target_attr_1));
+                    var x = 0
+                    for(x = i+(j*2)+2;x<i+(j*2)+27;x++){
+                      mesh.geometry.faces[x].color.setHex("0x949494");                  
+                    }
+                    for(x = i+(j*2)+27;x<i+(j*2)+52;x++){
+                      mesh.geometry.faces[x].color.setHex("0xcccccc");                  
+                    }
+  
+                    j = j + 1
+                    }
+            }
+          }
+          else //no partitions
+          {
+            //delete outer if else in case of a problem!!!!!
+            if (!(node.target_attr[state_idx]['target_attr_1'] == null)){
+              if (Object.values(node.target_attr[state_idx]['target_attr_1'][0])[0] == null)  { 
+                target_attr_1 = 2
+              }
+              else  { // TargetNodeColor exists  
+                target_attr_1 = Object.values(node.target_attr[state_idx]['target_attr_1'][0])
+              }
+            }
+            else{
+              target_attr_1 = 2
+            }
+
+            var face = 0
+            for(face = 0; face<50;face++){
+              mesh.geometry.faces[face].color.setHex(colors_target(target_attr_1));
+            }
+            face = 0
+            for(face = 50; face<75;face++){
+              mesh.geometry.faces[face].color.setHex("0x949494");
+            }
+            for(face = 75; face<100;face++){
+              mesh.geometry.faces[face].color.setHex("0xcccccc");
+            }
+
+          }
+
+        if(PARAMS.Labels)
+        {
+          const sprite = new SpriteText(node.id);
+          sprite.color = 'rgb(0,0,0)';
+          sprite.textHeight = 5;
+          mesh.add(sprite);
+        }
+          return mesh
+          }
+
+
+    /////// MASTER DATA MASTER DATA MASTER DATA MASTER DATA MASTER DATA MASTER DATA MASTER DATA MASTER DATA ////////
+
+var isRotationActive = true ;
+var isDrawActive = true ;
+var mod = file_names.length
+var mynum = 0;
+//var myVar;
+
+function timer(){
+  isRotationActive = true;
+  setTimeout(function(){ isDrawActive = true }, 3000)
+}
+
+function drawer(filename){
+  isRotationActive = false
+      var new_file_name = filename
+    /////////////// JSON FILE ////////////////
+    finalDataObj = parseCSV(localStorage.getItem(new_file_name))
+       Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer: true}})
+        .backgroundColor(PARAMS.Background)
+      (elem)
+        .graphData(finalDataObj)
+        .nodeThreeObject(node => (node.group == '2')
+          ? CreateTarget(node) // SUBSTRATES
+          : CreateSource(node))   // KINASES
+        .onNodeDragEnd(node => {
+          node.fx = node.x;
+          node.fy = node.y;
+          node.fz = node.z; })
+        .linkWidth(link => (link.edge_attr_2 == null)
+          ? 0.5
+          : (link.edge_attr_2 + 0.1))
+        .linkColor(link => (link.edge_attr_1 == null)
+          ? "#808080"
+          : colors_general(link.edge_attr_1, true, 'cornflowerblue', 'blue', 'midnightblue', 'blueviolet', 'darkviolet'))
+        .linkDirectionalArrowLength(directed => (directed)
+          ? 5
+          : 0)        
+        .linkDirectionalArrowRelPos(0.5)
+        .linkOpacity(0.5)
+        .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
+        .warmupTicks(200)
+        .cooldownTicks(0)
+        //.onEngineStop(setTimeout(function(){ isRotationActive = true }, 10000))
+        .onEngineStop(timer())
+    }
+
+    function changeStateA(statename) {
+      state = statename
+      Graph.nodeThreeObject(node =>  (node.group == '2')
+          ? CreateTargetA(node) // SUBSTRATES
+          : CreateSourceA(node)) // KINASES
+      Graph.linkWidth(link => LinkWidthA(link))
+      Graph.linkColor(link => LinkColorA(link))
+      Graph.onEngineStop(timer())
+      console.log(file_names[mynum])
+      //PARAMS.States = file_names[mynum]
+    }
+
+var interval1 = 0
+var interval2 = 0
+function animation(){
+  finalDataObjAnimation = parseCSV_animation()
+  state = file_names[mynum]
+  Graph = ForceGraph3D()
+        .backgroundColor("#ffffff")
+      (elem)
+        .graphData(finalDataObjAnimation)
+        .nodeThreeObject(node => (node.group == '2')
+          ? CreateTargetA(node) // SUBSTRATES
+          : CreateSourceA(node))   // KINASES
+        .linkWidth(link => LinkWidthA(link))
+        .linkColor(link => LinkColorA(link))
+        .onNodeDragEnd(node => {
+          node.fx = node.x;
+          node.fy = node.y;
+          node.fz = node.z; })
+        .linkDirectionalArrowLength(directed => (directed)
+          ? 5
+          : 0)        
+        .linkDirectionalArrowRelPos(0.5)
+        .linkOpacity(0.5)
+
+  
+  interval1 = setInterval(function() {
+    if(isDrawActive){
+      isDrawActive = false;
+    mynum = (mynum + 1) % mod
+    changeStateA(file_names[mynum])
+    //drawer(file_names[mynum]);
+    //console.log(file_names[mynum])
+  }
+    }, 100);
+
+    let angle = 0;
+    interval2 = setInterval(function() { 
+      if (isRotationActive) {
+        var nodenum = Graph.graphData().nodes.length
+        const distance = Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR
+        Graph.cameraPosition({
+          x: distance * Math.sin(angle),
+          z: distance * Math.cos(angle)
+        });
+        angle += Math.PI / 300;
+      }
+    }
+    , 10);
+/*
+    // let angle = 0;
+    // setInterval(() => {
+      // if (isRotationActive) {
+      //   var nodenum = Graph.graphData().nodes.length
+      //   const distance = Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR
+      //   Graph.cameraPosition({
+      //     x: distance * Math.sin(angle),
+      //     z: distance * Math.cos(angle)
+      //   });
+      //   angle += Math.PI / 300;
+      // }
+    // }, 10);
+*/
+  }
+
+  function stopAnimation(){
+    clearInterval(interval1)
+    clearInterval(interval2)
+    changeState()
+    //PARAMS.States = file_names[mynum]
+  }
+  /////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
+  /////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
+  /////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
+  /////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
+  /////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
+  /////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
+  /////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
+
+  </script>
+</body>

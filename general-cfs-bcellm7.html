@@ -1,0 +1,1042 @@
+<head>
+  <style> 
+  body { margin: 0; } 
+  .btn
+    {
+      background-color: white;
+      border: 3px solid black;
+      margin: 8px;
+      height: 30px; 
+      width: 120px;
+      transition: 0.3s;
+    }
+  
+    button {
+      display: block
+    }
+  
+    #logo{ 
+      position:fixed; 
+      top:15; 
+      left:0; 
+    } 
+  
+    /* .button1{
+      background-color: #B1C1C0;
+      color: white;
+    } 
+  
+    .button2 {
+      background-color: #AB3428;
+      color: white;
+    }
+   */
+    .button3 {
+    background-color: #FF8C42;
+    color: white;
+    outline: 3px solid black;
+    }
+  
+    /* .button4 {
+      background-color: #036D19;
+      color: white;
+    }
+  
+    .button5 {
+      background-color: #475AFF;
+      color: white; 
+    }
+  
+    .button6 {
+      background-color: #2E294E;
+      color: white;
+    }
+  
+    .button1:hover {
+      background-color: #e1e1e1;
+      color: black; 
+      outline: 2px solid black;
+    } 
+  
+    .button2:hover {
+      background-color: #ca675e;
+      color: white;
+    }  */
+  
+    .button3:hover {
+      background-color: #e6a882;
+      color: white;
+    }
+  
+    /* .button4:hover {
+      background-color: #529f61;
+      color: white;
+    }
+  
+    .button5:hover {
+      background-color: #8890dc;
+      color: white;
+    }
+  
+    .button6:hover {
+      background-color: #7067a7;
+      color: white;
+    } */
+  
+    #allnodes {
+      font-weight: bold;
+    }
+
+  </style>
+
+  <script src="//unpkg.com/3d-force-graph"></script>
+  <script src="//unpkg.com/three"></script>
+  <script src="//unpkg.com/dat.gui"></script>
+  <script src="//unpkg.com/three-spritetext"></script>
+
+
+  <!--<script src="../../dist/3d-force-graph.js"></script>-->
+</head>
+<body>
+      
+  
+  <div id="3d-graph"></div>
+
+  <div style="position: absolute; top: 150px; left: 5px;">
+    <!-- <button class="btn button1" id="allnodes" onclick="window.location.href = 'index.html'">
+      ALL NODES
+    </button> -->
+    <!-- <button class="btn button2" id="module1" onclick="window.location.href = 'nkm4.html'">
+      NKM4
+    </button> -->
+    <button class="btn button3" id="module2" onclick="window.location.href = 'general-cfs-bcellm7.html'">
+      BCellM7
+    </button>
+    <!-- <button class="btn button4" id="module3" onclick="window.location.href = 'monom6.html'">
+      MonoM6
+    </button> -->
+    <!-- <button class="btn button5" id="module4" onclick="window.location.href = 'nkm13.html'">
+      NKM13
+    </button>
+    <button class="btn button6" id="module5" onclick="window.location.href = 'nkm9.html'">
+      NKM9
+    </button> -->
+    
+  </div>
+
+
+  <script type="module">
+
+  const elem = document.getElementById('3d-graph');
+    
+  const Graph = ForceGraph3D()
+        .backgroundColor("#fff")
+      (elem)
+        .jsonUrl('data/BcellM7_final.json')
+        .nodeLabel(node => (`<span style="color: black">${node.id}</span>`))
+        .nodeThreeObject(node => colorNodes(node))
+        .linkDirectionalArrowLength(5)
+        .linkDirectionalArrowRelPos(1)
+        .linkWidth(1)
+        .linkColor(() => 'rgb(0,0,0)')
+        .linkOpacity(0.5)
+        .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
+        .onNodeClick(node => {
+          // Aim at node from outside it
+          const distance = 40;
+          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+
+          Graph.cameraPosition(
+            { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+            node, // lookAt ({ x, y, z })
+            3000  // ms transition duration
+          );
+        });
+
+  
+  function colorNodes(node) {
+      //var obj = null;
+    var color = "#000000"
+    if (node.group == "NKM4")
+      color = "#AB3428"
+    else if (node.group == "BcellM7")
+      color = "#FF8C42"
+    else if (node.group == "MonoM6")
+      color = "#036D19"
+    else if (node.group == "NKM13")
+      color = "#475AFF"
+    else if (node.group == "NKM9")
+      color = "#2E294E"
+    else
+      color = "#B1C1C0"
+    
+    if (node.kd == "1")
+      var obj = new THREE.Mesh(
+              new THREE.SphereGeometry(20),
+              //new THREE.BoxGeometry(30, 30, 30),
+              //new THREE.MeshBasicMaterial({ depthWrite: true, transparent: false, opacity: 0 })
+              new THREE.MeshLambertMaterial({
+            //depthWrite: false,
+            transparent: false,
+            opacity: 1,
+            wireframe: false,
+            emissive: "#000000",
+            color: color //FFAE03
+            //vertexColors: THREE.FaceColors,
+          })
+            );
+    else    
+      var obj = new THREE.Mesh(
+              new THREE.SphereGeometry(5),
+              //new THREE.MeshBasicMaterial({ depthWrite: true, transparent: false, opacity: 0 })
+              new THREE.MeshLambertMaterial({
+            depthWrite: false,
+            transparent: false,
+            opacity: 1,
+            wireframe: false,
+            //emissive: "#181818",
+            color: color //FFAE03
+            //vertexColors: THREE.FaceColors,
+          })
+            );  
+      return obj;
+  }
+
+  const Settings = function() {
+    this.nodeKeys = "";
+    };
+  
+  const settings = new Settings();
+  // const gui = new dat.GUI();
+
+  var gui = new dat.GUI();
+  gui.domElement.id = 'gui';
+
+/*      $.getJSON('./NKM4_final.json', function(data) {
+    console.log(data['nodes'][0]["id"])
+    $.each(data['nodes'], function (index, item) {
+      console.log(typeof(item['id']))
+      console.log(item["id"])
+      nodeList.push(item['id'])
+    })
+
+  console.log("hello", JSON.stringify(nodeList)) 
+  var nodeListNew = nodeList.entries()
+  console.log(nodeListNew) */
+
+  var nodeList = ['ARL14EP',
+ 'SRGN',
+ 'CD8A',
+ 'ITM2B',
+ 'IRF2BP2',
+ 'LYZ',
+ 'APOBEC3D',
+ 'WSB2',
+ 'MBOAT1',
+ 'ARHGEF11',
+ 'LEPROT',
+ 'LY96',
+ 'IQSEC2',
+ 'ATP6V1B2',
+ 'STX11',
+ 'CTD-3195I5.1',
+ 'ARMCX2',
+ 'MYADM',
+ 'LUC7L3',
+ 'FLT3',
+ 'F13A1',
+ 'TMEM43',
+ 'CACNA2D4',
+ 'RAB43',
+ 'THBS1',
+ 'GBP2',
+ 'PLEKHG3',
+ 'VCL',
+ 'FAM20C',
+ 'UBTD1',
+ 'LRP1',
+ 'AGBL3',
+ 'CTD-2583A14.8',
+ 'MSANTD2',
+ 'PILRA',
+ 'SLC27A1',
+ 'ACRBP',
+ 'SDCBP',
+ 'TNFSF13B',
+ 'MICAL2',
+ 'SLC16A3',
+ 'SGK1',
+ 'GIMAP1',
+ 'DAPK1',
+ 'TIMM21',
+ 'IGSF6',
+ 'TNFSF13',
+ 'ABHD5',
+ 'EPB41L3',
+ 'SCARF1',
+ 'OSCAR',
+ 'CSF1R',
+ 'ARHGEF10L',
+ 'MTMR11',
+ 'MFSD1',
+ 'RGS12',
+ 'MT-ATP6',
+ 'SLC26A11',
+ 'HIST1H2AC',
+ 'IL18',
+ 'ZCCHC24',
+ 'SLC40A1',
+ 'TJP2',
+ 'RNF130',
+ 'IMPA2',
+ 'MBOAT7',
+ 'NLRP3',
+ 'DNM3',
+ 'FAM222B',
+ 'TLR5',
+ 'TIMELESS',
+ 'S100A11',
+ 'RP11-492E3.1',
+ 'STK33',
+ 'ALDH3B1',
+ 'STAB1',
+ 'AOAH',
+ 'ROGDI',
+ 'SASH1',
+ 'PGRMC1',
+ 'EEPD1',
+ 'RFX2',
+ 'TMCO3',
+ 'GRN',
+ 'RTN4',
+ 'STOM',
+ 'SPTAN1',
+ 'IL7R',
+ 'ZNF544',
+ 'ANXA1',
+ 'MFSD7',
+ 'S100A9',
+ 'LILRA3',
+ 'AMPD2',
+ 'AGTRAP',
+ 'HFE',
+ 'FBP1',
+ 'USP35',
+ 'TNFSF10',
+ 'FUT4',
+ 'ID2',
+ 'CACNB1',
+ 'SLC24A4',
+ 'NUDT16',
+ 'CD163',
+ 'CDH23',
+ 'IRAK3',
+ 'TIAL1',
+ 'AC104809.4',
+ 'UBE2F',
+ 'TYROBP',
+ 'SPECC1',
+ 'RP11-305E6.4',
+ 'AC011899.9',
+ 'SIGLEC9',
+ 'LCP2',
+ 'CBR4',
+ 'GPBAR1',
+ 'CD86',
+ 'INSR',
+ 'CA2',
+ 'UBXN11',
+ 'VAV3-AS1',
+ 'CREB5',
+ 'FAM19A2',
+ 'TMEM176B',
+ 'OSBPL5',
+ 'CTC-205M6.5',
+ 'PXN',
+ 'CHN2',
+ 'SMPDL3A',
+ 'RAB3D',
+ 'MTA3',
+ 'VEGFA',
+ 'DYSF',
+ 'PRKCH',
+ 'MEGF9',
+ 'BCL11B',
+ 'AP4S1',
+ 'STEAP3',
+ 'ZNF346',
+ 'STK3',
+ 'METTL6',
+ 'RCN3',
+ 'SH3BGRL2',
+ 'RTN1',
+ 'BID',
+ 'CDC42EP3',
+ 'MT-CYB',
+ 'PAM',
+ 'TPP1',
+ 'C12orf65',
+ 'ERMAP',
+ 'AP5B1',
+ 'CTC-444N24.11',
+ 'CD14',
+ 'TMEM127',
+ 'SIRPB2',
+ 'MXD1',
+ 'FAM184B',
+ 'C11orf75',
+ 'KIAA0907',
+ 'CTBP2',
+ 'MYO5C',
+ 'CD44',
+ 'SOD2',
+ 'QSOX1',
+ 'SULT1A1',
+ 'SLC7A7',
+ 'ACP2',
+ 'TPMT',
+ 'IFT57',
+ 'PRKCA',
+ 'TRMT10B',
+ 'CLEC7A',
+ 'LEPROTL1',
+ 'DST',
+ 'ACPP',
+ 'RP11-48B14.2',
+ 'DOCK5',
+ 'FAM214B',
+ 'BLVRB',
+ 'IDH1',
+ 'MPP1',
+ 'NMT2',
+ 'FANCL',
+ 'MEFV',
+ 'MYO1F',
+ 'CD300C',
+ 'PADI4',
+ 'SELP',
+ 'GNA15',
+ 'TK2',
+ 'GRB2',
+ 'CD300A',
+ 'ARSD',
+ 'PLCB2',
+ 'NLRP12',
+ 'FCGRT',
+ 'TRERF1',
+ 'MAFB',
+ 'RP11-398K22.12',
+ 'GIMAP5',
+ 'SOCS6',
+ 'CD244',
+ 'S100A12',
+ 'BST1',
+ 'CCR5',
+ 'ETS2',
+ 'ATP10A',
+ 'TNFAIP8L2',
+ 'DUSP6',
+ 'CPQ',
+ 'OAF',
+ 'CLEC4E',
+ 'PRF1',
+ 'LATS2',
+ 'MARVELD1',
+ 'VHL',
+ 'FNIP2',
+ 'C5orf4',
+ 'AF131215.2',
+ 'UBIAD1',
+ 'MYCL1',
+ 'TNFAIP2',
+ 'ANO10',
+ 'CXCL16',
+ 'TBXAS1',
+ 'CLEC12A',
+ 'PRKAR2B',
+ 'LGALSL',
+ 'NOD2',
+ 'NEURL',
+ 'KLHDC8B',
+ 'CLTCL1',
+ 'MYD88',
+ 'SFXN5',
+ 'NDRG1',
+ 'MMP14',
+ 'NCF2',
+ 'FZD1',
+ 'C3AR1',
+ 'EPB49',
+ 'CDK2AP1',
+ 'FTH1',
+ 'MIR223',
+ 'IGF2R',
+ 'ZYX',
+ 'TNFRSF1A',
+ 'DPYSL2',
+ 'S100A8',
+ 'CAMK1',
+ 'RRAGD',
+ 'CCDC104',
+ 'PPT1',
+ 'XXYLT1',
+ 'SPRED1',
+ 'C1orf198',
+ 'OSBPL1A',
+ 'PSAP',
+ 'HMOX1',
+ 'METRNL',
+ 'IPP',
+ 'PREX1',
+ 'CDC16',
+ 'SPARC',
+ 'GLB1',
+ 'FRA10AC1',
+ 'GLT1D1',
+ 'KLF4',
+ 'PPM1F',
+ 'FAM63A',
+ 'ZMIZ1',
+ 'HAVCR2',
+ 'PTPN9',
+ 'PAK1',
+ 'CTIF',
+ 'LILRA2',
+ 'FAM129B',
+ 'RP11-1105G2.3',
+ 'TPM1',
+ 'SGMS2',
+ 'RAB32',
+ 'MMP25',
+ 'LPCAT2',
+ 'CTSS',
+ 'SDPR',
+ 'GK',
+ 'SNN',
+ 'STARD8',
+ 'PVRL1',
+ 'ZNF530',
+ 'SLC11A1',
+ 'CPVL',
+ 'SHROOM1',
+ 'SSH3',
+ 'CAMKK2',
+ 'ADD1',
+ 'SIRPA',
+ 'RP11-94L15.2',
+ 'RP11-622O11.2',
+ 'NCKAP5L',
+ 'GRAMD1B',
+ 'TYMP',
+ 'CYP27A1',
+ 'RNF149',
+ 'RHOG',
+ 'FAM101B',
+ 'GNS',
+ 'VCAN',
+ 'MAN1C1',
+ 'ADIPOR1',
+ 'ACSS2',
+ 'MTO1',
+ 'SLC2A9',
+ 'QPCT',
+ 'GIMAP4',
+ 'CD93',
+ 'PADI2',
+ 'C21orf7',
+ 'TCF7L2',
+ 'IER3',
+ 'AP1S2',
+ 'SEPTIN6',
+ 'TIAM1',
+ 'VPS26B',
+ 'SIRT5',
+ 'FES',
+ 'SEPN1',
+ 'SUMF1',
+ 'NGLY1',
+ 'CPAMD8',
+ 'RIPK2',
+ 'LOXL3',
+ 'HEXB',
+ 'BLVRA',
+ 'KBTBD11',
+ 'TOB1',
+ 'C5AR1',
+ 'TLR4',
+ 'HYLS1',
+ 'COCH',
+ 'FAM212B',
+ 'KIAA1598',
+ 'PCSK6',
+ 'EED',
+ 'PLEK',
+ 'PHOSPHO1',
+ 'KNDC1',
+ 'CD33',
+ 'VMP1',
+ 'EMR3',
+ 'SMAD7',
+ 'FYB',
+ 'ZNF185',
+ 'PID1',
+ 'EFCAB2',
+ 'ACOT2',
+ 'LTBR',
+ 'CSGALNACT2',
+ 'GKAP1',
+ 'GIMAP2',
+ 'ACSL1',
+ 'ARRB1',
+ 'RP11-398A8.3',
+ 'MAPK7',
+ 'RP5-1014C4.3',
+ 'TSPAN14',
+ 'AP2A1',
+ 'PLXNB2',
+ 'JUNB',
+ 'CYBRD1',
+ 'DOK2',
+ 'CPNE2',
+ 'PDE4A',
+ 'SLC31A1',
+ 'SRC',
+ 'S100A6',
+ 'TREM1',
+ 'TTYH3',
+ 'G0S2',
+ 'NINJ1',
+ 'MAF',
+ 'CTC-260E6.6',
+ 'KLRB1',
+ 'PLCD4',
+ 'HPSE',
+ 'ITGAX',
+ 'PYGL',
+ 'MIR22HG',
+ 'TSPAN3',
+ 'NPTN',
+ 'C11orf80',
+ 'TIMP2',
+ 'ITSN1',
+ 'FAAH',
+ 'PFKFB4',
+ 'HCK',
+ 'FPR2',
+ 'MPZL3',
+ 'FAH',
+ 'C6orf25',
+ 'IQCE',
+ 'NRGN',
+ 'CD7',
+ 'CARD6',
+ 'ABCC3',
+ 'PTGER2',
+ 'CSF3R',
+ 'MSRB1',
+ 'CXCR2',
+ 'FRG1B',
+ 'TNFSF4',
+ 'TTYH2',
+ 'EMILIN2',
+ 'PRKACA',
+ 'MAPKAPK3',
+ 'ZNF512',
+ 'CUEDC1',
+ 'FAM45A',
+ 'ADAMTSL4',
+ 'CPD',
+ 'NFAM1',
+ 'ACTN1',
+ 'IL1RN',
+ 'GOLGA8B',
+ 'FCGR3B',
+ 'ITGA5',
+ 'CEBPD',
+ 'CCT6P3',
+ 'BAIAP2-AS1',
+ 'NCBP2',
+ 'ZNF385A',
+ 'NLRC4',
+ 'RGS18',
+ 'SIGLEC16',
+ 'ZNF219',
+ 'RP11-566E18.3',
+ 'KCTD12',
+ 'MGAT3',
+ 'CST3',
+ 'RNF19B',
+ 'ZNF710',
+ 'H2AFY',
+ 'IFI30',
+ 'PLSCR1',
+ 'FPR1',
+ 'PISD',
+ 'AGAP3',
+ 'NAGA',
+ 'SORT1',
+ 'ATG7',
+ 'AGPAT3',
+ 'RXRA',
+ 'AP001053.11',
+ 'CCRL2',
+ 'ARHGAP26',
+ 'SLC8A1',
+ 'NDST1',
+ 'NFE2',
+ 'DMXL2',
+ 'PSTPIP2',
+ 'SYT11',
+ 'CD36',
+ 'CTTN',
+ 'CD9',
+ 'HAL',
+ 'VIPR1',
+ 'GOLM1',
+ 'RP11-750H9.5',
+ 'NACC2',
+ 'GAA',
+ 'HBB',
+ 'CSF2RA',
+ 'SYTL3',
+ 'SNX33',
+ 'EFHD2',
+ 'NAMPT',
+ 'CTSC',
+ 'FGFR1OP',
+ 'AHR',
+ 'CSGALNACT1',
+ 'CFP',
+ 'CD3E',
+ 'TRIM32',
+ 'RP11-340F14.5',
+ 'MNDA',
+ 'P2RY13',
+ 'BMP1',
+ 'C19orf38',
+ 'TNFSF8',
+ 'MT-CO1',
+ 'RPGRIP1',
+ 'PPP1R26',
+ 'CTNNA1',
+ 'MS4A6A',
+ 'GNAQ',
+ 'CMTM3',
+ 'SERPINA1',
+ 'CD300LB',
+ 'EMR1',
+ 'ANO8',
+ 'WDFY3',
+ 'GAS7',
+ 'APOBEC3A',
+ 'RAP2B',
+ 'TMTC2',
+ 'SLC30A1',
+ 'C10orf54',
+ 'TM6SF1',
+ 'GALC',
+ 'RNF207',
+ 'MCTP1',
+ 'ARAP3',
+ 'SMARCD1',
+ 'ITGA2B',
+ 'KLF10',
+ 'PF4',
+ 'PRAM1',
+ 'AMICA1',
+ 'CFD',
+ 'F5',
+ 'LAPTM4A',
+ 'ULK2',
+ 'SULF2',
+ 'IL17RA',
+ 'TP53',
+ 'KCNE3',
+ 'RIN2',
+ 'NAIP',
+ 'RNF11',
+ 'ADAM15',
+ 'MLTK',
+ 'NKIRAS2',
+ 'CYFIP1',
+ 'FAM105A',
+ 'PCTP',
+ 'CTSB',
+ 'LILRA5',
+ 'DNAJB1',
+ 'SLC45A4',
+ 'TIMP1',
+ 'SPG21',
+ 'SPDYE3',
+ 'CDKN1C',
+ 'MYLK',
+ 'OPLAH',
+ 'PLAUR',
+ 'GLUL',
+ 'RP11-534G20.3',
+ 'SIRPB1',
+ 'MT-ATP8',
+ 'ADAM9',
+ 'TSPAN4',
+ 'S100Z',
+ 'CXCR2P1',
+ 'MGST2',
+ 'GLB1L',
+ 'LST1',
+ 'MARCHF1',
+ 'BLNK',
+ 'SLC16A4',
+ 'SECTM1',
+ 'ZNF586',
+ 'ITGB3',
+ 'VAMP3',
+ 'ICAM1',
+ 'RAB20',
+ 'CASP1',
+ 'KIAA0513',
+ 'CDC42EP2',
+ 'CISH',
+ 'GPX3',
+ 'ZFAND5',
+ 'LPAR6',
+ 'PTTG1IP',
+ 'C2CD2L',
+ 'TBC1D8',
+ 'ITGAM',
+ 'FCGR3A',
+ 'MCL1',
+ 'TOR1AIP2',
+ 'PDCD11',
+ 'RP11-196G18.22',
+ 'CSTA',
+ 'GIMAP8',
+ 'CREG1',
+ 'TBC1D2',
+ 'TNFRSF1B',
+ 'PTAFR',
+ 'NUDT16P',
+ 'CDC42EP4',
+ 'ALDH2',
+ 'PARN',
+ 'FCAR',
+ 'MTERFD1',
+ 'C17orf75',
+ 'ZBTB47',
+ 'ZFP36L2',
+ 'CDA',
+ 'TMEM173',
+ 'NPL',
+ 'ATP8B3',
+ 'WDR66',
+ 'HSBP1',
+ 'PGD',
+ 'CD300LF',
+ 'LILRA1',
+ 'TECPR2',
+ 'CLU',
+ 'EMR2',
+ 'RARA',
+ 'LMNA',
+ 'SRD5A1',
+ 'CTA-217C2.1',
+ 'FCER1G',
+ 'SAMHD1',
+ 'OSM',
+ 'SIGLEC5',
+ 'CD4',
+ 'RASGRP4',
+ 'DUSP3',
+ 'IFITM3',
+ 'FHL3',
+ 'TMEM170B',
+ 'BAIAP2',
+ 'GBP1',
+ 'CTD-2542C24.1',
+ 'NQO2',
+ 'STAT3',
+ 'S100A4',
+ 'FSCN1',
+ 'LPPR2',
+ 'NVL',
+ 'RP11-960L18.1',
+ 'AQP9',
+ 'METTL9',
+ 'PTPLAD2',
+ 'RASSF4',
+ 'GLIPR2',
+ 'VPS37C',
+ 'GIMAP7',
+ 'CD2',
+ 'MYOF',
+ 'PTGS2',
+ 'CNIH4',
+ 'CX3CR1',
+ 'CERS2',
+ 'AIF1',
+ 'CARD9',
+ 'AC093673.5',
+ 'FAM210B',
+ 'FCGR2A',
+ 'FGR',
+ 'CPNE8',
+ 'CD24P4',
+ 'RHOU',
+ 'IPCEF1',
+ 'FLVCR2',
+ 'ANPEP',
+ 'SPATS2L',
+ 'ITK',
+ 'CD302',
+ 'GIMAP6',
+ 'CCR1',
+ 'GAS2L1',
+ 'PLXDC2',
+ 'HK3',
+ 'H1F0',
+ 'HRH2',
+ 'PLXNC1',
+ 'PTGIR',
+ 'NAAA',
+ 'SLC43A2',
+ 'RP11-64K12.2',
+ 'TLR2',
+ 'FGD4',
+ 'RP11-2H8.2',
+ 'CCDC77',
+ 'SLA2',
+ 'TNFRSF8',
+ 'CAMSAP2',
+ 'ZNF30',
+ 'PLBD1',
+ 'KCTD15',
+ 'DENND1A',
+ 'FCN1',
+ 'RP11-290F20.3',
+ 'AIFM3',
+ 'CRTAP',
+ 'HMGN1',
+ 'UPP1',
+ 'LILRA6',
+ 'ACOT9',
+ 'FUCA1',
+ 'GPATCH1',
+ 'GNLY',
+ 'ZDHHC7',
+ 'CYP1B1',
+ 'DLG4',
+ 'COQ2',
+ 'CECR1',
+ 'ARSB',
+ 'SDC3',
+ 'MT-ND4',
+ 'VENTX',
+ 'HBEGF',
+ 'CST7',
+ 'TGFBI',
+ 'DRAM1',
+ 'RP11-283I3.6',
+ 'PLEKHB2',
+ 'PLCB1',
+ 'GPR77',
+ 'PLXND1',
+ 'HNRNPH3',
+ 'PLCB3',
+ 'EIF4E3',
+ 'SMARCD3',
+ 'MCOLN1',
+ 'PPBP',
+ 'CRISPLD2',
+ 'ALDH1A1',
+ 'LGALS3',
+ 'CTC-559E9.5',
+ 'UBE2D1',
+ 'HNMT',
+ 'LILRB3',
+ 'RIN1',
+ 'CCNY',
+ 'SRXN1',
+ 'CYBB',
+ 'LRRC25',
+ 'SLC16A5',
+ 'OSBP2',
+ 'PTPRE',
+ 'CPPED1',
+ 'LILRB2',
+ 'CCL5',
+ 'ZNF467',
+ 'SLC16A6',
+ 'TDRD9',
+ 'PLK3',
+ 'ARHGEF5',
+ 'SVIL',
+ 'SIGLEC1',
+ 'NFIL3',
+ 'FAM198B',
+ 'SLC46A2',
+ 'FADS1',
+ 'ZMYND15',
+ 'TKT',
+ 'RAB31',
+ 'KCNH3',
+ 'ITGB2',
+ 'CD300E',
+ 'ARRB2',
+ 'SERPINB1',
+ 'TUBB1',
+ 'MT-ND1',
+ 'NAT10',
+ 'SEC22A',
+ 'PMS2P5',
+ 'PQLC3',
+ 'APOBR',
+ 'ACER3',
+ 'ARHGEF40',
+ 'FOSL2',
+ 'MT-ND2',
+ 'ASGR2',
+ 'TLR8',
+ 'RILP',
+ 'CD101',
+ 'CMIP',
+ 'NID1',
+ 'ITGB5',
+ 'FGL2']
+
+
+  const controllerSearch = gui.add(settings, "nodeKeys", nodeList).name("Select Node");
+
+  var node_key = settings.nodeKeys
+
+  controllerSearch.onChange(updateSearch);
+
+
+  function updateSearch() {
+
+      Graph.nodeThreeObjectExtend(node => {
+        var selectedNode = settings.nodeKeys
+        if (selectedNode == node.id) {
+              {
+                  const distance = 40;
+                  const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+                  Graph.cameraPosition(
+                      { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+                      node, // lookAt ({ x, y, z })
+                      3000  // ms transition duration
+                      );
+              }
+          }
+
+      }) 
+    }
+      
+  </script>
+
+    <div id="logo"> 
+      <img src="./img/logo.png" width="700"> 
+    </div> 
+
+    <!-- <div id="legend"> 
+      <img src="Legend.png" width="125"> 
+    </div>  -->
+
+</body>
