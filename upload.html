@@ -1,0 +1,462 @@
+<head>
+
+    <link rel="stylesheet" href="styles-upload.css" type="text/css">
+    <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@0.1.2/dist/index.min.js"></script>
+    <a href="general.html"></a>
+
+<title>PhosProViz</title>
+<style type="text/css">
+ 
+   #hidden-file-upload, #submit-button, #uploadButton {
+      margin-left:auto;
+      margin-right:auto;
+      display:block;
+      position: relative;
+  } 
+
+  text {
+    font-family: Helvetica, sans-serif;
+  }
+
+  #uploadButton {
+    margin-top: 10px;
+      border: none; 
+      background: none; 
+      cursor: pointer;
+  }
+  
+  #textBody{
+    margin-top: 40px;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    position: relative;
+  }
+  
+
+  #logo{
+      /* position: absolute; */
+  margin-top: -13px;
+  margin-left: -10px;
+  width: 15%;
+  height: 15%;
+  }
+
+  .tg {
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+
+  .tableCenter {
+    margin-left: -10px;
+    margin-right: auto;
+    margin-top: 1%;
+}
+
+</style>
+
+</head>
+
+<!-- LOGO -->
+<table class="tableCenter">
+  <tr>
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <rect id="Rectangle_1488" data-name="Rectangle 1488" width="290" height="55"/>
+          <text id="PhosProViz" transform="translate(100 37)" fill="#fff" font-size="25" font-family="CenturyGothicPro-Bold, Century Gothic Pro, Helvetica" font-weight="700" letter-spacing="0.1em"><tspan x="-60.495" y="-3">PhosProViz</tspan></text>
+        </svg>
+      </div>
+    </td>
+    
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2251" data-name="Path 2251" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <text id="Source_-_Target" data-name="Source - Target" transform="translate(100 32)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-72.59" y="0">Source - Target</tspan></text>
+        </svg>
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2261" data-name="Path 2261" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4014" data-name="Group 4014" transform="translate(-432 -156)">
+            <text id="Source_Attributes" data-name="Source Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-82.15" y="0">Source Attributes</tspan></text>
+          </g>
+        </svg>
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2262" data-name="Path 2262" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4015" data-name="Group 4015" transform="translate(-432 -156)">
+            <text id="Source_Attributes" data-name="Target Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-82.15" y="0">Target Attributes</tspan></text>
+          </g>
+        </svg>          
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2263" data-name="Path 2263" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4016" data-name="Group 4016" transform="translate(-432 -156)">
+            <text id="Edge_Attributes" data-name="Edge Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-74.07" y="0">Edge Attributes</tspan></text>
+          </g>
+        </svg>                 
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2264" data-name="Path 2264" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4017" data-name="Group 4017" transform="translate(-432 -156)">
+            <text id="Number_of_States" data-name="Number of States" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-83.39" y="0">Number of States</tspan></text>
+          </g>
+        </svg>                        
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2265" data-name="Path 2265" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#000000"/>
+          <g id="Group_4018" data-name="Group 4018" transform="translate(-432 -156)">
+            <text id="Prepare_you_Data" data-name="Prepare you Data" transform="translate(532 188)" fill="#fff" font-size="20" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-84.84" y="0">Prepare you Data</tspan></text>
+          </g>
+        </svg>                               
+      </div>
+    </td>
+  </tr>
+</table>
+<!--  -->
+
+
+<body onload="datatype();session_validate()">
+  <script src="js/session_validate.js"></script> 
+    <script src="js/upload.js"></script>
+    
+    <svg id="textBody" xmlns="http://www.w3.org/2000/svg" width="536" height="102" viewBox="0 0 536 102">
+      <text id="Great_According_to_the_information_you_gave_us_here_is_how_you_should_format_your_CSV_file._Please_be_sure_to_name_the_columns_exactly_as_shown_below_including_the_capitalization_conventions._If_you_missed_something_please_feel_free_to_go_back_and_modi" data-name="Great! According to the information you gave us, here is how you should format your CSV file. Please be sure to name the columns exactly as shown below, including the capitalization conventions. If you missed something, please feel free to go back and modi" fill="#5e6365" font-size="15" font-family="Helvetica"><tspan x="0" y="12">Great! According to the information you gave us, here is how you should format </tspan><tspan x="0" y="30">your CSV file. Please be sure to name the columns exactly as shown below, </tspan><tspan x="0" y="48">including the capitalization conventions. If you missed something, please feel </tspan><tspan x="0" y="66">free to go back and modify your answers. When you are ready to visualize your </tspan><tspan x="0" y="84">data, click the upload button below!</tspan></text>
+    </svg>
+    
+    
+    <table class="tg" id="pt_table" style="display:none;">
+      <thead>
+        <tr>
+          <th class="tg-e9v8 p1"><img src="img/svg/SourceID.svg" alt="Image" width="75" height="56"><br><br><span style="font-weight:bold">SourceID</span></th>
+          <th class="tg-e9v8 p2"><img src="img/svg/SourceNodeColor.svg" alt="Image" width="75" height="56"><br><br><span style="font-weight:bold;font-style:normal;text-decoration:none">SourceNodeColor</span></th>
+          <th class="tg-ygzf p3"><img src="img/svg/NodeSize.svg" alt="Image" width="75" height="56"><br><br><span style="font-weight:bold;font-style:normal;text-decoration:none">SourceNodeSize</span></th>
+          <th class="tg-ygzf p4"><img src="img/svg/TargetID.svg" alt="Image" width="75" height="56"><br><br>TargetID</th>
+          <th class="tg-ygzf p5"><img src="img/svg/PhosID.svg" alt="Image" width="75" height="56"><br><br>PhosphorylationSiteID</th>
+          <th class="tg-ygzf p6"><img src="img/svg/TargetNodeColor.svg" alt="Image" width="75" height="56"><br><br>TargetNodeColor</th>
+          <th class="tg-ygzf p7"><img src="img/svg/NodeSize.svg" alt="Image" width="75" height="56"><br><br><span style="font-weight:bold;font-style:normal;text-decoration:none">TargetNodeSize</span></th>
+          <th class="tg-ygzf p8"><img src="img/svg/EdgeColor.svg" alt="Image" width="75" height="56"><br><br><span style="font-weight:bold;font-style:normal;text-decoration:none">EdgeColor</span></th>
+          <th class="tg-ygzf p9"><img src="img/svg/EdgeWeight.svg" alt="Image" width="75" height="56"><br><br><span style="font-weight:bold;font-style:normal;text-decoration:none">EdgeWeight</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tg-g041 p1">ZZZ</td>
+          <td class="tg-tz9d p2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-8.91</span></td>
+          <td class="tg-izz2 p3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">7.5</span></td>
+          <td class="tg-2siu p4"><span style="font-weight:700;font-style:normal;text-decoration:none">AAA</span></td>
+          <td class="tg-izz2 p5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">ph2</span></td>
+          <td class="tg-tz9d p6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">1.43</span></td>
+          <td class="tg-izz2 p7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">9,3</span></td>
+          <td class="tg-tz9d p8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">4,67</span></td>
+          <td class="tg-izz2 p9"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">0.96</span></td>
+        </tr>
+        <tr>
+          <td class="tg-g041 p1">ZZZ</td>
+          <td class="tg-tz9d p2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-8.91</span></td>
+          <td class="tg-izz2 p3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">7.5</span></td>
+          <td class="tg-2siu p4"><span style="font-weight:700;font-style:normal;text-decoration:none">AAA</span></td>
+          <td class="tg-izz2 p5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">ph302</span></td>
+          <td class="tg-tz9d p6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-0.04</span></td>
+          <td class="tg-izz2 p7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">9.3</span></td>
+          <td class="tg-tz9d p8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">4.67</span></td>
+          <td class="tg-izz2 p9"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">0.96</span></td>
+        </tr>
+        <tr>
+          <td class="tg-g041 p1">ZZZ</td>
+          <td class="tg-tz9d p2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-8.91</span></td>
+          <td class="tg-izz2 p3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">7.5</span></td>
+          <td class="tg-2siu p4"><span style="font-weight:700;font-style:normal;text-decoration:none">AAA</span></td>
+          <td class="tg-izz2 p5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">ph204</span></td>
+          <td class="tg-tz9d p6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-2.28</span></td>
+          <td class="tg-izz2 p7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">9.3</span></td>
+          <td class="tg-tz9d p8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">4.67</span></td>
+          <td class="tg-izz2 p9"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">0.96</span></td>
+        </tr>
+        <tr>
+          <td class="tg-g041 p1">YYY</td>
+          <td class="tg-tz9d p2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">8.2</span></td>
+          <td class="tg-izz2 p3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">2.6</span></td>
+          <td class="tg-2siu p4"><span style="font-weight:700;font-style:normal;text-decoration:none">BBB</span></td>
+          <td class="tg-izz2 p5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">ph284</span></td>
+          <td class="tg-tz9d p6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">2.45</span></td>
+          <td class="tg-izz2 p7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">6.86</span></td>
+          <td class="tg-tz9d p8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">2.67</span></td>
+          <td class="tg-izz2 p9"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">1.12</span></td>
+        </tr>
+        <tr>
+          <td class="tg-g041 p1">YYY</td>
+          <td class="tg-tz9d p2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">8.2</span></td>
+          <td class="tg-izz2 p3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">2.6</span></td>
+          <td class="tg-2siu p4"><span style="font-weight:700;font-style:normal;text-decoration:none">BBB</span></td>
+          <td class="tg-izz2 p5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">ph23</span></td>
+          <td class="tg-tz9d p6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">3</span></td>
+          <td class="tg-izz2 p7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">6.86</span></td>
+          <td class="tg-tz9d p8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">2.67</span></td>
+          <td class="tg-izz2 p9"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">1.12</span></td>
+        </tr>
+        <tr>
+          <td class="tg-g041 p1">XXX</td>
+          <td class="tg-tz9d p2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-0.84</span></td>
+          <td class="tg-izz2 p3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">5</span></td>
+          <td class="tg-2siu p4"><span style="font-weight:700;font-style:normal;text-decoration:none">CCC</span></td>
+          <td class="tg-izz2 p5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">ph583</span></td>
+          <td class="tg-tz9d p6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-1.73</span></td>
+          <td class="tg-izz2 p7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">8.67</span></td>
+          <td class="tg-tz9d p8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">7</span></td>
+          <td class="tg-izz2 p9"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">3.65</span></td>
+        </tr>
+        <tr>
+          <td class="tg-g041 p1">XXX</td>
+          <td class="tg-tz9d p2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-0.84</span></td>
+          <td class="tg-izz2 p3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">5</span></td>
+          <td class="tg-2siu p4"><span style="font-weight:700;font-style:normal;text-decoration:none">CCC</span></td>
+          <td class="tg-izz2 p5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">ph208</span></td>
+          <td class="tg-tz9d p6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">1.31</span></td>
+          <td class="tg-izz2 p7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">8.67</span></td>
+          <td class="tg-tz9d p8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">7</span></td>
+          <td class="tg-izz2 p9"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">3.65</span></td>
+        </tr>
+        <tr>
+          <td class="tg-g041 p1">XXX</td>
+          <td class="tg-tz9d p2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-0.84</span></td>
+          <td class="tg-izz2 p3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">5</span></td>
+          <td class="tg-2siu p4"><span style="font-weight:700;font-style:normal;text-decoration:none">CCC</span></td>
+          <td class="tg-izz2 p5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">ph209</span></td>
+          <td class="tg-tz9d p6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">0.68</span></td>
+          <td class="tg-izz2 p7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">8.67</span></td>
+          <td class="tg-tz9d p8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">7</span></td>
+          <td class="tg-izz2 p9"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">3.65</span></td>
+        </tr>
+        <tr>
+          <td class="tg-g041 p1">XXX</td>
+          <td class="tg-tz9d p2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-0.84</span></td>
+          <td class="tg-izz2 p3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">5</span></td>
+          <td class="tg-2siu p4"><span style="font-weight:700;font-style:normal;text-decoration:none">CCC</span></td>
+          <td class="tg-izz2 p5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">ph210</span></td>
+          <td class="tg-tz9d p6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-0.72</span></td>
+          <td class="tg-izz2 p7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">8.67</span></td>
+          <td class="tg-tz9d p8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">7</span></td>
+          <td class="tg-izz2 p9"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">3.65</span></td>
+        </tr>
+      </tbody>
+      </table>
+
+      <table class="tg" id="npt_table" style="display:none">
+        <thead>
+          <tr>
+            <th class="tg-e9v8 np1"><img src="img/svg/SourceID.svg" alt="Image" width="75" height="56"><br><br><span style="font-weight:bold">SourceID</span></th>
+            <th class="tg-e9v8 np2"><img src="img/svg/SourceNodeColor.svg" alt="Image" width="75" height="56"><br><br><span style="font-weight:bold;font-style:normal;text-decoration:none">SourceNodeColor</span></th>
+            <th class="tg-ygzf np3"><img src="img/svg/NodeSize.svg" alt="Image" width="75" height="56"><br><br><span style="font-weight:bold;font-style:normal;text-decoration:none">SourceNodeSize</span></th>
+            <th class="tg-ygzf np4"><img src="img/svg/TargetID.svg" alt="Image" width="75" height="56"><br><br>TargetID</th>
+            <th class="tg-ygzf np5"><img src="img/svg/TargetNodeColor.svg" alt="Image" width="75" height="56"><br><br>TargetNodeColor</th>
+            <th class="tg-ygzf np6"><img src="img/svg/NodeSize.svg" alt="Image" width="75" height="56"><br><br><span style="font-weight:bold;font-style:normal;text-decoration:none">TargetNodeSize</span></th>
+            <th class="tg-ygzf np7"><img src="img/svg/EdgeColor.svg" alt="Image" width="75" height="56"><br><br><span style="font-weight:bold;font-style:normal;text-decoration:none">EdgeColor</span></th>
+            <th class="tg-ygzf np8"><img src="img/svg/EdgeWeight.svg" alt="Image" width="75" height="56"><br><br><span style="font-weight:bold;font-style:normal;text-decoration:none">EdgeWeight</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="tg-z3s7 np1"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">ZZZ</span></td>
+            <td class="tg-tz9d np2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">9,13</span></td>
+            <td class="tg-izz2 np3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">7,5</span></td>
+            <td class="tg-2siu np4"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">AAA</span></td>
+            <td class="tg-izz2 np5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">6,88</span></td>
+            <td class="tg-tz9d np6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">9,3</span></td>
+            <td class="tg-izz2 np7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">4,67</span></td>
+            <td class="tg-tz9d np8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">0,96</span></td>
+          </tr>
+          <tr>
+            <td class="tg-z3s7 np1"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">YYY</span></td>
+            <td class="tg-tz9d np2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-5,72</span></td>
+            <td class="tg-izz2 np3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">6,98</span></td>
+            <td class="tg-2siu np4"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">BBB</span></td>
+            <td class="tg-izz2 np5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-8,13</span></td>
+            <td class="tg-tz9d np6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">6,86</span></td>
+            <td class="tg-izz2 np7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">3,23</span></td>
+            <td class="tg-tz9d np8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">2,4</span></td>
+          </tr>
+          <tr>
+            <td class="tg-z3s7 np1"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">XXX</span></td>
+            <td class="tg-tz9d np2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">0,82</span></td>
+            <td class="tg-izz2 np3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">1,75</span></td>
+            <td class="tg-2siu np4"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">CCC</span></td>
+            <td class="tg-izz2 np5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-0,81</span></td>
+            <td class="tg-tz9d np6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">9,89</span></td>
+            <td class="tg-izz2 np7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">1,73</span></td>
+            <td class="tg-tz9d np8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">3,23</span></td>
+          </tr>
+          <tr>
+            <td class="tg-z3s7 np1"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">WWW</span></td>
+            <td class="tg-tz9d np2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">3,03</span></td>
+            <td class="tg-izz2 np3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">2,6</span></td>
+            <td class="tg-2siu np4"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">DDD</span></td>
+            <td class="tg-izz2 np5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">6,01</span></td>
+            <td class="tg-tz9d np6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">6,86</span></td>
+            <td class="tg-izz2 np7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">2,1</span></td>
+            <td class="tg-tz9d np8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">1,12</span></td>
+          </tr>
+          <tr>
+            <td class="tg-z3s7 np1"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">VVV</span></td>
+            <td class="tg-tz9d np2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">0,33</span></td>
+            <td class="tg-izz2 np3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">3,1</span></td>
+            <td class="tg-2siu np4"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">EEE</span></td>
+            <td class="tg-izz2 np5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">4,44</span></td>
+            <td class="tg-tz9d np6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">3,18</span></td>
+            <td class="tg-izz2 np7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">1,345</span></td>
+            <td class="tg-tz9d np8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">5,32</span></td>
+          </tr>
+          <tr>
+            <td class="tg-z3s7 np1"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">UUU</span></td>
+            <td class="tg-tz9d np2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">2,53</span></td>
+            <td class="tg-izz2 np3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">5</span></td>
+            <td class="tg-2siu np4"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">FFF</span></td>
+            <td class="tg-izz2 np5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-3,39</span></td>
+            <td class="tg-tz9d np6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">2,71</span></td>
+            <td class="tg-izz2 np7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">3,23</span></td>
+            <td class="tg-tz9d np8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">3,65</span></td>
+          </tr>
+          <tr>
+            <td class="tg-z3s7 np1"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">TTT</span></td>
+            <td class="tg-tz9d np2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-9,02</span></td>
+            <td class="tg-izz2 np3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">5,82</span></td>
+            <td class="tg-2siu np4"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">GGG</span></td>
+            <td class="tg-izz2 np5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-6,88</span></td>
+            <td class="tg-tz9d np6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">8,67</span></td>
+            <td class="tg-izz2 np7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">2,3</span></td>
+            <td class="tg-tz9d np8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">4,32</span></td>
+          </tr>
+          <tr>
+            <td class="tg-z3s7 np1"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">SSS</span></td>
+            <td class="tg-tz9d np2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">-2,69</span></td>
+            <td class="tg-izz2 np3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">6,33</span></td>
+            <td class="tg-2siu np4"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">HHH</span></td>
+            <td class="tg-izz2 np5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">2,01</span></td>
+            <td class="tg-tz9d np6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">4,69</span></td>
+            <td class="tg-izz2 np7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">4,1</span></td>
+            <td class="tg-tz9d np8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">7,43</span></td>
+          </tr>
+          <tr>
+            <td class="tg-z3s7 np1"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">RRR</span></td>
+            <td class="tg-tz9d np2"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">7,26</span></td>
+            <td class="tg-izz2 np3"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">9,46</span></td>
+            <td class="tg-2siu np4"><span style="font-weight:700;font-style:normal;text-decoration:none;color:gray">III</span></td>
+            <td class="tg-izz2 np5"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">0,52</span></td>
+            <td class="tg-tz9d np6"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">9,13</span></td>
+            <td class="tg-izz2 np7"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">4,52</span></td>
+            <td class="tg-tz9d np8"><span style="font-weight:400;font-style:normal;text-decoration:none;color:gray">3,21</span></td>
+          </tr>
+        </tbody>
+        </table>
+
+    <div id="toolbox">
+      <input type="file" id="hidden-file-upload" autocomplete="off" multiple>
+    </div>
+
+
+    <button id="uploadButton" onclick="data_upload_check()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="168" height="61" viewBox="0 0 168 61">
+      <g id="Rectangle_1546" data-name="Rectangle 1546" transform="translate(12)" fill="#fff" stroke="#707070" stroke-width="1">
+        <rect width="145" height="61" stroke="none"/>
+        <rect x="0.5" y="0.5" width="144" height="60" fill="none"/>
+      </g>
+      <text id="UPLOAD" transform="translate(0 21)" fill="#5e6365" font-size="25" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="31.223" y="19">UPLOAD</tspan></text>
+    </svg>
+    </button>
+    
+  
+    <script>
+      function readFileAsText(file){
+      return new Promise(function(resolve,reject){
+          let fr = new FileReader();
+      
+          fr.onload = function(){
+              resolve(fr.result);
+          };
+      
+          fr.onerror = function(){
+              reject(fr);
+          };
+      
+          fr.readAsText(file);
+      });
+      }
+      
+      d3.select("#hidden-file-upload").on("change", function(){
+      sessionStorage.setItem("vis_perm",false)
+      localStorage.clear(); 
+      if (window.File && window.FileReader && window.FileList && window.Blob) {
+        let files = this.files;
+        let readers = [];
+        let file_names = [];
+        let all_files = [];
+        // Abort if there were no files selected
+        if(!files.length) return;
+        //if(sessionStorage.getItem("states")=='true' && files.length.toString() != sessionStorage.getItem("state_number")) return;
+        if(sessionStorage.getItem("states")=='false' && files.length.toString()!="1"){alert("Please select a single file since there are no states!"); this.value=null; return;}
+        if(sessionStorage.getItem("states")=='true' && files.length.toString()!=sessionStorage.getItem('state_num')){alert("Please select "+sessionStorage.getItem("state_num")+" file for states!"); this.value=null; return;}
+        // Store promises in array
+        for(let i = 0;i < files.length;i++){
+            readers.push(readFileAsText(files[i]));
+            localStorage.setItem(files.item(i).name,('dataFrame'+i.toString()))
+            file_names.push(files.item(i).name);
+            //alert(files.item(i).name)
+        }
+        localStorage.setItem('file_names',JSON.stringify(file_names))
+
+        // Trigger Promises
+        Promise.all(readers).then((values) => {
+            // Values will be an array that contains an item
+            // with the text of every selected file
+            // ["File1 Content", "File2 Content" ... "FileN Content"]
+            for (var i = 0; i < values.length; i++) {
+              var parser = d3.csv(',')
+            try{
+            var jsonObj = d3.csv.parse(values[i]);
+            window.localStorage.setItem(('dataFrame'+i.toString()), JSON.stringify(jsonObj));
+            all_files.push(jsonObj)
+            }
+            catch(err){
+            window.alert("Error parsing uploaded file\nerror message: " + err.message);
+            return;
+            }
+            
+            }
+            window.localStorage.setItem('all_files',JSON.stringify(all_files))
+            sessionStorage.setItem("vis_perm",true)
+            //console.log(JSON.parse(localStorage.getItem('all_files')))
+        });
+      
+      }
+      
+      else {
+        alert("Your browser won't let you save this graph -- try upgrading your browser to IE 10+ or Chrome or Firefox.");
+      }
+      
+      });
+      
+          </script>
+
+</body>

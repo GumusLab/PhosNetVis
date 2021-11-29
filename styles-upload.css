@@ -1,0 +1,201 @@
+
+/* TO DECIDE FONT FAMILY ON THE BODY*/
+body {
+     font-family:sans-serif;
+ }
+ 
+ /* Header/logo Title */
+.header {
+    padding: 10px;
+    margin: 0%;
+    text-align: center;
+    background: #575757;
+    color: rgb(255, 255, 255);
+  }
+  
+  /* Increase the font size of the heading */
+  .header h1 {
+    font-size: 40px;
+  }
+  
+  
+  /*CHECKBOXES THAT LOOK LIKE BUTTONS*/
+
+ .ck-button {
+     margin:4px;
+     background-color:#EFEFEF;
+     border-radius:4px;
+     border:1px solid #D0D0D0;
+     overflow:auto;
+     float:left;
+ }
+ 
+ .ck-button label {
+     float:left;
+     width:4.0em;
+ }
+ 
+ .ck-button label span {
+     text-align:center;
+     padding:3px 0px;
+     display:block;
+ }
+ 
+ .ck-button label input {
+     position:absolute;
+     top:-20px;
+ }
+ 
+ .ck-button input:checked + span {
+     background-color:rgba(29, 29, 29, 0.479);
+     color:#fff;
+ }
+ .ck-button:hover {
+    background:rgba(207, 207, 207, 0.603);
+}
+
+.ck-button input:disabled+span{
+  pointer-events: none;
+  background-color:rgba(207, 207, 207);
+}
+
+
+/*RADIO BUTTONS THAT LOOKS LIKE BUTTONS*/
+.radio {
+    cursor: pointer;
+  }
+.radio input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+.radio span {
+    padding: 7px 14px;
+    border: 2px solid #EEE;
+    display: inline-block;
+    color: #444444;
+    border-radius: 3px;
+  }
+ .radio input:checked + span {
+    border-color: #1d1d1d96;
+    background-color:rgba(29, 29, 29, 0.13);
+  }
+
+  /* FOR BUTTONS*/
+
+  .button {
+    background-color: white;
+    color: black;
+    border: 2px solid #e7e7e7;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+ /*   cursor: pointer;*/
+  }
+  .button:hover {background-color: #cccccc;}
+
+  .button.disabled{
+    pointer-events: none;
+  }
+  
+  .button:disabled,
+  .button[disabled]{
+    border: 1px solid #303030;
+    background-color: #ffffff;
+    color: #b8b8b8ec;
+  }
+
+
+  /* FOR THE HTML DYNAMIC TABLES */
+  .tg  {border-collapse:collapse;border-color:#ccc;border-spacing:0;margin-left: auto;margin-right: auto;}
+  .tg td{background-color:#fff;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
+    font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+  .tg th{background-color:#f0f0f0;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
+    font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+  .tg .tg-izz2{color:#808080;font-size:100%;text-align:center;vertical-align:bottom}
+  .tg .tg-2siu{background-color:#f9f9f9;color:#808080;font-size:15px;font-weight:bold;text-align:center;vertical-align:bottom}
+  .tg .tg-ygzf{font-size:15px;font-weight:bold;text-align:center;vertical-align:top}
+  .tg .tg-e9v8{font-size:15px;text-align:center;vertical-align:top}
+  .tg .tg-g041{color:#808080;font-size:15px;font-weight:bold;text-align:center;vertical-align:top}
+  .tg .tg-z3s7{color:#808080;font-size:15px;font-weight:bold;text-align:center;vertical-align:bottom}
+  .tg .tg-tz9d{background-color:#f9f9f9;color:#808080;font-size:100%;text-align:center;vertical-align:bottom}
+
+  
+
+  
+  /* DOWN COPIED FROM THE PHOSPROVIZ CSS FILES*/
+
+
+#info {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	text-align: center;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	z-index: 1; /* TODO Solve this in HTML */
+}
+
+a, button, input, select {
+	pointer-events: auto;
+}
+
+.dg.ac {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	z-index: 2 !important; /* TODO Solve this in HTML */
+}
+
+#overlay {
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height:100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 1;
+	background-color: #000000;
+	color: #ffffff;
+}
+
+#overlay > div {
+	text-align: center;
+}
+
+#overlay > div > button {
+	height: 20px;
+	background: transparent;
+	color: #ffffff;
+	outline: 1px solid #ffffff;
+	border: 0px;
+	cursor: pointer;
+}
+
+#overlay > div > p {
+	color: #777777;
+	font-size: 12px;
+}
+
+#box {
+      
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+  position: relative;
+}

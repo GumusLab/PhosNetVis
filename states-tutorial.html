@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="styles-upload.css">
+<title>PhosProViz</title>
+<style type="text/css">
+
+  #text, #drawing, #button_center{
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    position: relative;
+  }
+
+  text {
+    font-family: Helvetica, sans-serif;
+  }
+
+  #text{
+  margin-top: 100px;
+  width: 30%;
+  height: 30%;
+  }
+
+  #drawing{
+  margin-top: 30px;
+  }
+
+  #button_center{
+  margin-top: 10px;
+  width: 30%;
+  height: 30%;
+  }
+
+  #logo{
+      /* position: absolute; */
+  margin-top: 25px;
+  margin-left: -10px;
+  width: 15%;
+  height: 15%;
+  }
+
+  .tableCenter {
+    margin-left: -10px;
+    margin-right: auto;
+    margin-top: 25px;
+}
+
+</style>
+
+
+</head>
+ 
+<body onload="session_validate()">
+<script src="js/session_validate-tutorial.js"></script>
+<script src="js/states-tutorial.js"></script>
+
+<!-- LOGO -->
+<table class="tableCenter">
+  <tr>
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <rect id="Rectangle_1488" data-name="Rectangle 1488" width="290" height="55"/>
+          <text id="PhosProViz" transform="translate(100 37)" fill="#fff" font-size="25" font-family="CenturyGothicPro-Bold, Century Gothic Pro, Helvetica" font-weight="700" letter-spacing="0.1em"><tspan x="-60.495" y="-3">PhosProViz</tspan></text>
+        </svg>
+      </div>
+    </td>
+    
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2251" data-name="Path 2251" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <text id="Source_-_Target" data-name="Source - Target" transform="translate(100 32)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-72.59" y="0">Source - Target</tspan></text>
+        </svg>
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2261" data-name="Path 2261" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4014" data-name="Group 4014" transform="translate(-432 -156)">
+            <text id="Source_Attributes" data-name="Source Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-82.15" y="0">Source Attributes</tspan></text>
+          </g>
+        </svg>
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2262" data-name="Path 2262" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4015" data-name="Group 4015" transform="translate(-432 -156)">
+            <text id="Source_Attributes" data-name="Target Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-82.15" y="0">Target Attributes</tspan></text>
+          </g>
+        </svg>          
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2263" data-name="Path 2263" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4016" data-name="Group 4016" transform="translate(-432 -156)">
+            <text id="Edge_Attributes" data-name="Edge Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-74.07" y="0">Edge Attributes</tspan></text>
+          </g>
+        </svg>                 
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2264" data-name="Path 2264" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#000000"/>
+          <g id="Group_4017" data-name="Group 4017" transform="translate(-432 -156)">
+            <text id="Number_of_States" data-name="Number of States" transform="translate(532 188)" fill="#fff" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-83.39" y="0">Number of States</tspan></text>
+          </g>
+        </svg>                        
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2265" data-name="Path 2265" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4018" data-name="Group 4018" transform="translate(-432 -156)">
+            <text id="Prepare_you_Data" data-name="Prepare you Data" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-84.84" y="0">Prepare you Data</tspan></text>
+          </g>
+        </svg>                               
+      </div>
+    </td>
+  </tr>
+</table>
+<!--  -->
+
+<svg id="text" xmlns="http://www.w3.org/2000/svg" width="536" height="205" viewBox="0 0 536 205">
+  <text id="_5_States" data-name="5
+States" fill="#5e6365" font-size="50" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="254" y="37">5</tspan><tspan font-family="CenturyGothicPro, Century Gothic Pro" font-weight="400"><tspan x="195.575" y="107">States</tspan></tspan></text>
+  <text id="Does_your_data_have_different_states_e.g_timepoints_treatments_you_want_to_compare_visually_" data-name="Does your data have different states (e.g timepoints, treatments…) you want to compare visually?" transform="translate(0 159)" fill="#5e6365" font-size="15" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="0" y="11">Does your data have different states (e.g timepoints, treatments…) you </tspan><tspan x="0" y="32">want to compare visually?</tspan></text>
+</svg>
+
+<div id="button_center">
+<label class="radio">
+    <input type="radio" name="states_radio" value="YES" id ="states_yes"  autocomplete="off" onclick="states()" >
+    <span>YES</span>
+  </label>
+  <label class="radio">
+    <input type="radio" name="states_radio" value="NO" id="states_no" autocomplete="off" onclick="states()">
+    <span>NO</span>
+  </label>
+  <svg xmlns="http://www.w3.org/2000/svg" width="189" height="40" viewBox="0 0 189 40">
+    <rect id="Rectangle_1553" data-name="Rectangle 1553" width="177" height="38" transform="translate(12)"/>
+    <path id="Polygon_7" data-name="Polygon 7" d="M19,0,38,12H0Z" transform="translate(0 38) rotate(-90)"/>
+    <text id="No_this_toy_data_does_not_have_different_states" data-name="No, this toy data does not have different states" transform="translate(17 3)" fill="#fff" font-size="13" font-family="HelveticaNeue, Helvetica Neue"><tspan x="13.499" y="12">No, this toy data does not </tspan><tspan x="46.454" y="27">have different states</tspan></text>
+  </svg>
+  
+</div>
+  
+  <h1></h1>
+  <h1></h1>
+
+  <p style="display:none;" id="text1"> 
+    <svg id="text" xmlns="http://www.w3.org/2000/svg" width="536" height="40" viewBox="0 0 536 40">
+      <text id="Great_Please_upload_each_state_in_a_separate_.csv_file_in_the_next_screen" data-name="Great! Please upload each state in a separate .csv file in the next screen" transform="translate(0 1)" fill="#5e6365" font-size="15" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="0" y="11">Great! Please upload each state in a separate .csv file in the next screen</tspan></text>
+    </svg>
+  </p>
+  <h1></h1>
+  <h1></h1>
+  <p style="display:none;" id="text2"> 
+    <svg id="text" xmlns="http://www.w3.org/2000/svg" width="536" height="23" viewBox="0 0 536 23">
+      <text id="How_many_different_states_do_you_have_" data-name="How many different states do you have?" transform="translate(0 1)" fill="#5e6365" font-size="15" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="0" y="11">How many different states do you have?</tspan></text>
+    </svg> 
+  </p>
+  <h1></h1>
+  <div id="button_center">
+    <input type="number" id="state_number" value="2" min="2" style="display:none;" onclick="state_num()" autocomplete="off">
+  </div>
+  <h1></h1>
+  <h1></h1>
+  <div id="button_center">
+    <button class="button" id = "next_state" onclick="next_states()" style="display:none;">NEXT</button>
+  </div>

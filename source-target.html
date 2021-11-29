@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="styles-upload.css">
+<title>PhosProViz</title>
+<style type="text/css">
+
+  #text, #drawing, #button_center{
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    position: relative;
+  }
+
+  #text{
+  margin-top: 4%;
+  width: 30%;
+  height: 30%;
+  }
+
+  #drawing{
+  margin-top: 10px;
+  }
+
+  #button_center{
+  margin-top: 10px;
+  width: 30%;
+  height: 30%;
+  }
+
+  #logo{
+      /* position: absolute; */
+  margin-top: 25px;
+  margin-left: -10px;
+  width: 15%;
+  height: 15%;
+  }
+
+  text {
+    font-family: Helvetica, sans-serif;
+  }
+
+  .tableCenter {
+    margin-left: -10px;
+    margin-right: auto;
+    margin-top: 1% ;
+}
+
+</style>
+
+</head>
+ 
+<body onload="session_validate()">
+<script src="js/session_validate.js"></script> 
+<script src="js/source_target.js"></script>
+
+<!-- LOGO -->
+
+<table class="tableCenter">
+  <tr>
+  
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <rect id="Rectangle_1488" data-name="Rectangle 1488" width="290" height="55"/>
+          <text id="PhosProViz" transform="translate(100 37)" fill="#fff" font-size="25" font-family="CenturyGothicPro-Bold, Century Gothic Pro, Helvetica" font-weight="700" letter-spacing="0.1em"><tspan x="-60.495" y="-3">PhosProViz</tspan></text>
+        </svg>
+      </div>
+    </td>
+    
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2251" data-name="Path 2251" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#000000"/>
+          <text id="Source_-_Target" data-name="Source - Target" transform="translate(100 32)" fill="#fff" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-72.59" y="0">Source - Target</tspan></text>
+        </svg>
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2261" data-name="Path 2261" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4014" data-name="Group 4014" transform="translate(-432 -156)">
+            <text id="Source_Attributes" data-name="Source Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-82.15" y="0">Source Attributes</tspan></text>
+          </g>
+        </svg>
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2262" data-name="Path 2262" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4015" data-name="Group 4015" transform="translate(-432 -156)">
+            <text id="Source_Attributes" data-name="Target Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-82.15" y="0">Target Attributes</tspan></text>
+          </g>
+        </svg>          
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2263" data-name="Path 2263" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4016" data-name="Group 4016" transform="translate(-432 -156)">
+            <text id="Edge_Attributes" data-name="Edge Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-74.07" y="0">Edge Attributes</tspan></text>
+          </g>
+        </svg>                 
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2264" data-name="Path 2264" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4017" data-name="Group 4017" transform="translate(-432 -156)">
+            <text id="Number_of_States" data-name="Number of States" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-83.39" y="0">Number of States</tspan></text>
+          </g>
+        </svg>                        
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2265" data-name="Path 2265" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4018" data-name="Group 4018" transform="translate(-432 -156)">
+            <text id="Prepare_you_Data" data-name="Prepare you Data" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-84.84" y="0">Prepare you Data</tspan></text>
+          </g>
+        </svg>                               
+      </div>
+    </td>
+  </tr>
+</table>
+<!--  -->
+
+<svg id="text" xmlns="http://www.w3.org/2000/svg" width="536" height="302" viewBox="0 0 536 302">
+  <text id="_1_Source_-_Target" data-name="1
+Source - Target" fill="#5e6365" font-size="50" font-family="CenturyGothicPro, Century Gothic Pro" font-weight="700"><tspan x="254" y="37">1</tspan><tspan font-family="CenturyGothicPro, Century Gothic Pro" font-weight="400"><tspan x="86.525" y="107">Source - Target</tspan></tspan></text>
+  <text id="To_visualize_network_data_you_will_need_to_have_at_the_very_minimum_a_column_containing_source_nodes_and_a_column_containing_target_nodes_e.g._kinase_substrate_For_example_a_kinase_would_be_a_source_node_and_a_substrate_would_be_a_target_node_in_a" data-name="To visualize network data, you will need to have, at the very minimum, a column containing source nodes and a column containing target nodes (e.g. kinase, substrate) 
+
+For example, a kinase would be a source node and a substrate would be a target node in a" transform="translate(0 157)" fill="#5e6365" font-size="15" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="0" y="11">To visualize network data, you will need to have, at the very minimum, a </tspan><tspan x="0" y="32">column containing source nodes and a column containing target nodes </tspan><tspan x="0" y="53">(e.g. kinase, substrate) </tspan><tspan x="0" y="74"></tspan><tspan x="0" y="95">For example, a kinase would be a source node and a substrate would be </tspan><tspan x="0" y="116">a target node in a phosphorylation event.</tspan></text>
+</svg>
+
+
+<svg id="drawing" xmlns="http://www.w3.org/2000/svg" width="415" height="114" viewBox="0 0 415 114">
+  <g id="Ellipse_660" data-name="Ellipse 660" transform="translate(4)" fill="#fff" stroke="#707070" stroke-width="1">
+    <circle cx="35" cy="35" r="35" stroke="none"/>
+    <circle cx="35" cy="35" r="34.5" fill="none"/>
+  </g>
+  <g id="Ellipse_661" data-name="Ellipse 661" transform="translate(341)" fill="#fff" stroke="#707070" stroke-width="1">
+    <circle cx="35" cy="35" r="35" stroke="none"/>
+    <circle cx="35" cy="35" r="34.5" fill="none"/>
+  </g>
+  <line id="Line_139" data-name="Line 139" x2="267" transform="translate(74.5 35.5)" fill="none" stroke="#707070" stroke-width="1"/>
+  <text id="Source" transform="translate(0 95)" fill="#5e6365" font-size="15" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="13.86" y="11">Source</tspan></text>
+  <text id="Target" transform="translate(337 94)" fill="#5e6365" font-size="15" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="16.343" y="11">Target</tspan></text>
+</svg>
+
+
+<svg id="text" xmlns="http://www.w3.org/2000/svg" width="536" height="21" viewBox="0 0 536 21">
+  <text id="Are_the_edges_in_your_network_directed_" data-name="Are the edges in your network directed?" transform="translate(0 1)" fill="#5e6365" font-size="15" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="0" y="11">Are the edges in your network directed?</tspan></text>
+</svg>
+
+
+<div id="button_center"> 
+  <label class="radio">
+    <input type="radio" name="directed_radio" value="YES" id ="directed_yes"  autocomplete="off" onclick="directed_graph()">
+    <span>YES</span>
+  </label>
+
+  <label class="radio">
+    <input type="radio" name="directed_radio" value="NO" id="directed_no" autocomplete="off" onclick="directed_graph()">
+    <span>NO</span>
+  </label>
+</div>
+
+<h1></h1>
+<h1></h1>
+
+<div id="button_center">
+  <button class="button" id = "next_button_directed" style="display:none;" onclick="next_directed()">NEXT</button>
+</div>
+
+
+</body>
+</html>
+ 

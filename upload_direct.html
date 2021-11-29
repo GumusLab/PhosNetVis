@@ -1,0 +1,241 @@
+<head>
+
+    <link rel="stylesheet" href="styles-upload.css" type="text/css">
+    <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@0.1.2/dist/index.min.js"></script>
+    <a href="general.html"></a>
+
+<title>PhosProViz</title>
+<style type="text/css">
+ 
+   #hidden-file-upload, #submit-button, #uploadButton {
+      margin-left:auto;
+      margin-right:auto;
+      display:block;
+      position: relative;
+  } 
+
+  text {
+    font-family: Helvetica, sans-serif;
+  }
+
+  #uploadButton {
+    margin-top: 10px;
+      border: none; 
+      background: none; 
+      cursor: pointer;
+  }
+  
+  #textBody{
+    margin-top: 100px;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    position: relative;
+  }
+  
+
+  #logo{
+      /* position: absolute; */
+  margin-top: -13px;
+  margin-left: -10px;
+  width: 15%;
+  height: 15%;
+  }
+
+  .tableCenter {
+    margin-left: -10px;
+    margin-right: auto;
+    margin-top: 25px;
+}
+
+
+</style>
+
+</head>
+
+<!-- LOGO -->
+<table class="tableCenter">
+  <tr>
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <rect id="Rectangle_1488" data-name="Rectangle 1488" width="290" height="55"/>
+          <text id="PhosProViz" transform="translate(100 37)" fill="#fff" font-size="25" font-family="CenturyGothicPro-Bold, Century Gothic Pro, Helvetica" font-weight="700" letter-spacing="0.1em"><tspan x="-60.495" y="-3">PhosProViz</tspan></text>
+        </svg>
+      </div>
+    </td>
+    
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2251" data-name="Path 2251" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <text id="Source_-_Target" data-name="Source - Target" transform="translate(100 32)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-72.59" y="0">Source - Target</tspan></text>
+        </svg>
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2261" data-name="Path 2261" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4014" data-name="Group 4014" transform="translate(-432 -156)">
+            <text id="Source_Attributes" data-name="Source Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-82.15" y="0">Source Attributes</tspan></text>
+          </g>
+        </svg>
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2262" data-name="Path 2262" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4015" data-name="Group 4015" transform="translate(-432 -156)">
+            <text id="Source_Attributes" data-name="Target Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-82.15" y="0">Target Attributes</tspan></text>
+          </g>
+        </svg>          
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2263" data-name="Path 2263" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4016" data-name="Group 4016" transform="translate(-432 -156)">
+            <text id="Edge_Attributes" data-name="Edge Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-74.07" y="0">Edge Attributes</tspan></text>
+          </g>
+        </svg>                 
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2264" data-name="Path 2264" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4017" data-name="Group 4017" transform="translate(-432 -156)">
+            <text id="Number_of_States" data-name="Number of States" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-83.39" y="0">Number of States</tspan></text>
+          </g>
+        </svg>                        
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2265" data-name="Path 2265" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#000000"/>
+          <g id="Group_4018" data-name="Group 4018" transform="translate(-432 -156)">
+            <text id="Prepare_you_Data" data-name="Prepare you Data" transform="translate(532 188)" fill="#fff" font-size="20" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-84.84" y="0">Prepare you Data</tspan></text>
+          </g>
+        </svg>                               
+      </div>
+    </td>
+  </tr>
+</table>
+<!--  -->
+
+
+
+
+<body onload="direct_initiate();session_validate()">
+  <script src="js/session_validate.js"></script> 
+    <script src="js/upload.js"></script>
+    <script src="js/states.js"></script>
+ 
+    <div id="button_center", style="margin-left:40%;">
+        <input type="number" id="state_number" value="1" min="1" onchange="state_num()" autocomplete="off">
+    </div>
+
+
+    <div id="toolbox", style="margin-top:40px">
+      <input type="file" id="hidden-file-upload" autocomplete="off" multiple>
+    </div>
+
+    
+   
+
+    <button id="uploadButton" onclick="data_upload_check()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="168" height="61" viewBox="0 0 168 61">
+      <g id="Rectangle_1546" data-name="Rectangle 1546" transform="translate(12)" fill="#fff" stroke="#707070" stroke-width="1">
+        <rect width="145" height="61" stroke="none"/>
+        <rect x="0.5" y="0.5" width="144" height="60" fill="none"/>
+      </g>
+      <text id="UPLOAD" transform="translate(0 21)" fill="#5e6365" font-size="25" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="31.223" y="19">UPLOAD</tspan></text>
+    </svg>
+    </button>
+    
+  
+    <script>
+      function readFileAsText(file){
+      return new Promise(function(resolve,reject){
+          let fr = new FileReader();
+      
+          fr.onload = function(){
+              resolve(fr.result);
+          };
+      
+          fr.onerror = function(){
+              reject(fr);
+          };
+      
+          fr.readAsText(file);
+      });
+      }
+      
+      d3.select("#hidden-file-upload").on("change", function(){
+      sessionStorage.setItem("vis_perm",false)
+      localStorage.clear(); 
+
+      if (window.File && window.FileReader && window.FileList && window.Blob) {
+        let files = this.files;
+        let readers = [];
+        let file_names = [];
+        let all_files = [];
+        // Abort if there were no files selected
+        if(!files.length) return;
+        //if(sessionStorage.getItem("states")=='true' && files.length.toString() != sessionStorage.getItem("state_number")) return;
+        if(files.length.toString()!=sessionStorage.getItem('state_num') && sessionStorage.getItem('state_num')=="1"){alert("Please select a single file since there are no states!"); this.value=null; return;}
+        if(files.length.toString()!=sessionStorage.getItem('state_num')){alert("Please select "+sessionStorage.getItem("state_num")+" file for states!"); this.value=null; return;}
+        // Store promises in array
+        for(let i = 0;i < files.length;i++){
+            readers.push(readFileAsText(files[i]));
+            localStorage.setItem(files.item(i).name,('dataFrame'+i.toString()))
+            file_names.push(files.item(i).name);
+            //alert(files.item(i).name)
+        }
+        localStorage.setItem('file_names',JSON.stringify(file_names))
+
+        // Trigger Promises
+        Promise.all(readers).then((values) => {
+            // Values will be an array that contains an item
+            // with the text of every selected file
+            // ["File1 Content", "File2 Content" ... "FileN Content"]
+            for (var i = 0; i < values.length; i++) {
+              var parser = d3.csv(',')
+            try{
+            var jsonObj = d3.csv.parse(values[i]);
+            window.localStorage.setItem(('dataFrame'+i.toString()), JSON.stringify(jsonObj));
+            all_files.push(jsonObj)
+            }
+            catch(err){
+            window.alert("Error parsing uploaded file\nerror message: " + err.message);
+            return;
+            }
+            
+            }
+            window.localStorage.setItem('all_files',JSON.stringify(all_files))
+            sessionStorage.setItem("vis_perm",true)
+            sessionStorage.setItem("state_num",1)
+            //console.log(JSON.parse(localStorage.getItem('all_files')))
+        });
+      
+      }
+      
+      else {
+        alert("Your browser won't let you save this graph -- try upgrading your browser to IE 10+ or Chrome or Firefox.");
+      }
+      
+      });
+      
+          </script>
+
+</body>

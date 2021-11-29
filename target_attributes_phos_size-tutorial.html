@@ -1,0 +1,227 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="styles-upload.css">
+<title>PhosProViz</title>
+<style type="text/css">
+
+  #text, #drawing, #button_center{
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    position: relative;
+  }
+
+  #flag {
+    margin-left: 35%;
+  }
+
+  #text{
+  margin-top: 100px;
+  width: 30%;
+  height: 30%;
+  }
+
+  #drawing{
+  margin-top: 30px;
+  }
+
+  #button_center{
+  margin-top: 10px;
+  width: 30%;
+  height: 30%;
+  }
+
+  #logo{
+      /* position: absolute; */
+  margin-top: 25px;
+  margin-left: -10px;
+  width: 15%;
+  height: 15%;
+  }
+
+  text {
+    font-family: Helvetica, sans-serif;
+  }
+
+  .tableCenter {
+    margin-left: -10px;
+    margin-right: auto;
+    margin-top: 25px;
+}
+
+</style>
+
+
+</head>
+ 
+<body onload="session_validate()">
+<script src="js/session_validate-tutorial.js"></script> 
+<script src="js/target_attributes_phos_size-tutorial.js"></script>
+
+
+<!-- LOGO -->
+<table class="tableCenter">
+  <tr>
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <rect id="Rectangle_1488" data-name="Rectangle 1488" width="290" height="55"/>
+          <text id="PhosProViz" transform="translate(100 37)" fill="#fff" font-size="25" font-family="CenturyGothicPro-Bold, Century Gothic Pro, Helvetica" font-weight="700" letter-spacing="0.1em"><tspan x="-60.495" y="-3">PhosProViz</tspan></text>
+        </svg>
+      </div>
+    </td>
+    
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2251" data-name="Path 2251" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <text id="Source_-_Target" data-name="Source - Target" transform="translate(100 32)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-72.59" y="0">Source - Target</tspan></text>
+        </svg>
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2261" data-name="Path 2261" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4014" data-name="Group 4014" transform="translate(-432 -156)">
+            <text id="Source_Attributes" data-name="Source Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-82.15" y="0">Source Attributes</tspan></text>
+          </g>
+        </svg>
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2262" data-name="Path 2262" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#000000"/>
+          <g id="Group_4015" data-name="Group 4015" transform="translate(-432 -156)">
+            <text id="Source_Attributes" data-name="Target Attributes" transform="translate(532 188)" fill="#fff" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-82.15" y="0">Target Attributes</tspan></text>
+          </g>
+        </svg>          
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2263" data-name="Path 2263" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4016" data-name="Group 4016" transform="translate(-432 -156)">
+            <text id="Edge_Attributes" data-name="Edge Attributes" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-74.07" y="0">Edge Attributes</tspan></text>
+          </g>
+        </svg>                 
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40"  viewBox="0 0 214.611 54">
+          <path id="Path_2264" data-name="Path 2264" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4017" data-name="Group 4017" transform="translate(-432 -156)">
+            <text id="Number_of_States" data-name="Number of States" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-83.39" y="0">Number of States</tspan></text>
+          </g>
+        </svg>                        
+      </div>
+    </td>
+
+    <td>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+          <path id="Path_2265" data-name="Path 2265" d="M0,0H200l14.611,27.971L200,54H0Z" fill="#fff"/>
+          <g id="Group_4018" data-name="Group 4018" transform="translate(-432 -156)">
+            <text id="Prepare_you_Data" data-name="Prepare you Data" transform="translate(532 188)" fill="#5e6365" font-size="20" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-84.84" y="0">Prepare you Data</tspan></text>
+          </g>
+        </svg>                               
+      </div>
+    </td>
+  </tr>
+</table>
+<!--  -->
+
+<svg id="text" xmlns="http://www.w3.org/2000/svg" width="536" height="242" viewBox="0 0 536 242">
+  <text id="_3_Target_Attributes" data-name="3
+Target Attributes" fill="#5e6365" font-size="50" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="254" y="37">3</tspan><tspan font-family="CenturyGothicPro, Century Gothic Pro" font-weight="400"><tspan x="70.9" y="107">Target Attributes</tspan></tspan></text>
+  <text id="Each_phosphorylation_site_information_will_need_to_be_in_its_own_column._Other_than_the_phosphorylation_value_for_each_site_does_your_data_include_information_you_would_like_to_represent_as_the_size_of_the_target_node_" data-name="Each phosphorylation site information will need to be in its own column. 
+
+Other than the phosphorylation value for each site, does your data include information you would like to represent as the size of the target node?" transform="translate(0 157)" fill="#5e6365" font-size="15" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="0" y="11">Each phosphorylation site information will need to be in its own column. </tspan><tspan x="0" y="32"></tspan><tspan x="0" y="53">Other than the phosphorylation value for each site, does your data </tspan><tspan x="0" y="74">include information you would like to represent as the size of the target </tspan></text>
+</svg>
+
+<svg id="drawing" xmlns="http://www.w3.org/2000/svg" width="466" height="211" viewBox="0 0 466 211">
+  <g id="Ellipse_660" data-name="Ellipse 660" transform="translate(4 29)" fill="none" stroke="#707070" stroke-width="1" opacity="0.15">
+    <circle cx="35" cy="35" r="35" stroke="none"/>
+    <circle cx="35" cy="35" r="34.5" fill="none"/>
+  </g>
+  <line id="Line_139" data-name="Line 139" x2="267" transform="translate(74.5 64.5)" fill="none" stroke="#707070" stroke-width="1" opacity="0.15"/>
+  <text id="Target_TargetSize" data-name="Target
+TargetSize" transform="translate(276 151)" fill="#5e6365" font-size="15" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="72.86" y="11">Target</tspan><tspan font-family="CenturyGothicPro, Century Gothic Pro" font-weight="400"><tspan x="59.045" y="32">TargetSize</tspan></tspan></text>
+  <text id="Source" transform="translate(0 124)" fill="#5e6365" font-size="15" font-family="CenturyGothicPro, Century Gothic Pro" opacity="0.15"><tspan x="13.86" y="11">Source</tspan></text>
+  <g id="Rectangle_1530" data-name="Rectangle 1530" transform="translate(342 32)" fill="#8aa8cc" stroke="#000" stroke-width="1">
+    <rect width="56" height="22" stroke="none"/>
+    <rect x="0.5" y="0.5" width="55" height="21" fill="none"/>
+  </g>
+  <g id="Rectangle_1531" data-name="Rectangle 1531" transform="translate(342 53)" fill="#d3d3d3" stroke="#000" stroke-width="1">
+    <rect width="56" height="22" stroke="none"/>
+    <rect x="0.5" y="0.5" width="55" height="21" fill="none"/>
+  </g>
+  <g id="Rectangle_1532" data-name="Rectangle 1532" transform="translate(342 74)" fill="#cb9999" stroke="#000" stroke-width="1">
+    <rect width="56" height="22" stroke="none"/>
+    <rect x="0.5" y="0.5" width="55" height="21" fill="none"/>
+  </g>
+  <text id="id1" transform="translate(360 49)" font-size="15" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">id1</tspan></text>
+  <text id="id2" transform="translate(360 70)" font-size="15" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">id2</tspan></text>
+  <text id="id3" transform="translate(360 91)" font-size="15" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">id3</tspan></text>
+  <g id="Rectangle_1533" data-name="Rectangle 1533" transform="translate(332 21)" fill="none" stroke="#707070" stroke-width="1" stroke-dasharray="10">
+    <rect width="76" height="86" stroke="none"/>
+    <rect x="0.5" y="0.5" width="75" height="85" fill="none"/>
+  </g>
+  <g id="Rectangle_1534" data-name="Rectangle 1534" transform="translate(316)" fill="none" stroke="#707070" stroke-width="1" stroke-dasharray="10">
+    <rect width="111" height="125" stroke="none"/>
+    <rect x="0.5" y="0.5" width="110" height="124" fill="none"/>
+  </g>
+</svg>
+
+<svg id="text" xmlns="http://www.w3.org/2000/svg" width="536" height="23" viewBox="0 0 536 23">
+  <text id="Yes_I_have_a_target_attribute_I_want_to_visualize:" data-name="Yes, I have a target attribute I want to visualize:" transform="translate(0 1)" fill="#5e6365" font-size="15" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="0" y="11">Yes, I have a target attribute I want to visualize:</tspan></text>
+</svg>
+
+
+<div id="button_center">
+  <div class="ck-button">
+    <label>
+      <input type="checkbox" value="color" id ="phos_color" autocomplete="off" onclick="target_phos_size()"><span>COLOR</span>
+    </label>
+  </div>  
+
+  <div class="ck-button">
+  <label>
+    <input type="checkbox" value="size" id ="phos_size" autocomplete="off" onclick="target_phos_size()"><span>SIZE</span>
+  </label>
+  </div>
+
+<div class="ck-button">
+  <label>
+    <input type="checkbox" value="no_skip" id ="phos_size_skip" autocomplete="off" onclick="target_phos_no_size()"><span>NONE</span>
+  </label>
+  </div>
+
+</div>
+
+<br/><br/><br/>
+
+<svg id="flag" xmlns="http://www.w3.org/2000/svg" width="200" height="53" viewBox="0 0 200 53">
+  <rect id="Rectangle_1556" data-name="Rectangle 1556" width="200" height="38" transform="translate(200 50) rotate(180)"/>
+  <path id="Polygon_10" data-name="Polygon 10" d="M100,0,200,12H0Z"/>
+  <text id="This_toy_data_contains_both_target_color_and_size._Select_both_" data-name="This toy data contains both target color and size. Select both! " transform="translate(3 16)" fill="#fff" font-size="12" font-family="HelveticaNeue, Helvetica Neue"><tspan x="6.814" y="11">This toy data contains both target </tspan><tspan x="24.112" y="25">color and size. Select both! </tspan></text>
+</svg>
+
+
+<br/><br/><br/>
+
+<div id="button_center">
+  <button class="button" id = "next_phos_size" style="display:none;" onclick="next_target_phos_size()">NEXT</button>
+</div>
+
+

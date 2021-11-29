@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <style type="text/css">
+
+.imgButton{
+    margin-left: 20px;
+}
+
+.downloadButton {
+    margin-left: 0px;
+    background-color: #707070;
+    color: white;
+
+}
+
+button {
+  background-color: white;
+  color: #707070;
+  border: 3px solid #707070;
+  padding: 15px 32px;
+  text-align: center;
+  margin: 4px 2px;
+  transition-duration: 0.6s;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: top
+}
+
+.left {
+    display:inline-block;
+    margin:5px 20px;
+    padding:5px;
+}
+
+#covidImg, #cfsImg, #toyImg {
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top
+}
+
+#logo{
+      /* position: absolute; */
+  margin-top: 25px;
+  margin-left: -10px;
+  width: 15%;
+  height: 15%;
+  }
+
+
+.tableCentercontent {
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 10px;
+}
+
+.tableCenter {
+    margin-left: -10px;
+    margin-right: auto;
+    margin-top: 25px;
+}
+
+.rect {
+    margin-left: 20px;
+    width:153px;
+    height:55px;
+}
+
+#textDesc {
+    margin-left: 20px;
+    margin-top: 10px;
+
+}
+
+text {
+    font-family: Helvetica, sans-serif;
+  }
+  </style>
+
+</head>
+<body>
+
+  <!-- LOGO -->
+  <table class="tableCenter">
+		<tr>
+      <td>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 214.611 54">
+            <rect id="Rectangle_1488" data-name="Rectangle 1488" width="290" height="55"/>
+            <text id="PhosProViz" transform="translate(100 37)" fill="#fff" font-size="25" font-family="CenturyGothicPro-Bold, Century Gothic Pro, Helvetica" font-weight="700" letter-spacing="0.1em"><tspan x="-60.495" y="-3">PhosProViz</tspan></text>
+          </svg>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <!--  -->
+
+    <table class="tableCentercontent">
+		<tr>
+			<td>
+      <div class="imgContainer">
+				<div>
+                    <img id="covidImg" src="./img/covidPreviewImg.jpeg" width="350px" class="left" />
+				</div>
+                <div>
+                    <svg id="textDesc" xmlns="http://www.w3.org/2000/svg" width="380" height="135" viewBox="0 0 380 135">
+                        <text id="SARS-CoV-2_Proteomics_Dataset_Created_with_data_from_a_global_phosphoproteomics_experiment_using_SARS-CoV-2-infected_Vero_E6_cells._The_corresponding_data_can_be_found_at_Bouhaddou_et_al_The_Global_Phosphorylation_Landscape_of_SARS-CoV-2_Infection_Cell_" data-name="SARS-CoV-2 Proteomics Dataset
+                      
+                      Created with data from a global phosphoproteomics experiment using SARS-CoV-2-infected Vero E6 cells. The corresponding data can be found at Bouhaddou et al, The Global Phosphorylation Landscape of SARS-CoV-2 Infection, Cell," fill="#707070" font-size="17" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="0" y="17">SARS-CoV-2 Proteomics Dataset</tspan><tspan font-size="15"><tspan x="0" y="36"></tspan></tspan><tspan font-size="12" font-family="HelveticaNeue, Helvetica Neue" font-weight="400"><tspan x="0" y="50">Created with data from a global phosphoproteomics experiment using </tspan><tspan x="0" y="64">SARS-CoV-2-infected Vero E6 cells. The corresponding data can be </tspan><tspan x="0" y="78">found at </tspan><tspan y="78" text-decoration="underline"><a href=“https://www.cell.com/cell/pdf/S0092-8674%2820%2930811-4.pdf”>Bouhaddou et al,</a> The Global Phosphorylation Landscape of </tspan><tspan x="0" y="92" text-decoration="underline">SARS-CoV-2 Infection, Cell, 2020</tspan></tspan></text>
+                      </svg>                                          
+                </div>
+                <div class="imgButton">
+					<button onclick="window.location.href = 'general-covid.html'">VISUALIZE IN 3D</button>
+				</div>
+                <div class="rect"></div>
+
+         </div>
+			</td>
+      
+      <td>
+      <div class="imgContainer">
+				<div>
+                    <img id="cfsImg" src="./img/cfsPreviewImg.jpeg" width="350px"class="left" />
+				</div>
+                <div>
+                    <svg id="textDesc" xmlns="http://www.w3.org/2000/svg" width="381" height="135" viewBox="0 0 381 135">
+                        <text id="Chronic_Fatigue_Syndrome_Dataset_A_probabilistic_causal_Bayesian_network_BN_with_key_driver_genes_KDs_for_each_of_the_top_CFS-associated_modules._The_corresponding_data_can_be_found_at_Comella_et_al._A_Molecular_network_approach_reveals_shared_cellula" data-name="Chronic Fatigue Syndrome Dataset
+                      
+                      A probabilistic causal Bayesian network (BN) with key driver genes (KDs) for each of the top CFS-associated modules. The corresponding data can be found at Comella et al. A Molecular network approach reveals shared cellula" transform="translate(1)" fill="#707070" font-size="17" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="0" y="17">Chronic Fatigue Syndrome Dataset</tspan><tspan font-size="15"><tspan x="0" y="36"></tspan></tspan><tspan font-size="12" font-family="HelveticaNeue, Helvetica Neue" font-weight="400"><tspan x="0" y="50">A probabilistic causal Bayesian network (BN) with key driver genes </tspan><tspan x="0" y="64">(KDs) for each of the top CFS-associated modules. The corresponding </tspan><tspan x="0" y="78">data can be found at </tspan><tspan y="78" text-decoration="underline"><a href="https://www.medrxiv.org/content/10.1101/2021.01.29.21250755v1.full" fill="#707070">Comella et al, </a>A Molecular network approach </tspan><tspan x="0" y="92" text-decoration="underline">reveals shared cellular and molecular signatures between chronic </tspan><tspan x="0" y="106" xml:space="preserve" text-decoration="underline">fatigue syndrome and other fatiguing illnesses. </tspan></tspan></text>
+                      </svg>                                         
+                </div>
+                <div class="imgButton">
+					<button onclick="window.location.href = 'general-cfs-bcellm7.html'">VISUALIZE IN 3D</button>
+				</div>
+                <div class="rect"></div>
+
+         </div>
+			
+      </td>
+              <td>
+      <div class="imgContainer">
+				<div>
+                    <img id="toyImg" src="./img/toyPreviewImg.jpeg" width="350px" class="left"/>
+				</div>
+                <div>
+                    <svg id="textDesc" xmlns="http://www.w3.org/2000/svg" width="380" height="135" viewBox="0 0 380 135">
+                        <text id="Toy_Datasets_We_have_created_a_set_of_toy_datasets_for_you_to_visualize_and_play_with._Feel_free_to_download_the_data_in_csv_format_and_upload_it_through_our_tool_as_well_" data-name="Toy Datasets
+                      
+                      We have created a set of toy datasets for you to visualize and play with. Feel free to download the data in csv format and upload it through our tool as well! " fill="#707070" font-size="17" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="0" y="17">Toy Datasets</tspan><tspan font-size="15"><tspan x="0" y="36"></tspan></tspan><tspan font-size="12" font-family="HelveticaNeue, Helvetica Neue" font-weight="400"><tspan x="0" y="50">We have created a set of toy datasets for you to visualize and play </tspan><tspan x="0" y="64">with. Feel free to download the data in csv format and upload it </tspan><tspan x="0" y="78">through our tool as well! </tspan></tspan></text>
+                      </svg>                      
+                </div>
+                <div class="imgButton">
+					<!-- <button>VISUALIZE IN 3D</button> -->
+                    <button class="downloadButton" onclick="location.href='https://github.com/IreneFP/PhosProViz-DataExamples/archive/main.zip'" >DOWNLOAD DATA</button>
+				</div>
+                <!-- <button id="downloadButton">DOWNLOAD DATA</button> -->
+                <div class="rect"></div>
+
+            
+         </div>
+			</td>
+		</tr>
+	</table>
+
+
+
+      
+
+
+      
+      
+
+  
+</body>
+</html>
+
