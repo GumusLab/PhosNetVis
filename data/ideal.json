@@ -1,0 +1,23 @@
+{
+    "ids":
+        ["PAK2", "HRI", "P20152", "Q01986", "P01237"],
+
+    "nodes": 
+        [{"id": "PAK2", "group": "1", "source_attr":[{"dataset":0, "source_attr_1": -1, "source_attr_2": 3}, 
+                                                    {"dataset":1, "source_attr_1": -5, "source_attr_2": 5}]},
+        {"id": "HRI", "group": "1", "source_attr":[{"dataset":0, "source_attr_1": 3, "source_attr_2": 1},
+                                                    {"dataset":1, "source_attr_1": -4, "source_attr_2": 1}]},
+        {"id": "P20152", "group": "2", "target_attr": [{"dataset":0, "target_attr_2": 0.01, "target_attr_1": [{"ph7" : 3.5}, {"ph206" : -5.2}, {"ph306": -7.5}]},
+                                                        {"dataset":1, "target_attr_2": 2, "target_attr_1": [{"ph7" : -3}, {"ph206" : 1}, {"ph306": 0.2}]}]},
+        {"id": "Q01986", "group": "2", "target_attr":[{"dataset":0, "target_attr_2": -1, "target_attr_1": [{"ph7" : 2.1}, {"ph206" : -3.9}]},
+                                                        {"dataset":1, "target_attr_2": 4, "target_attr_1": [{"ph7" : -4}]}]},
+        {"id": "P01237", "group": "2", "target_attr":[{"dataset":1,"target_attr_2": 2, "target_attr_1": [{}]}]}],
+
+    "links": 
+        [{"source": "PAK2", "target": "P20152", "edge_attr": [{"dataset":0, "edge_attr_1": -1, "edge_attr_2": 3}, 
+                                                              {"dataset":1, "edge_attr_1": -5, "edge_attr_2": 5}]}, 
+        {"source": "PAK2", "target": "Q01986", "edge_attr":[{"dataset":0, "edge_attr_1": -1, "edge_attr_2": 3}, 
+                                                              {"dataset":1, "edge_attr_1": -5, "edge_attr_2": 5}]},  
+        {"source": "HRI", "target": "P01237", "edge_attr": [{"dataset":0, "edge_attr_1": -1, "edge_attr_2": 3}, 
+                                                              {"dataset":1, "edge_attr_1": -5, "edge_attr_2": 5}]}]
+        }  
