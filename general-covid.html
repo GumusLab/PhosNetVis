@@ -1,51 +1,37 @@
 <head>
-  
-    <style> body { margin: 0; } </style>
-    
-<!--     <script src="//unpkg.com/3d-force-graph"></script>
-    <script src="//unpkg.com/three"></script>
-    <script src="//unpkg.com/three-spritetext"></script>
-    <script src="//unpkg.com/dat.gui"></script>
-    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
-    
-    <script src="libraries/3d-force-graph.js"></script>
-    <script src="libraries/index.min.js"></script>
-    <script src="libraries/three.js"></script>
-    <script src="libraries/three-spritetext.min.js"></script>
-    <script src="libraries/dat.gui.js"></script>
-    <script src="libraries/d3.v3.min.js" charset="utf-8"></script>
-    <script src="libraries/rainbowvis.js"></script>
-    <script src="https://github.com/mrdoob/three.js/blob/dev/examples/jsm/deprecated/Geometry.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
-    <script src="js/fstdropdown.js"></script>
-    <link rel="stylesheet" href="css/fstdropdown.css">
-    <link rel="stylesheet" href="styles.css">
-  
-      <!--<script src="../../dist/3d-force-graph.js"></script>-->
-  
+  <style> body { margin: 0; } </style>
+  <script src="libraries/3d-force-graph.js"></script>
+  <script src="libraries/index.min.js"></script>
+  <script src="libraries/three.js"></script>
+  <script src="libraries/three-spritetext.min.js"></script>
+  <script src="libraries/dat.gui.js"></script>
+  <script src="libraries/d3.v3.min.js" charset="utf-8"></script>
+  <script src="libraries/rainbowvis.js"></script>
+  <script src="https://github.com/mrdoob/three.js/blob/dev/examples/jsm/deprecated/Geometry.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
+  <script src="js/fstdropdown.js"></script>
+  <link rel="stylesheet" href="css/fstdropdown.css">
+  <a href="index.html"></a>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style type="text/css">
-
-#gui {
-    position: absolute;
-    left: 2px;   /* position inside relatively positioned parent */
-    top: 400px;
-    z-index: 10;   /* adjust as needed */
-    }
-
-  #guiplace{
-  font-size: 55px;
-  position: absolute;
-  left: 2px;   /* position inside relatively positioned parent */
-  top: 150px;
-  z-index: 10; 
-  width: 270px;
-}
-
-#tp {
+    #gui {
     position: absolute;
     left: 2px;   /* position inside relatively positioned parent */
     top: 140px;
     z-index: 10;   /* adjust as needed */
+    }
+    #tp {
+    position: absolute;
+    left: 2px;   /* position inside relatively positioned parent */
+    top: 140px;
+    z-index: 10;   /* adjust as needed */
+    }
+
+    #logo{
+      position: absolute;
+      margin-top: 10px;
+      z-index:2;
     }
   
     .button {
@@ -65,6 +51,12 @@
   z-index: 10; 
 }
 
+.button1 {
+  background-color: rgb(47,49,55); 
+  color: rgb(167, 167, 167); 
+  border: 0px solid #000000;
+}
+
 .button2 {
   border: none;
   padding: 16px 45px;
@@ -81,11 +73,39 @@
   z-index: 10; 
 }
 
-.button1 {
-  background-color: rgb(47,49,55); 
-  color: rgb(167, 167, 167); 
-  border: 0px solid #000000;
+.button3 {
+  border: none;
+  padding: 16px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  position: absolute;
+  left: 2px;   /* position inside relatively positioned parent */
+  top: 420px;
+  z-index: 10; 
 }
+
+
+.button4 {
+  border: none;
+  padding: 16px 50px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  position: absolute;
+  left: 140px;   /* position inside relatively positioned parent */
+  top: 420px;
+  z-index: 10; 
+}
+
 
 .button1:hover {
   background-color: #000000;
@@ -101,12 +121,93 @@
   z-index: 10; 
 }
 
+#openbutton{
+  font-family: Helvetica, sans-serif;
+  position: absolute;
+  font-size: 17px;
+  left: 2px;   /* position inside relatively positioned parent */
+  top: 70px;
+  z-index: 10; 
+  cursor:pointer;
+}
+
+#guiplace{
+  font-size: 55px;
+  position: absolute;
+  left: 2px;   /* position inside relatively positioned parent */
+  top: 150px;
+  z-index: 10; 
+  width: 270px;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+
+.overlay {
+  height: 100%;
+  width: 0;
+  position: absolute;
+  z-index: 15;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
   </style>
-  </head>
-  
+</head>
     
   <body>
-
+  
+    <div id="myNav" class="overlay">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <div class="overlay-content">
+        <a href="#">Content will be here!</a>
+      </div>
+    </div>
+    
+    <span id = "openbutton" onclick="openNav()">&#9776; open</span>
+  
     <p class="p1">Node Query</p>
     <p>
       <select class='fstdropdown-select' id="nodequery" onchange="updateSearch()">
@@ -114,12 +215,36 @@
       </select>
   </p>
     <button class="button button1" onclick="screenshot()">SnapShot</button>
+  
     <button class="button2 button1" onclick="queryReset()">Reset</button>
+  
+    <button class="button3 button1" onclick="animationStart()">Animation</button>
+  
+    <button class="button4 button1" onclick="stopAnimation()">Stop</button>
+  
+  
+  
     <div id="guiplace"> </div>
+  
     <div id="3d-graph"></div>
+  
+    <div class="dg ac">
+      <div class="dg main a" style="position: absolute;"> 
+        <img src="./img/Legend_3.png" alt="COVID Omics 3D Vizualization" style="width: 273px; margin-top: 500px; margin-left: 3px; z-index:2;" >
+        
+      </div>
+    </div>
+
+
     
     <script>
-  
+  function openNav() {
+  document.getElementById("myNav").style.width = "100%";
+}
+
+function closeNav() {
+  document.getElementById("myNav").style.width = "0%";
+}
       const elem = document.getElementById('3d-graph');
   
       var dict_num_sites = []
@@ -263,20 +388,6 @@
             dict_num_sites.push(obj)
           }}
       }); 
-      //console.log(dict_num_sites) // manage how to access each node's info.
-  
-      // ----------------------------------- end of the block
-      // ----------------------------------------------------
-  
-      // Define GUI 
-      // https://www.nowherenearithaca.com/2015/07/datgui-easy-way-to-allow-users-to.html
-      // https://codepen.io/justgooddesign/pen/sbGLC
-  
-
- 
-        // {"nodes": ["AKT1", "AKT2", "ATR", "AURKA", "CAMK2A", "CDK1", "CDK2_kinase", "CDK4", "CDK5", "CHEK1", "CLK1", "CSNK2A1", "DYRK3", "EEF2K", "GSK3B_kinase", "LATS1", "MAPK1", "MAPK14", "MAPK3", "MAPKAPK2", "MARK2", "MASTL", "MELK", "MTOR_kinase", "NEK6", "PAK1", "PLK1", "PRKAA1", "PRKACA", "PRKCA", "PRKCD", "PRKCI", "PRKDC_kinase", "RPS6KB1_kinase", "RPS6KB2", "SRC", "TBK1", "UHMK1", "WEE1"]
-  
-  
  
       var nodesList = ["AKT1", "AKT2", "ATR", "AURKA", "CAMK2A", "CDK1", "CDK2_kinase", "CDK4", "CDK5", "CHEK1", "CLK1", "CSNK2A1", "DYRK3", "EEF2K", "GSK3B_kinase", "LATS1", "MAPK1", "MAPK14", "MAPK3", "MAPKAPK2", "MARK2", "MASTL", "MELK", "MTOR_kinase", "NEK6", "PAK1", "PLK1", "PRKAA1", "PRKACA", "PRKCA", "PRKCD", "PRKCI", "PRKDC_kinase", "RPS6KB1_kinase", "RPS6KB2", "SRC", "TBK1", "UHMK1", "WEE1"]
       
@@ -287,12 +398,6 @@
           var optext = nodesList[nodeindexes]
           addOptions(optext,x)
         }
-      
-        
-  
-   
-  
-  
   
       const Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer: true}})
           //.cooldownTicks(30)
@@ -333,14 +438,12 @@
         
   
       Graph.d3Force('link').distance(80);  
-      //Graph.onEngineStop(() => Graph.zoomToFit(400)); 
-  
-
 
       timestamps = ["time 24h", "time 12h", "time 08h", "time 04h", "time 02h", "time 00h - control"]
       const CAMERA_DISTANCE2NODES_FACTOR = 170;
       const fnames = {};
- for (const key of timestamps) {
+ 
+      for (const key of timestamps) {
   fnames[key] = key;
  }
 
@@ -429,7 +532,34 @@ pane.addInput(PARAMS, 'Labels').on('change', (ev) => {
         
         }
   
-
+        states = ["time 00h - control","time 02h","time 04h","time 08h","time 12h","time 24h"]
+        
+        function stateAnimation(visualization_time) {
+          console.log(visualization_time)
+        if (visualization_time == "time 00h - control") {
+          visualization_time = time00
+        }
+        if (visualization_time == "time 02h") {
+          visualization_time = time02
+          }
+        if (visualization_time == "time 04h") {
+          visualization_time = time04
+        }
+        if (visualization_time== "time 08h") {
+          visualization_time = time08
+        }
+        if (visualization_time == "time 12h") {
+          visualization_time = time12
+        }
+        if (visualization_time == "time 24h") {
+          visualization_time = time24
+        }
+        
+        Graph.nodeThreeObject(node => (node.group == '2')
+            ? mesh_irene(visualization_time, node.id, dict_num_sites_2, radialPartitions) // SUBSTRATES
+            : (kinases_nodes(node))) // KINASES
+            .onEngineStop(timer())
+        }
   
       function updateMaxL2FC() {
         threshold_max = PARAMS.MaxFold
@@ -486,9 +616,53 @@ pane.addInput(PARAMS, 'Labels').on('change', (ev) => {
       document.getElementById("nodequery").selectedIndex = 0;
       document.getElementById("nodequery").fstdropdown.rebind()
       var nodenum = Graph.graphData().nodes.length
-      Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
+      Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)}
+
+var interval1 = 0
+var interval2 = 0
+var isRotationActive = true ;
+var isDrawActive = true ;
+var mod = states.length
+var mynum = 0;
+
+
+function timer(){
+  isRotationActive = true;
+  setTimeout(function(){ isDrawActive = true }, 3000)
+}
+
+function animationStart(){
+  interval1 = setInterval(function() {
+    if(isDrawActive){
+      isDrawActive = false;
+    mynum = (mynum + 1) % mod
+    stateAnimation(states[mynum])
+    console.log(states[mynum])
+  }
+    }, 100);
+
+    let angle = 0;
+    interval2 = setInterval(function() { 
+      if (isRotationActive) {
+        var nodenum = Graph.graphData().nodes.length
+        const distance = Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR
+        Graph.cameraPosition({
+          x: distance * Math.sin(angle),
+          z: distance * Math.cos(angle)
+        });
+        angle += Math.PI / 300;
+      }
+    }
+    , 40);
 
     }
+
+    function stopAnimation(){
+    clearInterval(interval1)
+    clearInterval(interval2)
+    changeState()
+
+  }
     </script>
   
    
@@ -497,16 +671,7 @@ pane.addInput(PARAMS, 'Labels').on('change', (ev) => {
         <img src="./img/logo-covid_2.png" alt="COVID Omics 3D Vizualization" style="width: 250px; margin-top: 10px;" >
         
       </div>
-    </div>
-    
-  
-    <div class="dg ac">
-      <div class="dg main a" style="position: absolute;"> 
-        <img src="./img/Legend_3.png" alt="COVID Omics 3D Vizualization" style="width: 260px; margin-top: 450px; margin-left: 2px; z-index:2;" >
-        
-      </div>
-    </div>
-      
+    </div>      
       
   
   </body>
