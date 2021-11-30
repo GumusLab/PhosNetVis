@@ -35,10 +35,13 @@
     }
   #stateInfo{
     position: absolute;
-    left: 2px;
-    top: 490px;
+    left: 17px;
+    top: 480px;
     z-index: 10;
     font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    color: red;
+    font-size: 20px;
   }
     .button {
   border: none;
@@ -445,7 +448,7 @@ function closeNav() {
   
       Graph.d3Force('link').distance(80);  
 
-      timestamps = ["time 24h", "time 12h", "time 08h", "time 04h", "time 02h", "time 00h - control"]
+      timestamps = ["time 24h", "time 12h", "time 08h", "time 04h", "time 02h", "time 00h"]
       const CAMERA_DISTANCE2NODES_FACTOR = 170;
       const fnames = {};
  
@@ -513,7 +516,7 @@ pane.addInput(PARAMS, 'Labels').on('change', (ev) => {
       
   
       function changeState() {
-        if (PARAMS.TimeStamps == "time 00h - control") {
+        if (PARAMS.TimeStamps == "time 00h") {
           visualization_time = time00
         }
         if (PARAMS.TimeStamps == "time 02h") {
@@ -538,7 +541,7 @@ pane.addInput(PARAMS, 'Labels').on('change', (ev) => {
         
         }
   
-        states = ["time 00h - control","time 02h","time 04h","time 08h","time 12h","time 24h"]
+        states = ["time 00h","time 02h","time 04h","time 08h","time 12h","time 24h"]
         
         function stateAnimation(visualization_time_text) {
         if (visualization_time_text == "time 00h - control") {
@@ -559,10 +562,12 @@ pane.addInput(PARAMS, 'Labels').on('change', (ev) => {
         if (visualization_time_text == "time 24h") {
           visualization_time = time24
         }
+        oldPosition = Graph.cameraPosition()
         Graph.nodeThreeObject(node => (node.group == '2')
             ? mesh_irene(visualization_time, node.id, dict_num_sites_2, radialPartitions) // SUBSTRATES
             : (kinases_nodes(node))) // KINASES
             .onEngineStop(timer(),writer("Current State is: "+visualization_time_text))
+        console.log(oldPosition)
         }
 
         function writer(text){
