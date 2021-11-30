@@ -33,7 +33,13 @@
       margin-top: 10px;
       z-index:2;
     }
-  
+  #stateInfo{
+    position: absolute;
+    left: 2px;
+    top: 490px;
+    z-index: 10;
+    font-family: 'Lato', sans-serif;
+  }
     .button {
   border: none;
   color: white;
@@ -222,7 +228,7 @@ body {
   
     <button class="button4 button1" onclick="stopAnimation()">Stop</button>
   
-  
+    <p id="stateInfo"></p>
   
     <div id="guiplace"> </div>
   
@@ -230,7 +236,7 @@ body {
   
     <div class="dg ac">
       <div class="dg main a" style="position: absolute;"> 
-        <img src="./img/Legend_3.png" alt="COVID Omics 3D Vizualization" style="width: 273px; margin-top: 500px; margin-left: 3px; z-index:2;" >
+        <img src="./img/Legend_3.png" alt="COVID Omics 3D Vizualization" style="width: 273px; margin-top: 550px; margin-left: 3px; z-index:2;" >
         
       </div>
     </div>
@@ -534,33 +540,36 @@ pane.addInput(PARAMS, 'Labels').on('change', (ev) => {
   
         states = ["time 00h - control","time 02h","time 04h","time 08h","time 12h","time 24h"]
         
-        function stateAnimation(visualization_time) {
-          console.log(visualization_time)
-        if (visualization_time == "time 00h - control") {
+        function stateAnimation(visualization_time_text) {
+        if (visualization_time_text == "time 00h - control") {
           visualization_time = time00
         }
-        if (visualization_time == "time 02h") {
+        if (visualization_time_text == "time 02h") {
           visualization_time = time02
           }
-        if (visualization_time == "time 04h") {
+        if (visualization_time_text == "time 04h") {
           visualization_time = time04
         }
-        if (visualization_time== "time 08h") {
+        if (visualization_time_text== "time 08h") {
           visualization_time = time08
         }
-        if (visualization_time == "time 12h") {
+        if (visualization_time_text == "time 12h") {
           visualization_time = time12
         }
-        if (visualization_time == "time 24h") {
+        if (visualization_time_text == "time 24h") {
           visualization_time = time24
         }
-        
         Graph.nodeThreeObject(node => (node.group == '2')
             ? mesh_irene(visualization_time, node.id, dict_num_sites_2, radialPartitions) // SUBSTRATES
             : (kinases_nodes(node))) // KINASES
-            .onEngineStop(timer())
+            .onEngineStop(timer(),writer("Current State is: "+visualization_time_text))
         }
-  
+
+        function writer(text){
+        var stateInfo = document.getElementById("stateInfo");
+        stateInfo.textContent = text
+        }
+
       function updateMaxL2FC() {
         threshold_max = PARAMS.MaxFold
         Graph.nodeThreeObject(node => (node.group == '2')
@@ -662,7 +671,7 @@ function animationStart(){
     clearInterval(interval1)
     clearInterval(interval2)
     changeState()
-
+    writer()
   }
     </script>
   
