@@ -613,6 +613,7 @@ pane.addInput(PARAMS, 'Labels').on('change', (ev) => {
         }
 
         function queryReset(){
+          stopAnimation()
       document.getElementById("nodequery").selectedIndex = 0;
       document.getElementById("nodequery").fstdropdown.rebind()
       var nodenum = Graph.graphData().nodes.length
