@@ -657,24 +657,24 @@ function animationStart(){
     }, 100);
 
     let angle = 0;
-    interval2 = setInterval(function() { 
-      if (isRotationActive) {
-        var nodenum = Graph.graphData().nodes.length
-        const distance = Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR
-        Graph.cameraPosition({
-          x: distance * Math.sin(angle),
-          z: distance * Math.cos(angle)
-        });
-        angle += Math.PI / 300;
-      }
-    }
-    , 40);
+    // interval2 = setInterval(function() { 
+    //   if (isRotationActive) {
+    //     var nodenum = Graph.graphData().nodes.length
+    //     const distance = Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR
+    //     Graph.cameraPosition({
+    //       x: distance * Math.sin(angle),
+    //       z: distance * Math.cos(angle)
+    //     });
+    //     angle += Math.PI / 300;
+    //   }
+    // }
+    // , 40);
 
     }
 
     function stopAnimation(){
     clearInterval(interval1)
-    clearInterval(interval2)
+    // clearInterval(interval2)
     changeState()
     writer()
   }
