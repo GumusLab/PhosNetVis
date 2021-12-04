@@ -36,7 +36,7 @@
   #stateInfo{
     position: absolute;
     left: 17px;
-    top: 480px;
+    top: 100px;
     z-index: 10;
     font-family: 'Lato', sans-serif;
     font-weight: bold;
@@ -101,7 +101,7 @@
 
 .button4 {
   border: none;
-  padding: 16px 50px;
+  padding: 16px 44px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -115,6 +115,53 @@
   z-index: 10; 
 }
 
+.button5 {
+  border: none;
+  padding: 16px 40px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  position: absolute;
+  left: 2px;   /* position inside relatively positioned parent */
+  top: 480px;
+  z-index: 10; 
+}
+
+.button6 {
+  border: none;
+  padding: 16px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  position: absolute;
+  left: 140px;   /* position inside relatively positioned parent */
+  top: 480px;
+  z-index: 10; 
+}
+
+.button7 {
+  border: none;
+  padding: 16px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  position: absolute;
+  left: 60px;   /* position inside relatively positioned parent */
+  top: 535px;
+  z-index: 10; 
+}
 
 .button1:hover {
   background-color: #000000;
@@ -229,8 +276,14 @@ body {
   
     <button class="button3 button1" onclick="animationStart()">Animation</button>
   
-    <button class="button4 button1" onclick="stopAnimation()">Stop</button>
-  
+    <button class="button4 button1" onclick="stopAnimation()">Pause</button>
+
+    <button id = "startBtn" class="button5 button1" onclick="startRecord()">Record</button>
+
+    <button id = "stopBtn" class="button6 button1" onclick="stopScreen()">Stop Recording</button>
+
+    <a href="#"  id="downloadbtn" class="button7 button1"><button> Download Video </button></a>
+
     <p id="stateInfo"></p>
   
     <div id="guiplace"> </div>
@@ -239,13 +292,13 @@ body {
   
     <div class="dg ac">
       <div class="dg main a" style="position: absolute;"> 
-        <img src="./img/Legend_3.png" alt="COVID Omics 3D Vizualization" style="width: 273px; margin-top: 550px; margin-left: 3px; z-index:2;" >
+        <img src="./img/Legend_3.png" alt="COVID Omics 3D Vizualization" style="width: 273px; margin-top: 595px; margin-left: 3px; z-index:2;" >
         
       </div>
     </div>
 
 
-    
+    <script src="./script.js"></script>
     <script>
   function openNav() {
   document.getElementById("myNav").style.width = "100%";
