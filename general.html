@@ -563,7 +563,7 @@ function addOptions(addText, selectElement)
           {
             // TargetNodeColor does not exist 
             if (Object.values(node['target_attr_1'][0])[0] == null)  { 
-              target_attr_1 = 2
+              target_attr_1 = "null"
             }
             else  { // TargetNodeColor exists  
               target_attr_1 = Object.values(node['target_attr_1'][0])
@@ -605,7 +605,7 @@ function addOptions(addText, selectElement)
             rainbow.setNumberRange(-3, 3);
             rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044')
 
-            if (l2fc_value >= threshold_min && l2fc_value <= threshold_max) {
+            if (l2fc_value >= threshold_min && l2fc_value <= threshold_max || l2fc_value=="null") {
               return "0xcccccc"
             }
             if (l2fc_value < threshold_min) {
@@ -953,7 +953,7 @@ function parseCSV_animation() {
       source_compare = [d["SourceID"].unique().values][0]
       target_compare = [d["TargetID"].unique().values][0]
       if(JSON.stringify(source) !== JSON.stringify(source_compare) ||JSON.stringify(target) !== JSON.stringify(target_compare)){
-        alert("Files do not have exact same sources and targets, animation cannot be achieved!")
+        alert("Files do not have exact same sources and targets, animation cannot be displayed!")
         return false;
       }
     }
@@ -1228,6 +1228,10 @@ var interval1 = 0
 var interval2 = 0
 function animation(){
   finalDataObjAnimation = parseCSV_animation()
+
+  if (!finalDataObjAnimation){
+    return false;
+  }
   state = file_names[mynum]
   Graph = ForceGraph3D()
         .backgroundColor("#ffffff")
