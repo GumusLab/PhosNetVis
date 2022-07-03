@@ -247,6 +247,100 @@ body {
   </div>
 <script>
 
+// const fragmentShader = `
+// uniform vec3 color;
+// uniform float coefficient;
+// uniform float power;
+// varying vec3 vVertexNormal;
+// varying vec3 vVertexWorldPosition;
+// void main() {
+//   vec3 worldCameraToVertex = vVertexWorldPosition - cameraPosition;
+//   vec3 viewCameraToVertex	= (viewMatrix * vec4(worldCameraToVertex, 0.0)).xyz;
+//   viewCameraToVertex = normalize(viewCameraToVertex);
+//   float intensity	= pow(
+//     coefficient + dot(vVertexNormal, viewCameraToVertex),
+//     power
+//   );
+//   gl_FragColor = vec4(color, intensity);
+// }`;
+
+// const vertexShader = `
+// varying vec3 vVertexWorldPosition;
+// varying vec3 vVertexNormal;
+// void main() {
+//   vVertexNormal	= normalize(normalMatrix * normal);
+//   vVertexWorldPosition = (modelMatrix * vec4(position, 1.0)).xyz;
+//   gl_Position	= projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+// }
+// `;
+
+// const defaultOptions = {
+//   backside: false,
+//   coefficient: 0.5,
+//   color: 'gold',
+//   size: 2,
+//   power: .1,
+// };
+
+// // Based off: http://stemkoski.blogspot.fr/2013/07/shaders-in-threejs-glow-and-halo.html
+// function createGlowMaterial(coefficient, color, power) {
+//   return new THREE.ShaderMaterial({
+//     depthWrite: false,
+//     fragmentShader,
+//     transparent: true,
+//     uniforms: {
+//       coefficient: {
+//         value: coefficient,
+//       },
+//       color: {
+//         value: new THREE.Color(color),
+//       },
+//       power: {
+//         value: power,
+//       },
+//     },
+//     vertexShader,
+//   });
+// }
+
+// function createGlowGeometry(geometry, size) {
+//   // Gather vertexNormals from geometry.faces
+//   const glowGeometry = geometry.clone();
+//   const vertexNormals = new Array(glowGeometry.vertices.length);
+//   glowGeometry.faces.forEach((face) => {
+//     if (face instanceof THREE.Face3) {
+//       vertexNormals[face.a] = face.vertexNormals[0];
+//       vertexNormals[face.b] = face.vertexNormals[1];
+//       vertexNormals[face.c] = face.vertexNormals[2];
+//     } else {
+//       console.error('Face needs to be an instance of THREE.Face3.');
+//     }
+//   });
+
+//   // Modify the vertices according to vertexNormal
+//   glowGeometry.vertices.forEach((vertex, i) => {
+//     const { x, y, z } = vertexNormals[i];
+//     vertex.x += x * size;
+//     vertex.y += y * size;
+//     vertex.z += z * size;
+//   });
+
+//   return glowGeometry;
+// }
+
+// function createGlowMesh(geometry, options = defaultOptions) {
+//   const { backside, coefficient, color, size, power } = options;
+
+//   const glowGeometry = createGlowGeometry(geometry, size);
+//   const glowMaterial = createGlowMaterial(coefficient, color, power);
+
+//   if (backside) {
+//     glowMaterial.side = THREE.BackSide;
+//   }
+
+//   return new THREE.Mesh(glowGeometry, glowMaterial);
+// }
+
 
 function hideShowMenu(val) {
   if(val==0 || val == undefined){
@@ -359,322 +453,322 @@ function partitions_dict (dataframe, col_name_target, col_name_partitions, col_n
 }
 
 function parseCSV(file_name) {
-  let dict_to_json = {"nodes": [], "links": []}
+let dict_to_json = {"nodes": [], "links": []}
+
+var userData = JSON.parse(window.localStorage.getItem(file_name));
+console.log(userData)
+var userDF = new dfd.DataFrame(userData)
+var source_att_1 = attribute_dict(userDF, "SourceID", "SourceNodeColor") // source_attr_1 // -1, 1
+var source_att_2 = attribute_dict(userDF, "SourceID", "SourceNodeSize") // source_attr_2 // 0, 1
+var target_att_1 = attribute_dict(userDF, "TargetID", "TargetNodeColor") // TargetAttr1 // -1, 1
+var target_att_2 = attribute_dict(userDF, "TargetID", "TargetNodeSize") // TargetAttr2 // 0, 1
+var edge_att_1 = attribute_dict(userDF, "TargetID", "EdgeColor") // EdgeAttr1 // // -1, 1
+var edge_att_2 = attribute_dict(userDF, "TargetID", "EdgeWeight") // EdgeAttr2 // 0, 1
+var partitions = partitions_dict(userDF, "TargetID", "PhosphorylationSiteID", "TargetNodeColor") 
+var links = links_info(userDF, "SourceID", "TargetID")
   
-  var userData = JSON.parse(window.localStorage.getItem(file_name));
-    var userDF = new dfd.DataFrame(userData)
-    var source_att_1 = attribute_dict(userDF, "SourceID", "SourceNodeColor") // source_attr_1 // -1, 1
-    var source_att_2 = attribute_dict(userDF, "SourceID", "SourceNodeSize") // source_attr_2 // 0, 1
-    var target_att_1 = attribute_dict(userDF, "TargetID", "TargetNodeColor") // TargetAttr1 // -1, 1
-    var target_att_2 = attribute_dict(userDF, "TargetID", "TargetNodeSize") // TargetAttr2 // 0, 1
-    var edge_att_1 = attribute_dict(userDF, "TargetID", "EdgeColor") // EdgeAttr1 // // -1, 1
-    var edge_att_2 = attribute_dict(userDF, "TargetID", "EdgeWeight") // EdgeAttr2 // 0, 1
-    var partitions = partitions_dict(userDF, "TargetID", "PhosphorylationSiteID", "TargetNodeColor") 
-    var links = links_info(userDF, "SourceID", "TargetID")
-    
-    var source = userDF["SourceID"].unique().values
-    var target = userDF["TargetID"].unique().values
-    
+var source = userDF["SourceID"].unique().values
+var target = userDF["TargetID"].unique().values
+  
 
-    for (var s in source){
-      dict_to_json['nodes'].push({'id': source[s], "group": 1, "source_attr_1": source_att_1[source[s]], "source_attr_2": source_att_2[source[s]]})
-    }
+for (var s in source){
+  dict_to_json['nodes'].push({'id': source[s], "group": 1, "source_attr_1": source_att_1[source[s]], "source_attr_2": source_att_2[source[s]]})
+}
 
-    for (var t in target){
-      var positionsObj; 
-      if (Object.keys(partitions).length === 0 && partitions.constructor === Object)
-      {
-        positions_or_target1 = [{key_: target_att_1[target[t]]}]
-      }
-      else
-      {
-        positions_or_target1 = partitions[target[t]]
-      }
-      dict_to_json['nodes'].push({'id': target[t], "group": 2, "target_attr_1": positions_or_target1, "target_attr_2": target_att_2[target[t]]})
-    }
+for (var t in target){
+  var positionsObj; 
+  if (Object.keys(partitions).length === 0 && partitions.constructor === Object)
+  {
+    positions_or_target1 = [{key_: target_att_1[target[t]]}]
+  }
+  else
+  {
+    positions_or_target1 = partitions[target[t]]
+  }
+  dict_to_json['nodes'].push({'id': target[t], "group": 2, "target_attr_1": positions_or_target1, "target_attr_2": target_att_2[target[t]]})
+}
 
-    for (var i in links){
-      var source_node = i
-      var target_nodes = links[i]
-      for (var i = 0; i < target_nodes.length; i++) {
-        var target_node = target_nodes[i]
-        dict_to_json['links'].push({"source": source_node, "target": target_node, "edge_attr_1": edge_att_1[target_node], "edge_attr_2": edge_att_2[target_node]})
-      }
-    }
-    dict_to_json['ids'] = source.concat(target)
-    return dict_to_json;
-    }
+for (var i in links){
+  var source_node = i
+  var target_nodes = links[i]
+  for (var i = 0; i < target_nodes.length; i++) {
+    var target_node = target_nodes[i]
+    dict_to_json['links'].push({"source": source_node, "target": target_node, "edge_attr_1": edge_att_1[target_node], "edge_attr_2": edge_att_2[target_node]})
+  }
+}
+dict_to_json['ids'] = source.concat(target)
+return dict_to_json;
+}
 
-    /// QUERY BOX FUNCTIONS ///
-  function removeOptions(selectElement) {
+//////////////// JSON to DATA OBJECT ////////////////
+var file_names = JSON.parse(localStorage.getItem("file_names"));
+var finalDataObj = parseCSV(localStorage.getItem(file_names[0]))
+var nodesList = finalDataObj["ids"]
+console.log(finalDataObj)
+//////////////// GRAPH CREATION ////////////////
+var directed = sessionStorage.getItem("directed")
+var elem = document.getElementById('3d-graph');
+var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer   : true}})
+  .backgroundColor("#ffffff")
+(elem)
+  .graphData(finalDataObj)
+  // .nodeLabel(node => (true) 
+  //   ? (`<span style="color: purple">${node.id}</span>`)
+  //   : (`<span></span>`))
+  .nodeThreeObject(node => (node.group == '2')
+    ? CreateTarget(node) // SUBSTRATES
+    : CreateSource(node))   // KINASES
+  .onNodeDragEnd(node => {
+    node.fx = node.x;
+    node.fy = node.y;
+    node.fz = node.z; })
+  .linkWidth(link => (link.edge_attr_2 == null)
+    ? 0.5
+    : (link.edge_attr_2 + 0.1))
+  .linkColor(link => (link.edge_attr_1 == null)
+    ? "#808080"
+    : colors_general(link.edge_attr_1, true, 'cornflowerblue', 'blue', 'midnightblue', 'blueviolet', 'darkviolet'))
+    .linkDirectionalArrowLength(directed => (directed)
+    ? 5
+    : 0)        
+  .linkDirectionalArrowRelPos(0.5)
+  .linkOpacity(0.5)
+  // .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
+  .onNodeClick(node => {
+    // Aim at node from outside it
+    const distance = 40;
+    const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+    Graph.cameraPosition(
+      { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+      node, // lookAt ({ x, y, z })
+      3000  // ms transition duration
+    );
+  });
+
+/// NODE QUERY FUNCTIONS
+function removeOptions(selectElement) {
    var i, L = selectElement.options.length - 1;
    for(i = L; i >= 0; i--) {
       selectElement.remove(i);
    }
    selectElement.fstdropdown.rebind()
 }
-
 function addOptions(addText, selectElement)
-    {
-        // Create an Option object       
-        var opt = document.createElement("option");        
+{
+    // Create an Option object       
+    var opt = document.createElement("option");        
 
-        // Assign text and value to Option object
-        opt.text = addText;
-        opt.value = addText;
+    // Assign text and value to Option object
+    opt.text = addText;
+    opt.value = addText;
 
-        // Add an Option object to Drop Down List Box
-        selectElement.options.add(opt);
-    }
-
-    //////////////// JSON FILE ////////////////
-       //////////////// JSON FILE ////////////////
-          //////////////// JSON FILE ////////////////
-    var file_names = JSON.parse(localStorage.getItem("file_names"));
-    var finalDataObj = parseCSV(localStorage.getItem(file_names[0]))
-    var nodesList = finalDataObj["ids"]
-
-    //////////////// GRAPH CREATION ////////////////
-    var directed = sessionStorage.getItem("directed")
-     var elem = document.getElementById('3d-graph');
-     var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer   : true}})
-        .backgroundColor("#ffffff")
-      (elem)
-        .graphData(finalDataObj)
-        // .nodeLabel(node => (true) 
-        //   ? (`<span style="color: purple">${node.id}</span>`)
-        //   : (`<span></span>`))
-        .nodeThreeObject(node => (node.group == '2')
-          ? CreateTarget(node) // SUBSTRATES
-          : CreateSource(node))   // KINASES
-        .onNodeDragEnd(node => {
-          node.fx = node.x;
-          node.fy = node.y;
-          node.fz = node.z; })
-        .linkWidth(link => (link.edge_attr_2 == null)
-          ? 0.5
-          : (link.edge_attr_2 + 0.1))
-        .linkColor(link => (link.edge_attr_1 == null)
-          ? "#808080"
-          : colors_general(link.edge_attr_1, true, 'cornflowerblue', 'blue', 'midnightblue', 'blueviolet', 'darkviolet'))
-          .linkDirectionalArrowLength(directed => (directed)
-          ? 5
-          : 0)        
-        .linkDirectionalArrowRelPos(0.5)
-        .linkOpacity(0.5)
-        // .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
-        .onNodeClick(node => {
-          // Aim at node from outside it
-          const distance = 40;
-          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-          Graph.cameraPosition(
-            { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-            node, // lookAt ({ x, y, z })
-            3000  // ms transition duration
-          );
-        });
-
-        nodesList = nodesList.sort()
-        var x = document.getElementById("nodequery");
-        var nodeindexes = 0
-        for(nodeindexes = 0; nodeindexes<nodesList.length;nodeindexes++){
-          var optext = nodesList[nodeindexes]
-          addOptions(optext,x)
-        }
+    // Add an Option object to Drop Down List Box
+    selectElement.options.add(opt);
+}
+nodesList = nodesList.sort()
+var x = document.getElementById("nodequery");
+var nodeindexes = 0
+for(nodeindexes = 0; nodeindexes<nodesList.length;nodeindexes++){
+  var optext = nodesList[nodeindexes]
+  addOptions(optext,x)
+}
         
-        //////////////// XXXXXX ////////////////
+//////////////// XXXXXX ////////////////
+
+// CREATING SOURCE TARGETS AND COLORING
           
-        function CreateSource(node)
-        {
-          var node_size
-          if (node["source_attr_2"] == null){ // SourceNodeSize
-            node_size = 1
-          }
-          else{
-            var node_size = node["source_attr_2"] + 0.5
-          }
-          var mesh = (new THREE.Mesh(    
-          new THREE.SphereGeometry(node_size*8,25,25),
-          new THREE.MeshLambertMaterial({
-            transparent: false,
-            depthWrite: false,
-            opacity: 1 //changed 0.8 to 1 
-          })
-        ))
+function CreateSource(node)
+{
+  var node_size
+  if (node["source_attr_2"] == null){ // SourceNodeSize
+    node_size = 1
+  }
+  else{
+    var node_size = node["source_attr_2"] + 0.5
+  }
+  var mesh = (new THREE.Mesh(
+  new THREE.SphereGeometry(node_size*8,25,25),
+  new THREE.MeshLambertMaterial({
+    transparent: false,
+    depthWrite: false,
+    opacity: 1 //changed 0.8 to 1 
+  })
+))
 
-        const sprite = new SpriteText(node.id);
-        sprite.color = 'rgb(0,0,0)';
-        sprite.textHeight = 5;
-        mesh.add(sprite);
-        
+const sprite1 = new SpriteText(node.id);
+sprite1.color = 'rgb(0,0,0)';
+sprite1.textHeight = 5;
+mesh.add(sprite1);
 
-        var node_color
-          if (node['source_attr_1'] == null){ // SourceNodeColor
-            node_color = 0.5
-          }
-          else{
-            var node_color = node['source_attr_1']
-          }
+var node_color
+  if (node['source_attr_1'] == null){ // SourceNodeColor
+    node_color = 0.5
+  }
+  else{
+    var node_color = node['source_attr_1']
+  }
 
-        mesh.material.color.setHex(colors_general(node_color, false, 'ffffb3', 'yellow', 'orange', '#ee9a00', '#ff8c00'));
-        return mesh
-        }
+mesh.material.color.setHex(colors_general(node_color, false, 'ffffb3', 'yellow', 'orange', '#ee9a00', '#ff8c00'));
 
-        function CountPartitions(data)
-        {
-          var num_sites_dict = {}
-          for (var node in data['nodes'])
-          {
-            if (data['nodes'][node]['group'] == '2')
-             {
-              num_sites = Object.keys(data['nodes'][node]['target_attr_1']).length
-              var id = data['nodes'][node]['id']
-              num_sites_dict[id] = num_sites
-             }
-          }
-          return num_sites_dict
-        }
 
-        function CreateTarget(node)
-        {
-          var node_size
-          if (node["target_attr_2"] == null){ // TargetNodeSize
-            node_size = 1
-          }
-          else{
-            var node_size = node["target_attr_2"] + 0.5
-          }
+return mesh
+}
 
-          var num_sites_dict = CountPartitions(finalDataObj)
-          if (num_sites_dict[node['id']] > 1) { // partitions
-            verticalPartitions = num_sites_dict[node['id']]
-          }
-          else // no partitions
-            verticalPartitions = 1
-          
-          radialPartitions = 25
-          var mesh = new THREE.Mesh(
-          new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
-          new THREE.MeshLambertMaterial({
-            transparent: false,
-            depthWrite: false,
-            opacity: 1,
-            wireframe: false,
-            emissive: "#181818",
-            vertexColors: THREE.FaceColors,
-          }));
+function CountPartitions(data)
+{
+  var num_sites_dict = {}
+  for (var node in data['nodes'])
+  {
+    if (data['nodes'][node]['group'] == '2')
+      {
+      num_sites = Object.keys(data['nodes'][node]['target_attr_1']).length
+      var id = data['nodes'][node]['id']
+      num_sites_dict[id] = num_sites
+      }
+  }
+  return num_sites_dict
+}
 
-          if (!(verticalPartitions == 1))
-          {
-            for (var i = 0; i < radialPartitions*2*(verticalPartitions); i+=(verticalPartitions*2))
-            {
-                  j = 0
-                  for (var position in node['target_attr_1']) {
-                    target_attr_1 = Object.values(node['target_attr_1'][position])
-                    mesh.geometry.faces[i+(j*2)].color.setHex(colors_target(target_attr_1)); 
-                    mesh.geometry.faces[i+(j*2)+1].color.setHex(colors_target(target_attr_1));
-                    var x = 0
-                    for(x = i+(j*2)+2;x<i+(j*2)+27;x++){
-                      mesh.geometry.faces[x].color.setHex("0x949494");                  
-                    }
-                    for(x = i+(j*2)+27;x<i+(j*2)+52;x++){
-                      mesh.geometry.faces[x].color.setHex("0xcccccc");                  
-                    }
+function CreateTarget(node)
+{
+  var node_size
+  if (node["target_attr_2"] == null){ // TargetNodeSize
+    node_size = 1
+  }
+  else{
+    var node_size = node["target_attr_2"] + 0.5
+  }
+
+  var num_sites_dict = CountPartitions(finalDataObj)
+  if (num_sites_dict[node['id']] > 1) { // partitions
+    verticalPartitions = num_sites_dict[node['id']]
+  }
+  else // no partitions
+    verticalPartitions = 1
   
-                    j = j + 1
-                    }
-            }
-          }
-          else
-          {
-            // TargetNodeColor does not exist 
-            if (Object.values(node['target_attr_1'][0])[0] == null)  { 
-              target_attr_1 = "null"
-            }
-            else  { // TargetNodeColor exists  
-              target_attr_1 = Object.values(node['target_attr_1'][0])
-            }
-            var face = 0
-            for(face = 0; face<50;face++){
-              mesh.geometry.faces[face].color.setHex(colors_target(target_attr_1));
-            }
-            face = 0
-            for(face = 50; face<75;face++){
-              mesh.geometry.faces[face].color.setHex("0x949494");
-            }
-            for(face = 75; face<100;face++){
-              mesh.geometry.faces[face].color.setHex("0xcccccc");
-            }
-            //mesh.geometry.faces[55].color.setHex("0xcccccc");   
-            //mesh.material.color.setHex(colors_target(target_attr_1));
+  radialPartitions = 25
+  var mesh = new THREE.Mesh(
+  new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
+  new THREE.MeshLambertMaterial({
+    transparent: false,
+    depthWrite: false,
+    opacity: 1,
+    wireframe: false,
+    emissive: "#181818",
+    vertexColors: THREE.FaceColors,
+  }));
+  //const glowMesh = createGlowMesh(mesh.geometry, defaultOptions);
 
-          }
-
-        if(PARAMS.Labels)
-        {
-          const sprite = new SpriteText(node.id);
-          sprite.color = 'rgb(0,0,0)';
-          sprite.textHeight = 5;
-          //sprite.position.y = 15;
-          mesh.add(sprite);
-        }
-          return mesh
-          }
-
-        function colors_target (l2fc_value) {
-          // https://github.com/anomal/RainbowVis-JS look at example.html for usage
-          // https://stackoverflow.com/questions/3080421/javascript-color-gradient
-
-            var threshold_max = PARAMS.MaxFold // 1
-            var threshold_min = PARAMS.MinFold // -1
-            var rainbow = new Rainbow(); 
-            rainbow.setNumberRange(-3, 3);
-            rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044')
-
-            if (l2fc_value >= threshold_min && l2fc_value <= threshold_max || l2fc_value=="null") {
-              return "0xcccccc"
+  if (!(verticalPartitions == 1))
+  {
+    for (var i = 0; i < radialPartitions*2*(verticalPartitions); i+=(verticalPartitions*2))
+    {
+          j = 0
+          for (var position in node['target_attr_1']) {
+            target_attr_1 = Object.values(node['target_attr_1'][position])
+            mesh.geometry.faces[i+(j*2)].color.setHex(colors_target(target_attr_1)); 
+            mesh.geometry.faces[i+(j*2)+1].color.setHex(colors_target(target_attr_1));
+            var x = 0
+            for(x = i+(j*2)+2;x<i+(j*2)+27;x++){
+              mesh.geometry.faces[x].color.setHex("0x949494");                  
             }
-            if (l2fc_value < threshold_min) {
-              var hexColour = rainbow.colourAt(l2fc_value-threshold_min);
-              var stringColor = '0x' + hexColour
-              return stringColor
-            } 
-            else {
-              var hexColour = rainbow.colourAt(l2fc_value-threshold_max);
-              var stringColor = '0x' + hexColour
-              return stringColor
-            } 
-        }
-
-        function colors_general (l2fc_value, isHexFlag, color1, color2, color3, color4, color5) {
-            var rainbow = new Rainbow(); 
-            thisColor1 = String(color1)
-            thisColor2 = String(color2)
-            thisColor3 = String(color3)
-            thisColor4 = String(color4)
-            thisColor5 = String(color5)
-            rainbow.setNumberRange(0, 1);
-            rainbow.setSpectrum(thisColor1, thisColor2, thisColor3, thisColor4, thisColor5)
-            var hexColour = rainbow.colourAt(l2fc_value);
-            var stringColor = '0x' + hexColour
-            if (isHexFlag){
-              var modcolor =  parseInt(hexColour, 16 )
-              return modcolor
+            for(x = i+(j*2)+27;x<i+(j*2)+52;x++){
+              mesh.geometry.faces[x].color.setHex("0xcccccc");                  
             }
-            else 
-              return stringColor
-          
-        }
 
-        function screenshot(){
-        var ImageBase64 = Graph.renderer().domElement.toDataURL("image/png");
-        var a = document.createElement("a"); //Create <a>
-        a.href = ImageBase64; //Image Base64 Goes here
-        a.download = "image.png"; //File name Here
-        a.click(); //Downloaded file
-        }
+            j = j + 1
+            }
+    }
+  }
+  else
+  {
+    // TargetNodeColor does not exist 
+    if (Object.values(node['target_attr_1'][0])[0] == null)  { 
+      target_attr_1 = "null"
+    }
+    else  { // TargetNodeColor exists  
+      target_attr_1 = Object.values(node['target_attr_1'][0])
+    }
+    var face = 0
+    for(face = 0; face<50;face++){
+      mesh.geometry.faces[face].color.setHex(colors_target(target_attr_1));
+    }
+    face = 0
+    for(face = 50; face<75;face++){
+      mesh.geometry.faces[face].color.setHex("0x949494");
+    }
+    for(face = 75; face<100;face++){
+      mesh.geometry.faces[face].color.setHex("0xcccccc");
+    }
+    mesh.geometry.faces[55].color.setHex("0xcccccc");   
+  }
 
-    const CAMERA_DISTANCE2NODES_FACTOR = 170;
+if(PARAMS.Labels)
+{
+  const sprite = new SpriteText(node.id);
+  sprite.color = 'rgb(0,0,0)';
+  sprite.textHeight = 5;
+  //sprite.position.y = 15;
+  mesh.add(sprite);
+}
+//mesh.add(glowMesh)
+  return mesh
+  }
+
+function colors_target (l2fc_value) {
+  // https://github.com/anomal/RainbowVis-JS look at example.html for usage
+  // https://stackoverflow.com/questions/3080421/javascript-color-gradient
+
+    var threshold_max = PARAMS.MaxFold // 1
+    var threshold_min = PARAMS.MinFold // -1
+    var rainbow = new Rainbow(); 
+    rainbow.setNumberRange(-3, 3);
+    rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044')
+
+    if (l2fc_value >= threshold_min && l2fc_value <= threshold_max || l2fc_value=="null") {
+      return "0xcccccc"
+    }
+    if (l2fc_value < threshold_min) {
+      var hexColour = rainbow.colourAt(l2fc_value-threshold_min);
+      var stringColor = '0x' + hexColour
+      return stringColor
+    } 
+    else {
+      var hexColour = rainbow.colourAt(l2fc_value-threshold_max);
+      var stringColor = '0x' + hexColour
+      return stringColor
+    } 
+}
+
+function colors_general (l2fc_value, isHexFlag, color1, color2, color3, color4, color5) {
+    var rainbow = new Rainbow(); 
+    thisColor1 = String(color1)
+    thisColor2 = String(color2)
+    thisColor3 = String(color3)
+    thisColor4 = String(color4)
+    thisColor5 = String(color5)
+    rainbow.setNumberRange(0, 1);
+    rainbow.setSpectrum(thisColor1, thisColor2, thisColor3, thisColor4, thisColor5)
+    var hexColour = rainbow.colourAt(l2fc_value);
+    var stringColor = '0x' + hexColour
+    if (isHexFlag){
+      var modcolor =  parseInt(hexColour, 16 )
+      return modcolor
+    }
+    else 
+      return stringColor
+  
+}
+
+function screenshot(){
+var ImageBase64 = Graph.renderer().domElement.toDataURL("image/png");
+var a = document.createElement("a"); //Create <a>
+a.href = ImageBase64; //Image Base64 Goes here
+a.download = "image.png"; //File name Here
+a.click(); //Downloaded file
+}
+
+const CAMERA_DISTANCE2NODES_FACTOR = 170;
 
   
 
@@ -831,6 +925,38 @@ pane.addInput(PARAMS, 'Labels').on('change', (ev) => {
       Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /////////// ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION ANIMATION /////////////////
