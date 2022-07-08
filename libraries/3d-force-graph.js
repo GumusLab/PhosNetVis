@@ -59508,8 +59508,11 @@ function InsertStackElement(node, body) {
         }
       }); // config renderObjs
 
-      state.renderObjs.objects([// Populate scene
-		new three$3.AmbientLight(0xf7f7f7), new three$3.DirectionalLight(0xffffff, 0.4), state.forceGraph]).hoverOrderComparator(function (a, b) {
+	  var sceneDirectedLight = new three$3.DirectionalLight(0xffffff, 0.0)
+	  sceneDirectedLight.position.set(0,-1,0)
+	
+      	state.renderObjs.objects([// Populate scene
+		new three$3.AmbientLight(0xf7f7f7), sceneDirectedLight, state.forceGraph]).hoverOrderComparator(function (a, b) {
 
       //new three$3.AmbientLight(0xf0f0f0), new three$3.DirectionalLight(0xe3e3e3, 0), state.forceGraph]).hoverOrderComparator(function (a, b) {
         // Prioritize graph objects

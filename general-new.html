@@ -1,0 +1,423 @@
+<head>
+  <style> body { margin: 0; } </style>
+  <script src="libraries/3d-force-graph.js"></script>
+  <script src="libraries/index.min.js"></script>
+  <script src="libraries/three.js"></script>
+  <script src="libraries/three-spritetext.min.js"></script>
+  <script src="libraries/d3.v3.min.js" charset="utf-8"></script>
+  <script src="libraries/rainbowvis.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
+  <script src="js/fstdropdown.js"></script>
+  <link rel="stylesheet" href="css/fstdropdown.css">
+  <a href="index.html"></a>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style type="text/css">
+    #gui {
+    position: absolute;
+    left: 2px;   /* position inside relatively positioned parent */
+    top: 140px;
+    z-index: 10;   /* adjust as needed */
+    }
+
+    #logo{
+      position: absolute;
+      margin-top: 10px;
+      z-index:2;
+    }
+
+.p1 {
+  font-family: Helvetica, sans-serif;
+  position: absolute;
+  font-size: 14px;
+  left: 8px;   /* position inside relatively positioned parent */
+  top: 267px;
+  z-index: 10; 
+}
+
+#openbutton{
+  font-family: Helvetica, sans-serif;
+  position: absolute;
+  font-size: 17px;
+  left: 2px;   /* position inside relatively positioned parent */
+  top: 120px;
+  z-index: 10; 
+  cursor:pointer;
+}
+
+#guiplace{
+  font-size: 55px;
+  position: absolute;
+  left: 2px;   /* position inside relatively positioned parent */
+  top: 150px;
+  z-index: 10; 
+  width: 270px;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+@font-face {
+    font-family: "MyriadPro-Regular";
+    src: url("fonts/MYRIADPROREGULAR.woff") format("woff");
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" width = "10%" style="top:1%;left:0.3%;position:absolute;z-index: 100;" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 710.3 222.4" xml:space="preserve"> <style type="text/css"> .st0b{fill:#424A60;} .st1b{fill:#DC298D;} .st2b{fill:#7383BF;} .st3b{fill:#969696;} .st4b{fill:#EBBA16;} .st5b{fill:#06ABEB;} .st6b{font-family:'Helvetica-Bold';} .st7b{font-size:84.3397px;} .st8b{letter-spacing:-1;} </style> <g id="Layer_1_00000056390415183483724190000009750584087129516189_"> <g id="path5"> <rect x="92.8" y="154.2" transform="matrix(0.3589 -0.9334 0.9334 0.3589 -62.6169 220.6174)" class="st0b" width="72.9" height="3.3"/> </g> <rect id="path4" x="156.9" y="60.1" transform="matrix(0.8102 -0.5861 0.5861 0.8102 0.7614 131.2305)" class="st0b" width="92.3" height="8.7"/> <g id="path3"> <rect x="19" y="127.2" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -46.9835 44.8278)" class="st0b" width="126.2" height="11.8"/> </g> <g id="path2"> <rect x="122.6" y="16.9" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -9.3065 55.4032)" class="st0b" width="6.4" height="65.4"/> </g> <rect id="path1" x="169" y="110.3" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -48.6296 83.9257)" class="st0b" width="8.7" height="92.3"/> <circle id="circle6" class="st1b" cx="249.7" cy="34.5" r="21.8"/> <circle id="circle5" class="st2b" cx="112.1" cy="200.6" r="21.8"/> <circle id="circle4" class="st1b" cx="21.8" cy="156.5" r="21.8"/> <circle id="circle3" class="st3b" cx="109.6" cy="13.1" r="13.1"/> <circle id="circle2" class="st4b" cx="189.6" cy="193.1" r="13.1"/> <circle id="circle1" class="st5b" cx="149.5" cy="102.8" r="37.3"/> </g> <g id="Layer_2_00000013871697503241264390000008040421359665832584_"> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 243.0089 140.7256)" class="st6b st7b">PhosNet</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 585.1035 139.5315)" class="st6b st7b st8b">V</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 639.8698 139.3403)" class="st6b st7b">is</text> </g> </svg>
+  </div>
+
+  <span id = "openbutton" value=0 onclick="hideShowMenu(this.value)">&times; close</span>
+
+  <p id = "nqText" class="p1">Node Query</p>
+  
+  <p  id="nodequeryMain">
+    <select class='fstdropdown-select' id="nodequery" onchange="updateSearch()">
+        <option value="">--</option>
+    </select>
+</p>
+
+
+<div id = "screenshotButton">
+<svg version="1.1" onclick="screenshot()" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+    viewBox="0 0 114 30" width = "8%" style="left:15px;top:350px;background-color: rgba(255,255,255,0); cursor: pointer;  z-index: 30; position:absolute;" xml:space="preserve"> <style type="text/css"> .st0{font-family:'MyriadPro-Regular';} .st1{font-size:22px;} </style> <g> <path d="M6,19v-2c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v2c0,0.6,0.4,1,1,1l0,0C5.6,20,6,19.6,6,19z"/> <path d="M10,5L10,5c0,0.6,0.4,1,1,1h2c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1h-2C10.4,4,10,4.4,10,5z"/> <path d="M5,14L5,14c0.6,0,1-0.4,1-1v-2c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v2C4,13.6,4.4,14,5,14z"/> <path d="M23,6h1v1c0,0.6,0.4,1,1,1l0,0c0.6,0,1-0.4,1-1V6c0-1.1-0.9-2-2-2h-1c-0.6,0-1,0.4-1,1l0,0C22,5.6,22.4,6,23,6z"/> <path d="M16,5L16,5c0,0.6,0.4,1,1,1h2c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1h-2C16.4,4,16,4.4,16,5z"/> <path d="M7,24H6v-1c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v1c0,1.1,0.9,2,2,2h1c0.6,0,1-0.4,1-1l0,0C8,24.4,7.6,24,7,24z"/> <path d="M6,7V6h1c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1H6C4.9,4,4,4.9,4,6v1c0,0.6,0.4,1,1,1l0,0C5.6,8,6,7.6,6,7z"/> <path d="M24,11v2c0,0.6,0.4,1,1,1l0,0c0.6,0,1-0.4,1-1v-2c0-0.6-0.4-1-1-1l0,0C24.4,10,24,10.4,24,11z"/> </g> <g> <path d="M25,16h-1.8c-0.8,0-1.5-0.4-1.8-1.1l-0.2-0.3c-0.2-0.3-0.5-0.6-0.9-0.6h-4.8c-0.4,0-0.7,0.2-0.9,0.6l-0.2,0.3 c-0.3,0.7-1,1.1-1.8,1.1H11c-0.6,0-1,0.4-1,1v8c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1v-8C26,16.4,25.6,16,25,16z M18,25 c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4S20.2,25,18,25z"/> <circle cx="18" cy="21" r="2"/> </g> <text transform="matrix(1 0 0 1 28.4106 22)" class="st0 st1">Snapshot</text>
+</svg>  
+</div>
+
+<div id = "resetButton">
+<svg version="1.1" onclick="queryReset()" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1068.5 512" width = "6.5%" style="left:165px;top:343px;background-color: rgba(255,255,255,0); cursor: pointer;  z-index: 30; position:absolute;" xml:space="preserve"> <style type="text/css"> .st0a{font-family:'MyriadPro-Regular';} .st1a{font-size:239.4106px;} </style> <path d="M218.4,320.6l28.4,28.4H157c-51.4,0-93-41.6-93-93s41.6-93,93-93h18v-30h-18c-67.9,0-123,55.1-123,123s55.1,123,123,123 h89.8l-28.4,28.4l21.2,21.2l64.6-64.6l-64.6-64.6L218.4,320.6z"/> <path d="M355,133h-89.8l28.4-28.4l-21.2-21.2L207.8,148l64.6,64.6l21.2-21.2L265.2,163H355c51.4,0,93,41.6,93,93s-41.6,93-93,93 h-18.6v30H355c67.9,0,123-55.1,123-123S422.9,133,355,133z"/> <text transform="matrix(1 0 0 1 496.8376 327.6711)" class="st0a st1a">Reset</text>
+</svg>
+</div>
+
+  <div id="guiplace"> </div>
+
+  <div id="3d-graph"></div>
+
+  <div id = "legend" class="dg ac">
+    <div class="dg main a" style="position: absolute;"> 
+      <img src="./img/Legend_3.png" alt="" style="width: 273px; margin-top: 400px; margin-left: 3px; z-index:2;" >
+      
+    </div>
+  </div>
+<script>
+
+function hideShowMenu(val) {
+  if(val==0 || val == undefined){
+    document.getElementById("nqText").style.display = "none";
+    document.getElementById("nodequeryMain").style.display = "none";
+    document.getElementById("screenshotButton").style.display = "none";
+    document.getElementById("resetButton").style.display = "none";
+    document.getElementById("openbutton").innerHTML =  "&#9776; open";
+    document.getElementById("openbutton").value = 1;
+    document.getElementById("legend").style.display = "none";
+    document.getElementById("guiplace").style.display = "none";
+    
+  }
+  else{
+    document.getElementById("nqText").style.display = "block";
+    document.getElementById("nodequeryMain").style.display = "block";
+    document.getElementById("screenshotButton").style.display = "block";
+    document.getElementById("resetButton").style.display = "inline-block";
+    document.getElementById("openbutton").innerHTML =  "&times; close";
+    document.getElementById("openbutton").value = 0;
+    document.getElementById("legend").style.display = "block";
+    document.getElementById("guiplace").style.display = "block";
+  }
+}
+
+//////////////// DATA CREATION ////////////////
+
+function linkExist(sourceTargetTuples,kinaseID,targetID){
+  for (var idx = 0; idx < sourceTargetTuples.length; idx++) {
+    currTuple = sourceTargetTuples[idx]
+    if (currTuple[0] == kinaseID && currTuple[1] == targetID){
+      return true
+    }
+  }
+return false
+}
+
+function parseCSV(file_name) {
+let dict = {"nodes": [], "links": []}
+
+var userData = JSON.parse(window.localStorage.getItem(file_name));
+for (var i = 0; i < userData.length; i++) {
+  dataLine = userData[i]
+  kinaseID =  dataLine['KinaseID']
+  kinaseSize = dataLine['KinaseSize']
+  edgeWeight = dataLine['EdgeWeight']
+  edgeColor = dataLine['EdgeColor']
+  targetID = dataLine['TargetID']
+  targetSize = dataLine['TargetSize']
+  diffPhos = dataLine['Diff_Protein_Phosphorylation']
+  PhosphoSiteID = dataLine['PhosphoSiteID']
+
+  currentNodeList = dict["nodes"].map(el => el.id)
+
+  //kinase is type 1, target is type 2
+  if (!(currentNodeList.includes(kinaseID))){ // if kinase id does not occur in nodes
+    dict["nodes"].push({'id': kinaseID, "type": 1, "nodeSize": kinaseSize, "nodeColors": [], "partitionIDs":[]})
+    currentNodeList.push(kinaseID)
+  }
+  else { // kinase id occurs, need to check if it is labeled as target and change its type into kinase (1)
+    nodeIndex = currentNodeList.indexOf(kinaseID)
+    dict['nodes'][nodeIndex]['type'] = 1
+  }
+
+  if (!(currentNodeList.includes(targetID))){
+    var currentNodeColors = []
+    if(diffPhos!=undefined){currentNodeColors.push(diffPhos)}
+    var currentNodePartitions = []
+    if(PhosphoSiteID!=undefined){currentNodePartitions.push(PhosphoSiteID)}
+    dict["nodes"].push({'id': targetID, "type": 2, "nodeSize": targetSize, "nodeColors": currentNodeColors, "partitionIDs": currentNodePartitions})
+  }
+  else{ // target id occurs, need to append diffPhos to nodecolors and PhosphoSiteID to partitionIDs
+        // no need to update its type as target !!!!!!!!
+      nonDirtyNodeList = dict["nodes"].map(el => el.id)
+      nodeIndex = nonDirtyNodeList.indexOf(targetID)
+      if(diffPhos != undefined && PhosphoSiteID!= undefined && !(dict['nodes'][nodeIndex]['partitionIDs'].includes(PhosphoSiteID))){
+        dict['nodes'][nodeIndex]['nodeColors'].push(diffPhos)
+        dict['nodes'][nodeIndex]['partitionIDs'].push(PhosphoSiteID)}
+  }
+
+  sourceTargetTuples = dict["links"].map(el => [el.source,el.target])
+
+  if(!(linkExist(sourceTargetTuples,kinaseID,targetID))){
+    if(kinaseID==targetID){
+      dict['links'].push({'source': kinaseID, 'target': targetID, 'edgeWeight': edgeWeight, 'edgeColor': edgeColor, 'curvature':.3})
+    }
+    else{
+      dict['links'].push({'source': kinaseID, 'target': targetID, 'edgeWeight': edgeWeight, 'edgeColor': edgeColor, 'curvature':0})
+    }
+  }
+}
+  dict['ids'] = dict["nodes"].map(el => el.id)
+return dict;
+}
+
+const CAMERA_DISTANCE2NODES_FACTOR = 170;
+//////////////// JSON to DATA OBJECT ////////////////
+var file_names = JSON.parse(localStorage.getItem("file_names"))
+var finalDataObj = parseCSV(localStorage.getItem(file_names[0]))
+var nodesList = finalDataObj["ids"]
+var nodeSizes = finalDataObj["nodes"].map(el => el.nodeSize)
+var nodeColors = (finalDataObj["nodes"].map(el => el.nodeColors)).flat()
+var nodeSizeRange = [Math.min.apply(Math, nodeSizes), Math.max.apply(Math, nodeSizes)]
+var nodeColorRange = [Math.min.apply(Math, nodeColors), Math.max.apply(Math, nodeColors)]
+
+var edgeWeights = finalDataObj["links"].map(el => el.edgeWeight)
+var edgeColors = finalDataObj["links"].map(el => el.edgeColor)
+var edgeWeightRange = [Math.min.apply(Math, edgeWeights), Math.max.apply(Math, edgeWeights)]
+var edgeColorRange = [Math.min.apply(Math, edgeColors), Math.max.apply(Math, edgeColors)]
+
+console.log(finalDataObj)
+
+//////////////// GRAPH CREATION ////////////////
+var directed = sessionStorage.getItem("directed")
+var elem = document.getElementById('3d-graph');
+var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
+  (elem)
+  .backgroundColor("#ffffff")
+  .graphData(finalDataObj)
+  .linkCurvature('curvature')
+  .nodeThreeObject(node =>  CreateNode(node))
+  .linkWidth(link => (edgeWeightRange[0]!=undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight,edgeWeightRange,[0,1]):1) // subject to change
+  .linkDirectionalArrowLength(directed => (directed)
+    ? 5
+    : 0)        
+  .linkDirectionalArrowRelPos(0.5)
+  .linkColor(link => (link.edgeColor == undefined)
+    ? "#808080"
+    : linkColoring(link.edgeColor, 'cornflowerblue', 'blue', 'midnightblue', 'blueviolet', 'darkviolet'))
+    .nodeLabel(node => (true) 
+    ? (`<span style="color: purple">${node.id}</span>`)
+    : (`<span></span>`))
+
+
+// NODE AND LINK CREATION FUNCTIONS
+function normalized(value, actual_bounds, desired_bounds) { 
+  return (desired_bounds[0] + (value - actual_bounds[0]) * (desired_bounds[1] - desired_bounds[0]) / (actual_bounds[1] - actual_bounds[0]))
+}
+
+
+function nodeColoring (l2fc_value_original) {
+    if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
+    
+    var threshold_max = 0
+    var threshold_min = 0
+    var l2fc_value = (l2fc_value_original == 'null') ? 'null' : normalized(l2fc_value_original,nodeColorRange,[-3,3]);
+   
+    var rainbow = new Rainbow(); 
+    rainbow.setNumberRange(-3, 3);
+    rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044')
+  
+    if ((l2fc_value >= threshold_min && l2fc_value <= threshold_max) || l2fc_value == "null") {
+      return "0xcccccc"
+    }
+
+    if (l2fc_value < threshold_min) {
+      var hexColour = rainbow.colourAt(l2fc_value-threshold_min);
+      var stringColor = '0x' + hexColour
+      return stringColor
+    } 
+    else {
+      var hexColour = rainbow.colourAt(l2fc_value-threshold_max);
+      var stringColor = '0x' + hexColour
+      return stringColor
+    } 
+  }
+}
+
+function linkColoring (value, color1, color2, color3, color4, color5) {
+  if (edgeColorRange[0] != undefined && edgeColorRange[1] != undefined){
+    var rainbow = new Rainbow(); 
+    thisColor1 = String(color1)
+    thisColor2 = String(color2)
+    thisColor3 = String(color3)
+    thisColor4 = String(color4)
+    thisColor5 = String(color5)
+    rainbow.setNumberRange(-1, 1);
+    value = normalized(value,edgeColorRange,[-1,1])
+    rainbow.setSpectrum(thisColor1, thisColor2, thisColor3, thisColor4, thisColor5)
+    var hexColour = rainbow.colourAt(value);
+    return parseInt(hexColour, 16 )
+  }
+}
+function CreateNode(node)
+{
+  // NODE SIZE
+  var node_size = node.nodeSize
+  if(node_size == undefined){
+    node_size = 1
+  }
+  else{
+    node_size = normalized(node_size,nodeSizeRange,[0,1]) + 0.5
+  }
+
+  // NODE PARTITIONS
+  var num_sites = (node.nodeColors).length
+  if (num_sites > 1 ) { // partitions
+    verticalPartitions = num_sites
+  }
+  else // no partitions
+    verticalPartitions = 1
+
+  if(node.type == 1){ // if it is a kinase
+    radialPartitions = 25
+    var mesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(node_size*0.001, node_size*8, node_size*9*verticalPartitions, radialPartitions, verticalPartitions),
+    new THREE.MeshLambertMaterial({
+      transparent: false,
+      depthWrite: true,
+      opacity: 1,
+      wireframe: false,
+      emissive: "#181818",
+      vertexColors: THREE.FaceColors,
+    }));
+  }
+  else{ // if it is not a kinase
+    radialPartitions = 25
+    var mesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
+    new THREE.MeshLambertMaterial({
+      transparent: false,
+      depthWrite: true,
+      opacity: 1,
+      wireframe: false,
+      emissive: "#181818",
+      vertexColors: THREE.FaceColors,
+    }));
+  }
+
+  // NODE COLORING
+  if(verticalPartitions == 1){ // NO PARTITIONS!
+
+    // NodeColor does not exist 
+    if (node.nodeColors.length == 0)  { 
+      nodeColor = "null"
+    }
+    else  {// NodeColor exists  
+      nodeColor = node.nodeColors[0]
+    }
+    var face = 0
+
+    for(face = 0; face<50;face++){
+      mesh.geometry.faces[face].color.setHex(nodeColoring(nodeColor))
+    }
+  
+    face = 50
+    for(face = 50; face<75;face++){
+      mesh.geometry.faces[face].color.setHex("0xb5b5b5");
+    }
+
+    face = 75
+    for(face = 75; face<100;face++){
+      mesh.geometry.faces[face].color.setHex("0xb5b5b5");
+    }
+  }
+  else{ // THERE ARE PARTITIONS!
+
+    for (var i = 0; i < radialPartitions*2*(verticalPartitions); i+=(verticalPartitions*2))
+    {
+          j = 0
+          for (var k = 0; k<node.nodeColors.length; k++) {
+            nodeColor = node.nodeColors[k]
+            mesh.geometry.faces[i+(j*2)].color.setHex(nodeColoring(nodeColor)); 
+            mesh.geometry.faces[i+(j*2)+1].color.setHex(nodeColoring(nodeColor));
+            var x = 0
+            for(x = i+(j*2)+2;x<i+(j*2)+27;x++){
+              mesh.geometry.faces[x].color.setHex("0xb5b5b5");                  
+            }
+            for(x = i+(j*2)+27;x<i+(j*2)+52;x++){
+              mesh.geometry.faces[x].color.setHex("0xb5b5b5");                  
+            }
+            j = j + 1
+            }
+    }
+  }
+  return mesh
+}
+
+
+/// NODE QUERY FUNCTIONS
+function removeOptions(selectElement) {
+   var i, L = selectElement.options.length - 1;
+   for(i = L; i >= 0; i--) {
+      selectElement.remove(i)
+   }
+   selectElement.fstdropdown.rebind()
+}
+function addOptions(addText, selectElement)
+{
+    // Create an Option object       
+    var opt = document.createElement("option")
+
+    // Assign text and value to Option object
+    opt.text = addText;
+    opt.value = addText;
+
+    // Add an Option object to Drop Down List Box
+    selectElement.options.add(opt);
+}
+nodesList = nodesList.sort()
+var x = document.getElementById("nodequery")
+var nodeindexes = 0
+for(nodeindexes = 0; nodeindexes<nodesList.length;nodeindexes++){
+  var optext = nodesList[nodeindexes]
+  addOptions(optext,x)
+}
+        
+
+function queryReset(){
+  document.getElementById("nodequery").selectedIndex = 0;
+  document.getElementById("nodequery").fstdropdown.rebind()
+  var nodenum = Graph.graphData().nodes.length
+  Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
+}
+
+  </script>
+</body>

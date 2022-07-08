@@ -1,7 +1,7 @@
-﻿SourceID,SourceNodeColor,SourceNodeSize,TargetID,TargetNodeColor,TargetNodeSize,EdgeColor,EdgeWeight
-O00203,4.67,0.963550095,AP3B1,1.43,-3,4.67,1
-O00203,4.67,0.963550095,BRD4,2.45,1,2.67,4
-O00203,4.67,0.963550095,asd,-1.72,2,7,2
-O00204,-8,4,acd,10,0.2,-4.67,3
-O00204,-8,4,DE,-6,1,-2.67,2
-O00204,-8,4,XX,0.1,-4.5,-7,1
+﻿KinaseID,KinaseSize,TargetID,Diff_Protein_Phosphorylation
+O00203,0.963550095,AP3B1,1.43
+O00203,0.963550095,BRD4,2.45
+O00203,0.963550095,asd,-1.72
+O00204,4,acd,10
+O00204,4,DE,-6
+O00204,4,XX,0.1

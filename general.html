@@ -456,7 +456,6 @@ function parseCSV(file_name) {
 let dict_to_json = {"nodes": [], "links": []}
 
 var userData = JSON.parse(window.localStorage.getItem(file_name));
-console.log(userData)
 var userDF = new dfd.DataFrame(userData)
 var source_att_1 = attribute_dict(userDF, "SourceID", "SourceNodeColor") // source_attr_1 // -1, 1
 var source_att_2 = attribute_dict(userDF, "SourceID", "SourceNodeSize") // source_attr_2 // 0, 1
@@ -505,6 +504,8 @@ var file_names = JSON.parse(localStorage.getItem("file_names"));
 var finalDataObj = parseCSV(localStorage.getItem(file_names[0]))
 var nodesList = finalDataObj["ids"]
 console.log(finalDataObj)
+// permittedValues = finalDataObj["nodes"].map(el => [el.id,el.group]);
+// console.log(finalDataObj["nodes"])
 //////////////// GRAPH CREATION ////////////////
 var directed = sessionStorage.getItem("directed")
 var elem = document.getElementById('3d-graph');
@@ -757,7 +758,6 @@ function colors_general (l2fc_value, isHexFlag, color1, color2, color3, color4, 
     }
     else 
       return stringColor
-  
 }
 
 function screenshot(){
