@@ -116,7 +116,7 @@ function data_upload_check(){
     
     if (sessionStorage.getItem("vis_perm") == "true"){
         sessionStorage.setItem("vis_perm",false)
-        window.location.href = 'general.html'
+        window.location.href = 'visualization.html'
         
     }
     else{

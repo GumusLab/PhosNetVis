@@ -12,19 +12,12 @@
   <a href="index.html"></a>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <style type="text/css">
-    #gui {
-    position: absolute;
-    left: 2px;   /* position inside relatively positioned parent */
-    top: 140px;
-    z-index: 10;   /* adjust as needed */
-    }
-
-    #logo{
-      position: absolute;
-      margin-top: 10px;
-      z-index:2;
-    }
+<style type="text/css">
+#logo{
+  position: absolute;
+  margin-top: 10px;
+  z-index:2;
+}
 
 .p1 {
   font-family: Helvetica, sans-serif;
@@ -49,8 +42,8 @@
   font-size: 55px;
   position: absolute;
   left: 2px;   /* position inside relatively positioned parent */
-  top: 150px;
-  z-index: 10; 
+  top: 160px;
+  z-index: 50; 
   width: 270px;
 }
 
@@ -62,6 +55,7 @@ body {
     font-family: "MyriadPro-Regular";
     src: url("fonts/MYRIADPROREGULAR.woff") format("woff");
     }
+    
   </style>
 </head>
 
@@ -82,7 +76,7 @@ body {
 
 
 <div id = "screenshotButton">
-<svg version="1.1" onclick="screenshot()" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" onclick="snapshot()" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
     viewBox="0 0 114 30" width = "8%" style="left:15px;top:350px;background-color: rgba(255,255,255,0); cursor: pointer;  z-index: 30; position:absolute;" xml:space="preserve"> <style type="text/css"> .st0{font-family:'MyriadPro-Regular';} .st1{font-size:22px;} </style> <g> <path d="M6,19v-2c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v2c0,0.6,0.4,1,1,1l0,0C5.6,20,6,19.6,6,19z"/> <path d="M10,5L10,5c0,0.6,0.4,1,1,1h2c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1h-2C10.4,4,10,4.4,10,5z"/> <path d="M5,14L5,14c0.6,0,1-0.4,1-1v-2c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v2C4,13.6,4.4,14,5,14z"/> <path d="M23,6h1v1c0,0.6,0.4,1,1,1l0,0c0.6,0,1-0.4,1-1V6c0-1.1-0.9-2-2-2h-1c-0.6,0-1,0.4-1,1l0,0C22,5.6,22.4,6,23,6z"/> <path d="M16,5L16,5c0,0.6,0.4,1,1,1h2c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1h-2C16.4,4,16,4.4,16,5z"/> <path d="M7,24H6v-1c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v1c0,1.1,0.9,2,2,2h1c0.6,0,1-0.4,1-1l0,0C8,24.4,7.6,24,7,24z"/> <path d="M6,7V6h1c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1H6C4.9,4,4,4.9,4,6v1c0,0.6,0.4,1,1,1l0,0C5.6,8,6,7.6,6,7z"/> <path d="M24,11v2c0,0.6,0.4,1,1,1l0,0c0.6,0,1-0.4,1-1v-2c0-0.6-0.4-1-1-1l0,0C24.4,10,24,10.4,24,11z"/> </g> <g> <path d="M25,16h-1.8c-0.8,0-1.5-0.4-1.8-1.1l-0.2-0.3c-0.2-0.3-0.5-0.6-0.9-0.6h-4.8c-0.4,0-0.7,0.2-0.9,0.6l-0.2,0.3 c-0.3,0.7-1,1.1-1.8,1.1H11c-0.6,0-1,0.4-1,1v8c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1v-8C26,16.4,25.6,16,25,16z M18,25 c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4S20.2,25,18,25z"/> <circle cx="18" cy="21" r="2"/> </g> <text transform="matrix(1 0 0 1 28.4106 22)" class="st0 st1">Snapshot</text>
 </svg>  
 </div>
@@ -97,10 +91,6 @@ body {
 
   <div id="3d-graph"></div>
 
-  <div id = "legend" class="dg ac">
-    <div class="dg main a" style="position: absolute;"> 
-      <img src="./img/Legend_3.png" alt="" style="width: 273px; margin-top: 400px; margin-left: 3px; z-index:2;" >
-      
     </div>
   </div>
 <script>
@@ -113,7 +103,6 @@ function hideShowMenu(val) {
     document.getElementById("resetButton").style.display = "none";
     document.getElementById("openbutton").innerHTML =  "&#9776; open";
     document.getElementById("openbutton").value = 1;
-    document.getElementById("legend").style.display = "none";
     document.getElementById("guiplace").style.display = "none";
     
   }
@@ -124,7 +113,6 @@ function hideShowMenu(val) {
     document.getElementById("resetButton").style.display = "inline-block";
     document.getElementById("openbutton").innerHTML =  "&times; close";
     document.getElementById("openbutton").value = 0;
-    document.getElementById("legend").style.display = "block";
     document.getElementById("guiplace").style.display = "block";
   }
 }
@@ -188,7 +176,7 @@ for (var i = 0; i < userData.length; i++) {
 
   if(!(linkExist(sourceTargetTuples,kinaseID,targetID))){
     if(kinaseID==targetID){
-      dict['links'].push({'source': kinaseID, 'target': targetID, 'edgeWeight': edgeWeight, 'edgeColor': edgeColor, 'curvature':.3})
+      dict['links'].push({'source': kinaseID, 'target': targetID, 'edgeWeight': edgeWeight, 'edgeColor': edgeColor, 'curvature':.4})
     }
     else{
       dict['links'].push({'source': kinaseID, 'target': targetID, 'edgeWeight': edgeWeight, 'edgeColor': edgeColor, 'curvature':0})
@@ -200,21 +188,82 @@ return dict;
 }
 
 const CAMERA_DISTANCE2NODES_FACTOR = 170;
-//////////////// JSON to DATA OBJECT ////////////////
+//////////////// GRAPH DATA OBJECT ////////////////
 var file_names = JSON.parse(localStorage.getItem("file_names"))
-var finalDataObj = parseCSV(localStorage.getItem(file_names[0]))
+var index = localStorage.getItem("idx")
+var finalDataObj = parseCSV(localStorage.getItem(file_names[index]))
+
 var nodesList = finalDataObj["ids"]
-var nodeSizes = finalDataObj["nodes"].map(el => el.nodeSize)
-var nodeColors = (finalDataObj["nodes"].map(el => el.nodeColors)).flat()
+var nodeSizes = (finalDataObj["nodes"].map(el => el.nodeSize)).filter(x => x != undefined)
+var nodeColors = ((finalDataObj["nodes"].map(el => el.nodeColors)).flat()).filter(x => x != undefined)
 var nodeSizeRange = [Math.min.apply(Math, nodeSizes), Math.max.apply(Math, nodeSizes)]
 var nodeColorRange = [Math.min.apply(Math, nodeColors), Math.max.apply(Math, nodeColors)]
+var nodeColorThreshold = 0
+if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
+  var minPositive = 0
+  var maxPositive = 0
+  nodeColorRange[0]<0 ? minPositive = - nodeColorRange[0] : minPositive = nodeColorRange[0]
+  nodeColorRange[1]<0 ? maxPositive = - nodeColorRange[1] : maxPositive = nodeColorRange[1]
+  minPositive>maxPositive  ? nodeColorThreshold = minPositive : nodeColorThreshold = maxPositive
+}
 
-var edgeWeights = finalDataObj["links"].map(el => el.edgeWeight)
-var edgeColors = finalDataObj["links"].map(el => el.edgeColor)
+var edgeWeights = (finalDataObj["links"].map(el => el.edgeWeight)).filter(x => x != undefined)
+var edgeColors = (finalDataObj["links"].map(el => el.edgeColor)).filter(x => x != undefined)
 var edgeWeightRange = [Math.min.apply(Math, edgeWeights), Math.max.apply(Math, edgeWeights)]
 var edgeColorRange = [Math.min.apply(Math, edgeColors), Math.max.apply(Math, edgeColors)]
 
-console.log(finalDataObj)
+// cross-linking the node objects
+finalDataObj.links.forEach(link => {
+      const a = (finalDataObj.nodes.filter(x => x.id === link.source))[0]
+      const b = (finalDataObj.nodes.filter(x => x.id === link.target))[0]
+      !a.neighbors && (a.neighbors = []);
+      !b.neighbors && (b.neighbors = []);
+      a.neighbors.push(b);
+      b.neighbors.push(a);
+
+      !a.links && (a.links = []);
+      !b.links && (b.links = []);
+      a.links.push(link);
+      b.links.push(link);
+    });
+
+
+const highlightNodes = new Set();
+const highlightLinks = new Set();
+
+const searchNodes = new Set();
+const searchLinks = new Set();
+let hoverNode = null;
+
+////////// GUI CONTROL CREATION ////////////////
+const fnames = {};
+ for (const key of file_names) {
+  fnames[key] = key;
+ }
+
+ const PARAMS = {
+  States: file_names[index],
+  MaxFold : 0,
+  MinFold : 0,
+  Background : "#ffffff"
+};
+
+const pane = new Tweakpane.Pane({
+  container: document.getElementById('guiplace'),
+});
+
+pane.addInput(PARAMS, 'States', {options: fnames}).on('change', (ev) => {
+  changeState();
+  });
+pane.addInput(PARAMS, 'MaxFold', {min: 0, max: nodeColorThreshold}).on('change', (ev) => {
+  updateHighlight();
+  });
+pane.addInput(PARAMS, 'MinFold', {min: -nodeColorThreshold, max: 0}).on('change', (ev) => {
+  updateHighlight();
+  });
+pane.addInput(PARAMS, 'Background').on('change', (ev) => {
+  updateBackground();
+  });
 
 //////////////// GRAPH CREATION ////////////////
 var directed = sessionStorage.getItem("directed")
@@ -224,51 +273,130 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
   .backgroundColor("#ffffff")
   .graphData(finalDataObj)
   .linkCurvature('curvature')
-  .nodeThreeObject(node =>  CreateNode(node))
-  .linkWidth(link => (edgeWeightRange[0]!=undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight,edgeWeightRange,[0,1]):1) // subject to change
-  .linkDirectionalArrowLength(directed => (directed)
-    ? 5
-    : 0)        
+  .nodeThreeObject(node => CreateNode(node))
+  .onNodeClick(node => {
+          // Aim at node from outside it
+          const distance = 40;
+          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+
+          const newPos = node.x || node.y || node.z
+            ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+            : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+          Graph.cameraPosition(
+            newPos, // new position
+            node, // lookAt ({ x, y, z })
+            3000  // ms transition duration
+          )        
+        })
+  .linkWidth(link => (highlightLinks.has(link) || searchLinks.has(link)) ? 2 : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1]) : 1) // subject to change
+  .linkDirectionalArrowLength(directed => (directed) ? 5 : 0)        
   .linkDirectionalArrowRelPos(0.5)
-  .linkColor(link => (link.edgeColor == undefined)
-    ? "#808080"
-    : linkColoring(link.edgeColor, 'cornflowerblue', 'blue', 'midnightblue', 'blueviolet', 'darkviolet'))
-    .nodeLabel(node => (true) 
-    ? (`<span style="color: purple">${node.id}</span>`)
-    : (`<span></span>`))
+  .linkColor(link => (link.edgeColor == undefined) ? "#808080" : linkColoring(link.edgeColor, 'cornflowerblue', 'blue', 'midnightblue', 'blueviolet', 'darkviolet'))
+  .linkDirectionalParticleWidth(2)
+  .linkDirectionalParticles(link => (highlightLinks.has(link) || searchLinks.has(link)) ? 4 : 0)
+  .onNodeHover(node => {
+          // no state change
+          if ((!node && !highlightNodes.size) || (node && hoverNode === node)) return;
+
+          highlightNodes.clear();
+          highlightLinks.clear();
+          if (node) {
+            highlightNodes.add(node);
+            node.neighbors.forEach(neighbor => highlightNodes.add(neighbor));
+            node.links.forEach(link => highlightLinks.add(link));
+          }
+
+          hoverNode = node || null;
+
+          updateHighlight();
+        })
+  .onLinkHover(link => {
+    highlightNodes.clear();
+    highlightLinks.clear();
+
+    if (link) {
+      highlightLinks.add(link);
+      highlightNodes.add(link.source);
+      highlightNodes.add(link.target);
+    }
+
+    updateHighlight();
+  });
+
+  function updateHighlight() {
+      // trigger update of highlighted objects in scene
+      Graph
+        .nodeThreeObject(Graph.nodeThreeObject())
+        .linkWidth(Graph.linkWidth())
+        .linkDirectionalParticles(Graph.linkDirectionalParticles());
+    }
+  
+    function updateBackground() {
+      Graph
+        .backgroundColor(PARAMS.Background)
+    }
 
 
+    function updateSearch() {
+      var x = document.getElementById("nodequery");
+      if(x.value == ""){
+        searchNodes.clear();
+        searchLinks.clear();
+        var nodenum = Graph.graphData().nodes.length
+        Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
+        updateHighlight();
+      }
+
+      else{
+        var currentData = Graph.graphData()
+        var thisNode = currentData["nodes"].filter(ix => ix.id == x.value)[0]
+        const distance = 100;
+          const distRatio = 1 + distance/Math.hypot(thisNode.x, thisNode.y, thisNode.z);
+          Graph
+          .cameraPosition(
+              { x: thisNode.x * distRatio, y: thisNode.y * distRatio, z: thisNode.z * distRatio }, // new position
+              thisNode, // lookAt ({ x, y, z })
+              2000  // ms transition duration
+            )
+          searchNodes.clear();
+          searchLinks.clear();
+          if (thisNode) {
+            searchNodes.add(thisNode);
+            thisNode.neighbors.forEach(neighbor => searchNodes.add(neighbor));
+            thisNode.links.forEach(link => searchLinks.add(link));
+          }
+          updateHighlight();
+          
+      }
+
+  }
+    
 // NODE AND LINK CREATION FUNCTIONS
 function normalized(value, actual_bounds, desired_bounds) { 
   return (desired_bounds[0] + (value - actual_bounds[0]) * (desired_bounds[1] - desired_bounds[0]) / (actual_bounds[1] - actual_bounds[0]))
 }
 
+function nodeColoring (l2fc_value) {
 
-function nodeColoring (l2fc_value_original) {
     if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
     
-    var threshold_max = 0
-    var threshold_min = 0
-    var l2fc_value = (l2fc_value_original == 'null') ? 'null' : normalized(l2fc_value_original,nodeColorRange,[-3,3]);
-   
+    var threshold_max = PARAMS.MaxFold
+    var threshold_min = PARAMS.MinFold
     var rainbow = new Rainbow(); 
-    rainbow.setNumberRange(-3, 3);
-    rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044')
+    nodeColorThreshold > 3 ? rainbow.setNumberRange(-3, 3) : rainbow.setNumberRange(-nodeColorThreshold, nodeColorThreshold)
+    
+    rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044');
   
     if ((l2fc_value >= threshold_min && l2fc_value <= threshold_max) || l2fc_value == "null") {
       return "0xcccccc"
     }
+    else{
+      var hexColour = rainbow.colourAt(l2fc_value);
+      var stringColor = '0x' + hexColour
+      return stringColor
+    }
 
-    if (l2fc_value < threshold_min) {
-      var hexColour = rainbow.colourAt(l2fc_value-threshold_min);
-      var stringColor = '0x' + hexColour
-      return stringColor
-    } 
-    else {
-      var hexColour = rainbow.colourAt(l2fc_value-threshold_max);
-      var stringColor = '0x' + hexColour
-      return stringColor
-    } 
   }
 }
 
@@ -280,13 +408,14 @@ function linkColoring (value, color1, color2, color3, color4, color5) {
     thisColor3 = String(color3)
     thisColor4 = String(color4)
     thisColor5 = String(color5)
-    rainbow.setNumberRange(-1, 1);
-    value = normalized(value,edgeColorRange,[-1,1])
+    rainbow.setNumberRange(-2, 2);
+    value = normalized(value,edgeColorRange,[-2,2])
     rainbow.setSpectrum(thisColor1, thisColor2, thisColor3, thisColor4, thisColor5)
     var hexColour = rainbow.colourAt(value);
-    return parseInt(hexColour, 16 )
+    return parseInt(hexColour, 16)
   }
 }
+
 function CreateNode(node)
 {
   // NODE SIZE
@@ -303,11 +432,27 @@ function CreateNode(node)
   if (num_sites > 1 ) { // partitions
     verticalPartitions = num_sites
   }
-  else // no partitions
+  else {
     verticalPartitions = 1
-
+  }
+    
   if(node.type == 1){ // if it is a kinase
     radialPartitions = 25
+
+    if (highlightNodes.has(node) || searchNodes.has(node)){
+    var mesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(node_size*0.001, node_size*8, node_size*9*verticalPartitions, radialPartitions, verticalPartitions),
+    new THREE.MeshLambertMaterial({
+      transparent: false,
+      depthWrite: false,
+      opacity: 1,
+      wireframe: false,
+      emissive: "#181818",
+      vertexColors: THREE.FaceColors,
+    }));
+
+    }
+    else{
     var mesh = new THREE.Mesh(
     new THREE.CylinderGeometry(node_size*0.001, node_size*8, node_size*9*verticalPartitions, radialPartitions, verticalPartitions),
     new THREE.MeshLambertMaterial({
@@ -318,9 +463,25 @@ function CreateNode(node)
       emissive: "#181818",
       vertexColors: THREE.FaceColors,
     }));
+    }
+
   }
+
   else{ // if it is not a kinase
     radialPartitions = 25
+    if (highlightNodes.has(node) || searchNodes.has(node)){
+    var mesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
+    new THREE.MeshLambertMaterial({
+      transparent: false,
+      depthWrite: false,
+      opacity: 1,
+      wireframe: false,
+      emissive: "#181818",
+      vertexColors: THREE.FaceColors,
+    }));
+    }
+    else{
     var mesh = new THREE.Mesh(
     new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
     new THREE.MeshLambertMaterial({
@@ -331,6 +492,8 @@ function CreateNode(node)
       emissive: "#181818",
       vertexColors: THREE.FaceColors,
     }));
+    }
+
   }
 
   // NODE COLORING
@@ -344,7 +507,6 @@ function CreateNode(node)
       nodeColor = node.nodeColors[0]
     }
     var face = 0
-
     for(face = 0; face<50;face++){
       mesh.geometry.faces[face].color.setHex(nodeColoring(nodeColor))
     }
@@ -361,7 +523,7 @@ function CreateNode(node)
   }
   else{ // THERE ARE PARTITIONS!
 
-    for (var i = 0; i < radialPartitions*2*(verticalPartitions); i+=(verticalPartitions*2))
+    for (var i = 0; i < radialPartitions*2*(verticalPartitions); i+= (verticalPartitions*2))
     {
           j = 0
           for (var k = 0; k<node.nodeColors.length; k++) {
@@ -379,9 +541,17 @@ function CreateNode(node)
             }
     }
   }
+
+  if (highlightNodes.has(node) || searchNodes.has(node)){
+  const sprite = new SpriteText(node.id);
+  sprite.color = 'rgb(0,0,0)';
+  sprite.textHeight = 7;
+  sprite.fontFace = "Trebuchet MS"
+  mesh.add(sprite);
+  }
+
   return mesh
 }
-
 
 /// NODE QUERY FUNCTIONS
 function removeOptions(selectElement) {
@@ -411,13 +581,33 @@ for(nodeindexes = 0; nodeindexes<nodesList.length;nodeindexes++){
   addOptions(optext,x)
 }
         
-
 function queryReset(){
   document.getElementById("nodequery").selectedIndex = 0;
   document.getElementById("nodequery").fstdropdown.rebind()
   var nodenum = Graph.graphData().nodes.length
   Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
+  searchNodes.clear();
+  searchLinks.clear();
+  updateHighlight();
 }
 
+function snapshot(){
+const d = new Date();
+let hour = String(d.getHours()).padStart(2, '0');
+let minutes = String(d.getMinutes()).padStart(2, '0');
+let seconds = String(d.getSeconds()).padStart(2, '0');
+var ImageBase64 = Graph.renderer().domElement.toDataURL("image/png");
+var a = document.createElement("a"); //Create <a>
+a.href = ImageBase64; //Image Base64 Goes here
+a.download = hour+"-"+minutes+"-"+seconds+"_PhosNetVis-Snapshot.png"; //File name Here
+a.click(); //Downloaded file
+}
+
+
+function changeState(){
+var new_file_name = PARAMS.States
+localStorage.setItem('idx',file_names.indexOf(new_file_name))
+location.reload();
+}
   </script>
 </body>
