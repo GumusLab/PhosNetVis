@@ -413,9 +413,9 @@ const fnames = {};
  }
 
  const PARAMS = {
-  States: file_names[index],
-  MaxFold : 0,
-  MinFold : 0,
+  Files: file_names[index],
+  PosLogFold : 0,
+  NegLogFold : 0,
   Background : "#ffffff"
 };
 
@@ -423,13 +423,13 @@ const pane = new Tweakpane.Pane({
   container: document.getElementById('guiplace'),
 });
 
-pane.addInput(PARAMS, 'States', {options: fnames}).on('change', (ev) => {
+pane.addInput(PARAMS, 'Files', {options: fnames}).on('change', (ev) => {
   changeState();
   });
-pane.addInput(PARAMS, 'MaxFold', {min: 0, max: nodeColorThreshold}).on('change', (ev) => {
+pane.addInput(PARAMS, 'PosLogFold', {min: 0, max: nodeColorThreshold}).on('change', (ev) => {
   updateHighlight();
   });
-pane.addInput(PARAMS, 'MinFold', {min: -nodeColorThreshold, max: 0}).on('change', (ev) => {
+pane.addInput(PARAMS, 'NegLogFold', {min: -nodeColorThreshold, max: 0}).on('change', (ev) => {
   updateHighlight();
   });
 pane.addInput(PARAMS, 'Background').on('change', (ev) => {
@@ -446,8 +446,10 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
   .linkCurvature('curvature')
   .nodeThreeObject(node => CreateNode(node))
   .onNodeClick(node => {
+        searchNodes.clear();
+        searchLinks.clear();
           // Aim at node from outside it
-          const distance = 40;
+          const distance = 100;
           const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
 
           const newPos = node.x || node.y || node.z
@@ -458,13 +460,21 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
             newPos, // new position
             node, // lookAt ({ x, y, z })
             3000  // ms transition duration
-          )        
+          )      
+          
+          if (node) {
+            searchNodes.add(node);
+            node.neighbors.forEach(neighbor => searchNodes.add(neighbor));
+            node.links.forEach(link => searchLinks.add(link));
+          }
+          updateHighlight();
         })
   .linkWidth(link => (highlightLinks.has(link) || searchLinks.has(link)) ? 2 : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1]) : 1) // subject to change
   .linkDirectionalArrowLength(directed => (directed) ? 5 : 0)        
   .linkDirectionalArrowRelPos(0.5)
   .linkColor(link => (link.edgeColor == undefined) ? "#808080" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
   .linkDirectionalParticleWidth(2)
+  .linkOpacity(0.6)
   .linkDirectionalParticles(link => (highlightLinks.has(link) || searchLinks.has(link)) ? 4 : 0)
   .onNodeHover(node => {
           // no state change
@@ -552,8 +562,8 @@ function nodeColoring (l2fc_value) {
 
     if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
     
-    var threshold_max = PARAMS.MaxFold
-    var threshold_min = PARAMS.MinFold
+    var threshold_max = PARAMS.PosLogFold
+    var threshold_min = PARAMS.NegLogFold
     var rainbow = new Rainbow(); 
     nodeColorThreshold > 3 ? rainbow.setNumberRange(-3, 3) : rainbow.setNumberRange(-nodeColorThreshold, nodeColorThreshold)
     
@@ -771,7 +781,7 @@ a.click(); //Downloaded file
 
 
 function changeState(){
-var new_file_name = PARAMS.States
+var new_file_name = PARAMS.Files
 localStorage.setItem('idx',file_names.indexOf(new_file_name))
 location.reload();
 }
