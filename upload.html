@@ -58,8 +58,6 @@
     }
     
 
-
-
 </style>
 
 </head>
@@ -79,10 +77,8 @@
       <line id="Line_150" data-name="Line 150" x2="891" transform="translate(0 61)" fill="none" stroke="#707070" stroke-width="4"/>
     </svg>
 
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1376 370" width = "45%" id="uploadText" style="margin-bottom:0%">
-      <text id="Phosphoproteomics_data_is_best_represented_as_a_network._Source_nodes_are_typically_kinases_and_target_nodes_are_substrates_which_may_have_multiple_phosphorylation_sites._To_visualize_your_network_data_you_need_to_have_at_the_very_minimum_a_column_co" data-name="Phosphoproteomics data is best represented as a network. Kinase nodes are typically kinases, and target nodes are substrates which may have multiple phosphorylation sites. 
-    
-    To visualize your network data, you need to have, at the very minimum, a column co" fill="#5e6365" font-size="25" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="24">Phosphoproteomics data is best represented as a network. Kinase nodes are typically kinases, and target nodes are </tspan><tspan x="0" y="54">substrates which may have multiple phosphorylation sites. </tspan><tspan x="0" y="84"></tspan><tspan x="0" y="114">To visualize your network data, you need to have, at the very minimum, a column containing kinase nodes for kinases </tspan><tspan x="0" y="144" font-family="helveticaBold, Helvetica Neue" font-weight="700">(KinaseID)</tspan><tspan y="144" xml:space="preserve"> and a column containing target nodes </tspan><tspan y="144" font-family="helveticaBold, Helvetica Neue" font-weight="700">(TargetID) </tspan><tspan y="144">for substrates, in </tspan><tspan y="144" font-family="helveticaBold, Helvetica Neue" font-weight="700">.csv format</tspan><tspan y="144">. You can have additional </tspan><tspan x="0" y="174">columns in your </tspan><tspan y="174" font-family="helveticaBold, Helvetica Neue" font-weight="700">.csv </tspan><tspan y="174" xml:space="preserve">file to customize kinase node, target node and edge attributes.  If you have more than one dataset </tspan><tspan x="0" y="204">that may be coming from different states, timepoints or treatments etc., make sure that you have formatted each of them </tspan><tspan x="0" y="234">correctly with the guide table below.</tspan><tspan x="0" y="264"></tspan><tspan x="0" y="294">If you have already formatted your datasets with the corresponding column names, go ahead and upload to visualize them. </tspan><tspan x="0" y="324">If not, we can always help you to determine the correct format for your data!</tspan></text>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1376 395" width = "46%" id="uploadText" style="margin-bottom:0%">
+      <text id="Phosphoproteomics" fill="#5e6365" font-size="25" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="24">Phosphoproteomics data is best represented as a network. Kinase nodes are typically kinases, and target nodes are </tspan><tspan x="0" y="54">substrates which may have multiple phosphorylation sites. </tspan><tspan x="0" y="84"></tspan><tspan x="0" y="114">To visualize your network data, you need to have, at the very minimum, a column containing kinase nodes for kinases </tspan><tspan x="0" y="144" font-family="helveticaBold, Helvetica Neue" font-weight="700">(KinaseID)</tspan><tspan y="144" xml:space="preserve"> and a column containing target nodes </tspan><tspan y="144" font-family="helveticaBold, Helvetica Neue" font-weight="700">(TargetID) </tspan><tspan y="144">for substrates, in </tspan><tspan y="144" font-family="helveticaBold, Helvetica Neue" font-weight="700">.csv format</tspan><tspan y="144">. You can have additional </tspan><tspan x="0" y="174">columns in your </tspan><tspan y="174" font-family="helveticaBold, Helvetica Neue" font-weight="700">.csv </tspan><tspan y="174" xml:space="preserve">file to customize kinase node, target node and edge attributes.  If you have more than one dataset </tspan><tspan x="0" y="204">that may be coming from different states, timepoints or treatments etc., make sure that you have formatted each of them </tspan><tspan x="0" y="234">correctly with the guide table below.</tspan><tspan x="0" y="264"></tspan><tspan x="0" y="274">If you have already formatted your datasets with the corresponding column names, go ahead and upload to visualize them! </tspan><tspan x="0" y="325">If you only have target proteins with differential phosphorylation values (log FoldChange) and want to find out possible</tspan> <tspan x="0" y="355">kinase interactions, perform <tspan y="355" font-family="helveticaBold, Helvetica Neue" font-weight="700">Gene Set Enrichment Analysis </tspan> to create your network and visualize it to explore! </tspan></text>
     </svg>
     
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 781.176 310.965" width="47%" id="guideTable" style="margin-top:-0.6%;margin-bottom:0.5%;left:-0.5%" >
@@ -782,9 +778,9 @@
       </svg>      
     </button>
   
-    
   
     <script>
+
       function readFileAsText(file){
       return new Promise(function(resolve,reject){
           let fr = new FileReader();

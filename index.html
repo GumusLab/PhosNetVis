@@ -13,6 +13,19 @@
       display:block;
       position: relative;
     }
+    #overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+    }
     #uploadButton,#sampleDataButton, #tutorialButton {
       border: none; 
       background: none; 
@@ -44,6 +57,20 @@
     height: 30%;
     }
 
+  #overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
     @font-face {
     font-family: "helveticaBold";
     src: url("fonts/helvetica-bold-webfont.woff") format("woff");
@@ -65,7 +92,7 @@
 
 <!-- phosnetvis explanation -->
 <div class="textcontainer">
-  <svg id="Layer_3" data-name="Layer 3" xmlns="http://www.w3.org/2000/svg" height = "30%" width = "30%" viewBox="0 0 923 319.73"><defs><style>.cls-1{font-size:29px;fill:#586071;}.cls-1,.cls-5{font-family:Helvetica-Bold, Helvetica;font-weight:700;}.cls-2{letter-spacing:-0.02em;}.cls-3{font-family:Helvetica-Light, Helvetica;font-weight:300;}.cls-4{font-family:Helvetica;font-weight:400;}</style></defs><text class="cls-1" transform="translate(0 24.94)">PhosNet<tspan class="cls-2" x="117.63" y="0">V</tspan><tspan x="136.46" y="0">is</tspan><tspan class="cls-3" x="160.65" y="0" xml:space="preserve"> is a web-based platform to generate, explore, and share </tspan><tspan class="cls-3"><tspan x="0" y="34.8">interactive phosphoproteomics networks in 3D. </tspan><tspan x="0" y="104.4">To visualize your phosphoproteomics data, you will need to have, at </tspan><tspan x="0" y="139.2">the very minimum, a .csv file that contains a column with source nodes </tspan><tspan x="0" y="174">and a column with target nodes.</tspan><tspan x="0" y="243.6">You can</tspan><tspan class="cls-4" x="106.4" y="243.6"> </tspan><tspan class="cls-5" x="114.46" y="243.6">upload your own data</tspan><tspan x="414.13" y="243.6" xml:space="preserve"> or </tspan><tspan class="cls-5" x="456.03" y="243.6">explore existing networks</tspan><tspan x="812.21" y="243.6" xml:space="preserve"> or take </tspan><tspan x="0" y="278.4">a </tspan><tspan class="cls-5" x="24.19" y="278.4">tutorial </tspan><tspan x="130.51" y="278.4">to learn how to upload and visualize a sample dataset.</tspan></tspan></text></svg> 
+  <svg id="Layer_3" data-name="Layer 3" xmlns="http://www.w3.org/2000/svg" height = "30%" width = "30%" viewBox="0 0 923 319.73"><defs><style>.cls-1{font-size:29px;fill:#586071;}.cls-1,.cls-5{font-family:Helvetica-Bold, Helvetica;font-weight:700;}.cls-2{letter-spacing:-0.02em;}.cls-3{font-family:Helvetica-Light, Helvetica;font-weight:300;}.cls-4{font-family:Helvetica;font-weight:400;}</style></defs><text class="cls-1" transform="translate(0 24.94)">PhosNet<tspan class="cls-2" x="117.63" y="0">V</tspan><tspan x="136.46" y="0">is</tspan><tspan class="cls-3" x="160.65" y="0" xml:space="preserve"> is a web-based platform to generate, explore, and share </tspan><tspan class="cls-3"><tspan x="0" y="34.8">interactive phosphoproteomics networks in 3D. </tspan><tspan x="0" y="104.4">To visualize your phosphoproteomics data, you will need to have, at </tspan><tspan x="0" y="139.2">the very minimum, a .csv file that contains a column with kinases and</tspan><tspan x="0" y="174">a column with target proteins.</tspan><tspan x="0" y="243.6">You can</tspan><tspan class="cls-4" x="106.4" y="243.6"> </tspan><tspan class="cls-5" x="114.46" y="243.6">upload your own data</tspan><tspan x="414.13" y="243.6" xml:space="preserve"> or </tspan><tspan class="cls-5" x="456.03" y="243.6">explore existing networks</tspan><tspan x="812.21" y="243.6" xml:space="preserve"> or take </tspan><tspan x="0" y="278.4">a </tspan><tspan class="cls-5" x="24.19" y="278.4">tutorial </tspan><tspan x="130.51" y="278.4">to learn how to upload and visualize a sample dataset.</tspan></tspan></text></svg> 
 </div>   
 <!-- end of phosnetvis explanation -->
 
@@ -106,7 +133,7 @@
 
 <!-- tutorial button -->
 <div>
-<button id="tutorialButton" onclick="window.location.href = 'download-data.html'">
+<button id="tutorialButton" onclick="on()">
       <svg xmlns="http://www.w3.org/2000/svg" width="93%" viewBox="0 0 426 51">
       <g id="Group_4013" data-name="Group 4013" transform="translate(-625 -695)">
         <g id="Rectangle_1489" data-name="Rectangle 1489" transform="translate(625 695)" fill="#fff" stroke="#586071" stroke-width="1">
@@ -128,6 +155,17 @@
       </span>
     </div>
 <!-- end of MS logo --> 
-    
+
+<div id="overlay" onclick="off()"></div>
+
+<script>
+  function on() {
+    document.getElementById("overlay").style.display = "block";
+  }
+  
+  function off() {
+    document.getElementById("overlay").style.display = "none";
+  }
+  </script>
 </body>
 </html>
