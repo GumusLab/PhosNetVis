@@ -7,7 +7,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico?">
   <style type="text/css">
 
-    #uploadButton, #sampleDataButton, #text, #tutorialButton {
+    #uploadNetworkButton, #existingNetworksButton, #text, #tutorialButton {
       margin-left:auto;
       margin-right:auto;
       display:block;
@@ -28,7 +28,7 @@
     cursor: pointer;
     }
     
-    #uploadButton,#sampleDataButton, #tutorialButton {
+    #uploadNetworkButton,#existingNetworksButton, #tutorialButton {
       border: none; 
       background: none; 
       cursor: pointer;
@@ -90,7 +90,7 @@
 
 <!-- upload button -->
 <div>
-    <button id="uploadButton" onclick="window.location.href = 'upload.html'">
+    <button id="uploadNetworkButton" onclick="window.location.href = 'uploadNetwork.html'">
       <svg xmlns="http://www.w3.org/2000/svg" width="93%" viewBox="0 0 425 51">
         <g id="Group_4008" data-name="Group 4008" transform="translate(-810.687 -691)">
           <g id="Rectangle_1489" data-name="Rectangle 1489" transform="translate(810.687 691)" fill="#586071" stroke="#586071" stroke-width="2">
@@ -107,7 +107,7 @@
 
 <!-- existing networks button -->
 <div>
-    <button id="sampleDataButton" onclick="window.location.href = 'sample-data.html'">
+    <button id="existingNetworksButton" onclick="window.location.href = 'existingNetworks.html'">
       <svg xmlns="http://www.w3.org/2000/svg" width="93%" viewBox="0 0 426 51">
         <g id="Group_4009" data-name="Group 4009" transform="translate(-811 -691)">
           <g id="Rectangle_1489" data-name="Rectangle 1489" transform="translate(811 691)" fill="#fff" stroke="#586071" stroke-width="1">
@@ -124,7 +124,7 @@
 
 <!-- tutorial button -->
 <div>
-<button id="tutorialButton" onclick="on()">
+<button id="tutorialButton">
       <svg xmlns="http://www.w3.org/2000/svg" width="93%" viewBox="0 0 426 51">
       <g id="Group_4013" data-name="Group 4013" transform="translate(-625 -695)">
         <g id="Rectangle_1489" data-name="Rectangle 1489" transform="translate(625 695)" fill="#fff" stroke="#586071" stroke-width="1">
@@ -142,7 +142,7 @@
     <div id = "footer" style="font-family: Helvetica, Arial;vertical-align:bottom;">
       <img src="./img/MS_logo.png" alt="MountSinai Logo" class="MountSinailogo">   
       <span style="font-size:0.9vw; margin-left: 10px; vertical-align:bottom;color:#586071"> © Gumus Lab 
-          <a href="https://labs.icahn.mssm.edu/gumuslab/" target="_blank" style="margin-left: 10px; vertical-align:bottom;color:#586071"> https://labs.icahn.mssm.edu/gumuslab/</a> 
+          <a href="https://gumuslab.github.io" target="_blank" style="margin-left: 10px; vertical-align:bottom;color:#586071"> https://gumuslab.github.io</a> 
       </span>
     </div>
 <!-- end of MS logo --> 

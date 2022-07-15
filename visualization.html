@@ -59,6 +59,52 @@ p{
   z-index: 50; 
 }
 
+.dropbtn {
+  background-color: #4caf4f00;
+  color: rgba(255, 255, 255, 0);
+  padding: 3px;
+  font-size: 10px;
+  border: none;
+  cursor: pointer;
+}
+.dropdown {
+  position: absolute;
+  display: inline-block;
+  bottom: 315px;
+  right: 85px;
+  z-index: 300;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  left: 25px;
+  top: 8px;
+  background-color: #f9f9f900;
+  min-width: 90px;
+  max-width: 90px;
+  z-index: 1;
+  -webkit-animation: fadein 1s;
+       animation: fadein 1s;
+}
+
+.dropdown-content a {
+  color: black;
+  text-decoration: none;
+  padding: auto;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f100}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e4100;
+}
+
 body {
   font-family: 'Lato', sans-serif;
 }
@@ -115,6 +161,18 @@ src: url("fonts/CenturyGothic-Bold.woff") format("woff");
 </div>
 
   <div id="guiplace"> </div>
+
+  <!-- LEGEND SHAPES -->
+  <div class="dropdown" id = "dropdown" value = "0" onclick="hideShowLegend(this.value)" style="cursor: pointer;">
+    <button class="dropbtn" id = "dropbtn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 13"> <g id="Rectangle_1580" data-name="Rectangle 1580" fill="#fff" stroke="#000000" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <g id="Polygon_11" data-name="Polygon 11" transform="translate(11 2) rotate(90)" fill="#9f9f9f"> <path d="M 8.145074844360352 7.5 L 0.8549256324768066 7.5 L 4.5 1.019867777824402 L 8.145074844360352 7.5 Z" stroke="none"/> <path d="M 4.5 2.039735317230225 L 1.709851264953613 7 L 7.290148735046387 7 L 4.5 2.039735317230225 M 4.5 0 L 9 8 L 0 8 L 4.5 0 Z" stroke="none" fill="#000000"/> </g> </svg>
+    </button>
+    <div class="dropdown-content" id = "dropdown-content">
+      <svg xmlns="http://www.w3.org/2000/svg" width="70" viewBox="0 0 75 11">
+        <text id="hide_legend" data-name="hide legend" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">hide legend</tspan></text>
+      </svg>
+    </div>
+  </div>
 
   <div id="legendPlace">
     <svg id = "legend" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="124.5px" viewBox="0 0 108 275">
@@ -190,9 +248,10 @@ src: url("fonts/CenturyGothic-Bold.woff") format("woff");
       </g>
       <line id="Line_194" data-name="Line 194" x2="17" transform="translate(39 104.825) rotate(-21)" fill="none" stroke="#363535" stroke-width="1"/>
     </svg>
-    
   </div>
 
+<!-- LEGEND NUMBERS -->
+<div id = "legendNumbers"> 
   <p id="p1" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:26px; z-index:150; font-size: 20; bottom:220px">&ndash;</p>
   <p id="p2" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:98px; z-index:150; font-size: 20; bottom:220px">&ndash;</p>
 
@@ -205,7 +264,33 @@ src: url("fonts/CenturyGothic-Bold.woff") format("woff");
 
   <p id="w1" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:26px; z-index:150;font-size: 20; bottom:-12px">&ndash;</p>
   <p id="w2" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:98px; z-index:150;font-size: 20; bottom:-12px">&ndash;</p>
+</div>
+<!-- LEGEND REMOVERS -->
+<div id="legendRemovers"> 
+<div id="nodeColorRemover">
+  <svg xmlns="http://www.w3.org/2000/svg" width="119px"  style="z-index: 151; position: absolute;right: 5px; bottom: 240px;" viewBox="0 0 95 61">
+    <rect id="Rectangle_1579" data-name="Rectangle 1579" width="95" height="61" rx="15" fill="rgba(255,255,255,0.85)"/>
+  </svg>
+</div>
 
+<div id="nodeSizeRemover">
+  <svg xmlns="http://www.w3.org/2000/svg" width="119px"  style="z-index: 151; position: absolute;right: 5px; bottom: 160px;" viewBox="0 0 95 61">
+    <rect id="Rectangle_1579" data-name="Rectangle 1579" width="95" height="61" rx="15" fill="rgba(255,255,255,0.85)"/>
+  </svg>
+</div>
+
+<div id="edgeColorRemover">
+  <svg xmlns="http://www.w3.org/2000/svg" width="119px"  style="z-index: 151; position: absolute;right: 5px; bottom: 80px;" viewBox="0 0 95 61">
+    <rect id="Rectangle_1579" data-name="Rectangle 1579" width="95" height="61" rx="15" fill="rgba(255,255,255,0.85)"/>
+  </svg>
+</div>
+
+<div id="edgeWeightRemover">
+  <svg xmlns="http://www.w3.org/2000/svg" width="119px"  style="z-index: 151; position: absolute;right: 5px; bottom: 10px;" viewBox="0 0 95 61">
+    <rect id="Rectangle_1579" data-name="Rectangle 1579" width="95" height="61" rx="15" fill="rgba(255,255,255,0.85)"/>
+  </svg>
+</div>
+</div>
 
   <div id="3d-graph"></div>
 
@@ -213,6 +298,28 @@ src: url("fonts/CenturyGothic-Bold.woff") format("woff");
   </div>
 <script>
 
+function hideShowLegend(val){
+  if(val == 0 || val == undefined){
+    document.getElementById("legendPlace").style.display = "none";
+    document.getElementById("legendNumbers").style.display = "none";
+    document.getElementById("legendRemovers").style.display = "none";
+    document.getElementById("dropdown").value = 1;
+    document.getElementById("dropbtn").style.transform = "rotate(180deg)";
+    document.getElementById("dropdown").style.right = "0px";
+    document.getElementById("dropdown-content").style.left = "-71px";
+    document.getElementById("dropdown-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="70" viewBox="0 0 75 11"> <text id="show_legend" data-name="show legend" transform="translate(32 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-31.145" y="0">show legend</tspan></text> </svg>'
+  }
+  else{
+    document.getElementById("legendPlace").style.display = "block";
+    document.getElementById("legendNumbers").style.display = "block";
+    document.getElementById("legendRemovers").style.display = "block";
+    document.getElementById("dropdown").value = 0;
+    document.getElementById("dropbtn").style.transform = "rotate(0deg)";
+    document.getElementById("dropdown").style.right = "85px";
+    document.getElementById("dropdown-content").style.left = "25px";
+    document.getElementById("dropdown-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="70" viewBox="0 0 75 11"> <text id="hide_legend" data-name="hide legend" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">hide legend</tspan></text> </svg>'
+  }
+}
 function hideShowMenu(val) {
   if(val==0 || val == undefined){
     document.getElementById("nqText").style.display = "none";
@@ -259,7 +366,7 @@ for (var i = 0; i < userData.length; i++) {
   edgeColor = dataLine['EdgeColor']
   targetID = dataLine['TargetID']
   targetSize = dataLine['TargetSize']
-  diffPhos = dataLine['Diff_Protein_Phosphorylation']
+  diffPhos = dataLine['ProteinPhosphorylation']
   PhosphoSiteID = dataLine['PhosphoSiteID']
 
   currentNodeList = dict["nodes"].map(el => el.id)
@@ -317,6 +424,7 @@ var nodeColors = ((finalDataObj["nodes"].map(el => el.nodeColors)).flat()).filte
 var nodeSizeRange = [Math.min.apply(Math, nodeSizes), Math.max.apply(Math, nodeSizes)]
 var nodeColorRange = [Math.min.apply(Math, nodeColors), Math.max.apply(Math, nodeColors)]
 var nodeColorThreshold = null
+
 if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
   var minPositive = 0
   var maxPositive = 0
@@ -330,6 +438,7 @@ var edgeColors = (finalDataObj["links"].map(el => el.edgeColor)).filter(x => x !
 var edgeWeightRange = [Math.min.apply(Math, edgeWeights), Math.max.apply(Math, edgeWeights)]
 var edgeColorRange = [Math.min.apply(Math, edgeColors), Math.max.apply(Math, edgeColors)]
 
+// LEGEND IMPLEMENTATION
 if(nodeColorThreshold != null){
   var nodeColorThresholdL = nodeColorThreshold > 3 ? 3 : nodeColorThreshold
   document.getElementById("p1").innerHTML = Number(-nodeColorThresholdL).toFixed(2)
@@ -342,6 +451,7 @@ if(nodeColorThreshold != null){
   document.getElementById("p2").style.fontFamily = "CenturyGothicPro"
   document.getElementById("p1").style.fontSize = 15
   document.getElementById("p2").style.fontSize = 15
+  document.getElementById("nodeColorRemover").style.display = "none"
 }
 
 if(nodeSizes.length>0 && nodeSizes.length>0){
@@ -355,6 +465,7 @@ if(nodeSizes.length>0 && nodeSizes.length>0){
   document.getElementById("s2").style.fontFamily = "CenturyGothicPro"
   document.getElementById("s1").style.fontSize = 15
   document.getElementById("s2").style.fontSize = 15
+  document.getElementById("nodeSizeRemover").style.display = "none"
 }
 
 if(edgeColors.length>0 && edgeColors.length>0){
@@ -368,6 +479,7 @@ if(edgeColors.length>0 && edgeColors.length>0){
   document.getElementById("c2").style.fontFamily = "CenturyGothicPro"
   document.getElementById("c1").style.fontSize = 15
   document.getElementById("c2").style.fontSize = 15
+  document.getElementById("edgeColorRemover").style.display = "none"
 }
 
 if(edgeWeights.length>0 && edgeWeights.length>0){
@@ -381,6 +493,7 @@ if(edgeWeights.length>0 && edgeWeights.length>0){
   document.getElementById("w2").style.fontFamily = "CenturyGothicPro"
   document.getElementById("w1").style.fontSize = 15
   document.getElementById("w2").style.fontSize = 15
+  document.getElementById("edgeWeightRemover").style.display = "none"
 }
 
 // cross-linking the node objects

@@ -1,4 +1,4 @@
-﻿KinaseID,KinaseSize,TargetID,Diff_Protein_Phosphorylation
+﻿KinaseID,KinaseSize,TargetID,ProteinPhosphorylation
 O00203,0.963550095,AP3B1,-1
 O00203,0.963550095,BRD4,1
 O00203,0.963550095,asd,-2
