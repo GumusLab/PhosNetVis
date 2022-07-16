@@ -50,8 +50,8 @@
     display: inline-block;
     font-family: Helvetica, sans-serif;
     font-size: 17px;
-    left: -1px;   /* position inside relatively positioned parent */
-    top: 136px;
+    left: 0px;   /* position inside relatively positioned parent */
+    top: 133px;
     z-index: 300; 
     cursor:pointer;
   }
