@@ -1,6 +1,6 @@
 ﻿.fstdiv {
     position: absolute;
-    left: 4px;   /* position inside relatively positioned parent */
+    left: 1px;   /* position inside relatively positioned parent */
     top: 300px;
     z-index: 10; 
     width: 268px;

@@ -9,126 +9,34 @@
   <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
   <script src="js/fstdropdown.js"></script>
   <link rel="stylesheet" href="css/fstdropdown.css">
+  <link rel="stylesheet" href="css/visualization.css">
   <a href="index.html"></a>
   <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
   <title>PhosNetVis - Network</title>
   <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico?">
 
 <style type="text/css">
-#logo{
-  position: absolute;
-  margin-top: 10px;
-  z-index:2;
-}
-
-p{
-  white-space: nowrap;
-}
-.p1 {
-  font-family: Helvetica, sans-serif;
-  position: absolute;
-  font-size: 14px;
-  left: 8px;   /* position inside relatively positioned parent */
-  top: 267px;
-  z-index: 10; 
-}
-
-#openbutton{
-  font-family: Helvetica, sans-serif;
-  position: absolute;
-  font-size: 17px;
-  left: 2px;   /* position inside relatively positioned parent */
-  top: 130px;
-  z-index: 10; 
-  cursor:pointer;
-}
-
-#guiplace{
-  font-size: 55px;
-  position: absolute;
-  left: 3px;   /* position inside relatively positioned parent */
-  top: 160px;
-  z-index: 50; 
-  width: 270px;
-}
-
-#legendPlace{
-  position: absolute;
-  right: 2px;   /* position inside relatively positioned parent */
-  bottom: 2px;
-  z-index: 50; 
-}
-
-.dropbtn {
-  background-color: #4caf4f00;
-  color: rgba(255, 255, 255, 0);
-  padding: 3px;
-  font-size: 10px;
-  border: none;
-  cursor: pointer;
-}
-.dropdown {
-  position: absolute;
-  display: inline-block;
-  bottom: 315px;
-  right: 85px;
-  z-index: 300;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  left: 25px;
-  top: 8px;
-  background-color: #f9f9f900;
-  min-width: 90px;
-  max-width: 90px;
-  z-index: 1;
-  -webkit-animation: fadein 1s;
-       animation: fadein 1s;
-}
-
-.dropdown-content a {
-  color: black;
-  text-decoration: none;
-  padding: auto;
-  display: block;
-}
-
-.dropdown-content a:hover {background-color: #f1f1f100}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown:hover .dropbtn {
-  background-color: #3e8e4100;
-}
-
-body {
-  font-family: 'Lato', sans-serif;
-}
-
-@font-face {
+    
+  @font-face {
     font-family: "MyriadPro-Regular";
     src: url("fonts/MYRIADPROREGULAR.woff") format("woff");
     }
+  
+  @font-face {
+  font-family: "Century Gothic";
+  src: url("fonts/CenturyGothic.woff") format("woff");
+  }
+  
+  @font-face {
+  font-family: "CenturyGothicPro";
+  src: url("fonts/CenturyGothic.woff") format("woff");
+  }
+  
+  @font-face {
+  font-family: "CenturyGothicPro-Bold";
+  src: url("fonts/CenturyGothic-Bold.woff") format("woff");
+  }
 
-@font-face {
-font-family: "Century Gothic";
-src: url("fonts/CenturyGothic.woff") format("woff");
-}
-
-@font-face {
-font-family: "CenturyGothicPro";
-src: url("fonts/CenturyGothic.woff") format("woff");
-}
-
-@font-face {
-font-family: "CenturyGothicPro-Bold";
-src: url("fonts/CenturyGothic-Bold.woff") format("woff");
-}
-    
 </style>
 </head>
 
@@ -137,7 +45,14 @@ src: url("fonts/CenturyGothic-Bold.woff") format("woff");
     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" width = "130px" style="top:1%;left:0.3%;position:absolute;z-index: 100;" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 710.3 222.4" xml:space="preserve"> <style type="text/css"> .st0b{fill:#424A60;} .st1b{fill:#DC298D;} .st2b{fill:#7383BF;} .st3b{fill:#969696;} .st4b{fill:#EBBA16;} .st5b{fill:#06ABEB;} .st6b{font-family:'Helvetica-Bold';} .st7b{font-size:84.3397px;} .st8b{letter-spacing:-1;} </style> <g id="Layer_1_00000056390415183483724190000009750584087129516189_"> <g id="path5"> <rect x="92.8" y="154.2" transform="matrix(0.3589 -0.9334 0.9334 0.3589 -62.6169 220.6174)" class="st0b" width="72.9" height="3.3"/> </g> <rect id="path4" x="156.9" y="60.1" transform="matrix(0.8102 -0.5861 0.5861 0.8102 0.7614 131.2305)" class="st0b" width="92.3" height="8.7"/> <g id="path3"> <rect x="19" y="127.2" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -46.9835 44.8278)" class="st0b" width="126.2" height="11.8"/> </g> <g id="path2"> <rect x="122.6" y="16.9" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -9.3065 55.4032)" class="st0b" width="6.4" height="65.4"/> </g> <rect id="path1" x="169" y="110.3" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -48.6296 83.9257)" class="st0b" width="8.7" height="92.3"/> <circle id="circle6" class="st1b" cx="249.7" cy="34.5" r="21.8"/> <circle id="circle5" class="st2b" cx="112.1" cy="200.6" r="21.8"/> <circle id="circle4" class="st1b" cx="21.8" cy="156.5" r="21.8"/> <circle id="circle3" class="st3b" cx="109.6" cy="13.1" r="13.1"/> <circle id="circle2" class="st4b" cx="189.6" cy="193.1" r="13.1"/> <circle id="circle1" class="st5b" cx="149.5" cy="102.8" r="37.3"/> </g> <g id="Layer_2_00000013871697503241264390000008040421359665832584_"> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 243.0089 140.7256)" class="st6b st7b">PhosNet</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 585.1035 139.5315)" class="st6b st7b st8b">V</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 639.8698 139.3403)" class="st6b st7b">is</text> </g> </svg>
   </div>
 
-  <span id = "openbutton" value=0 onclick="hideShowMenu(this.value)">&times; close</span>
+  <div class="openbutton" id = "openbutton" value = 0 onclick="hideShowMenu(this.value)" style="cursor: pointer;">
+    <button class="dropbtn" id="openbutton-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 16"> <g id="Rectangle_1581" data-name="Rectangle 1581" transform="translate(0 1)" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <text id="x" transform="translate(6.5 11)" fill="#9f9f9f" stroke="#2e3137" stroke-width="1" font-size="14" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-3.92" y="0">x</tspan></text> </svg>
+    </button>
+    <div class="openbutton-content" id = "openbutton-content">
+      <svg xmlns="http://www.w3.org/2000/svg" width="80px" viewBox="0 0 81 11"> <text id="close_controls" data-name="close controls" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">close controls</tspan></text> </svg>
+    </div>
+  </div>
 
   <p id = "nqText" class="p1">Node Query</p>
   
@@ -150,13 +65,13 @@ src: url("fonts/CenturyGothic-Bold.woff") format("woff");
 
 <div id = "screenshotButton">
 <svg version="1.1" onclick="snapshot()" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-    viewBox="0 0 114 30" width = "120px" style="left:15px;top:350px;background-color: rgba(255,255,255,0); cursor: pointer;  z-index: 30; position:absolute;" xml:space="preserve"> <style type="text/css"> .st0{font-family:'MyriadPro-Regular';} .st1{font-size:22px;} </style> <g> <path d="M6,19v-2c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v2c0,0.6,0.4,1,1,1l0,0C5.6,20,6,19.6,6,19z"/> <path d="M10,5L10,5c0,0.6,0.4,1,1,1h2c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1h-2C10.4,4,10,4.4,10,5z"/> <path d="M5,14L5,14c0.6,0,1-0.4,1-1v-2c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v2C4,13.6,4.4,14,5,14z"/> <path d="M23,6h1v1c0,0.6,0.4,1,1,1l0,0c0.6,0,1-0.4,1-1V6c0-1.1-0.9-2-2-2h-1c-0.6,0-1,0.4-1,1l0,0C22,5.6,22.4,6,23,6z"/> <path d="M16,5L16,5c0,0.6,0.4,1,1,1h2c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1h-2C16.4,4,16,4.4,16,5z"/> <path d="M7,24H6v-1c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v1c0,1.1,0.9,2,2,2h1c0.6,0,1-0.4,1-1l0,0C8,24.4,7.6,24,7,24z"/> <path d="M6,7V6h1c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1H6C4.9,4,4,4.9,4,6v1c0,0.6,0.4,1,1,1l0,0C5.6,8,6,7.6,6,7z"/> <path d="M24,11v2c0,0.6,0.4,1,1,1l0,0c0.6,0,1-0.4,1-1v-2c0-0.6-0.4-1-1-1l0,0C24.4,10,24,10.4,24,11z"/> </g> <g> <path d="M25,16h-1.8c-0.8,0-1.5-0.4-1.8-1.1l-0.2-0.3c-0.2-0.3-0.5-0.6-0.9-0.6h-4.8c-0.4,0-0.7,0.2-0.9,0.6l-0.2,0.3 c-0.3,0.7-1,1.1-1.8,1.1H11c-0.6,0-1,0.4-1,1v8c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1v-8C26,16.4,25.6,16,25,16z M18,25 c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4S20.2,25,18,25z"/> <circle cx="18" cy="21" r="2"/> </g> <text transform="matrix(1 0 0 1 28.4106 22)" class="st0 st1">Snapshot</text>
+    viewBox="0 0 114 30" width = "120px" style="left:11px;top:350px;background-color: rgba(255,255,255,0); cursor: pointer;  z-index: 30; position:absolute;" xml:space="preserve"> <style type="text/css"> .st0{font-family:'MyriadPro-Regular';} .st1{font-size:22px;} </style> <g> <path d="M6,19v-2c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v2c0,0.6,0.4,1,1,1l0,0C5.6,20,6,19.6,6,19z"/> <path d="M10,5L10,5c0,0.6,0.4,1,1,1h2c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1h-2C10.4,4,10,4.4,10,5z"/> <path d="M5,14L5,14c0.6,0,1-0.4,1-1v-2c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v2C4,13.6,4.4,14,5,14z"/> <path d="M23,6h1v1c0,0.6,0.4,1,1,1l0,0c0.6,0,1-0.4,1-1V6c0-1.1-0.9-2-2-2h-1c-0.6,0-1,0.4-1,1l0,0C22,5.6,22.4,6,23,6z"/> <path d="M16,5L16,5c0,0.6,0.4,1,1,1h2c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1h-2C16.4,4,16,4.4,16,5z"/> <path d="M7,24H6v-1c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v1c0,1.1,0.9,2,2,2h1c0.6,0,1-0.4,1-1l0,0C8,24.4,7.6,24,7,24z"/> <path d="M6,7V6h1c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1H6C4.9,4,4,4.9,4,6v1c0,0.6,0.4,1,1,1l0,0C5.6,8,6,7.6,6,7z"/> <path d="M24,11v2c0,0.6,0.4,1,1,1l0,0c0.6,0,1-0.4,1-1v-2c0-0.6-0.4-1-1-1l0,0C24.4,10,24,10.4,24,11z"/> </g> <g> <path d="M25,16h-1.8c-0.8,0-1.5-0.4-1.8-1.1l-0.2-0.3c-0.2-0.3-0.5-0.6-0.9-0.6h-4.8c-0.4,0-0.7,0.2-0.9,0.6l-0.2,0.3 c-0.3,0.7-1,1.1-1.8,1.1H11c-0.6,0-1,0.4-1,1v8c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1v-8C26,16.4,25.6,16,25,16z M18,25 c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4S20.2,25,18,25z"/> <circle cx="18" cy="21" r="2"/> </g> <text transform="matrix(1 0 0 1 28.4106 22)" class="st0 st1">Snapshot</text>
 </svg>  
 </div>
 
 <div id = "resetButton">
 <svg version="1.1" onclick="queryReset()" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 1068.5 512" width = "100px" style="left:165px;top:343px;background-color: rgba(255,255,255,0); cursor: pointer;  z-index: 30; position:absolute;" xml:space="preserve"> <style type="text/css"> .st0a{font-family:'MyriadPro-Regular';} .st1a{font-size:239.4106px;} </style> <path d="M218.4,320.6l28.4,28.4H157c-51.4,0-93-41.6-93-93s41.6-93,93-93h18v-30h-18c-67.9,0-123,55.1-123,123s55.1,123,123,123 h89.8l-28.4,28.4l21.2,21.2l64.6-64.6l-64.6-64.6L218.4,320.6z"/> <path d="M355,133h-89.8l28.4-28.4l-21.2-21.2L207.8,148l64.6,64.6l21.2-21.2L265.2,163H355c51.4,0,93,41.6,93,93s-41.6,93-93,93 h-18.6v30H355c67.9,0,123-55.1,123-123S422.9,133,355,133z"/> <text transform="matrix(1 0 0 1 496.8376 327.6711)" class="st0a st1a">Reset</text>
+	 viewBox="0 0 1068.5 512" width = "100px" style="left:161px;top:343px;background-color: rgba(255,255,255,0); cursor: pointer;  z-index: 30; position:absolute;" xml:space="preserve"> <style type="text/css"> .st0a{font-family:'MyriadPro-Regular';} .st1a{font-size:239.4106px;} </style> <path d="M218.4,320.6l28.4,28.4H157c-51.4,0-93-41.6-93-93s41.6-93,93-93h18v-30h-18c-67.9,0-123,55.1-123,123s55.1,123,123,123 h89.8l-28.4,28.4l21.2,21.2l64.6-64.6l-64.6-64.6L218.4,320.6z"/> <path d="M355,133h-89.8l28.4-28.4l-21.2-21.2L207.8,148l64.6,64.6l21.2-21.2L265.2,163H355c51.4,0,93,41.6,93,93s-41.6,93-93,93 h-18.6v30H355c67.9,0,123-55.1,123-123S422.9,133,355,133z"/> <text transform="matrix(1 0 0 1 496.8376 327.6711)" class="st0a st1a">Reset</text>
 </svg>
 </div>
 
@@ -326,7 +241,8 @@ function hideShowMenu(val) {
     document.getElementById("nodequeryMain").style.display = "none";
     document.getElementById("screenshotButton").style.display = "none";
     document.getElementById("resetButton").style.display = "none";
-    document.getElementById("openbutton").innerHTML =  "&#9776; open";
+    document.getElementById("openbutton-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="80px" viewBox="0 0 81 11"> <text id="close_controls" data-name="close controls" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">open controls</tspan></text> </svg>';
+    document.getElementById("openbutton-button").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 13"> <g id="Rectangle_1582" data-name="Rectangle 1582" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <line id="Line_201" data-name="Line 201" x2="6.5" transform="translate(3.25 4.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> <line id="Line_202" data-name="Line 202" x2="6.5" transform="translate(3.25 6.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> <line id="Line_203" data-name="Line 203" x2="6.5" transform="translate(3.25 8.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> </svg> '
     document.getElementById("openbutton").value = 1;
     document.getElementById("guiplace").style.display = "none";
     
@@ -336,7 +252,8 @@ function hideShowMenu(val) {
     document.getElementById("nodequeryMain").style.display = "block";
     document.getElementById("screenshotButton").style.display = "block";
     document.getElementById("resetButton").style.display = "inline-block";
-    document.getElementById("openbutton").innerHTML =  "&times; close";
+    document.getElementById("openbutton-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="80px" viewBox="0 0 81 11"> <text id="close_controls" data-name="close controls" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">close controls</tspan></text> </svg>'
+    document.getElementById("openbutton-button").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 16"> <g id="Rectangle_1581" data-name="Rectangle 1581" transform="translate(0 1)" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <text id="x" transform="translate(6.5 11)" fill="#9f9f9f" stroke="#2e3137" stroke-width="1" font-size="14" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-3.92" y="0">x</tspan></text> </svg>'
     document.getElementById("openbutton").value = 0;
     document.getElementById("guiplace").style.display = "block";
   }
