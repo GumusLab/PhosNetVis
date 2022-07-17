@@ -14,21 +14,23 @@
       position: relative;
       z-index: 5;
     }
-    #overlay {
-    position: fixed;
-    display: block;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 2;
-    cursor: pointer;
+
+    #lowerButtons {
+      text-align: center;
+    }
+
+    #faqButton, #tutorialButton {
+      margin-left: 5%;
+      left: -2.5%;
+      display:inline-block;
+      position: relative;
+      z-index: 5;
+      background: none; 
+      cursor: pointer;
+      margin-top: 10px;
     }
     
-    #uploadNetworkButton,#existingNetworksButton, #GSEAButton {
+    #uploadNetworkButton,#existingNetworksButton, #GSEAButton{
       border: none; 
       background: none; 
       cursor: pointer;
@@ -135,6 +137,34 @@
   </button>
 </div>
 <!-- end of existing networks button -->
+
+<!-- faq button -->
+<div id="lowerButtons">
+
+    <svg id = "faqButton" xmlns="http://www.w3.org/2000/svg" width="2.52%" viewBox="0 0 14 20">
+      <g id="Rectangle_1583" data-name="Rectangle 1583" fill="#fff" stroke="#586071" stroke-width="0.5">
+        <rect width="14" height="14" stroke="none"/>
+        <rect x="0.25" y="0.25" width="13.5" height="13.5" fill="none"/>
+      </g>
+      <text id="_" data-name="?" transform="translate(7 12.5)" fill="#586071" font-size="15" font-family="Helvetica"><tspan x="-4.171" y="0">?</tspan></text>
+      <text id="FAQ" transform="translate(7 19)" fill="#586071" font-size="5" font-family="Helvetica"><tspan x="-5.002" y="0">FAQ</tspan></text>
+    </svg>
+
+
+<!-- end of faq button -->
+<!-- tutorial button -->
+    <svg id = "tutorialButton" xmlns="http://www.w3.org/2000/svg" width="4.7%" viewBox="0 0 26 20">
+        <g id="Rectangle_1584" data-name="Rectangle 1584" transform="translate(6)" fill="#fff" stroke="#586071" stroke-width="0.5">
+          <rect width="14" height="14" stroke="none"/>
+          <rect x="0.25" y="0.25" width="13.5" height="13.5" fill="none"/>
+        </g>
+        <text id="TUTORIAL" transform="translate(13 19)" fill="#586071" font-size="5" font-family="Helvetica"><tspan x="-12.318" y="0">TUTORIAL</tspan></text>
+        <path id="puzzle-piece-thin-svgrepo-com" d="M21.788,26.652a.192.192,0,0,0-.183-.011,1.151,1.151,0,0,1-1.246-.176,1.116,1.116,0,0,1-.322-1.2,1.138,1.138,0,0,1,1-.761,1.159,1.159,0,0,1,.572.105.192.192,0,0,0,.183-.011.187.187,0,0,0,.088-.159v-2a.567.567,0,0,0-.57-.563H19.359a1.489,1.489,0,0,0-.474-1.507,1.535,1.535,0,0,0-1.577-.256,1.492,1.492,0,0,0-.893,1.763H14.467a.567.567,0,0,0-.57.563v1.735a1.532,1.532,0,0,0-1.526.468,1.486,1.486,0,0,0-.259,1.557,1.519,1.519,0,0,0,1.294.925,1.555,1.555,0,0,0,.491-.044v1.736a.567.567,0,0,0,.57.563h6.839a.567.567,0,0,0,.57-.563v-2a.187.187,0,0,0-.088-.159Zm-.291,2.16a.189.189,0,0,1-.19.188H14.467a.189.189,0,0,1-.19-.188v-2a.187.187,0,0,0-.088-.159.192.192,0,0,0-.183-.011,1.149,1.149,0,0,1-1.41-.354,1.115,1.115,0,0,1,.09-1.433,1.152,1.152,0,0,1,1.319-.247.192.192,0,0,0,.183-.011.187.187,0,0,0,.088-.159v-2a.189.189,0,0,1,.19-.188h2.218a.191.191,0,0,0,.161-.087.185.185,0,0,0,.011-.181,1.113,1.113,0,0,1,.048-1.053,1.147,1.147,0,0,1,1.925-.062,1.114,1.114,0,0,1,.087,1.114.185.185,0,0,0,.011.181.191.191,0,0,0,.161.087h2.218a.189.189,0,0,1,.19.188v1.736a1.557,1.557,0,0,0-.491-.044,1.518,1.518,0,0,0-1.293.926,1.486,1.486,0,0,0,.259,1.556,1.532,1.532,0,0,0,1.525.469Z" transform="translate(-4.197 -17.797)" fill="#586071" stroke="#586071" stroke-width="0.3"/>
+      </svg>  
+</div>
+<!-- end of tutorial button -->
+
+
 
 <!-- MS logo -->
     <div id = "footer" style="font-family: Helvetica, Arial;vertical-align:bottom;">
