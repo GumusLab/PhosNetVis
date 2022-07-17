@@ -7,7 +7,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico?">
   <style type="text/css">
 
-    #uploadNetworkButton, #existingNetworksButton, #text, #tutorialButton {
+    #uploadNetworkButton, #existingNetworksButton, #text, #GSEAButton {
       margin-left:auto;
       margin-right:auto;
       display:block;
@@ -28,7 +28,7 @@
     cursor: pointer;
     }
     
-    #uploadNetworkButton,#existingNetworksButton, #tutorialButton {
+    #uploadNetworkButton,#existingNetworksButton, #GSEAButton {
       border: none; 
       background: none; 
       cursor: pointer;
@@ -87,8 +87,23 @@
 </div>   
 <!-- end of phosnetvis explanation -->
 
+<!-- upload for GSEA button -->
+<div>
+  <button id="GSEAButton">
+        <svg xmlns="http://www.w3.org/2000/svg" width="93%" viewBox="0 0 426 51">
+        <g id="Group_4013" data-name="Group 4013" transform="translate(-625 -695)">
+          <g id="Rectangle_1489" data-name="Rectangle 1489" transform="translate(625 695)" fill="#586071" stroke="#586071" stroke-width="1">
+            <rect width="425" height="51" stroke="none"/>
+            <rect x="0.5" y="0.5" width="424" height="50" fill="none"/>
+          </g>
+          <text id="GSEA" data-name="GSEA" transform="translate(970 727)" fill="#fff" font-size="22" font-family="Helvetica-Bold" font-weight="700"><tspan x="-275.441" y="0">UPLOAD DATA FOR GSEA</tspan></text>
+        </g>
+      </svg>
+      </button>
+  <div>
+  <!-- end of upload for GSEA button -->
 
-<!-- upload button -->
+<!-- upload for network button -->
 <div>
     <button id="uploadNetworkButton" onclick="window.location.href = 'uploadNetwork.html'">
       <svg xmlns="http://www.w3.org/2000/svg" width="93%" viewBox="0 0 425 51">
@@ -97,29 +112,13 @@
             <rect width="425" height="51" stroke="none"/>
             <rect x="1" y="1" width="423" height="49" fill="none"/>
           </g>
-          <text id="UPLOAD_MY_DATA" data-name="UPLOAD MY DATA" transform="translate(1023.687 723)" fill="#fff" font-size="25" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-111.127" y="0">UPLOAD MY DATA</tspan></text>
+          <text id="UPLOAD_MY_DATA" data-name="UPLOAD MY DATA" transform="translate(1023.687 723)" fill="#fff" font-size="22" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-192.127" y="0">UPLOAD DATA FOR VISUALIZATION</tspan></text>
         </g>
       </svg>      
     </button>
   </div>
-<!-- end of upload button -->
-    
-<!-- tutorial button -->
-<div>
-<button id="tutorialButton">
-      <svg xmlns="http://www.w3.org/2000/svg" width="93%" viewBox="0 0 426 51">
-      <g id="Group_4013" data-name="Group 4013" transform="translate(-625 -695)">
-        <g id="Rectangle_1489" data-name="Rectangle 1489" transform="translate(625 695)" fill="#fff" stroke="#586071" stroke-width="1">
-          <rect width="425" height="51" stroke="none"/>
-          <rect x="0.5" y="0.5" width="424" height="50" fill="none"/>
-        </g>
-        <text id="TUTORIAL" data-name="TUTORIAL" transform="translate(970 727)" fill="#586071" font-size="25" font-family="Helvetica"><tspan x="-338.441" y="0">FREQUENTLY ASKED QUESTIONS</tspan></text>
-      </g>
-    </svg>
-    </button>
-<div>
-<!-- end of tutorial button -->
-
+<!-- end of upload for network button -->
+  
 
 <!-- existing networks button -->
 <div>
@@ -130,7 +129,7 @@
           <rect width="426" height="51" stroke="none"/>
           <rect x="0.5" y="0.5" width="425" height="50" fill="none"/>
         </g>
-        <text id="EXPLORE_EXISTING_NETWORKS" data-name="EXPLORE EXISTING NETWORKS" transform="translate(1028 726)" fill="#586071" font-size="25" font-family="Helvetica"><tspan x="-200.564" y="0">EXPLORE EXISTING NETWORKS</tspan></text>
+        <text id="EXPLORE_EXISTING_NETWORKS" data-name="EXPLORE EXISTING NETWORKS" transform="translate(1028 726)" fill="#586071" font-size="22" font-family="Helvetica-Bold"><tspan x="-177.564" y="-2">EXPLORE EXISTING NETWORKS</tspan></text>
       </g>
     </svg>      
   </button>

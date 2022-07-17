@@ -50,7 +50,7 @@
     display: inline-block;
     font-family: Helvetica, sans-serif;
     font-size: 17px;
-    left: 0px;   /* position inside relatively positioned parent */
+    left: 0px;
     top: 133px;
     z-index: 300; 
     cursor:pointer;
