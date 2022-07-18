@@ -263,15 +263,15 @@ function hideShowMenu(val) {
 
 const CAMERA_DISTANCE2NODES_FACTOR = 170;
 //////////////// GRAPH DATA OBJECT ////////////////
-var file_names = ["time00","time02","time04","time08","time12","time24"]
+var file_names = ["time 24hr", "time 12hr", "time 08hr", "time 04hr", "time 02hr", "time 00hr - control"]
 var index = localStorage.getItem("idx")
 var finalDataObj = null
-if(index==0){finalDataObj = time00_network}
-else if(index==1){finalDataObj = time02_network}
-else if(index==2){finalDataObj = time04_network}
-else if(index==3){finalDataObj = time08_network}
-else if(index==4){finalDataObj = time12_network}
-else{finalDataObj = time24_network}
+if(index==0){finalDataObj = time24_network}
+else if(index==1){finalDataObj = time12_network}
+else if(index==2){finalDataObj = time08_network}
+else if(index==3){finalDataObj = time04_network}
+else if(index==4){finalDataObj = time02_network}
+else{finalDataObj = time00_network}
 
 var nodesList = (finalDataObj["nodes"].map(el => el.id)).filter(x => x != undefined)
 var nodeSizes = (finalDataObj["nodes"].map(el => el.nodeSize)).filter(x => x != undefined)
