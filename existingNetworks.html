@@ -92,7 +92,7 @@ text {
 			<td>
       <div class="imgContainer">
 				<div>
-                    <img id="covidImg" src="./img/covidPreviewImg.jpeg" width="350px" class="left" />
+                    <img id="covidImg" src="./img/p2.png" width="350px" class="left" />
 				</div>
                 <div>
                     <svg id="textDesc" xmlns="http://www.w3.org/2000/svg" width="380" height="135" viewBox="0 0 380 135">
@@ -100,7 +100,7 @@ text {
                       </svg>                                          
                 </div>
                 <div class="imgButton">
-					<button onclick="window.location.href = 'covidVisualization.html'">VISUALIZE IN 3D</button>
+					<button onclick="covidVisualization()">VISUALIZE IN 3D</button>
 				</div>
                 <div class="rect"></div>
 
@@ -131,11 +131,12 @@ text {
 
 
 
-      
-
-
-      
-      
+<script>
+function covidVisualization(){
+  localStorage.setItem('idx', 0)
+  location.replace("/covidVis.html");
+}
+</script>
 
   
 </body>

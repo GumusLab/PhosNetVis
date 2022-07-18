@@ -4,7 +4,7 @@
     <script src="https://cdn.jsdelivr.net/npm/danfojs@0.1.2/dist/index.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico?">
-<title>PhosNetVis - Upload</title>
+<title>Upload For Visualization</title>
 <style type="text/css">
  
    #hidden-file-upload, #submit-button, #uploadButton {
@@ -815,7 +815,7 @@
             file_names.push(files.item(i).name);
         }
         localStorage.setItem('file_names',JSON.stringify(file_names))
-        localStorage.setItem('idx',0)
+        localStorage.setItem('idx', 0)
         // Trigger Promises
         Promise.all(readers).then((values) => {
             // Values will be an array that contains an item

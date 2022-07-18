@@ -5,6 +5,7 @@
   <script src="libraries/three.js"></script>
   <script src="libraries/three-spritetext.min.js"></script>
   <script src="libraries/d3.v3.min.js" charset="utf-8"></script>
+  <script src="data/covid-networks.js"></script>
   <script src="libraries/rainbowvis.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
   <script src="js/fstdropdown.js"></script>
@@ -12,7 +13,7 @@
   <link rel="stylesheet" href="css/visualization.css">
   <a href="index.html"></a>
   <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
-  <title>3D Visualization</title>
+  <title>COVID Visualization</title>
   <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico?">
 
 <style type="text/css">
@@ -260,83 +261,19 @@ function hideShowMenu(val) {
   }
 }
 
-//////////////// DATA CREATION ////////////////
-
-function linkExist(sourceTargetTuples,kinaseID,targetID){
-  for (var idx = 0; idx < sourceTargetTuples.length; idx++) {
-    currTuple = sourceTargetTuples[idx]
-    if (currTuple[0] == kinaseID && currTuple[1] == targetID){
-      return true
-    }
-  }
-return false
-}
-
-function parseCSV(file_name) {
-let dict = {"nodes": [], "links": []}
-
-var userData = JSON.parse(window.localStorage.getItem(file_name));
-for (var i = 0; i < userData.length; i++) {
-  dataLine = userData[i]
-  kinaseID =  dataLine['KinaseID']
-  kinaseSize = dataLine['KinaseSize']
-  edgeWeight = dataLine['EdgeWeight']
-  edgeColor = dataLine['EdgeColor']
-  targetID = dataLine['TargetID']
-  targetSize = dataLine['TargetSize']
-  diffPhos = dataLine['ProteinPhosphorylation']
-  PhosphoSiteID = dataLine['PhosphoSiteID']
-
-  currentNodeList = dict["nodes"].map(el => el.id)
-
-  //kinase is type 1, target is type 2
-  if (!(currentNodeList.includes(kinaseID))){ // if kinase id does not occur in nodes
-    dict["nodes"].push({'id': kinaseID, "type": 1, "nodeSize": kinaseSize, "nodeColors": [], "partitionIDs":[]})
-    currentNodeList.push(kinaseID)
-  }
-  else { // kinase id occurs, need to check if it is labeled as target and change its type into kinase (1)
-    nodeIndex = currentNodeList.indexOf(kinaseID)
-    dict['nodes'][nodeIndex]['type'] = 1
-  }
-
-  if (!(currentNodeList.includes(targetID))){
-    var currentNodeColors = []
-    if(diffPhos!=undefined){currentNodeColors.push(diffPhos)}
-    var currentNodePartitions = []
-    if(PhosphoSiteID!=undefined){currentNodePartitions.push(PhosphoSiteID)}
-    dict["nodes"].push({'id': targetID, "type": 2, "nodeSize": targetSize, "nodeColors": currentNodeColors, "partitionIDs": currentNodePartitions})
-  }
-  else{ // target id occurs, need to append diffPhos to nodecolors and PhosphoSiteID to partitionIDs
-        // no need to update its type as target !!!!!!!!
-      nonDirtyNodeList = dict["nodes"].map(el => el.id)
-      nodeIndex = nonDirtyNodeList.indexOf(targetID)
-      if(diffPhos != undefined && PhosphoSiteID!= undefined && !(dict['nodes'][nodeIndex]['partitionIDs'].includes(PhosphoSiteID))){
-        dict['nodes'][nodeIndex]['nodeColors'].push(diffPhos)
-        dict['nodes'][nodeIndex]['partitionIDs'].push(PhosphoSiteID)}
-  }
-
-  sourceTargetTuples = dict["links"].map(el => [el.source,el.target])
-
-  if(!(linkExist(sourceTargetTuples,kinaseID,targetID))){
-    if(kinaseID==targetID){
-      dict['links'].push({'source': kinaseID, 'target': targetID, 'edgeWeight': edgeWeight, 'edgeColor': edgeColor, 'curvature':.4})
-    }
-    else{
-      dict['links'].push({'source': kinaseID, 'target': targetID, 'edgeWeight': edgeWeight, 'edgeColor': edgeColor, 'curvature':0})
-    }
-  }
-}
-  dict['ids'] = dict["nodes"].map(el => el.id)
-return dict;
-}
-
 const CAMERA_DISTANCE2NODES_FACTOR = 170;
 //////////////// GRAPH DATA OBJECT ////////////////
-var file_names = JSON.parse(localStorage.getItem("file_names"))
+var file_names = ["time00","time02","time04","time08","time12","time24"]
 var index = localStorage.getItem("idx")
-var finalDataObj = parseCSV(localStorage.getItem(file_names[index]))
+var finalDataObj = null
+if(index==0){finalDataObj = time00_network}
+else if(index==1){finalDataObj = time02_network}
+else if(index==2){finalDataObj = time04_network}
+else if(index==3){finalDataObj = time08_network}
+else if(index==4){finalDataObj = time12_network}
+else{finalDataObj = time24_network}
 
-var nodesList = finalDataObj["ids"]
+var nodesList = (finalDataObj["nodes"].map(el => el.id)).filter(x => x != undefined)
 var nodeSizes = (finalDataObj["nodes"].map(el => el.nodeSize)).filter(x => x != undefined)
 var nodeColors = ((finalDataObj["nodes"].map(el => el.nodeColors)).flat()).filter(x => x != undefined)
 var nodeSizeRange = [Math.min.apply(Math, nodeSizes), Math.max.apply(Math, nodeSizes)]
@@ -674,7 +611,7 @@ function CreateNode(node)
 
   }
 
-  else{ // if it is not a kinase
+  else{ // if not a kinase
     radialPartitions = 25
     if (highlightNodes.has(node) || searchNodes.has(node)){
     var mesh = new THREE.Mesh(
@@ -768,6 +705,7 @@ function removeOptions(selectElement) {
    }
    selectElement.fstdropdown.rebind()
 }
+
 function addOptions(addText, selectElement)
 {
     // Create an Option object       
@@ -780,6 +718,7 @@ function addOptions(addText, selectElement)
     // Add an Option object to Drop Down List Box
     selectElement.options.add(opt);
 }
+
 nodesList = nodesList.sort()
 var x = document.getElementById("nodequery")
 var nodeindexes = 0
@@ -809,7 +748,6 @@ a.href = ImageBase64; //Image Base64 Goes here
 a.download = hour+"-"+minutes+"-"+seconds+"_PhosNetVis-Snapshot.png"; //File name Here
 a.click(); //Downloaded file
 }
-
 
 function changeState(){
 var new_file_name = PARAMS.Files
