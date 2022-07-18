@@ -471,7 +471,8 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
     }
 
     updateHighlight();
-  });
+  })
+  .cameraPosition({ z: 1500 });
 
   function updateHighlight() {
       // trigger update of highlighted objects in scene
