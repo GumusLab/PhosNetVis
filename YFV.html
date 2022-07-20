@@ -437,7 +437,7 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
   .linkWidth(link => (highlightLinks.has(link) || searchLinks.has(link)) ? 2 : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1]) : 1) // subject to change
   .linkDirectionalArrowLength(directed => (directed) ? 5 : 0)        
   .linkDirectionalArrowRelPos(0.5)
-  .linkColor(link => (link.edgeColor == undefined) ? "#808080" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
+  .linkColor(link => (link.edgeColor == undefined) ? "#adadad" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
   .linkDirectionalParticleWidth(2)
   .linkOpacity(0.6)
   .linkDirectionalParticles(link => (highlightLinks.has(link) || searchLinks.has(link)) ? 4 : 0)
