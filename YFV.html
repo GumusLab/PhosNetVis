@@ -381,7 +381,8 @@ const fnames = {};
   Files: file_names[index],
   PosLogFold : 0,
   NegLogFold : 0,
-  Background : "#ffffff"
+  Background : "#ffffff",
+  Partitions : false
 };
 
 const pane = new Tweakpane.Pane({
@@ -400,7 +401,11 @@ pane.addInput(PARAMS, 'NegLogFold', {min: -nodeColorThreshold, max: 0}).on('chan
 pane.addInput(PARAMS, 'Background').on('change', (ev) => {
   updateBackground();
   });
-
+pane.addInput(PARAMS, 'Partitions').on('change', (ev) => {
+  searchNodes.clear();
+  searchLinks.clear();
+  updateHighlight();
+  });
 //////////////// GRAPH CREATION ////////////////
 var directed = sessionStorage.getItem("directed")
 var elem = document.getElementById('3d-graph');
@@ -441,35 +446,6 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
   .linkDirectionalParticleWidth(2)
   .linkOpacity(0.6)
   .linkDirectionalParticles(link => (highlightLinks.has(link) || searchLinks.has(link)) ? 4 : 0)
-  // .onNodeHover(node => {
-  //         // no state change
-
-  //         if ((!node && !highlightNodes.size) || (node && hoverNode === node)) return;
-
-  //         highlightNodes.clear();
-  //         highlightLinks.clear();
-  //         if (node) {
-  //           highlightNodes.add(node);
-  //           node.neighbors.forEach(neighbor => highlightNodes.add(neighbor));
-  //           node.links.forEach(link => highlightLinks.add(link));
-  //         }
-
-  //         hoverNode = node || null;
-
-  //         updateHighlight();
-  //       })
-  // .onLinkHover(link => {
-  //   highlightNodes.clear();
-  //   highlightLinks.clear();
-
-  //   if (link) {
-  //     highlightLinks.add(link);
-  //     highlightNodes.add(link.source);
-  //     highlightNodes.add(link.target);
-  //   }
-
-  //   updateHighlight();
-  // });
 
   Graph.d3Force('link')
   .distance(55)
@@ -533,6 +509,9 @@ function normalized(value, actual_bounds, desired_bounds) {
 
 function nodeColoring (l2fc_value) {
 
+  if(l2fc_value == "kinase"){
+    return "0xf5aa3b"
+  }
     if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
     
     var threshold_max = PARAMS.PosLogFold
@@ -578,7 +557,7 @@ function CreateNode(node)
 
   // NODE PARTITIONS
   var num_sites = (node.nodeColors).length
-  if (num_sites > 1 ) { // partitions
+  if (num_sites > 1 && (PARAMS.Partitions || searchNodes.has(node))) { // partitions
     verticalPartitions = num_sites
   }
   else {
@@ -647,14 +626,17 @@ function CreateNode(node)
 
   // NODE COLORING
   if(verticalPartitions == 1){ // NO PARTITIONS!
-
     // NodeColor does not exist 
-    if (node.nodeColors.length == 0)  { 
-      nodeColor = "null"
+    if (node.nodeColors.length == 0 || !PARAMS.Partitions)  { 
+      if(searchNodes.has(node) || PARAMS.Partitions){nodeColor = "null"}
+      else{
+      nodeColor = node.type == 1 ? "kinase" : "null"
+      }
     }
     else  {// NodeColor exists  
       nodeColor = node.nodeColors[0]
     }
+
     var face = 0
     for(face = 0; face<50;face++){
       mesh.geometry.faces[face].color.setHex(nodeColoring(nodeColor))
@@ -667,7 +649,8 @@ function CreateNode(node)
 
     face = 75
     for(face = 75; face<100;face++){
-      mesh.geometry.faces[face].color.setHex("0xb5b5b5");
+      if(!PARAMS.Partitions && node.type == 1 && !searchNodes.has(node)){mesh.geometry.faces[face].color.setHex("0xc78b32");}
+      else{mesh.geometry.faces[face].color.setHex("0xb5b5b5");}
     }
   }
   else{ // THERE ARE PARTITIONS!

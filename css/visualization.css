@@ -9,7 +9,7 @@
     position: absolute;
     font-size: 14px;
     left: 5px;   /* position inside relatively positioned parent */
-    top: 267px;
+    top: 275px;
     z-index: 10; 
   }
   
