@@ -37,6 +37,29 @@
   font-family: "CenturyGothicPro-Bold";
   src: url("fonts/CenturyGothic-Bold.woff") format("woff");
   }
+  :root {
+  --tp-base-background-color: hsla(197, 95%, 47%, .75);
+  --tp-base-shadow-color: hsla(0, 0%, 100%, 0.00);
+  --tp-button-background-color: hsla(230, 0%, 100%, 1.00);
+  --tp-button-background-color-active: hsla(230, 0%, 100%, 1.00);
+  --tp-button-background-color-focus: hsla(230, 0%, 95%, 1.00);
+  --tp-button-background-color-hover: hsla(230, 0%, 100%, 1.00);
+  --tp-button-foreground-color: hsla(197, 100%, 50%, 1.00);
+  --tp-container-background-color: hsla(230, 7%, 75%, 0.10);
+  --tp-container-background-color-active: hsla(230, 0%, 100%, 1.00);
+  --tp-container-background-color-focus: hsla(230, 0%, 100%, 0.20);
+  --tp-container-background-color-hover: hsla(230, 0%, 100%, 0.15);
+  --tp-container-foreground-color: hsla(230, 0%, 100%, 1.00);
+  --tp-groove-foreground-color: hsla(230, 0%, 100%, 0.10);
+  --tp-input-background-color: hsla(230, 0%, 100%, 1.00);
+  --tp-input-background-color-active: hsla(230, 0%, 99%, 0.87);
+  --tp-input-background-color-focus: hsla(230, 0%, 100%, 0.80);
+  --tp-input-background-color-hover: hsla(227, 0%, 85%, 1.00);
+  --tp-input-foreground-color: hsla(230, 0%, 46%, 1.00);
+  --tp-label-foreground-color: hsla(230, 0%, 100%, 1.00);
+  --tp-monitor-background-color: hsla(230, 25%, 6%, 0.30);
+  --tp-monitor-foreground-color: hsla(230, 0%, 100%, 0.70);
+}
 
 </style>
 </head>
@@ -382,7 +405,7 @@ const fnames = {};
   PosLogFold : 0,
   NegLogFold : 0,
   Background : "#ffffff",
-  Partitions : false
+  Expand_Nodes : false
 };
 
 const pane = new Tweakpane.Pane({
@@ -401,7 +424,7 @@ pane.addInput(PARAMS, 'NegLogFold', {min: -nodeColorThreshold, max: 0}).on('chan
 pane.addInput(PARAMS, 'Background').on('change', (ev) => {
   updateBackground();
   });
-pane.addInput(PARAMS, 'Partitions').on('change', (ev) => {
+pane.addInput(PARAMS, 'Expand_Nodes').on('change', (ev) => {
   searchNodes.clear();
   searchLinks.clear();
   updateHighlight();
@@ -557,7 +580,7 @@ function CreateNode(node)
 
   // NODE PARTITIONS
   var num_sites = (node.nodeColors).length
-  if (num_sites > 1 && (PARAMS.Partitions || searchNodes.has(node))) { // partitions
+  if (num_sites > 1 && (PARAMS.Expand_Nodes || searchNodes.has(node))) { // partitions
     verticalPartitions = num_sites
   }
   else {
@@ -627,8 +650,8 @@ function CreateNode(node)
   // NODE COLORING
   if(verticalPartitions == 1){ // NO PARTITIONS!
     // NodeColor does not exist 
-    if (node.nodeColors.length == 0 || !PARAMS.Partitions)  { 
-      if(searchNodes.has(node) || PARAMS.Partitions){nodeColor = "null"}
+    if (node.nodeColors.length == 0 || !PARAMS.Expand_Nodes)  { 
+      if(searchNodes.has(node) || PARAMS.Expand_Nodes){nodeColor = "null"}
       else{
       nodeColor = node.type == 1 ? "kinase" : "null"
       }
@@ -649,7 +672,7 @@ function CreateNode(node)
 
     face = 75
     for(face = 75; face<100;face++){
-      if(!PARAMS.Partitions && node.type == 1 && !searchNodes.has(node)){mesh.geometry.faces[face].color.setHex("0xc78b32");}
+      if(!PARAMS.Expand_Nodes && node.type == 1 && !searchNodes.has(node)){mesh.geometry.faces[face].color.setHex("0xc78b32");}
       else{mesh.geometry.faces[face].color.setHex("0xb5b5b5");}
     }
   }
