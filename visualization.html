@@ -522,6 +522,10 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
           }
           updateHighlight();
         })
+  .onNodeDragEnd(node => {
+    node.fx = node.x;
+    node.fy = node.y;
+    node.fz = node.z; })
   .linkWidth(link => (highlightLinks.has(link) || searchLinks.has(link)) ? 2 : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1]) : 1) // subject to change
   .linkDirectionalArrowLength(directed => (directed) ? 5 : 0)        
   .linkDirectionalArrowRelPos(0.5)
