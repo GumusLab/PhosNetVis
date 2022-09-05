@@ -1,4 +1,4 @@
-KinaseID,KinaseSize,EdgeColor,EdgeWeight,TargetID,TargetSize,PhosphoSiteID,ProteinPhosphorylation
+KinaseID,KinaseSize,EdgeColor,EdgeWeight,TargetID,TargetSize,PhosphoSiteID,log2FC
 Kinase1,1.2,-1.8,3.38,Target1,1.16,SiteTarget1-1,-1.76
 Kinase1,1.2,-1.8,3.38,Target1,1.16,SiteTarget1-2,0.88
 Kinase1,1.2,-1.8,3.38,Target1,1.16,SiteTarget1-3,0.67
