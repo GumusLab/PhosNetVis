@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-
-<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>PhosNetVis</title>
-  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico?">
-  <style type="text/css">
+    <link rel="stylesheet" href="styles-upload.css" type="text/css">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico?">
+<title>PhosNetVis</title>
+<style type="text/css">
+ 
+
+    #uploadText {
+        margin-left:auto;
+        margin-right:auto;
+        display:block;
+        position: relative;
+    } 
 
     #uploadNetworkButton, #existingNetworksButton, #text, #KEAButton {
       margin-left:auto;
@@ -30,6 +35,7 @@
       margin-top: 5px;
       margin-bottom: -5px;  
     }
+
     #faqButton, #tutorialButton {
       margin-left: 6.5%;
       left: -3%;
@@ -46,14 +52,10 @@
       border: none; 
       background: none; 
       cursor: pointer;
-      width: 32%;
-      height: 32%;
-      margin-top: 6px;
-      margin-bottom: 1px;
+      width: 35%;
+      margin-top: 12px;
+      margin-bottom: 10px;
     }
-    
-    .logocontainer {display: flex; justify-content: center; margin-top: -3px;}
-    .textcontainer {display: flex; justify-content: center; margin-top: 1.2%; margin-left: 5%; margin-bottom: 1.2%;}
 
     .MountSinailogo {       
         margin-left: 0px;
@@ -68,86 +70,160 @@
         margin-bottom: 5px;
     }
 
+    #uploadText {
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    position: relative;
+} 
+
+
     @font-face {
     font-family: "helveticaBold";
     src: url("fonts/helvetica-bold-webfont.woff") format("woff");
     }
-
-  </style>
+</style>
 
 </head>
 
-<body>
 
-<!-- the new logo -->
-<div class="logocontainer">   
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="39%" height = "39%" viewBox="0 0 1478.4 574" style="enable-background:new 0 0 1478.4 574;" xml:space="preserve"> <style type="text/css"> .st0{fill:#424A60;} .st1{fill:#DC298D;} .st2{fill:#7383BF;} .st3{fill:#969696;} .st4{fill:#EBBA16;} .st5{fill:#06ABEB;} .st6{fill:#1D222B;} .st7{font-family:helveticaBold;} .st8{font-size:76px;} .st9{font-family:'Helvetica';} .st10{fill:none;} </style> <g id="Layer_1"> <g> <rect x="239.6" y="398.2" transform="matrix(0.3589 -0.9334 0.9334 0.3589 -161.6451 569.4649)" class="st0" width="188.3" height="8.5"/> </g> <rect x="404.9" y="155.1" transform="matrix(0.8102 -0.5861 0.5861 0.8102 1.9732 338.7402)" class="st0" width="238.4" height="22.5"/> <g> <rect x="49" y="328.3" transform="matrix(0.9138 -0.4062 0.4062 0.9138 -121.2696 115.6947)" class="st0" width="325.8" height="30.5"/> </g> <g> <rect x="316.6" y="43.7" transform="matrix(0.9138 -0.4062 0.4062 0.9138 -24.0306 142.9913)" class="st0" width="16.5" height="168.8"/> </g> <rect x="436.2" y="284.8" transform="matrix(0.9138 -0.4062 0.4062 0.9138 -125.5262 216.6017)" class="st0" width="22.5" height="238.4"/> <circle class="st1" cx="644.6" cy="88.9" r="56.2"/> <circle class="st2" cx="289.4" cy="517.8" r="56.2"/> <circle class="st1" cx="56.2" cy="404" r="56.2"/> <circle class="st3" cx="282.9" cy="33.7" r="33.7"/> <circle class="st4" cx="489.4" cy="498.4" r="33.7"/> <circle class="st5" cx="385.8" cy="265.3" r="96.2"/> </g> <g id="Layer_2"> <text transform="matrix(1 0 0 1 293.4512 289.0084)"><tspan x="0" y="0" class="st6 st7 st8">PhosNetVis</tspan><tspan x="422.3" y="0" class="st6 st9 st8"> | PhosphoProteomics </tspan><tspan x="159.8" y="101" class="st6 st9 st8">Network 3D Visualization</tspan><tspan x="1004.6" y="101" class="st9 st8"> </tspan></text> <rect x="1221.1" y="334.6" class="st10" width="2.3" height="0"/> </g></svg>
-</div> 
-<!-- end the new logo -->
+<body >
 
-<!-- phosnetvis explanation -->
-<div class="textcontainer">
-
-<svg xmlns="http://www.w3.org/2000/svg" width="47%" height="47%" viewBox="0 0 656 224">
-  <text id="PhosNetVis_is_a_web-based_platform_to_generate_explore_and_share_interactive_phosphoproteomics_networks_in_3D._To_generate_a_phosphoproteomics_network_that_consists_of_kinases_and_their_targets_you_can_run_Kinase_Enrichment_Analysis_KEA_by_uploadi" data-name="PhosNetVis is a web-based platform to generate, explore, and share interactive phosphoproteomics networks in 3D. 
-
-To generate a phosphoproteomics network that consists of kinases and their targets, you can run “Kinase Enrichment Analysis (KEA)” by uploadi" fill="#576072" font-size="16" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="12">PhosNetVis</tspan><tspan y="12" font-family="Helvetica" font-weight="400"> </tspan><tspan y="12" font-family="Helvetica-Light, Helvetica" font-weight="300">is a web-based platform to generate, explore, and share interactive </tspan><tspan x="0" y="28" font-family="Helvetica-Light, Helvetica" font-weight="300">phosphoproteomics networks in 3D. </tspan><tspan font-family="Helvetica" font-weight="400"><tspan x="0" y="44"></tspan></tspan><tspan font-family="Helvetica-Light, Helvetica" font-weight="300"><tspan x="0" y="60">To generate a phosphoproteomics network that consists of kinases and their targets, you </tspan><tspan x="0" y="76">can run</tspan><tspan y="76" font-family="Helvetica" font-weight="400"> </tspan><tspan y="76" font-family="Helvetica-Bold, Helvetica" font-weight="700">“Kinase Enrichment Analysis (KEA)”</tspan><tspan y="76" xml:space="preserve"> by uploading a .csv file that contain target </tspan><tspan x="0" y="92">proteins and their corresponding log(FoldChange) phosphorylation values. </tspan></tspan><tspan font-family="Helvetica" font-weight="400"><tspan x="0" y="108"></tspan></tspan><tspan font-family="Helvetica-Light, Helvetica" font-weight="300"><tspan x="0" y="124">If you have already run KEA</tspan><tspan y="124" font-family="Helvetica" font-weight="400"> </tspan><tspan y="124" font-family="Helvetica-Bold, Helvetica" font-weight="700">OR</tspan><tspan y="124" font-family="Helvetica" font-weight="400"> </tspan><tspan y="124">prepared your networks, you can upload your data for </tspan><tspan x="0" y="140" font-family="Helvetica-Bold, Helvetica" font-weight="700">“Visualization”</tspan><tspan y="140" font-family="Helvetica" font-weight="400"> </tspan><tspan y="140">to interactively visualize and explore your phosphoproteomics networks in </tspan><tspan x="0" y="156">3D. If you do not have any data yet, you can also</tspan><tspan y="156" font-family="Helvetica" font-weight="400"> </tspan><tspan y="156" font-family="Helvetica-Bold, Helvetica" font-weight="700">“Explore Existing Networks”</tspan><tspan y="156" font-family="Helvetica" font-weight="400">. </tspan></tspan><tspan font-family="Helvetica" font-weight="400"><tspan x="0" y="172"></tspan></tspan><tspan font-family="Helvetica-Light, Helvetica" font-weight="300"><tspan x="0" y="188">Further guides for running the GSEA, and reshaping &amp; customizing your network data in the </tspan><tspan x="0" y="204">correct format for visualization can be found in their own sections below. If you encounter </tspan><tspan x="0" y="220">any difficulties, you can check the</tspan><tspan y="220" font-family="Helvetica" font-weight="400"> </tspan><tspan y="220" font-family="Helvetica-Bold, Helvetica" font-weight="700">FAQ</tspan><tspan y="220" font-family="Helvetica" font-weight="400"> </tspan><tspan y="220">section, or watch the recorded </tspan><tspan y="220" font-family="Helvetica-Bold, Helvetica" font-weight="700">tutorials.</tspan></tspan></text>
+<div>
+<svg id="uploadText" style = "left:2.1%;margin-bottom:1.2%"xmlns="http://www.w3.org/2000/svg" height="62%" viewBox="0 0 656 462.153">
+    <g id="Group_96" data-name="Group 96" transform="translate(-362.5 -16.847)">
+      <g id="phos_copy" data-name="phos copy" transform="translate(362.62 16.847)">
+        <g id="Layer_1" transform="translate(0)">
+          <rect id="Rectangle_1" data-name="Rectangle 1" width="70.901" height="3.19" transform="translate(111.465 184.057) rotate(-68.97)" fill="#424a60"/>
+          <rect id="Rectangle_2" data-name="Rectangle 2" width="89.77" height="8.462" transform="matrix(0.81, -0.586, 0.586, 0.81, 158.529, 85.518)" fill="#424a60"/>
+          <rect id="Rectangle_3" data-name="Rectangle 3" width="122.708" height="11.475" transform="matrix(0.914, -0.406, 0.406, 0.914, 21.407, 149.047)" fill="#424a60"/>
+          <rect id="Rectangle_4" data-name="Rectangle 4" width="6.203" height="63.572" transform="matrix(0.914, -0.406, 0.406, 0.914, 106.58, 20.455)" fill="#424a60"/>
+          <rect id="Rectangle_5" data-name="Rectangle 5" width="8.462" height="89.77" transform="matrix(0.914, -0.406, 0.406, 0.914, 146.418, 112.838)" fill="#424a60"/>
+          <circle id="Ellipse_1" data-name="Ellipse 1" cx="21.158" cy="21.158" r="21.158" transform="translate(221.611 12.334)" fill="#dc298d"/>
+          <circle id="Ellipse_2" data-name="Ellipse 2" cx="21.158" cy="21.158" r="21.158" transform="translate(87.811 173.837)" fill="#7383bf"/>
+          <circle id="Ellipse_3" data-name="Ellipse 3" cx="21.158" cy="21.158" r="21.158" transform="translate(0 131.005)" fill="#dc298d"/>
+          <circle id="Ellipse_4" data-name="Ellipse 4" cx="12.696" cy="12.696" r="12.696" transform="translate(93.829)" fill="#969696"/>
+          <circle id="Ellipse_5" data-name="Ellipse 5" cx="12.696" cy="12.696" r="12.696" transform="translate(171.623 175.001)" fill="#ebba16"/>
+          <circle id="Ellipse_6" data-name="Ellipse 6" cx="36.223" cy="36.223" r="36.223" transform="translate(109.067 63.678)" fill="#06abeb"/>
+        </g>
+        <g id="Layer_2" transform="translate(112.201 86.621)">
+          <g id="Group">
+            <text id="PhosNet" transform="translate(0 22)" fill="#1d222b" font-size="28" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">PhosNet</tspan></text>
+            <text id="V" transform="translate(116.099 22)" fill="#1d222b" font-size="28" font-family="Helvetica-Bold, Helvetica" font-weight="700" letter-spacing="-0.02em"><tspan x="0" y="0">V</tspan></text>
+            <text id="is" transform="translate(134.684 22)" fill="#1d222b" font-size="28" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">is</tspan></text>
+            <text id="_PhosphoProteomics_" data-name=" | PhosphoProteomics " transform="translate(158.558 22)" fill="#1d222b" font-size="28" font-family="Helvetica"><tspan x="0" y="0" xml:space="preserve"> | PhosphoProteomics </tspan></text>
+            <text id="Network_3D_" data-name="Network 3D " transform="translate(60.194 60.038)" fill="#1d222b" font-size="28" font-family="Helvetica"><tspan x="0" y="0">Network 3D </tspan></text>
+            <text id="V-2" data-name="V" transform="translate(212.66 60.038)" fill="#1d222b" font-size="28" font-family="Helvetica" letter-spacing="-0.02em"><tspan x="0" y="0">V</tspan></text>
+            <text id="isualization" transform="translate(231.249 60.038)" fill="#1d222b" font-size="28" font-family="Helvetica"><tspan x="0" y="0">isualization</tspan></text>
+          </g>
+        </g>
+      </g>
+    </g>
+    <text id="PhosNetVis_is_a_web-based_platform_to_generate_explore_and_share_interactive_phosphoproteomics_networks_in_3D._To_generate_a_phosphoproteomics_network_that_consists_of_kinases_and_their_targets_you_can_run_Kinase_Enrichment_Analysis_KEA_by_uploadi" data-name="PhosNetVis is a web-based platform to generate, explore, and share interactive phosphoproteomics networks in 3D. 
+  
+  To generate a phosphoproteomics network that consists of kinases and their targets, you can run “Kinase Enrichment Analysis (KEA)” by uploadi" transform="translate(0 238.153)" fill="#576072" font-size="16" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="12">PhosNetVis</tspan><tspan y="12" font-family="Helvetica" font-weight="400"> </tspan><tspan y="12" font-family="Helvetica-Light, Helvetica" font-weight="300">is a web-based platform to generate, explore, and share interactive </tspan><tspan x="0" y="28" font-family="Helvetica-Light, Helvetica" font-weight="300">phosphoproteomics networks in 3D. </tspan><tspan font-family="Helvetica" font-weight="400"><tspan x="0" y="44"></tspan></tspan><tspan font-family="Helvetica-Light, Helvetica" font-weight="300"><tspan x="0" y="60">To generate a phosphoproteomics network that consists of kinases and their targets, you </tspan><tspan x="0" y="76">can run</tspan><tspan y="76" font-family="Helvetica" font-weight="400"> </tspan><tspan y="76" font-family="Helvetica-Bold, Helvetica" font-weight="700">“Kinase Enrichment Analysis (KEA)”</tspan><tspan y="76" xml:space="preserve"> by uploading a .csv file that contain target </tspan><tspan x="0" y="92">proteins and their corresponding log(FoldChange) phosphorylation values. </tspan></tspan><tspan font-family="Helvetica" font-weight="400"><tspan x="0" y="108"></tspan></tspan><tspan font-family="Helvetica-Light, Helvetica" font-weight="300"><tspan x="0" y="124">If you have already run KEA</tspan><tspan y="124" font-family="Helvetica" font-weight="400"> </tspan><tspan y="124" font-family="Helvetica-Bold, Helvetica" font-weight="700">OR</tspan><tspan y="124" font-family="Helvetica" font-weight="400"> </tspan><tspan y="124">prepared your networks, you can upload your data for </tspan><tspan x="0" y="140" font-family="Helvetica-Bold, Helvetica" font-weight="700">“Visualization”</tspan><tspan y="140" font-family="Helvetica" font-weight="400"> </tspan><tspan y="140">to interactively visualize and explore your phosphoproteomics networks in </tspan><tspan x="0" y="156">3D. If you do not have any data yet, you can also</tspan><tspan y="156" font-family="Helvetica" font-weight="400"> </tspan><tspan y="156" font-family="Helvetica-Bold, Helvetica" font-weight="700">“Explore Existing Networks”</tspan><tspan y="156" font-family="Helvetica" font-weight="400">. </tspan></tspan><tspan font-family="Helvetica" font-weight="400"><tspan x="0" y="172"></tspan></tspan><tspan font-family="Helvetica-Light, Helvetica" font-weight="300"><tspan x="0" y="188">Further guides for running the GSEA, and reshaping &amp; customizing your network data in the </tspan><tspan x="0" y="204">correct format for visualization can be found in their own sections below. If you encounter </tspan><tspan x="0" y="220">any difficulties, you can check the</tspan><tspan y="220" font-family="Helvetica" font-weight="400"> </tspan><tspan y="220" font-family="Helvetica-Bold, Helvetica" font-weight="700">FAQ</tspan><tspan y="220" font-family="Helvetica" font-weight="400"> </tspan><tspan y="220">section, or watch the recorded </tspan><tspan y="220" font-family="Helvetica-Bold, Helvetica" font-weight="700">tutorials.</tspan></tspan></text>
 </svg>
+</div>
 
-
-</div>   
-<!-- end of phosnetvis explanation -->
 
 <!-- upload for KEA button -->
 <div>
-  <button id="KEAButton" onclick="window.location.href = 'kea.html'">
-    <svg xmlns="http://www.w3.org/2000/svg"  width="81%" height="80%" viewBox="0 0 362.509 48">
-        <g id="Button_CTA" data-name="Button CTA">
-          <path id="Rectangle_1090" data-name="Rectangle 1090" d="M5.254,0h352c2.9,0,5.254,1.791,5.254,4V44c0,2.209-2.352,4-5.254,4h-352C2.352,48,0,46.209,0,44V4C0,1.791,2.352,0,5.254,0Z" fill="#576072"/>
-          <text id="NORMAL" transform="translate(181 28)" fill="#fff" font-size="15" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-89.033" y="0">UPLOAD DATA FOR KEA</tspan></text>
-        </g>
-        <g id="Button_CTA-2" data-name="Button CTA">
-          <path id="Rectangle_1090-2" data-name="Rectangle 1090" d="M5.254,0h352c2.9,0,5.254,1.791,5.254,4V44c0,2.209-2.352,4-5.254,4h-352C2.352,48,0,46.209,0,44V4C0,1.791,2.352,0,5.254,0Z" fill="#576072"/>
-          <text id="NORMAL-2" data-name="NORMAL" transform="translate(181.255 29)" fill="#fff" font-size="18" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-106.84" y="0">UPLOAD DATA FOR KEA</tspan></text>
-        </g>
-      </svg>
-      </button>
-  <div>
-  <!-- end of upload for KEA button -->
-
-<!-- upload for network button -->
-<div>
-    <button id="uploadNetworkButton" onclick="window.location.href = 'uploadNetwork.html'">
-      <svg id="Button_CTA" data-name="Button CTA" xmlns="http://www.w3.org/2000/svg"  width="81%" height="80%" viewBox="0 0 362.509 48">
-          <path id="Rectangle_1090" data-name="Rectangle 1090" d="M5.254,0h352c2.9,0,5.254,1.791,5.254,4V44c0,2.209-2.352,4-5.254,4h-352C2.352,48,0,46.209,0,44V4C0,1.791,2.352,0,5.254,0Z" fill="#576072"/>
-          <text id="NORMAL" transform="translate(181.255 29)" fill="#fff" font-size="18" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-156.173" y="0">UPLOAD DATA FOR VISUALIZATION</tspan></text>
+    <button id="KEAButton" onclick="window.location.href = 'kea.html'">
+      <svg xmlns="http://www.w3.org/2000/svg"  width="81%" height="80%" viewBox="0 0 362.509 48">
+          <g id="Button_CTA" data-name="Button CTA">
+            <path id="Rectangle_1090" data-name="Rectangle 1090" d="M5.254,0h352c2.9,0,5.254,1.791,5.254,4V44c0,2.209-2.352,4-5.254,4h-352C2.352,48,0,46.209,0,44V4C0,1.791,2.352,0,5.254,0Z" fill="#576072"/>
+            <text id="NORMAL" transform="translate(181 28)" fill="#fff" font-size="15" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-89.033" y="0">UPLOAD DATA FOR KEA</tspan></text>
+          </g>
+          <g id="Button_CTA-2" data-name="Button CTA">
+            <path id="Rectangle_1090-2" data-name="Rectangle 1090" d="M5.254,0h352c2.9,0,5.254,1.791,5.254,4V44c0,2.209-2.352,4-5.254,4h-352C2.352,48,0,46.209,0,44V4C0,1.791,2.352,0,5.254,0Z" fill="#576072"/>
+            <text id="NORMAL-2" data-name="NORMAL" transform="translate(181.255 29)" fill="#fff" font-size="18" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-106.84" y="0">UPLOAD DATA FOR KEA</tspan></text>
+          </g>
         </svg>
+        </button>
+    <div>
+    <!-- end of upload for KEA button -->
+  
+  <!-- upload for network button -->
+  <div>
+      <button id="uploadNetworkButton" onclick="window.location.href = 'uploadNetwork.html'">
+        <svg id="Button_CTA" data-name="Button CTA" xmlns="http://www.w3.org/2000/svg"  width="81%" height="80%" viewBox="0 0 362.509 48">
+            <path id="Rectangle_1090" data-name="Rectangle 1090" d="M5.254,0h352c2.9,0,5.254,1.791,5.254,4V44c0,2.209-2.352,4-5.254,4h-352C2.352,48,0,46.209,0,44V4C0,1.791,2.352,0,5.254,0Z" fill="#576072"/>
+            <text id="NORMAL" transform="translate(181.255 29)" fill="#fff" font-size="18" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-156.173" y="0">UPLOAD DATA FOR VISUALIZATION</tspan></text>
+          </svg>
+      </button>
+    </div>
+  <!-- end of upload for network button -->
+    
+  
+  <!-- existing networks button -->
+  <div>
+    <button id="existingNetworksButton" onclick="window.location.href = 'existingNetworks.html'">
+      <svg id="Button_CTA" data-name="Button CTA" xmlns="http://www.w3.org/2000/svg" width="81%" height="80%" viewBox="0 0 362.509 48">
+          <g id="Rectangle_1090" data-name="Rectangle 1090" fill="none">
+            <path d="M5.254,0h352c2.9,0,5.254,1.791,5.254,4V44c0,2.209-2.352,4-5.254,4h-352C2.352,48,0,46.209,0,44V4C0,1.791,2.352,0,5.254,0Z" stroke="none"/>
+            <path d="M 5.253753662109375 1 C 4.0679931640625 1 2.9637451171875 1.343498229980469 2.14453125 1.967227935791016 C 1.406494140625 2.529136657714844 1 3.251091003417969 1 4 L 1 44 C 1 44.74890899658203 1.406494140625 45.47086334228516 2.14453125 46.03277206420898 C 2.9637451171875 46.65650177001953 4.0679931640625 47 5.253753662109375 47 L 357.2555847167969 47 C 358.4413452148438 47 359.5455322265625 46.65650177001953 360.36474609375 46.03277206420898 C 361.1028442382812 45.47081756591797 361.5093383789062 44.74890899658203 361.5093383789062 44 L 361.5093383789062 4 C 361.5093383789062 3.251091003417969 361.1028442382812 2.529182434082031 360.36474609375 1.967227935791016 C 359.5455322265625 1.343498229980469 358.4413452148438 1 357.2555847167969 1 L 5.253753662109375 1 M 5.253753662109375 0 L 357.2555847167969 0 C 360.1571350097656 0 362.5093383789062 1.790863037109375 362.5093383789062 4 L 362.5093383789062 44 C 362.5093383789062 46.20913696289062 360.1571350097656 48 357.2555847167969 48 L 5.253753662109375 48 C 2.3521728515625 48 0 46.20913696289062 0 44 L 0 4 C 0 1.790863037109375 2.3521728515625 0 5.253753662109375 0 Z" stroke="none" fill="#576072"/>
+          </g>
+          <text id="NORMAL" transform="translate(181.255 29)" fill="#576072" font-size="18" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-142.515" y="0">EXPLORE EXISTING NETWORKS</tspan></text>
+        </svg>   
     </button>
   </div>
-<!-- end of upload for network button -->
+  <!-- end of existing networks button -->
   
-
-<!-- existing networks button -->
-<div>
-  <button id="existingNetworksButton" onclick="window.location.href = 'existingNetworks.html'">
-    <svg id="Button_CTA" data-name="Button CTA" xmlns="http://www.w3.org/2000/svg" width="81%" height="80%" viewBox="0 0 362.509 48">
-        <g id="Rectangle_1090" data-name="Rectangle 1090" fill="none">
-          <path d="M5.254,0h352c2.9,0,5.254,1.791,5.254,4V44c0,2.209-2.352,4-5.254,4h-352C2.352,48,0,46.209,0,44V4C0,1.791,2.352,0,5.254,0Z" stroke="none"/>
-          <path d="M 5.253753662109375 1 C 4.0679931640625 1 2.9637451171875 1.343498229980469 2.14453125 1.967227935791016 C 1.406494140625 2.529136657714844 1 3.251091003417969 1 4 L 1 44 C 1 44.74890899658203 1.406494140625 45.47086334228516 2.14453125 46.03277206420898 C 2.9637451171875 46.65650177001953 4.0679931640625 47 5.253753662109375 47 L 357.2555847167969 47 C 358.4413452148438 47 359.5455322265625 46.65650177001953 360.36474609375 46.03277206420898 C 361.1028442382812 45.47081756591797 361.5093383789062 44.74890899658203 361.5093383789062 44 L 361.5093383789062 4 C 361.5093383789062 3.251091003417969 361.1028442382812 2.529182434082031 360.36474609375 1.967227935791016 C 359.5455322265625 1.343498229980469 358.4413452148438 1 357.2555847167969 1 L 5.253753662109375 1 M 5.253753662109375 0 L 357.2555847167969 0 C 360.1571350097656 0 362.5093383789062 1.790863037109375 362.5093383789062 4 L 362.5093383789062 44 C 362.5093383789062 46.20913696289062 360.1571350097656 48 357.2555847167969 48 L 5.253753662109375 48 C 2.3521728515625 48 0 46.20913696289062 0 44 L 0 4 C 0 1.790863037109375 2.3521728515625 0 5.253753662109375 0 Z" stroke="none" fill="#576072"/>
+  <!-- faq button -->
+  <div id="lowerButtons">
+  
+    <svg id="faqButton" xmlns="http://www.w3.org/2000/svg" width="2.8%" viewBox="0 0 41 56">
+      <g id="Group_1" data-name="Group 1" transform="translate(0 0.136)">
+        <g id="No">
+          <g id="Ellipse_111" data-name="Ellipse 111" transform="translate(0 -0.136)" fill="none" stroke="#576072" stroke-width="2">
+            <circle cx="20.5" cy="20.5" r="20.5" stroke="none"/>
+            <circle cx="20.5" cy="20.5" r="19.5" fill="none"/>
+          </g>
+          <g id="Symbol_85_1" data-name="Symbol 85 – 1" transform="translate(12.152 12.152)">
+            <g id="Union_3" data-name="Union 3" transform="translate(0 0)">
+              <rect id="Rectangle_9" data-name="Rectangle 9" width="20.254" height="2.025" transform="translate(1.432 0) rotate(45)" fill="#fff"/>
+              <rect id="Rectangle_10" data-name="Rectangle 10" width="20.254" height="2.025" transform="translate(0 14.322) rotate(-45)" fill="#fff"/>
+            </g>
+          </g>
         </g>
-        <text id="NORMAL" transform="translate(181.255 29)" fill="#576072" font-size="18" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-142.515" y="0">EXPLORE EXISTING NETWORKS</tspan></text>
-      </svg>   
-  </button>
-</div>
-<!-- end of existing networks button -->
-
-<!-- faq button -->
-<div id="lowerButtons">
-
-  <svg id="faqButton" xmlns="http://www.w3.org/2000/svg" width="2.8%" viewBox="0 0 41 56">
-    <g id="Group_1" data-name="Group 1" transform="translate(0 0.136)">
-      <g id="No">
-        <g id="Ellipse_111" data-name="Ellipse 111" transform="translate(0 -0.136)" fill="none" stroke="#576072" stroke-width="2">
+      </g>
+      <g id="Layer_2" data-name="Layer 2" transform="translate(5.453 5.589)">
+        <g id="menu-arrow">
+          <rect id="Rectangle_6" data-name="Rectangle 6" width="30" height="29" transform="translate(29.547 29.411) rotate(180)" fill="#576072" stroke="#576072" stroke-width="1" opacity="0"/>
+          <path id="Path_1" data-name="Path 1" d="M19.333,10.167A6.167,6.167,0,1,0,7,10.167a1.233,1.233,0,1,0,2.467,0,3.7,3.7,0,1,1,3.7,3.7A1.233,1.233,0,0,0,11.933,15.1v2.467a1.233,1.233,0,0,0,2.467,0V16.21A6.167,6.167,0,0,0,19.333,10.167Z" transform="translate(1.633 0.933)" fill="#576072" stroke="#576072" stroke-width="1"/>
+          <circle id="Ellipse_7" data-name="Ellipse 7" cx="1.5" cy="1.5" r="1.5" transform="translate(13.547 22.411)" fill="#576072" stroke="#576072" stroke-width="1"/>
+        </g>
+      </g>
+      <text id="FAQ" transform="translate(9 53)" fill="#576072" font-size="11" font-family="Helvetica"><tspan x="0" y="0">FAQ</tspan></text>
+    </svg>
+    
+        
+  
+  <!-- end of faq button -->
+  <!-- tutorial button -->
+  <svg id="tutorialButton" xmlns="http://www.w3.org/2000/svg" width="3.7%" viewBox="0 0 55 56">
+    <g id="Group_2" data-name="Group 2" transform="translate(6.032 0.136)">
+      <g id="No" transform="translate(0)">
+        <g id="Ellipse_111" data-name="Ellipse 111" transform="translate(-0.032 -0.136)" fill="none" stroke="#576072" stroke-width="2">
+          <circle cx="20.5" cy="20.5" r="20.5" stroke="none"/>
+          <circle cx="20.5" cy="20.5" r="19.5" fill="none"/>
+        </g>
+      </g>
+    </g>
+    <g id="Polygon_1" data-name="Polygon 1" transform="translate(41 9) rotate(90)" fill="#fff">
+      <path d="M 16.52786064147949 21.50000190734863 L 6.472129821777344 21.50000190734863 C 5.586329936981201 21.50000190734863 4.811200141906738 21.06784248352051 4.345510005950928 20.3143310546875 C 3.879810094833374 19.56081199645996 3.839920043945312 18.67425155639648 4.236070156097412 17.88196182250977 L 9.263930320739746 7.826241970062256 C 9.696599960327148 6.960891723632812 10.53250980377197 6.444272041320801 11.5 6.444272041320801 C 12.46747970581055 6.444272041320801 13.30340003967285 6.960891723632812 13.73606967926025 7.826231956481934 L 18.76392936706543 17.88196182250977 C 19.16007995605469 18.67425155639648 19.12018966674805 19.56081199645996 18.65448951721191 20.31432151794434 C 18.18880081176758 21.06784248352051 17.41366958618164 21.50000190734863 16.52786064147949 21.50000190734863 Z" stroke="none"/>
+      <path d="M 11.5 7.944271087646484 C 11.26918029785156 7.944271087646484 10.84605979919434 8.016082763671875 10.60556983947754 8.497062683105469 L 5.577709197998047 18.55278205871582 C 5.360759735107422 18.9866828918457 5.512020111083984 19.34861183166504 5.621480941772461 19.52573204040527 C 5.730949401855469 19.70286178588867 5.987030029296875 20.00000190734863 6.472129821777344 20.00000190734863 L 16.52786064147949 20.00000190734863 C 17.01296043395996 20.00000190734863 17.26903915405273 19.70286178588867 17.37850952148438 19.52573204040527 C 17.48797988891602 19.34861183166504 17.63922882080078 18.98667144775391 17.42229080200195 18.55278205871582 L 12.39443016052246 8.497051239013672 C 12.15394973754883 8.016082763671875 11.73081970214844 7.944271087646484 11.5 7.944271087646484 M 11.5 4.944271087646484 C 12.92033100128174 4.944271087646484 14.34066009521484 5.681316375732422 15.07771015167236 7.155412673950195 L 20.10556983947754 17.21114158630371 C 21.43536949157715 19.87075233459473 19.50139045715332 23.00000190734863 16.52786064147949 23.00000190734863 L 6.472129821777344 23.00000190734863 C 3.49860954284668 23.00000190734863 1.564619064331055 19.87075233459473 2.894430160522461 17.21114158630371 L 7.922289848327637 7.155422210693359 C 8.659335136413574 5.68132209777832 10.07966899871826 4.944271087646484 11.5 4.944271087646484 Z" stroke="none" fill="#576072"/>
+    </g>
+    <text id="TUTORIAL" transform="translate(0 53)" fill="#576072" font-size="11" font-family="Helvetica"><tspan x="0" y="0">TUTORIAL</tspan></text>
+  </svg>
+  
+  <!-- end of tutorial button -->
+  
+  <!-- contact us button -->
+  <svg id = "contactButton" onclick="window.location.href = 'contact-us.html'" xmlns="http://www.w3.org/2000/svg" width="4.8%" viewBox="0 0 71 56">
+    <g id="Group_3" data-name="Group 3" transform="translate(14.065 0.136)">
+      <g id="No" transform="translate(0)">
+        <g id="Ellipse_111" data-name="Ellipse 111" transform="translate(-0.065 -0.136)" fill="none" stroke="#576072" stroke-width="2">
           <circle cx="20.5" cy="20.5" r="20.5" stroke="none"/>
           <circle cx="20.5" cy="20.5" r="19.5" fill="none"/>
         </g>
@@ -159,74 +235,25 @@ To generate a phosphoproteomics network that consists of kinases and their targe
         </g>
       </g>
     </g>
-    <g id="Layer_2" data-name="Layer 2" transform="translate(5.453 5.589)">
-      <g id="menu-arrow">
-        <rect id="Rectangle_6" data-name="Rectangle 6" width="30" height="29" transform="translate(29.547 29.411) rotate(180)" fill="#576072" stroke="#576072" stroke-width="1" opacity="0"/>
-        <path id="Path_1" data-name="Path 1" d="M19.333,10.167A6.167,6.167,0,1,0,7,10.167a1.233,1.233,0,1,0,2.467,0,3.7,3.7,0,1,1,3.7,3.7A1.233,1.233,0,0,0,11.933,15.1v2.467a1.233,1.233,0,0,0,2.467,0V16.21A6.167,6.167,0,0,0,19.333,10.167Z" transform="translate(1.633 0.933)" fill="#576072" stroke="#576072" stroke-width="1"/>
-        <circle id="Ellipse_7" data-name="Ellipse 7" cx="1.5" cy="1.5" r="1.5" transform="translate(13.547 22.411)" fill="#576072" stroke="#576072" stroke-width="1"/>
-      </g>
+    <g id="envelope-svgrepo-com" transform="translate(24.18 13.261)">
+      <path id="Path_2" data-name="Path 2" d="M19.958,156a.317.317,0,0,0-.317.317v8.553a1.586,1.586,0,0,1-1.584,1.584H2.218A1.586,1.586,0,0,1,.634,164.87v-8.553a.317.317,0,1,0-.634,0v8.553a2.22,2.22,0,0,0,2.218,2.218H18.057a2.22,2.22,0,0,0,2.218-2.218v-8.553A.317.317,0,0,0,19.958,156Z" transform="translate(0 -152.832)" fill="#576072" stroke="#576072" stroke-width="1.5"/>
+      <path id="Path_3" data-name="Path 3" d="M.481,78.583h0l8.636,5.572a2.222,2.222,0,0,0,2.4,0l8.636-5.572A.62.62,0,0,0,20.446,78a2.224,2.224,0,0,0-2.207-2H2.4A2.224,2.224,0,0,0,.193,78,.62.62,0,0,0,.481,78.583ZM2.4,76.634H18.239a1.6,1.6,0,0,1,1.575,1.417h0l-8.636,5.572a1.587,1.587,0,0,1-1.717,0L.825,78.051h0A1.6,1.6,0,0,1,2.4,76.634Z" transform="translate(-0.182 -76)" fill="#576072" stroke="#576072" stroke-width="1.5"/>
     </g>
-    <text id="FAQ" transform="translate(9 53)" fill="#576072" font-size="11" font-family="Helvetica"><tspan x="0" y="0">FAQ</tspan></text>
+    <text id="CONTACT_US" data-name="CONTACT US" transform="translate(0 53)" fill="#576072" font-size="11" font-family="Helvetica"><tspan x="0" y="0">CONTACT US</tspan></text>
   </svg>
   
-      
-
-<!-- end of faq button -->
-<!-- tutorial button -->
-<svg id="tutorialButton" xmlns="http://www.w3.org/2000/svg" width="3.7%" viewBox="0 0 55 56">
-  <g id="Group_2" data-name="Group 2" transform="translate(6.032 0.136)">
-    <g id="No" transform="translate(0)">
-      <g id="Ellipse_111" data-name="Ellipse 111" transform="translate(-0.032 -0.136)" fill="none" stroke="#576072" stroke-width="2">
-        <circle cx="20.5" cy="20.5" r="20.5" stroke="none"/>
-        <circle cx="20.5" cy="20.5" r="19.5" fill="none"/>
-      </g>
-    </g>
-  </g>
-  <g id="Polygon_1" data-name="Polygon 1" transform="translate(41 9) rotate(90)" fill="#fff">
-    <path d="M 16.52786064147949 21.50000190734863 L 6.472129821777344 21.50000190734863 C 5.586329936981201 21.50000190734863 4.811200141906738 21.06784248352051 4.345510005950928 20.3143310546875 C 3.879810094833374 19.56081199645996 3.839920043945312 18.67425155639648 4.236070156097412 17.88196182250977 L 9.263930320739746 7.826241970062256 C 9.696599960327148 6.960891723632812 10.53250980377197 6.444272041320801 11.5 6.444272041320801 C 12.46747970581055 6.444272041320801 13.30340003967285 6.960891723632812 13.73606967926025 7.826231956481934 L 18.76392936706543 17.88196182250977 C 19.16007995605469 18.67425155639648 19.12018966674805 19.56081199645996 18.65448951721191 20.31432151794434 C 18.18880081176758 21.06784248352051 17.41366958618164 21.50000190734863 16.52786064147949 21.50000190734863 Z" stroke="none"/>
-    <path d="M 11.5 7.944271087646484 C 11.26918029785156 7.944271087646484 10.84605979919434 8.016082763671875 10.60556983947754 8.497062683105469 L 5.577709197998047 18.55278205871582 C 5.360759735107422 18.9866828918457 5.512020111083984 19.34861183166504 5.621480941772461 19.52573204040527 C 5.730949401855469 19.70286178588867 5.987030029296875 20.00000190734863 6.472129821777344 20.00000190734863 L 16.52786064147949 20.00000190734863 C 17.01296043395996 20.00000190734863 17.26903915405273 19.70286178588867 17.37850952148438 19.52573204040527 C 17.48797988891602 19.34861183166504 17.63922882080078 18.98667144775391 17.42229080200195 18.55278205871582 L 12.39443016052246 8.497051239013672 C 12.15394973754883 8.016082763671875 11.73081970214844 7.944271087646484 11.5 7.944271087646484 M 11.5 4.944271087646484 C 12.92033100128174 4.944271087646484 14.34066009521484 5.681316375732422 15.07771015167236 7.155412673950195 L 20.10556983947754 17.21114158630371 C 21.43536949157715 19.87075233459473 19.50139045715332 23.00000190734863 16.52786064147949 23.00000190734863 L 6.472129821777344 23.00000190734863 C 3.49860954284668 23.00000190734863 1.564619064331055 19.87075233459473 2.894430160522461 17.21114158630371 L 7.922289848327637 7.155422210693359 C 8.659335136413574 5.68132209777832 10.07966899871826 4.944271087646484 11.5 4.944271087646484 Z" stroke="none" fill="#576072"/>
-  </g>
-  <text id="TUTORIAL" transform="translate(0 53)" fill="#576072" font-size="11" font-family="Helvetica"><tspan x="0" y="0">TUTORIAL</tspan></text>
-</svg>
-
-<!-- end of tutorial button -->
-
-<!-- contact us button -->
-<svg id = "contactButton" onclick="window.location.href = 'contact-us.html'" xmlns="http://www.w3.org/2000/svg" width="4.8%" viewBox="0 0 71 56">
-  <g id="Group_3" data-name="Group 3" transform="translate(14.065 0.136)">
-    <g id="No" transform="translate(0)">
-      <g id="Ellipse_111" data-name="Ellipse 111" transform="translate(-0.065 -0.136)" fill="none" stroke="#576072" stroke-width="2">
-        <circle cx="20.5" cy="20.5" r="20.5" stroke="none"/>
-        <circle cx="20.5" cy="20.5" r="19.5" fill="none"/>
-      </g>
-      <g id="Symbol_85_1" data-name="Symbol 85 – 1" transform="translate(12.152 12.152)">
-        <g id="Union_3" data-name="Union 3" transform="translate(0 0)">
-          <rect id="Rectangle_9" data-name="Rectangle 9" width="20.254" height="2.025" transform="translate(1.432 0) rotate(45)" fill="#fff"/>
-          <rect id="Rectangle_10" data-name="Rectangle 10" width="20.254" height="2.025" transform="translate(0 14.322) rotate(-45)" fill="#fff"/>
-        </g>
-      </g>
-    </g>
-  </g>
-  <g id="envelope-svgrepo-com" transform="translate(24.18 13.261)">
-    <path id="Path_2" data-name="Path 2" d="M19.958,156a.317.317,0,0,0-.317.317v8.553a1.586,1.586,0,0,1-1.584,1.584H2.218A1.586,1.586,0,0,1,.634,164.87v-8.553a.317.317,0,1,0-.634,0v8.553a2.22,2.22,0,0,0,2.218,2.218H18.057a2.22,2.22,0,0,0,2.218-2.218v-8.553A.317.317,0,0,0,19.958,156Z" transform="translate(0 -152.832)" fill="#576072" stroke="#576072" stroke-width="1.5"/>
-    <path id="Path_3" data-name="Path 3" d="M.481,78.583h0l8.636,5.572a2.222,2.222,0,0,0,2.4,0l8.636-5.572A.62.62,0,0,0,20.446,78a2.224,2.224,0,0,0-2.207-2H2.4A2.224,2.224,0,0,0,.193,78,.62.62,0,0,0,.481,78.583ZM2.4,76.634H18.239a1.6,1.6,0,0,1,1.575,1.417h0l-8.636,5.572a1.587,1.587,0,0,1-1.717,0L.825,78.051h0A1.6,1.6,0,0,1,2.4,76.634Z" transform="translate(-0.182 -76)" fill="#576072" stroke="#576072" stroke-width="1.5"/>
-  </g>
-  <text id="CONTACT_US" data-name="CONTACT US" transform="translate(0 53)" fill="#576072" font-size="11" font-family="Helvetica"><tspan x="0" y="0">CONTACT US</tspan></text>
-</svg>
-
-<!-- end of contact us button -->
-  </div>
-
-
-
-<!-- MS logo -->
-    <div id = "footer" style="font-family: Helvetica, Arial;vertical-align:bottom;">
-      <img src="./img/MS_logo.png" alt="MountSinai Logo" class="MountSinailogo">   
-      <span style="font-size:0.9vw; margin-left: 10px; vertical-align:bottom;color:#586071"> © Gümüş Lab 
-          <a href="https://gumuslab.github.io" target="_blank" style="margin-left: 10px; vertical-align:bottom;color:#586071"> https://gumuslab.github.io</a> 
-      </span>
+  <!-- end of contact us button -->
     </div>
-<!-- end of MS logo --> 
-
+  
+  
+  
+  <!-- MS logo -->
+      <div id = "footer" style="font-family: Helvetica, Arial;vertical-align:bottom;">
+        <img src="./img/MS_logo.png" alt="MountSinai Logo" class="MountSinailogo">   
+        <span style="font-size:0.9vw; margin-left: 10px; vertical-align:bottom;color:#586071"> © Gümüş Lab 
+            <a href="https://gumuslab.github.io" target="_blank" style="margin-left: 10px; vertical-align:bottom;color:#586071"> https://gumuslab.github.io</a> 
+        </span>
+      </div>
+  <!-- end of MS logo --> 
+  
 </body>
-</html>
