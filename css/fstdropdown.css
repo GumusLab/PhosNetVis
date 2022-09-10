@@ -1,16 +1,16 @@
 ﻿  
   @font-face {
-    font-family: "CenturyGothicPro";
-    src: url("../fonts/CenturyGothic.woff") format("woff");
+    font-family: "CenturyGothicPro-Bold";
+    src: url("../fonts/CenturyGothic-Bold.woff") format("woff");
     }
 
 .fstdiv {
     position: absolute;
-    left: 1px;   /* position inside relatively positioned parent */
-    top: 335px;
+    left: 3px;   /* position inside relatively positioned parent */
+    top: 385px;
     z-index: 10; 
-    width: 261px;
-    font-family: "CenturyGothicPro";
+    width: 258px;
+    font-family: "CenturyGothicPro-Bold";
 }
 .fstdiv.open {
     z-index: 2147483647
@@ -34,7 +34,7 @@
         box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
         color: #555;
         font-size: 14px;
-        font-family: "CenturyGothicPro";
+        font-family: "CenturyGothicPro-Bold";
         outline: 0;
         position: relative;
         white-space: nowrap;
@@ -118,7 +118,7 @@
     border: 1px solid #ccc;
     color: #555;
     font-size: 14px;
-    font-family: "CenturyGothicPro";
+    font-family: "CenturyGothicPro-Bold";
     display: none;
 }
 
