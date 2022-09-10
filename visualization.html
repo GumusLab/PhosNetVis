@@ -364,6 +364,8 @@ var file_names = JSON.parse(localStorage.getItem("file_names"))
 var index = localStorage.getItem("idx")
 var finalDataObj = parseCSV(localStorage.getItem(file_names[index]))
 
+console.log(finalDataObj)
+
 var nodesList = finalDataObj["ids"]
 var nodeSizes = (finalDataObj["nodes"].map(el => el.nodeSize)).filter(x => x != undefined)
 var nodeColors = ((finalDataObj["nodes"].map(el => el.nodeColors)).flat()).filter(x => x != undefined)
@@ -971,7 +973,7 @@ function addRow(id,log2FC,pValue) {
   cell1.innerHTML = id;
   cell2.innerHTML = parseFloat(log2FC).toFixed(3);
   pvalueRound =  parseFloat(pValue).toFixed(3);
-  cell3.innerHTML = pvalueRound>0 ? pvalueRound : "<0.001" ;
+  cell3.innerHTML = pValue=="NaN"?"NaN":pvalueRound>0 ? pvalueRound : "<0.001" ;
 }
 
 function resetRows(){
