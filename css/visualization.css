@@ -34,7 +34,7 @@
     position: absolute;
     font-size: 14px;
     left: 5px;   /* position inside relatively positioned parent */
-    top: 350px;
+    top: 360px;
     z-index: 10; 
   }
   
@@ -137,8 +137,70 @@
   }
   
 
-
-
   body {
     font-family: 'Lato', sans-serif;
   }
+
+  #infoBox{
+    top:450px;
+    width: 259px;
+    height: 259px;
+    position: absolute;
+    z-index: 500;
+    left: 2px;
+  }
+
+  #infoTop{
+    border: 2px solid #dee2e6;
+    background-color: #f2f2f2;
+    width: 259px;
+    height: 95px;
+  }
+
+  table {
+    width: 100%;
+    font-family: 'CenturyGothicPro-Bold';
+  } 
+
+thead, tbody, tr, td, th { display: block; }
+
+tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+thead th {
+    height: 30px;
+    font-size: 14px;
+    /*text-align: left;*/
+    
+}
+
+tbody {
+    height: 120px;
+    overflow-y: auto;
+    
+}
+
+
+tbody td{
+  font-size: 12px;
+ 
+}
+
+tbody td, thead th {
+    width: 86.3px;
+    float: left;
+  }
+
+tr:nth-child(even) {
+  background-color: rgba(230, 230, 230, .8);
+  }
+
+tr:nth-child(odd) {
+background-color:  rgba(200, 200, 200, .8);
+}
+
+

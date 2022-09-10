@@ -6,10 +6,10 @@
 
 .fstdiv {
     position: absolute;
-    left: 3px;   /* position inside relatively positioned parent */
+    left: 2px;   /* position inside relatively positioned parent */
     top: 385px;
     z-index: 10; 
-    width: 258px;
+    width: 259px;
     font-family: "CenturyGothicPro-Bold";
 }
 .fstdiv.open {
