@@ -58540,7 +58540,7 @@ function InsertStackElement(node, body) {
     }
   }
 
-  var css_248z$1 = ".scene-nav-info {\n  bottom: 5px;\n  width: 100%;\n  text-align: center;\n  color: slategrey;\n  opacity: 0.7;\n  font-size: 10px;\n}\n\n.scene-tooltip {\n  color: lavender;\n  font-size: 15px;\n}\n\n.scene-nav-info, .scene-tooltip {\n  position: absolute;\n  font-family: sans-serif;\n  pointer-events: none;\n}\n\n.scene-container canvas:focus {\n  outline: none;\n}";
+  var css_248z$1 = ".scene-nav-info {\n  bottom: 5px;\n  width: 100%;\n  text-align: center;\n  color: slategrey;\n  opacity: 0.8;\n  font-size: 12px;\n}\n\n.scene-tooltip {\n  color: lavender;\n  font-size: 15px;\n}\n\n.scene-nav-info, .scene-tooltip {\n  position: absolute;\n  font-family: sans-serif;\n  pointer-events: none;\n}\n\n.scene-container canvas:focus {\n  outline: none;\n}";
   styleInject$1(css_248z$1);
 
   function _defineProperty$3(obj, key, value) {
@@ -58940,8 +58940,8 @@ function InsertStackElement(node, body) {
       state.container.appendChild(state.navInfo = document.createElement('div'));
       state.navInfo.className = 'scene-nav-info';
       state.navInfo.textContent = {
-        orbit: 'Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-click: pan',
-        trackball: 'Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-click: pan',
+        orbit: 'Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-click: pan, Double-click on node: node information',
+        trackball: 'Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-click: pan, Double-click on node: node information',
         fly: 'WASD: move, R|F: up | down, Q|E: roll, up|down: pitch, left|right: yaw'
       }[controlType] || '';
       state.navInfo.style.display = state.showNavInfo ? null : 'none'; // Setup tooltip
