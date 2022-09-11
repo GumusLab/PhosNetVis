@@ -53,10 +53,9 @@
 
   <div class="openbutton" id = "openbutton" value = 0 onclick="hideShowMenu(this.value)" style="cursor: pointer;">
     <button class="dropbtn" id="openbutton-button">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 16"> <g id="Rectangle_1581" data-name="Rectangle 1581" transform="translate(0 1)" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <text id="x" transform="translate(6.5 11)" fill="#9f9f9f" stroke="#2e3137" stroke-width="1" font-size="14" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-3.92" y="0">x</tspan></text> </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="18px" viewBox="0 0 13 16"> <g id="Rectangle_1581" data-name="Rectangle 1581" transform="translate(0 1)" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <text id="x" transform="translate(6.5 11)" fill="#9f9f9f" stroke="#2e3137" stroke-width="1" font-size="14" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-3.92" y="0">x</tspan></text> </svg>
     </button>
     <div class="openbutton-content" id = "openbutton-content">
-      <svg xmlns="http://www.w3.org/2000/svg" width="80px" viewBox="0 0 81 11"> <text id="close_controls" data-name="close controls" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">close controls</tspan></text> </svg>
     </div>
   </div>
 
@@ -273,7 +272,7 @@ function hideShowMenu(val) {
   else{
     document.getElementById("nqText").style.display = "block";
     document.getElementById("nodequeryMain").style.display = "block";
-    document.getElementById("openbutton-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="80px" viewBox="0 0 81 11"> <text id="close_controls" data-name="close controls" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">close controls</tspan></text> </svg>'
+    document.getElementById("openbutton-content").innerHTML = ''
     document.getElementById("openbutton-button").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 16"> <g id="Rectangle_1581" data-name="Rectangle 1581" transform="translate(0 1)" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <text id="x" transform="translate(6.5 11)" fill="#9f9f9f" stroke="#2e3137" stroke-width="1" font-size="14" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-3.92" y="0">x</tspan></text> </svg>'
     document.getElementById("openbutton").value = 0;
     document.getElementById("guiplace").style.display = "block";
@@ -331,14 +330,14 @@ for (var i = 0; i < userData.length; i++) {
     dict["nodes"].push({'id': targetID, "type": 2, "nodeSize": targetSize, "nodeColors": currentNodeColors, "partitionIDs": currentNodePartitions, "pValues": currentpValues})
   }
 
-  else{ // target id occurs, need to append diffPhos to nodecolors and PhosphoSiteID to partitionIDs
+  else{ // target id occurs again (must need partitions!!!), need to append diffPhos to nodecolors and PhosphoSiteID to partitionIDs
         // no need to update its type as target !!!!!!!!
       nonDirtyNodeList = dict["nodes"].map(el => el.id)
       nodeIndex = nonDirtyNodeList.indexOf(targetID)
-      if(diffPhos != undefined && PhosphoSiteID!= undefined && pValue != undefined && !(dict['nodes'][nodeIndex]['partitionIDs'].includes(PhosphoSiteID))){
-        dict['nodes'][nodeIndex]['nodeColors'].push(diffPhos)
+      if(PhosphoSiteID != undefined && !(dict['nodes'][nodeIndex]['partitionIDs'].includes(PhosphoSiteID))){
         dict['nodes'][nodeIndex]['partitionIDs'].push(PhosphoSiteID)
-        dict['nodes'][nodeIndex]['pValues'].push(pValue)
+        if(diffPhos!=undefined){dict['nodes'][nodeIndex]['nodeColors'].push(diffPhos)}
+        if(pValue!=undefined){ dict['nodes'][nodeIndex]['pValues'].push(pValue)}
       }
   }
 
@@ -512,21 +511,28 @@ const pane = new Tweakpane.Pane({
 
 pane.registerPlugin(TweakpaneEssentialsPlugin);
 
-pane.addInput(PARAMS, 'Files', {options: fnames, label: 'Network'}).on('change', (ev) => {
+const tab = pane.addTab({
+  pages: [
+    {title: 'Controls'},
+    {title: 'Animation'},
+  ],
+});
+
+tab.pages[0].addInput(PARAMS, 'Files', {options: fnames, label: 'Network'}).on('change', (ev) => {
   changeState();
   });
-pane.addInput(PARAMS, 'PosL2FC', {min: 0, max: nodeColorThreshold, label: 'Pos-Log2FC'}).on('change', (ev) => {
+  tab.pages[0].addInput(PARAMS, 'PosL2FC', {min: 0, max: nodeColorThreshold, label: 'Pos-Log2FC'}).on('change', (ev) => {
   updateHighlight();
   });
-pane.addInput(PARAMS, 'NegL2FC', {min: -nodeColorThreshold, max: 0, label: 'Neg-Log2FC'}).on('change', (ev) => {
+  tab.pages[0].addInput(PARAMS, 'NegL2FC', {min: -nodeColorThreshold, max: 0, label: 'Neg-Log2FC'}).on('change', (ev) => {
   updateHighlight();
   });
 
-  pane.addInput(PARAMS, 'Background').on('change', (ev) => {
+  tab.pages[0].addInput(PARAMS, 'Background').on('change', (ev) => {
   updateBackground();
   });
 
-pane.addInput(PARAMS, 'Phosphorylation', {
+  tab.pages[0].addInput(PARAMS, 'Phosphorylation', {
   view: 'radiogrid',
   groupName: 'Phosphorylation',
   size: [2, 1],
@@ -540,7 +546,7 @@ pane.addInput(PARAMS, 'Phosphorylation', {
   Graph.nodeThreeObject(Graph.nodeThreeObject())
 });
 
-pane.addInput(PARAMS, 'Labels', {
+tab.pages[0].addInput(PARAMS, 'Labels', {
   view: 'radiogrid',
   groupName: 'Labels',
   size: [2, 1],
@@ -548,18 +554,19 @@ pane.addInput(PARAMS, 'Labels', {
     title: labelOpt[y * 3 + x],
     value: labelOpt[y * 3 + x],
   }),
-  label: 'Node Labels',
+  label: 'Labels',
 }).on('change', (ev) => {
   Graph.nodeThreeObject(Graph.nodeThreeObject())
 });
 
 
-pane.addButton({title: 'Take a screenshot'}).on('click',()=>{
+tab.pages[0].addButton({title: 'Take a screenshot'}).on('click',()=>{
   snapshot();  
 });
-pane.addButton({title: 'Reset the view'}).on('click',()=>{
+tab.pages[0].addButton({title: 'Reset the view'}).on('click',()=>{
   queryReset();
 });
+
 
 /////////////////////////////////////////////////
 //////////////// GRAPH CREATION ////////////////
@@ -991,9 +998,22 @@ function addRow(id,log2FC,pValue) {
   var cell2 = row.insertCell(1);
   var cell3 = row.insertCell(2);
   cell1.innerHTML = id;
-  cell2.innerHTML = log2FC=="--"?"--":parseFloat(log2FC).toFixed(3);
+
+  if(log2FC==undefined){
+    cell2.innerHTML="--"
+  }
+  else{
+    cell2.innerHTML = log2FC=="--"?"--":parseFloat(log2FC).toFixed(3);
+  }
+
   pvalueRound =  parseFloat(pValue).toFixed(3);
-  cell3.innerHTML = pValue=="--"?"--":pvalueRound>0 ? pvalueRound : "<0.001" ;
+  if(pValue==undefined){
+    cell3.innerHTML = "--"
+  }
+  else{
+    cell3.innerHTML = pValue=="--"?"--":pvalueRound>0 ? pvalueRound : "<0.001" ;
+  }
+
 }
 
 function resetRows(){
