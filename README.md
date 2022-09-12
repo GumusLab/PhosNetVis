@@ -6,8 +6,9 @@
 
 [© Gumus Lab](https://gumuslab.github.io) 2022 || [gumuslab.github.io/PhosNetVis](https://gumuslab.github.io/PhosNetVis) 
 
-![Alt Text](https://i.hizliresim.com/5uvbaww.gif)
-
+<p align="center">
+  <img src="https://i.hizliresim.com/5uvbaww.gif" />
+</p>
 
 ## Developers
 
