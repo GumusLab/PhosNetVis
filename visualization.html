@@ -1,23 +1,33 @@
 <head>
-  <style> body { margin: 0; } </style>
+  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
   <script src="libraries/3d-force-graph.js"></script>
   <script src="libraries/three.js"></script>
   <script src="libraries/three-spritetext.min.js"></script>
   <script src="libraries/rainbowvis.js"></script>
   <script src="js/hgnc_dict.js"></script>
+  <script src="js/recordScript.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/@tweakpane/plugin-essentials@0.1.5/dist/tweakpane-plugin-essentials.min.js"></script>
   <script src="js/fstdropdown.js"></script>
+  <script src="//unpkg.com/element-resize-detector/dist/element-resize-detector.min.js"></script>
   <link rel="stylesheet" href="css/fstdropdown.css">
   <link rel="stylesheet" href="css/visualization.css">
   <a href="index.html"></a>
   <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
   <title>3D Visualization</title>
-  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
 
 <style type="text/css">
-    
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.full-height {
+  height: 100%;
+}
+
   @font-face {
     font-family: "MyriadPro-Regular";
     src: url("fonts/MYRIADPROREGULAR.woff") format("woff");
@@ -46,10 +56,10 @@
 </style>
 </head>
 
-<body>
-  <div>
+<body id = "screen">
+<div>
     <svg version="1.1" id="Layer_1" onclick="window.location.href = 'index.html'" xmlns="http://www.w3.org/2000/svg" width = "150px" style="top:2%;left:1%;position:absolute;cursor: pointer;z-index:10;" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 710.3 222.4" xml:space="preserve"> <style type="text/css"> .st0b{fill:#424A60;} .st1b{fill:#DC298D;} .st2b{fill:#7383BF;} .st3b{fill:#969696;} .st4b{fill:#EBBA16;} .st5b{fill:#06ABEB;} .st6b{font-family:'helveticaBold';} .st7b{font-size:84.3397px;} .st8b{letter-spacing:-1;} </style> <g id="Layer_1_00000056390415183483724190000009750584087129516189_"> <g id="path5"> <rect x="92.8" y="154.2" transform="matrix(0.3589 -0.9334 0.9334 0.3589 -62.6169 220.6174)" class="st0b" width="72.9" height="3.3"/> </g> <rect id="path4" x="156.9" y="60.1" transform="matrix(0.8102 -0.5861 0.5861 0.8102 0.7614 131.2305)" class="st0b" width="92.3" height="8.7"/> <g id="path3"> <rect x="19" y="127.2" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -46.9835 44.8278)" class="st0b" width="126.2" height="11.8"/> </g> <g id="path2"> <rect x="122.6" y="16.9" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -9.3065 55.4032)" class="st0b" width="6.4" height="65.4"/> </g> <rect id="path1" x="169" y="110.3" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -48.6296 83.9257)" class="st0b" width="8.7" height="92.3"/> <circle id="circle6" class="st1b" cx="249.7" cy="34.5" r="21.8"/> <circle id="circle5" class="st2b" cx="112.1" cy="200.6" r="21.8"/> <circle id="circle4" class="st1b" cx="21.8" cy="156.5" r="21.8"/> <circle id="circle3" class="st3b" cx="109.6" cy="13.1" r="13.1"/> <circle id="circle2" class="st4b" cx="189.6" cy="193.1" r="13.1"/> <circle id="circle1" class="st5b" cx="149.5" cy="102.8" r="37.3"/> </g> <g id="Layer_2_00000013871697503241264390000008040421359665832584_"> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 243.0089 140.7256)" class="st6b st7b">PhosNet</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 585.1035 139.5315)" class="st6b st7b st8b">V</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 639.8698 139.3403)" class="st6b st7b">is</text> </g> </svg>
-    </div>
+</div>
 
   <div class="openbutton" id = "openbutton" value = 0 onclick="hideShowMenu(this.value)" style="cursor: pointer;">
     <button class="dropbtn" id="openbutton-button">
@@ -59,11 +69,11 @@
     </div>
   </div>
 
-  <p id = "nqText" class="p1">Node Query</p>
+  <!-- <p id = "nqText" class="p1">Node Query</p> -->
   
   <div id="nodequeryMain">
     <select class='fstdropdown-select' id="nodequery" onchange="updateSearch()">
-        <option value="">--</option>
+        <option value="">Node Query</option>
     </select>
   </div>
 
@@ -87,7 +97,7 @@
 
 </div>
 
-  <div id="guiplace"> </div>
+<div id="guiplace"> </div>
 
   <!-- LEGEND SHAPES -->
   <div class="dropdown" id = "dropdown" value = "0" onclick="hideShowLegend(this.value)" style="cursor: pointer;">
@@ -219,11 +229,50 @@
 </div>
 </div>
 
-  <div id="3d-graph"></div>
+<div id="3d-graph" class="full-height"> </div>
 
-    </div>
-  </div>
+<div id = "footer" style="font-family: CenturyGothicPro; z-index: 1000;">
+    <span style="font-size:0.8vw;color:#6f6f6f;"> Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-click: pan, Double-click on node: node information  </span>
+</div>
+
+<a href="#"  id="downloadbtn" style="display: none; width: 0px; height: 0px;"><button> Download Video </button></a>
+
+
 <script>
+
+/////////////////////////////////////////////////
+///// ENTER AND EXIT FULLSCREEN FUNCTIONS //////
+///////////////////////////////////////////////
+function fullscreen() {
+    var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
+        (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
+        (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
+        (document.msFullscreenElement && document.msFullscreenElement !== null);
+
+    var docElm = document.documentElement;
+    if (!isInFullScreen) {
+        if (docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+        } else if (docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+        } else if (docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+        } else if (docElm.msRequestFullscreen) {
+            docElm.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
+
 ////////////////////////////////////////////////
 // DOUBLE CLICK IMPLEMENTATION FOR NODE CLICK //
 ////////////////////////////////////////////////
@@ -261,7 +310,7 @@ function hideShowLegend(val){
 
 function hideShowMenu(val) {
   if(val==0 || val == undefined){
-    document.getElementById("nqText").style.display = "none";
+    // document.getElementById("nqText").style.display = "none";
     document.getElementById("nodequeryMain").style.display = "none";
     document.getElementById("openbutton-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="80px" viewBox="0 0 81 11"> <text id="close_controls" data-name="close controls" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">open controls</tspan></text> </svg>';
     document.getElementById("openbutton-button").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 13"> <g id="Rectangle_1582" data-name="Rectangle 1582" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <line id="Line_201" data-name="Line 201" x2="6.5" transform="translate(3.25 4.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> <line id="Line_202" data-name="Line 202" x2="6.5" transform="translate(3.25 6.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> <line id="Line_203" data-name="Line 203" x2="6.5" transform="translate(3.25 8.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> </svg> '
@@ -270,7 +319,7 @@ function hideShowMenu(val) {
     
   }
   else{
-    document.getElementById("nqText").style.display = "block";
+    // document.getElementById("nqText").style.display = "block";
     document.getElementById("nodequeryMain").style.display = "block";
     document.getElementById("openbutton-content").innerHTML = ''
     document.getElementById("openbutton-button").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 16"> <g id="Rectangle_1581" data-name="Rectangle 1581" transform="translate(0 1)" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <text id="x" transform="translate(6.5 11)" fill="#9f9f9f" stroke="#2e3137" stroke-width="1" font-size="14" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-3.92" y="0">x</tspan></text> </svg>'
@@ -514,11 +563,11 @@ pane.registerPlugin(TweakpaneEssentialsPlugin);
 const tab = pane.addTab({
   pages: [
     {title: 'Controls'},
-    {title: 'Animation'},
+    {title: 'Animate'},
   ],
 });
 
-tab.pages[0].addInput(PARAMS, 'Files', {options: fnames, label: 'Network'}).on('change', (ev) => {
+  tab.pages[0].addInput(PARAMS, 'Files', {options: fnames, label: 'Network'}).on('change', (ev) => {
   changeState();
   });
   tab.pages[0].addInput(PARAMS, 'PosL2FC', {min: 0, max: nodeColorThreshold, label: 'Pos-Log2FC'}).on('change', (ev) => {
@@ -559,6 +608,9 @@ tab.pages[0].addInput(PARAMS, 'Labels', {
   Graph.nodeThreeObject(Graph.nodeThreeObject())
 });
 
+tab.pages[0].addButton({title: 'Enter/Exit Fullscreen'}).on('click',()=>{
+  fullscreen();
+});
 
 tab.pages[0].addButton({title: 'Take a screenshot'}).on('click',()=>{
   snapshot();  
@@ -568,11 +620,68 @@ tab.pages[0].addButton({title: 'Reset the view'}).on('click',()=>{
 });
 
 
+const f1 = tab.pages[1].addFolder({
+  title: 'Animation',
+});
+
+const startAnimation = f1.addButton({title: 'Start Animation ▶', disabled: false})
+
+const stopAnimation =f1.addButton({title: 'Stop Animation ▣',  disabled: true})
+
+startAnimation.on('click', () => {
+  stopAnimation.disabled = !stopAnimation.disabled;
+  startAnimation.disabled = !startAnimation.disabled;
+});
+
+stopAnimation.on('click', () => {
+  startAnimation.disabled = !startAnimation.disabled;
+  stopAnimation.disabled = !stopAnimation.disabled;
+});
+
+tab.pages[1].addSeparator();
+tab.pages[1].addSeparator();
+
+const f2 = tab.pages[1].addFolder({
+  title: 'Screen Record',
+});
+
+const startRecord = f2.addButton({title: 'Start Recording ▶',disabled: false})
+
+const stopRecord =f2.addButton({title: 'Stop Recording ▣',  disabled: true})
+
+f2.addSeparator();
+
+const downloadRecord = f2.addButton({title: 'Download Recording ↴',  disabled: true})
+
+startRecord.on('click', () => {
+  stopRecord.disabled = !stopRecord.disabled;
+  startRecord.disabled = !startRecord.disabled;
+
+  startRecording()
+
+  if(!downloadRecord.disabled){
+    downloadRecord.disabled = !downloadRecord.disabled;
+  }
+
+});
+
+stopRecord.on('click', () => {
+  stopRecord.disabled = !stopRecord.disabled;
+  startRecord.disabled = !startRecord.disabled;
+  stopScreen()
+  downloadRecord.disabled = !downloadRecord.disabled;
+});
+
+downloadRecord.on('click', () => {
+  downloadRecord.disabled = !downloadRecord.disabled;
+  downloadVideo()
+});
+
+
 /////////////////////////////////////////////////
 //////////////// GRAPH CREATION ////////////////
 /////////////////////////////////////////////////
 const regex = new RegExp('[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}')
-var directed = sessionStorage.getItem("directed")
 var elem = document.getElementById('3d-graph');
 var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
   (elem)
@@ -643,6 +752,16 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
   Graph.d3Force('charge')
   .theta(0.5)
   .strength(-125)
+
+
+ 
+elementResizeDetectorMaker().listenTo(
+    document.getElementById('3d-graph'),
+    el => {
+      Graph.width(el.offsetWidth)
+      Graph.height(el.offsetHeight)
+    }
+  );
 
 /////////////////////////////////////////////////
 ////////////// UPDATE FUNCTIONS /////////////////

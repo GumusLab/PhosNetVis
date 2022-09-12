@@ -205,3 +205,10 @@ background-color:  rgba(200, 200, 200, .8);
 }
 
 
+#footer {
+  position: fixed;
+  bottom: 0%;
+  width: 100%;
+  margin-bottom: 5px;
+  text-align: center;
+}

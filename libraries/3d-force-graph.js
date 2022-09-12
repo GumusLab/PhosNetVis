@@ -58940,8 +58940,8 @@ function InsertStackElement(node, body) {
       state.container.appendChild(state.navInfo = document.createElement('div'));
       state.navInfo.className = 'scene-nav-info';
       state.navInfo.textContent = {
-        orbit: 'Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-click: pan, Double-click on node: node information',
-        trackball: 'Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-click: pan, Double-click on node: node information',
+        orbit: 'Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-click: pan, Double-click on node: node information CHANGED HERE',
+        trackball: '',
         fly: 'WASD: move, R|F: up | down, Q|E: roll, up|down: pitch, left|right: yaw'
       }[controlType] || '';
       state.navInfo.style.display = state.showNavInfo ? null : 'none'; // Setup tooltip
