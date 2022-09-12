@@ -1108,7 +1108,9 @@ function addRows(ids,log2FCs,pValues){
     }
   }
   else{
-    addRow("--","--","--")
+    log2fc = log2FCs.length>0?log2FCs[0]:"--"
+    pval = pValues.length>0?pValues[0]:"--"
+    addRow("--",log2fc,pval)
   }
 }
 
