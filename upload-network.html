@@ -886,8 +886,8 @@ To visualize your network data, at a minimum, you need a .csv file" transform="t
         let all_files = [];
         // Abort if there were no files selected
         if(!files.length) return;
-        if(files.length.toString()!=sessionStorage.getItem('state_num') && sessionStorage.getItem('state_num')=="1"){alert("Please select a single file since there are no states!"); this.value=null; return;}
-        if(files.length.toString()!=sessionStorage.getItem('state_num')){alert("Please select "+sessionStorage.getItem("state_num")+" file for states!"); this.value=null; return;}
+        if(files.length.toString()!=sessionStorage.getItem('state_num') && sessionStorage.getItem('state_num')=="1"){alert("Please select a single file or change the number of datasets to upload!"); this.value=null; return;}
+        if(files.length.toString()!=sessionStorage.getItem('state_num')){alert("Please select "+sessionStorage.getItem("state_num")+" file or change the number of datasets to upload!"); this.value=null; return;}
         // Store promises in array
         for(let i = 0;i < files.length;i++){
             readers.push(readFileAsText(files[i]));

@@ -554,7 +554,7 @@ pane.registerPlugin(TweakpaneEssentialsPlugin);
 const tab = pane.addTab({
   pages: [
     {title: 'Controls'},
-    {title: 'Animate'},
+    {title: 'Animate & Record'}
   ],
 });
 
@@ -1094,6 +1094,20 @@ var new_file_name = PARAMS.Files
 localStorage.setItem('idx',file_names.indexOf(new_file_name))
 location.reload();
 }
+
+
+/////////////////////////////////////////////////
+//////////// ANIMATION FUNCTION /////////////////
+/////////////////////////////////////////////////
+
+
+function animate(){
+  // finalDataObj = parseCSV(localStorage.getItem(file_names[1]))
+  // Graph.graphData() = null
+  // Graph.nodeThreeObject(node => CreateNode(node))
+  // console.log(Graph.graphData)
+}
+
 
 
 /////////////////////////////////////////////////

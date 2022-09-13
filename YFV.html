@@ -481,7 +481,7 @@ pane.registerPlugin(TweakpaneEssentialsPlugin);
 const tab = pane.addTab({
   pages: [
     {title: 'Controls'},
-    {title: 'Animate'},
+    {title: 'Record'}
   ],
 });
 
@@ -536,38 +536,6 @@ tab.pages[0].addButton({title: 'Take a screenshot'}).on('click',()=>{
 tab.pages[0].addButton({title: 'Reset'}).on('click',()=>{
   queryReset();
 });
-
-
-const f1 = tab.pages[1].addFolder({
-  title: 'Animation',
-});
-
-const startAnimation = f1.addButton({title: 'Start Animation ▶', disabled: false})
-
-const pauseAnimation = f1.addButton({title: 'Pause Animation ❚❚', disabled: true})
-
-const stopAnimation =f1.addButton({title: 'Stop Animation ▣',  disabled: true})
-
-startAnimation.on('click', () => {
-  stopAnimation.disabled == true ? stopAnimation.disabled = false : true
-  startAnimation.disabled == true ? startAnimation.disabled = false : startAnimation.disabled = true
-  pauseAnimation.disabled == true ? pauseAnimation.disabled = false : true
-});
-
-stopAnimation.on('click', () => {
-  startAnimation.disabled == true ? startAnimation.disabled = false: true
-  stopAnimation.disabled = !stopAnimation.disabled;
-  pauseAnimation.disabled == false ? pauseAnimation.disabled = true : true
-});
-
-pauseAnimation.on('click', () => {
-  startAnimation.disabled == true ? startAnimation.disabled = false : true
-  pauseAnimation.disabled == false ? pauseAnimation.disabled = true : true
-});
-
-
-tab.pages[1].addSeparator();
-tab.pages[1].addSeparator();
 
 const f2 = tab.pages[1].addFolder({
   title: 'Screen Record',
