@@ -323,17 +323,6 @@
   //////////////// DATA CREATION ////////////////
   ///////////////////////////////////////////////
   
-  function linkExist(sourceTargetTuples,kinaseID,targetID){
-    for (var idx = 0; idx < sourceTargetTuples.length; idx++) {
-      currTuple = sourceTargetTuples[idx]
-      if (currTuple[0] == kinaseID && currTuple[1] == targetID){
-        return true
-      }
-    }
-  return false
-  }
-  
-
 var file_names = ["time 24hr", "time 12hr", "time 08hr", "time 04hr", "time 02hr", "time 00hr - control"]
 var index = localStorage.getItem("idx")
 var finalDataObj = null
