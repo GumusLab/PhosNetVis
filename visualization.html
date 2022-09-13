@@ -404,10 +404,10 @@ var file_names = JSON.parse(localStorage.getItem("file_names"))
 var index = localStorage.getItem("idx")
 var finalDataObj = parseCSV(localStorage.getItem(file_names[index]))
 
-function thresholdDecider(finalDataObj){
+function thresholdDecider(DataObj){
 
-  let nodeSizes = (finalDataObj["nodes"].map(el => el.nodeSize)).filter(x => x != undefined)
-  let nodeColors = ((finalDataObj["nodes"].map(el => el.nodeColors)).flat()).filter(x => x != undefined)
+  let nodeSizes = (DataObj["nodes"].map(el => el.nodeSize)).filter(x => x != undefined)
+  let nodeColors = ((DataObj["nodes"].map(el => el.nodeColors)).flat()).filter(x => x != undefined)
   let nodeSizeRange = [Math.min.apply(Math, nodeSizes), Math.max.apply(Math, nodeSizes)]
   let nodeColorRange = [Math.min.apply(Math, nodeColors), Math.max.apply(Math, nodeColors)]
   let nodeColorThreshold = null
@@ -420,8 +420,8 @@ function thresholdDecider(finalDataObj){
     minPositive>maxPositive  ? nodeColorThreshold = minPositive : nodeColorThreshold = maxPositive
   }
 
-  let edgeWeights = (finalDataObj["links"].map(el => el.edgeWeight)).filter(x => x != undefined)
-  let edgeColors = (finalDataObj["links"].map(el => el.edgeColor)).filter(x => x != undefined)
+  let edgeWeights = (DataObj["links"].map(el => el.edgeWeight)).filter(x => x != undefined)
+  let edgeColors = (DataObj["links"].map(el => el.edgeColor)).filter(x => x != undefined)
   let edgeWeightRange = [Math.min.apply(Math, edgeWeights), Math.max.apply(Math, edgeWeights)]
   let edgeColorRange = [Math.min.apply(Math, edgeColors), Math.max.apply(Math, edgeColors)]
 
@@ -443,7 +443,7 @@ const searchLinks = new Set();
 /////////////////////////////////////////////////
 
 function nodeColorLegend(phosOption){
-  if(nodeColorThreshold != null && phosOption === "Show"){
+  if(nodeColorThreshold != null && nodeColorThreshold != Infinity && nodeColorThreshold != NaN && phosOption === "Show"){
   let nodeColorThresholdL = nodeColorThreshold > 3 ? 3 : nodeColorThreshold
   document.getElementById("p1").innerHTML = Number(-nodeColorThresholdL).toFixed(2)
   document.getElementById("p2").innerHTML = Number(nodeColorThresholdL).toFixed(2)
@@ -458,7 +458,7 @@ function nodeColorLegend(phosOption){
   document.getElementById("nodeColorRemover").style.display = "none"
 }
 else{
-  if(searchNodes.size === 0) {
+  if(searchNodes.size === 0 || animationActive) {
   document.getElementById("p1").innerHTML = "&ndash;"
   document.getElementById("p2").innerHTML = "&ndash;"
   document.getElementById("p1").style.bottom ="220px"
@@ -477,6 +477,8 @@ else{
 nodeColorLegend("Show");
 
 
+function restOfLegends(){
+
 if(nodeSizes.length>0 && nodeSizes.length>0){
   document.getElementById("s1").innerHTML = Number(nodeSizeRange[0]).toFixed(2)
   document.getElementById("s2").innerHTML = Number(nodeSizeRange[1]).toFixed(2)
@@ -489,6 +491,21 @@ if(nodeSizes.length>0 && nodeSizes.length>0){
   document.getElementById("s1").style.fontSize = 15
   document.getElementById("s2").style.fontSize = 15
   document.getElementById("nodeSizeRemover").style.display = "none"
+}
+else{
+  if(animationActive){
+  document.getElementById("s1").innerHTML = "&ndash;"
+  document.getElementById("s2").innerHTML = "&ndash;"
+  document.getElementById("s1").style.bottom = "140px"
+  document.getElementById("s2").style.bottom = "140px"
+  document.getElementById("s1").style.right = "26px"
+  document.getElementById("s2").style.right = "98px"
+  document.getElementById("s1").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("s2").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("s1").style.fontSize = 20
+  document.getElementById("s2").style.fontSize = 20
+  document.getElementById("nodeSizeRemover").style.display = "block"
+}
 }
 
 if(edgeColors.length>0 && edgeColors.length>0){
@@ -504,6 +521,21 @@ if(edgeColors.length>0 && edgeColors.length>0){
   document.getElementById("c2").style.fontSize = 15
   document.getElementById("edgeColorRemover").style.display = "none"
 }
+else{
+  if(animationActive){
+  document.getElementById("c1").innerHTML = "&ndash;"
+  document.getElementById("c2").innerHTML = "&ndash;"
+  document.getElementById("c1").style.bottom = "70px"
+  document.getElementById("c2").style.bottom = "70px"
+  document.getElementById("c1").style.right = "26px"
+  document.getElementById("c2").style.right = "98px"
+  document.getElementById("c1").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("c2").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("c1").style.fontSize = 20
+  document.getElementById("c2").style.fontSize = 20
+  document.getElementById("edgeColorRemover").style.display = "block"
+}
+}
 
 if(edgeWeights.length>0 && edgeWeights.length>0){
   document.getElementById("w1").innerHTML = Number(edgeWeightRange[0]).toFixed(2)
@@ -518,21 +550,41 @@ if(edgeWeights.length>0 && edgeWeights.length>0){
   document.getElementById("w2").style.fontSize = 15
   document.getElementById("edgeWeightRemover").style.display = "none"
 }
+else{
+
+  if(animationActive){
+  document.getElementById("w1").innerHTML = "&ndash;"
+  document.getElementById("w2").innerHTML = "&ndash;"
+  document.getElementById("w1").style.bottom = "-12x"
+  document.getElementById("w2").style.bottom = "-12px"
+  document.getElementById("w1").style.right = "26px"
+  document.getElementById("w2").style.right = "98px"
+  document.getElementById("w1").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("w2").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("w1").style.fontSize = 20
+  document.getElementById("w2").style.fontSize = 20
+  document.getElementById("edgeWeightRemover").style.display = "block"
+}
+}
+
+}
+
+restOfLegends()
 
 // cross-linking the node objects
 finalDataObj.links.forEach(link => {
-      const a = (finalDataObj.nodes.filter(x => x.id === link.source))[0]
-      const b = (finalDataObj.nodes.filter(x => x.id === link.target))[0]
-      !a.neighbors && (a.neighbors = []);
-      !b.neighbors && (b.neighbors = []);
-      a.neighbors.push(b);
-      b.neighbors.push(a);
+  const a = (finalDataObj.nodes.filter(x => x.id === link.source))[0]
+  const b = (finalDataObj.nodes.filter(x => x.id === link.target))[0]
+  !a.neighbors && (a.neighbors = []);
+  !b.neighbors && (b.neighbors = []);
+  a.neighbors.push(b);
+  b.neighbors.push(a);
 
-      !a.links && (a.links = []);
-      !b.links && (b.links = []);
-      a.links.push(link);
-      b.links.push(link);
-    });
+  !a.links && (a.links = []);
+  !b.links && (b.links = []);
+  a.links.push(link);
+  b.links.push(link);
+});
 
 
 /////////////////////////////////////////
@@ -638,7 +690,6 @@ const fileMonitor = f1.addMonitor(PARAMS, 'Network', {
 
 
 startAnimation.on('click', () => {
-  
   if(animate()){
     stopAnimation.disabled === true ? stopAnimation.disabled = false : true
   startAnimation.disabled === true ? startAnimation.disabled = false : startAnimation.disabled = true
@@ -652,6 +703,26 @@ stopAnimation.on('click', () => {
   clearInterval(animationInterval)
   animationIndex = -1
   animationActive = false
+  PARAMS.Network = file_names[localStorage.getItem("idx")]
+  let newthresholds = thresholdDecider(finalDataObj)
+  nodeSizes = newthresholds["nodeSizes"]
+  nodeColors = newthresholds["nodeColors"]
+  nodeSizeRange = newthresholds["nodeSizeRange"]
+  nodeColorRange = newthresholds["nodeColorRange"]
+  nodeColorThreshold = newthresholds["nodeColorThreshold"]
+  edgeWeights = newthresholds["edgeWeights"]
+  edgeColors = newthresholds["edgeColors"]
+  edgeWeightRange = newthresholds["edgeWeightRange"]
+  edgeColorRange = newthresholds["edgeColorRange"]
+  resetRows();
+  if(clickedNode!=null){
+    let animationFinalClicked = finalDataObj["nodes"].find(x => x.id === clickedNode);
+    addRows(animationFinalClicked.partitionIDs, animationFinalClicked.nodeColors, animationFinalClicked.pValues)
+  }
+  restOfLegends();
+  nodeColorLegend(PARAMS.Phosphorylation);
+  Graph.nodeThreeObject(Graph.nodeThreeObject());
+  Graph.linkWidth(link => (searchLinks.has(link)) ? 1 : animationActive === true ? linkWidthAnimation(link) : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1]) : .8) // subject to change
 }
 });
 
@@ -709,6 +780,7 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
   .nodeThreeObject(node => animationActive === false ? CreateNode(node): createNodeAnimation(node))
   .onNodeClick(node => {
     if(doubleclick){
+        clickedNode = node.id
         resetRows();
         searchNodes.clear();
         searchLinks.clear();
@@ -730,7 +802,8 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
             searchNodes.add(node);
             node.neighbors.forEach(neighbor => searchNodes.add(neighbor));
             node.links.forEach(link => searchLinks.add(link));
-            addRows(node.partitionIDs, node.nodeColors, node.pValues)
+            if(!animationActive){addRows(node.partitionIDs, node.nodeColors, node.pValues)}
+
             document.getElementById("nodehref").innerHTML = node.id
 
             if(regex.test((node.id).toUpperCase())){
@@ -756,10 +829,10 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
     node.fy = node.y;
     node.fz = node.z; })
   .onBackgroundClick(undefined=>{if(doubleclick){queryReset()}})
-  .linkWidth(link => (searchLinks.has(link)) ? 1 : animationActive===true ? linkWidthAnimation(link) : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1]) : .8) // subject to change
+  .linkWidth(link => (searchLinks.has(link)) ? 1 : animationActive === true ? linkWidthAnimation(link) : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1]) : .8) // subject to change
   .linkDirectionalArrowLength(directed => (directed) ? 5 : 0)        
   .linkDirectionalArrowRelPos(0.5)
-  .linkColor(link => (searchLinks.has(link)) ? "#ff3b3b" : animationActive===true ? linkColorAnimation(link) : (link.edgeColor === undefined) ? "#cccccc" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
+  .linkColor(link => (searchLinks.has(link)) ? "#ff3b3b" : animationActive === true ? linkColorAnimation(link) : (link.edgeColor === undefined) ? "#cccccc" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
   .linkDirectionalParticleWidth(1.5)
   .linkOpacity(0.6)
   .linkDirectionalParticles(link => (searchLinks.has(link)) ? 4 : 0)
@@ -789,7 +862,7 @@ elementResizeDetectorMaker().listenTo(
       // trigger update of highlighted objects in scene
       Graph
         .nodeThreeObject(Graph.nodeThreeObject())
-        // .linkWidth(Graph.linkWidth())
+        //.linkWidth(Graph.linkWidth())
         .linkDirectionalParticles(Graph.linkDirectionalParticles());
     }
   
@@ -1076,6 +1149,7 @@ for(nodeindexes = 0; nodeindexes<nodesList.length;nodeindexes++){
 /////////////////////////////////////////////////
 
 function queryReset(){
+  clickedNode = null
   document.getElementById("nodequery").selectedIndex = 0;
   document.getElementById("nodequery").fstdropdown.rebind()
   let nodenum = Graph.graphData().nodes.length
@@ -1144,10 +1218,11 @@ function animate(){
     }
 
   }
-  
-  console.log("all good lets animate!!!!!!!!!!")
-  animationInterval =  setInterval(animator, 1000);
+
+  console.log("all good let's animate!!!!!!!!!!")
   animationActive = true
+  animator()
+  animationInterval =  setInterval(animator, 5000);
   return true
 }
 
@@ -1155,9 +1230,27 @@ function animate(){
 
 
 function animator(){ // really easy - calculate the animation index, prepare the data, call Graph.nodeThreeObject(Graph.nodeThreeObject()) to awake update nodes and link color link width and change monitor and legend updates
-  animationIndex = (animationIndex+1) % allFiles.length
-  // console.log(animationIndex)
-  console.log(file_names[animationIndex],parseCSV(localStorage.getItem(file_names[animationIndex])))
+  animationIndex = (animationIndex+1) % allFiles.length;
+  let tempdata = parseCSV(localStorage.getItem(file_names[animationIndex]));
+  let tempNodes = tempdata["nodes"].reduce((a, v) => ({ ...a, [v.id]: v}), {});
+  let tempLinks = tempdata["links"].reduce((a, v) => ({ ...a, [v.source+v.target]: v}), {});
+  animationData =  Object.assign(tempNodes, tempLinks);
+  let animationthresholds = thresholdDecider(tempdata);
+  nodeSizes = animationthresholds["nodeSizes"]
+  nodeColors = animationthresholds["nodeColors"]
+  nodeSizeRange = animationthresholds["nodeSizeRange"]
+  nodeColorRange = animationthresholds["nodeColorRange"]
+  nodeColorThreshold = animationthresholds["nodeColorThreshold"]
+  edgeWeights = animationthresholds["edgeWeights"]
+  edgeColors = animationthresholds["edgeColors"]
+  edgeWeightRange = animationthresholds["edgeWeightRange"]
+  edgeColorRange = animationthresholds["edgeColorRange"]
+  restOfLegends();
+  nodeColorLegend(PARAMS.Phosphorylation);
+  PARAMS.Network = file_names[animationIndex];
+  resetRows();
+  Graph.nodeThreeObject(Graph.nodeThreeObject());
+  Graph.linkWidth(link => (searchLinks.has(link)) ? 1 : animationActive === true ? linkWidthAnimation(link) : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1]) : .8) // subject to change
 }
 
 
