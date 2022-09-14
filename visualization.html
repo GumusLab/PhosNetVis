@@ -702,7 +702,6 @@ stopAnimation.on('click', () => {
   stopAnimation.disabled = !stopAnimation.disabled;
   clearInterval(animationInterval)
   animationIndex = -1
-  animationActive = false
   PARAMS.Network = file_names[localStorage.getItem("idx")]
   let newthresholds = thresholdDecider(finalDataObj)
   nodeSizes = newthresholds["nodeSizes"]
@@ -714,12 +713,13 @@ stopAnimation.on('click', () => {
   edgeColors = newthresholds["edgeColors"]
   edgeWeightRange = newthresholds["edgeWeightRange"]
   edgeColorRange = newthresholds["edgeColorRange"]
+  restOfLegends();
+  animationActive = false
   resetRows();
   if(clickedNode!=null){
     let animationFinalClicked = finalDataObj["nodes"].find(x => x.id === clickedNode);
     addRows(animationFinalClicked.partitionIDs, animationFinalClicked.nodeColors, animationFinalClicked.pValues)
   }
-  restOfLegends();
   nodeColorLegend(PARAMS.Phosphorylation);
   Graph.nodeThreeObject(Graph.nodeThreeObject());
   Graph.linkWidth(link => (searchLinks.has(link)) ? 1 : animationActive === true ? linkWidthAnimation(link) : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1]) : .8) // subject to change
@@ -1225,7 +1225,7 @@ function animate(){
   console.log("all good let's animate!!!!!!!!!!")
   animationActive = true
   animator()
-  animationInterval =  setInterval(animator, 5000);
+  animationInterval =  setInterval(animator, 2000);
   return true
 }
 
