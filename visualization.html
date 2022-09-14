@@ -882,6 +882,7 @@ elementResizeDetectorMaker().listenTo(
         Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
         updateHighlight();
         document.getElementById("infoBox").style.display =  "none";
+        clickedNode = null
       }
 
       else{
@@ -898,10 +899,12 @@ elementResizeDetectorMaker().listenTo(
           searchNodes.clear();
           searchLinks.clear();
           if (thisNode) {
+            clickedNode = thisNode.id
             searchNodes.add(thisNode);
             thisNode.neighbors.forEach(neighbor => searchNodes.add(neighbor));
             thisNode.links.forEach(link => searchLinks.add(link));
-            addRows(thisNode.partitionIDs, thisNode.nodeColors, thisNode.pValues)
+            if(!animationActive){addRows(thisNode.partitionIDs, thisNode.nodeColors, thisNode.pValues)}
+            // addRows(thisNode.partitionIDs, thisNode.nodeColors, thisNode.pValues)
             document.getElementById("nodehref").innerHTML = thisNode.id
 
             if(regex.test((thisNode.id).toUpperCase())){
