@@ -29,4 +29,4 @@
 
 If you have any feedback, please reach out to us at zeynep.gumus AT mssm.edu or you can fill the "Contact Us" form available at [gumuslab.github.io/PhosNetVis/contact-us.html](https://gumuslab.github.io/PhosNetVis/contact-us.html)
 
-### [© Gumus Lab](https://gumuslab.github.io) 2022 | [[phosnetvis.app](https://phosnetvis.app)
+### [© Gumus Lab](https://gumuslab.github.io) 2022 | [phosnetvis.app](https://phosnetvis.app)
