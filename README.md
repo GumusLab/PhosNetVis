@@ -2,7 +2,7 @@
 ![Logo](https://i.hizliresim.com/l6cau2g.png)
 
 
-## PhosNetVis is a web-based platform to generate, explore, and share interactive phosphoproteomics networks in 3D! [gumuslab.github.io/PhosNetVis](https://gumuslab.github.io/PhosNetVis)
+## PhosNetVis is a web-based platform to generate, explore, and share interactive phosphoproteomics networks in 3D! [phosnetvis.app](https://phosnetvis.app)
 
 
 <p align="center">
@@ -11,12 +11,12 @@
 
 ## Developers
 
-#### [Berk Turhan](https://www.github.com/turhanberk) | [Irene Font Peradejordi](https://github.com/IreneFP) | [Shreya Chandrasekar](https://github.com/sap344) 
+#### [Berk Turhan](https://www.github.com/turhanberk) | [Irene Font Peradejordi](https://github.com/IreneFP) | [Shreya Chandrasekar](https://github.com/sap344) | [Dr. Zeynep H. Gümüş](https://github.com/zeynepcim)  
 
 
 ## Contributors
 
-#### Dr. Zeynep H. Gümüş | Dr. Jeffrey Johnson | Dr. Selim Kalaycı
+#### Dr. Jeffrey Johnson | Dr. Selim Kalaycı
 
 
 ## License
@@ -29,4 +29,4 @@
 
 If you have any feedback, please reach out to us at zeynep.gumus AT mssm.edu or you can fill the "Contact Us" form available at [gumuslab.github.io/PhosNetVis/contact-us.html](https://gumuslab.github.io/PhosNetVis/contact-us.html)
 
-### [© Gumus Lab](https://gumuslab.github.io) 2022 | [gumuslab.github.io/PhosNetVis](https://gumuslab.github.io/PhosNetVis) 
+### [© Gumus Lab](https://gumuslab.github.io) 2022 | [[phosnetvis.app](https://phosnetvis.app)
