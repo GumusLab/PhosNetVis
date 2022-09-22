@@ -394,7 +394,29 @@ for (let i = 0; i < userData.length; i++) {
     }
   }
 }
-  dict['ids'] = dict["nodes"].map(el => el.id)
+
+
+for(let nodeIndex = 0 ; nodeIndex<dict['nodes'].length; nodeIndex++){
+
+ 
+    let tempColors = dict['nodes'][nodeIndex]['nodeColors']
+    
+    indices = Array.from(tempColors.keys()).sort( (a,b) => tempColors[b]-tempColors[a])
+        
+    dict['nodes'][nodeIndex]['partitionIDs'] = indices.map(i => dict['nodes'][nodeIndex]['partitionIDs'][i])
+    dict['nodes'][nodeIndex]['nodeColors'] = indices.map(i => dict['nodes'][nodeIndex]['nodeColors'][i])
+    dict['nodes'][nodeIndex]['pValues'] = indices.map(i => dict['nodes'][nodeIndex]['pValues'][i])
+
+    if(dict['nodes'][nodeIndex]['nodeColors'].length>10){
+    dict['nodes'][nodeIndex]['partitionIDs'] = [...dict['nodes'][nodeIndex]['partitionIDs'].slice(0,5), ...dict['nodes'][nodeIndex]['partitionIDs'].slice(-5)]
+    dict['nodes'][nodeIndex]['nodeColors'] = [...dict['nodes'][nodeIndex]['nodeColors'].slice(0,5), ...dict['nodes'][nodeIndex]['nodeColors'].slice(-5)]
+    dict['nodes'][nodeIndex]['pValues'] = [...dict['nodes'][nodeIndex]['pValues'].slice(0,5), ...dict['nodes'][nodeIndex]['pValues'].slice(-5)]
+  }
+
+}
+
+dict['ids'] = dict["nodes"].map(el => el.id)
+
 return dict;
 }
 
@@ -842,7 +864,7 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
 
   Graph.d3Force('charge')
   .theta(0.5)
-  .strength(-125)
+  .strength(-100)
 
 
  
