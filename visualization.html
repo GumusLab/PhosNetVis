@@ -1303,7 +1303,13 @@ function addRow(id,log2FC,pValue) {
   let cell1 = row.insertCell(0);
   let cell2 = row.insertCell(1);
   let cell3 = row.insertCell(2);
-  cell1.innerHTML = id;
+
+  if(id===undefined){
+    cell1.innerHTML="--"
+  }
+  else{
+    cell1.innerHTML = id;
+  }
 
   if(log2FC===undefined){
     cell2.innerHTML="--"
