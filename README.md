@@ -1,12 +1,12 @@
 
 ![Logo](https://i.hizliresim.com/l6cau2g.png)
 
-
-## PhosNetVis is a web-based platform to generate, explore, and share interactive phosphoproteomics networks in 3D! [phosnetvis.app](https://phosnetvis.app)
-
+## [PhosNetVis](https://phosnetvis.app) is a web-based platform for integrated kinase enrichment analyses and interactive 3D network visualizations of phosphoproteomics datasets. 
 
 <p align="center">
   <img src="https://i.hizliresim.com/5uvbaww.gif" />
+  <br>
+  <b> Link to the platform: <a href="https://phosnetvis.app">phosnetvis.app</a></b>
 </p>
 
 ## Developers
@@ -20,6 +20,7 @@
 
 
 ## License
+
 [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
