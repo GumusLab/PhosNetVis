@@ -21,13 +21,14 @@
 
 ## License
 
-[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
+
 
 
 
 ## Feedback
 
-If you have any feedback, please reach out to us at zeynep.gumus AT mssm.edu or you can fill the "Contact Us" form available at [gumuslab.github.io/PhosNetVis/contact-us.html](https://gumuslab.github.io/PhosNetVis/contact-us.html)
+If you have any feedback, please reach out to us at zeynep.gumus AT mssm.edu or you can fill the "Contact Us" form available at [phosnetvis.app/contact-us.html](https://phosnetvis.app/contact-us.html)
 
 ### [© Gumus Lab](https://gumuslab.github.io) 2022 | [phosnetvis.app](https://phosnetvis.app)
