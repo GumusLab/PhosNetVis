@@ -47,7 +47,7 @@ shinyApp(
                  title = "Format Data", width = NULL, solidHeader = TRUE, status = "gray", collapsible = F,
                  h6(style ="font-size:15px;margin-top-7px" ,"Welcome! Here you can perform kinase enrichment analysis (KEA)  to identify putative upstream kinases of your differentially phosphorylated protein set. Kinase-substrate interactions are from PhosphoSitePlus [1] and enrichment is performed using fgsea [2]. Upload a .csv file in the format below for enrichment and then to build your interactive 3D phosphoproteomics network!",HTML(paste0("<b>","*optional","</b>"))),
                  column(width = 11.5, dataTableOutput("guide_table"), style = "height:170px; overflow-y: scroll;overflow-x: scroll; margin-top:-10px"),
-                 HTML(paste0("<h style='font-size:13px;margin-top:-5px'>","[1] Retrieved from <a href='https://www.phosphosite.org' target='_blank'> phosphosite.org </a> - version Mon Aug 08 10:26:58 EDT 2022<br>[2] Korotkevich G, Sukhov V, Sergushichev A (2019). “Fast gene set enrichment analysis.” bioRxiv. <a href='https://www.biorxiv.org/content/10.1101/060012v3' target='_blank'>doi: 10.1101/060012</a> - version 1.18.0","</h>"))
+                 HTML(paste0("<h style='font-size:13px;margin-top:-5px'>","[1] Retrieved from <a href='https://www.phosphosite.org' target='_blank'> phosphosite.org </a> - version Fri Sep 09 09:58:14 EDT 2022<br>[2] Korotkevich G, Sukhov V, Sergushichev A (2019). “Fast gene set enrichment analysis.” bioRxiv. <a href='https://www.biorxiv.org/content/10.1101/060012v3' target='_blank'>doi: 10.1101/060012</a> - version 1.18.0","</h>"))
                  
                  
                ),
@@ -165,7 +165,7 @@ shinyApp(
         # JEFF'S CODE FOR ANALYSIS !!!
         
         ### START - PhosphoSitePlus kinase-substrate data manipulation
-        psp <- read.delim(file = "data/Kinase_Substrate_Dataset.txt", quote = "", stringsAsFactors = FALSE)
+        psp <- read.delim(file = "data/Kinase_Substrate_Dataset_ 090922.txt", quote = "", stringsAsFactors = FALSE)
         psp_human <- psp[which(psp$KIN_ORGANISM == "human"),]
         psp_human$GENE <- toupper(psp_human$GENE)
         psp_human$SUB_GENE <- toupper(psp_human$SUB_GENE)
