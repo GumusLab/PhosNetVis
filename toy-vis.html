@@ -1,781 +1,1071 @@
 <head>
-    <style> body { margin: 0; } </style>
-    <script src="libraries/3d-force-graph.js"></script>
-    <script src="libraries/index.min.js"></script>
-    <script src="libraries/three.js"></script>
-    <script src="libraries/three-spritetext.min.js"></script>
-    <script src="libraries/d3.v3.min.js" charset="utf-8"></script>
-    <script src="libraries/rainbowvis.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
-    <script src="js/fstdropdown.js"></script>
-    <script src="data/toy-networks.js"></script>
-    <link rel="stylesheet" href="css/fstdropdown.css">
-    <link rel="stylesheet" href="css/visualization.css">
-    <a href="index.html"></a>
-    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
-    <title>Toy Visualization</title>
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-  
-  <style type="text/css">
-      
-    @font-face {
-      font-family: "MyriadPro-Regular";
-      src: url("fonts/MYRIADPROREGULAR.woff") format("woff");
-    }
-    
-    @font-face {
-    font-family: "Century Gothic";
-    src: url("fonts/CenturyGothic.woff") format("woff");
-    }
-    
-    @font-face {
-    font-family: "CenturyGothicPro";
-    src: url("fonts/CenturyGothic.woff") format("woff");
-    }
-    
-    @font-face {
-    font-family: "CenturyGothicPro-Bold";
-    src: url("fonts/CenturyGothic-Bold.woff") format("woff");
-    }
+  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+  <script src="libraries/3d-force-graph.js"></script>
+  <script src="libraries/three.js"></script>
+  <script src="libraries/three-spritetext.min.js"></script>
+  <script src="libraries/rainbowvis.js"></script>
+  <script src="js/hgnc_dict.js"></script>
+  <script src="js/recordScript.js"></script>
+  <script src="data/toy-networks.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@tweakpane/plugin-essentials@0.1.5/dist/tweakpane-plugin-essentials.min.js"></script>
+  <script src="js/fstdropdown.js"></script>
+  <script src="//unpkg.com/element-resize-detector/dist/element-resize-detector.min.js"></script>
+  <link rel="stylesheet" href="css/fstdropdown.css">
+  <link rel="stylesheet" href="css/visualization.css">
+  <a href="index.html"></a>
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+  <title>Toy Networks</title>
 
-    @font-face {
+<style type="text/css">
+
+  @font-face {
+    font-family: "MyriadPro-Regular";
+    src: url("fonts/MYRIADPROREGULAR.woff") format("woff");
+  }
+  
+  @font-face {
+  font-family: "Century Gothic";
+  src: url("fonts/CenturyGothic.woff") format("woff");
+  }
+  
+  @font-face {
+  font-family: "CenturyGothicPro";
+  src: url("fonts/CenturyGothic.woff") format("woff");
+  }
+  
+  @font-face {
+  font-family: "CenturyGothicPro-Bold";
+  src: url("fonts/CenturyGothic-Bold.woff") format("woff");
+  }
+
+  @font-face {
     font-family: "helveticaBold";
     src: url("fonts/helvetica-bold-webfont.woff") format("woff");
     }
 
-    :root {
-  --tp-base-background-color: hsla(197, 95%, 47%, 0.80);
-  --tp-base-shadow-color: hsla(0, 0%, 0%, 0.2);
-  --tp-button-background-color: hsla(0, 0%, 100%, 1.00);
-  --tp-button-background-color-active: hsla(0, 0%, 85%, 1.00);
-  --tp-button-background-color-focus: hsla(0, 0%, 90%, 1.00);
-  --tp-button-background-color-hover: hsla(0, 0%, 95%, 1.00);
-  --tp-button-foreground-color: hsla(230, 20%, 11%, 1.00);
-  --tp-container-background-color: hsla(0, 0%, 0%, 0.20);
-  --tp-container-background-color-active: hsla(0, 0%, 0%, 0.35);
-  --tp-container-background-color-focus: hsla(0, 0%, 0%, 0.30);
-  --tp-container-background-color-hover: hsla(0, 0%, 0%, 0.25);
-  --tp-container-foreground-color: hsla(0, 0%, 100%, 0.90);
-  --tp-groove-foreground-color: hsla(0, 0%, 0%, 0.50);
-  --tp-input-background-color: hsla(0, 0%, 0%, 0.50);
-  --tp-input-background-color-active: hsla(0, 0%, 0%, 0.65);
-  --tp-input-background-color-focus: hsla(0, 0%, 0%, 0.60);
-  --tp-input-background-color-hover: hsla(0, 0%, 0%, 0.55);
-  --tp-input-foreground-color: hsla(0, 0%, 100%, 0.90);
-  --tp-label-foreground-color: hsla(0, 0%, 100%, 0.90);
-  --tp-monitor-background-color: hsla(0, 0%, 0%, 0.50);
-  --tp-monitor-foreground-color: hsla(0, 0%, 100%, 0.50);
-}
-  
-  </style>
-  </head>
-  
-  <body>
-    <div>
-      <svg version="1.1" id="Layer_1" onclick="window.location.href = 'index.html'" xmlns="http://www.w3.org/2000/svg" width = "150px" style="top:2%;left:1%;position:absolute;cursor: pointer;z-index:10;" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 710.3 222.4" xml:space="preserve"> <style type="text/css"> .st0b{fill:#424A60;} .st1b{fill:#DC298D;} .st2b{fill:#7383BF;} .st3b{fill:#969696;} .st4b{fill:#EBBA16;} .st5b{fill:#06ABEB;} .st6b{font-family:'helveticaBold';} .st7b{font-size:84.3397px;} .st8b{letter-spacing:-1;} </style> <g id="Layer_1_00000056390415183483724190000009750584087129516189_"> <g id="path5"> <rect x="92.8" y="154.2" transform="matrix(0.3589 -0.9334 0.9334 0.3589 -62.6169 220.6174)" class="st0b" width="72.9" height="3.3"/> </g> <rect id="path4" x="156.9" y="60.1" transform="matrix(0.8102 -0.5861 0.5861 0.8102 0.7614 131.2305)" class="st0b" width="92.3" height="8.7"/> <g id="path3"> <rect x="19" y="127.2" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -46.9835 44.8278)" class="st0b" width="126.2" height="11.8"/> </g> <g id="path2"> <rect x="122.6" y="16.9" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -9.3065 55.4032)" class="st0b" width="6.4" height="65.4"/> </g> <rect id="path1" x="169" y="110.3" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -48.6296 83.9257)" class="st0b" width="8.7" height="92.3"/> <circle id="circle6" class="st1b" cx="249.7" cy="34.5" r="21.8"/> <circle id="circle5" class="st2b" cx="112.1" cy="200.6" r="21.8"/> <circle id="circle4" class="st1b" cx="21.8" cy="156.5" r="21.8"/> <circle id="circle3" class="st3b" cx="109.6" cy="13.1" r="13.1"/> <circle id="circle2" class="st4b" cx="189.6" cy="193.1" r="13.1"/> <circle id="circle1" class="st5b" cx="149.5" cy="102.8" r="37.3"/> </g> <g id="Layer_2_00000013871697503241264390000008040421359665832584_"> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 243.0089 140.7256)" class="st6b st7b">PhosNet</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 585.1035 139.5315)" class="st6b st7b st8b">V</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 639.8698 139.3403)" class="st6b st7b">is</text> </g> </svg>
-      </div>
-  
-    <div class="openbutton" id = "openbutton" value = 0 onclick="hideShowMenu(this.value)" style="cursor: pointer;">
-      <button class="dropbtn" id="openbutton-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 16"> <g id="Rectangle_1581" data-name="Rectangle 1581" transform="translate(0 1)" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <text id="x" transform="translate(6.5 11)" fill="#9f9f9f" stroke="#2e3137" stroke-width="1" font-size="14" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-3.92" y="0">x</tspan></text> </svg>
-      </button>
-      <div class="openbutton-content" id = "openbutton-content">
-        <svg xmlns="http://www.w3.org/2000/svg" width="80px" viewBox="0 0 81 11"> <text id="close_controls" data-name="close controls" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">close controls</tspan></text> </svg>
-      </div>
+</style>
+</head>
+
+<body id = "screen">
+<div>
+    <svg version="1.1" id="Layer_1" onclick="window.location.href = 'index.html'" xmlns="http://www.w3.org/2000/svg" width = "150px" style="top:2%;left:1%;position:absolute;cursor: pointer;z-index:10;" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 710.3 222.4" xml:space="preserve"> <style type="text/css"> .st0b{fill:#424A60;} .st1b{fill:#DC298D;} .st2b{fill:#7383BF;} .st3b{fill:#969696;} .st4b{fill:#EBBA16;} .st5b{fill:#06ABEB;} .st6b{font-family:'helveticaBold';} .st7b{font-size:84.3397px;} .st8b{letter-spacing:-1;} </style> <g id="Layer_1_00000056390415183483724190000009750584087129516189_"> <g id="path5"> <rect x="92.8" y="154.2" transform="matrix(0.3589 -0.9334 0.9334 0.3589 -62.6169 220.6174)" class="st0b" width="72.9" height="3.3"/> </g> <rect id="path4" x="156.9" y="60.1" transform="matrix(0.8102 -0.5861 0.5861 0.8102 0.7614 131.2305)" class="st0b" width="92.3" height="8.7"/> <g id="path3"> <rect x="19" y="127.2" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -46.9835 44.8278)" class="st0b" width="126.2" height="11.8"/> </g> <g id="path2"> <rect x="122.6" y="16.9" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -9.3065 55.4032)" class="st0b" width="6.4" height="65.4"/> </g> <rect id="path1" x="169" y="110.3" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -48.6296 83.9257)" class="st0b" width="8.7" height="92.3"/> <circle id="circle6" class="st1b" cx="249.7" cy="34.5" r="21.8"/> <circle id="circle5" class="st2b" cx="112.1" cy="200.6" r="21.8"/> <circle id="circle4" class="st1b" cx="21.8" cy="156.5" r="21.8"/> <circle id="circle3" class="st3b" cx="109.6" cy="13.1" r="13.1"/> <circle id="circle2" class="st4b" cx="189.6" cy="193.1" r="13.1"/> <circle id="circle1" class="st5b" cx="149.5" cy="102.8" r="37.3"/> </g> <g id="Layer_2_00000013871697503241264390000008040421359665832584_"> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 243.0089 140.7256)" class="st6b st7b">PhosNet</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 585.1035 139.5315)" class="st6b st7b st8b">V</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 639.8698 139.3403)" class="st6b st7b">is</text> </g> </svg>
+</div>
+
+  <div class="openbutton" id = "openbutton" value = 0 onclick="hideShowMenu(this.value)" style="cursor: pointer;">
+    <button class="dropbtn" id="openbutton-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18px" viewBox="0 0 13 16"> <g id="Rectangle_1581" data-name="Rectangle 1581" transform="translate(0 1)" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <text id="x" transform="translate(6.5 11)" fill="#9f9f9f" stroke="#2e3137" stroke-width="1" font-size="14" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-3.92" y="0">x</tspan></text> </svg>
+    </button>
+    <div class="openbutton-content" id = "openbutton-content">
     </div>
-  
-    <p id = "nqText" class="p1">Node Query</p>
-    
-    <p  id="nodequeryMain">
-      <select class='fstdropdown-select' id="nodequery" onchange="updateSearch()">
-          <option value="">--</option>
-      </select>
-  </p>
-  
-  
-  <div id = "screenshotButton">
-  <svg version="1.1" onclick="snapshot()" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-      viewBox="0 0 114 30" width = "120px" style="left:11px;top:350px;background-color: rgba(255,255,255,0); cursor: pointer;  z-index: 30; position:absolute;" xml:space="preserve"> <style type="text/css"> .st0{font-family:'MyriadPro-Regular';} .st1{font-size:22px;} </style> <g> <path d="M6,19v-2c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v2c0,0.6,0.4,1,1,1l0,0C5.6,20,6,19.6,6,19z"/> <path d="M10,5L10,5c0,0.6,0.4,1,1,1h2c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1h-2C10.4,4,10,4.4,10,5z"/> <path d="M5,14L5,14c0.6,0,1-0.4,1-1v-2c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v2C4,13.6,4.4,14,5,14z"/> <path d="M23,6h1v1c0,0.6,0.4,1,1,1l0,0c0.6,0,1-0.4,1-1V6c0-1.1-0.9-2-2-2h-1c-0.6,0-1,0.4-1,1l0,0C22,5.6,22.4,6,23,6z"/> <path d="M16,5L16,5c0,0.6,0.4,1,1,1h2c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1h-2C16.4,4,16,4.4,16,5z"/> <path d="M7,24H6v-1c0-0.6-0.4-1-1-1l0,0c-0.6,0-1,0.4-1,1v1c0,1.1,0.9,2,2,2h1c0.6,0,1-0.4,1-1l0,0C8,24.4,7.6,24,7,24z"/> <path d="M6,7V6h1c0.6,0,1-0.4,1-1l0,0c0-0.6-0.4-1-1-1H6C4.9,4,4,4.9,4,6v1c0,0.6,0.4,1,1,1l0,0C5.6,8,6,7.6,6,7z"/> <path d="M24,11v2c0,0.6,0.4,1,1,1l0,0c0.6,0,1-0.4,1-1v-2c0-0.6-0.4-1-1-1l0,0C24.4,10,24,10.4,24,11z"/> </g> <g> <path d="M25,16h-1.8c-0.8,0-1.5-0.4-1.8-1.1l-0.2-0.3c-0.2-0.3-0.5-0.6-0.9-0.6h-4.8c-0.4,0-0.7,0.2-0.9,0.6l-0.2,0.3 c-0.3,0.7-1,1.1-1.8,1.1H11c-0.6,0-1,0.4-1,1v8c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1v-8C26,16.4,25.6,16,25,16z M18,25 c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4S20.2,25,18,25z"/> <circle cx="18" cy="21" r="2"/> </g> <text transform="matrix(1 0 0 1 28.4106 22)" class="st0 st1">Snapshot</text>
-  </svg>  
   </div>
+
+  <!-- <p id = "nqText" class="p1">Node Query</p> -->
   
-  <div id = "resetButton">
-  <svg version="1.1" onclick="queryReset()" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-       viewBox="0 0 1068.5 512" width = "100px" style="left:161px;top:343px;background-color: rgba(255,255,255,0); cursor: pointer;  z-index: 30; position:absolute;" xml:space="preserve"> <style type="text/css"> .st0a{font-family:'MyriadPro-Regular';} .st1a{font-size:239.4106px;} </style> <path d="M218.4,320.6l28.4,28.4H157c-51.4,0-93-41.6-93-93s41.6-93,93-93h18v-30h-18c-67.9,0-123,55.1-123,123s55.1,123,123,123 h89.8l-28.4,28.4l21.2,21.2l64.6-64.6l-64.6-64.6L218.4,320.6z"/> <path d="M355,133h-89.8l28.4-28.4l-21.2-21.2L207.8,148l64.6,64.6l21.2-21.2L265.2,163H355c51.4,0,93,41.6,93,93s-41.6,93-93,93 h-18.6v30H355c67.9,0,123-55.1,123-123S422.9,133,355,133z"/> <text transform="matrix(1 0 0 1 496.8376 327.6711)" class="st0a st1a">Reset</text>
-  </svg>
+  <div id="nodequeryMain">
+    <select class='fstdropdown-select' id="nodequery" onchange="updateSearch()">
+        <option value="">Node Query</option>
+    </select>
   </div>
-  
-    <div id="guiplace"> </div>
-  
-    <!-- LEGEND SHAPES -->
-    <div class="dropdown" id = "dropdown" value = "0" onclick="hideShowLegend(this.value)" style="cursor: pointer;">
-      <button class="dropbtn" id = "dropbtn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 13"> <g id="Rectangle_1580" data-name="Rectangle 1580" fill="#fff" stroke="#000000" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <g id="Polygon_11" data-name="Polygon 11" transform="translate(11 2) rotate(90)" fill="#9f9f9f"> <path d="M 8.145074844360352 7.5 L 0.8549256324768066 7.5 L 4.5 1.019867777824402 L 8.145074844360352 7.5 Z" stroke="none"/> <path d="M 4.5 2.039735317230225 L 1.709851264953613 7 L 7.290148735046387 7 L 4.5 2.039735317230225 M 4.5 0 L 9 8 L 0 8 L 4.5 0 Z" stroke="none" fill="#000000"/> </g> </svg>
-      </button>
-      <div class="dropdown-content" id = "dropdown-content">
-        <svg xmlns="http://www.w3.org/2000/svg" width="70" viewBox="0 0 75 11">
-          <text id="hide_legend" data-name="hide legend" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">hide legend</tspan></text>
-        </svg>
-      </div>
-    </div>
-  
-    <div id="legendPlace">
-      <svg id = "legend" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="124.5px" viewBox="0 0 108 275">
-        <defs>
-          <pattern id="pattern" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" viewBox="0 0 716 152">
-            <image width="716" height="152" xlink:href="data:image/png;base64,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"/>
-          </pattern>
-          <pattern id="pattern-2" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" viewBox="0 0 708 162">
-            <image width="708" height="162" xlink:href="data:image/jpeg;base64,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"/>
-          </pattern>
-        </defs>
-        <g id="Path_2281" data-name="Path 2281" fill="#fff" stroke-linecap="round">
-          <path d="M 88 274.3999938964844 L 20 274.3999938964844 C 17.38075065612793 274.3999938964844 14.84017848968506 273.8871459960938 12.44882106781006 272.8756713867188 C 10.13878536224365 271.8986206054688 8.064000129699707 270.4997253417969 6.282142639160156 268.7178649902344 C 4.500285625457764 266.9360046386719 3.10139274597168 264.8612060546875 2.124321460723877 262.5511779785156 C 1.112857103347778 260.1598205566406 0.6000000238418579 257.6192626953125 0.6000000238418579 255 L 0.6000000238418579 20 C 0.6000000238418579 17.38075065612793 1.112857103347778 14.84017848968506 2.124321460723877 12.44882106781006 C 3.10139274597168 10.13878536224365 4.500285625457764 8.064000129699707 6.282142639160156 6.282142639160156 C 8.064000129699707 4.500285625457764 10.13878536224365 3.10139274597168 12.44882106781006 2.124321460723877 C 14.84017848968506 1.112857103347778 17.38075065612793 0.6000000238418579 20 0.6000000238418579 L 88 0.6000000238418579 C 90.61924743652344 0.6000000238418579 93.15982055664062 1.112857103347778 95.55117797851562 2.124321460723877 C 97.86121368408203 3.10139274597168 99.93599700927734 4.500285625457764 101.7178573608398 6.282142639160156 C 103.4997177124023 8.064000129699707 104.8986053466797 10.13878536224365 105.8756790161133 12.44882106781006 C 106.8871459960938 14.84017848968506 107.4000015258789 17.38075065612793 107.4000015258789 20 L 107.4000015258789 255 C 107.4000015258789 257.6192626953125 106.8871459960938 260.1598205566406 105.8756790161133 262.5511779785156 C 104.8986053466797 264.8612060546875 103.4997177124023 266.9360046386719 101.7178573608398 268.7178649902344 C 99.93599700927734 270.4997253417969 97.86121368408203 271.8986206054688 95.55117797851562 272.8756713867188 C 93.15982055664062 273.8871459960938 90.61924743652344 274.3999938964844 88 274.3999938964844 Z" stroke="none"/>
-          <path d="M 20 1.20001220703125 C 17.46150207519531 1.20001220703125 14.99953460693359 1.6968994140625 12.68257141113281 2.6768798828125 C 10.44403839111328 3.623748779296875 8.433357238769531 4.979461669921875 6.706390380859375 6.706390380859375 C 4.979461669921875 8.433349609375 3.623748779296875 10.44403076171875 2.676895141601562 12.68258666992188 C 1.696891784667969 14.99954223632812 1.199996948242188 17.46148681640625 1.199996948242188 20 L 1.199996948242188 255 C 1.199996948242188 257.5385131835938 1.696891784667969 260.0004577636719 2.676895141601562 262.3174438476562 C 3.623748779296875 264.5559692382812 4.979461669921875 266.566650390625 6.706390380859375 268.2936096191406 C 8.433357238769531 270.0205383300781 10.44403839111328 271.3762512207031 12.68257141113281 272.3231201171875 C 14.99953460693359 273.3031005859375 17.46150207519531 273.7999877929688 20 273.7999877929688 L 88 273.7999877929688 C 90.53849792480469 273.7999877929688 93.00046539306641 273.3031005859375 95.31742858886719 272.3231201171875 C 97.55596160888672 271.3762512207031 99.56664276123047 270.0205383300781 101.2936096191406 268.2936096191406 C 103.0205383300781 266.566650390625 104.3762512207031 264.5559692382812 105.3231048583984 262.3174438476562 C 106.303108215332 260.0004577636719 106.8000030517578 257.5385131835938 106.8000030517578 255 L 106.8000030517578 20 C 106.8000030517578 17.46148681640625 106.303108215332 14.99954223632812 105.3231048583984 12.68258666992188 C 104.3762512207031 10.44403076171875 103.0205383300781 8.433349609375 101.2936096191406 6.706390380859375 C 99.56664276123047 4.979461669921875 97.55596160888672 3.623748779296875 95.31742858886719 2.6768798828125 C 93.00046539306641 1.6968994140625 90.53849792480469 1.20001220703125 88 1.20001220703125 L 20 1.20001220703125 M 20 0 L 88 0 C 99.04567718505859 0 108 8.954315185546875 108 20 L 108 255 C 108 266.0456848144531 99.04567718505859 275 88 275 L 20 275 C 8.954322814941406 275 0 266.0456848144531 0 255 L 0 20 C 0 8.954315185546875 8.954322814941406 0 20 0 Z" stroke="none" fill="#4e4c4c"/>
-        </g>
-        <g id="WhatsApp_Image_2021-01-19_at_20.50.37_1_" data-name="WhatsApp Image 2021-01-19 at 20.50.37 (1)" transform="translate(16.5 29.9)" stroke="#000" stroke-width="1" fill="url(#pattern)">
-          <rect width="70" height="19" stroke="none"/>
-          <rect x="0.5" y="0.5" width="69" height="18" fill="none"/>
-        </g>
-        <g id="Path_2277" data-name="Path 2277" transform="translate(20.301 101.825)" fill="none">
-          <path d="M0,0H5.889V5.945H0Z" stroke="none"/>
-          <path d="M 1 0.9999985694885254 L 1 4.944998264312744 L 4.888999938964844 4.944998264312744 L 4.888999938964844 0.9999985694885254 L 1 0.9999985694885254 M 0 -1.430511474609375e-06 L 5.888999938964844 -1.430511474609375e-06 L 5.888999938964844 5.944998264312744 L 0 5.944998264312744 L 0 -1.430511474609375e-06 Z" stroke="none" fill="#363535"/>
-        </g>
-        <g id="Rectangle_1567" data-name="Rectangle 1567" transform="translate(17.893 99.567)" fill="none" stroke="#363535" stroke-width="1" stroke-dasharray="1">
-          <rect width="10.707" height="10.461" rx="3" stroke="none"/>
-          <rect x="0.5" y="0.5" width="9.707" height="9.461" rx="2.5" fill="none"/>
-        </g>
-        <g id="Path_2278" data-name="Path 2278" transform="translate(75.051 98.66)" fill="none">
-          <path d="M0,0H12V11.759H0Z" stroke="none"/>
-          <path d="M 1 0.9999990463256836 L 1 10.75869846343994 L 10.9990406036377 10.75869846343994 L 10.9990406036377 0.9999990463256836 L 1 0.9999990463256836 M 0 -9.5367431640625e-07 L 11.9990406036377 -9.5367431640625e-07 L 11.9990406036377 11.75869846343994 L 0 11.75869846343994 L 0 -9.5367431640625e-07 Z" stroke="none" fill="#363535"/>
-        </g>
-        <g id="Rectangle_1568" data-name="Rectangle 1568" transform="translate(69.486 92.693)" fill="none" stroke="#363535" stroke-width="1" stroke-dasharray="1">
-          <rect width="23.13" height="23.691" rx="3" stroke="none"/>
-          <rect x="0.5" y="0.5" width="22.13" height="22.691" rx="2.5" fill="none"/>
-        </g>
-        <g id="Rectangle_1570" data-name="Rectangle 1570" transform="translate(66.601 89.456)" fill="none" stroke="#363535" stroke-width="1" stroke-dasharray="1">
-          <rect width="28.9" height="30.166" rx="4" stroke="none"/>
-          <rect x="0.5" y="0.5" width="27.9" height="29.166" rx="3.5" fill="none"/>
-        </g>
-        <g id="WhatsApp_Image_2021-01-19_at_20.50.38" data-name="WhatsApp Image 2021-01-19 at 20.50.38" transform="translate(16.5 158.119)" stroke="#000" stroke-width="1" fill="url(#pattern-2)">
-          <rect width="70" height="19" stroke="none"/>
-          <rect x="0.5" y="0.5" width="69" height="18" fill="none"/>
-        </g>
-        <line id="Line_189" data-name="Line 189" y1="21" x2="22" transform="translate(16.5 228.675)" fill="none" stroke="#363535" stroke-width="1"/>
-        <line id="Line_190" data-name="Line 190" y1="21" x2="22" transform="translate(60.262 228.675)" fill="none" stroke="#363535" stroke-width="11"/>
-        <line id="Line_191" data-name="Line 191" y1="21" x2="22" transform="translate(36.63 228.675)" fill="none" stroke="#363535" stroke-width="5"/>
-        <text id="Phosphorylation_log_FoldChange_" data-name="Phosphorylation
-      (log FoldChange)" transform="translate(51.5 14.9)" font-size="10" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-38.6" y="0">Phosphorylation</tspan><tspan font-size="8" font-family="CenturyGothicPro, Century Gothic Pro" font-weight="400"><tspan x="-34.428" y="10">(log FoldChange)</tspan></tspan></text>
-        <text id="Node_Size" data-name="Node Size" transform="translate(48.5 85.456)" font-size="10" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-24.1" y="0">Node Size</tspan></text>
-        <text id="Edge_Color" data-name="Edge Color" transform="translate(49.607 152.119)" font-size="10" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-26.9" y="0">Edge Color</tspan></text>
-        <text id="Edge_Weight" data-name="Edge Weight" transform="translate(51.404 221.675)" font-size="10" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-30.25" y="0">Edge Weight</tspan></text>
-        <g id="Rectangle_1572" data-name="Rectangle 1572" transform="translate(15.469 97.159)" fill="none" stroke="#363535" stroke-width="1" stroke-dasharray="1">
-          <rect width="15.554" height="15.277" rx="3" stroke="none"/>
-          <rect x="0.5" y="0.5" width="14.554" height="14.277" rx="2.5" fill="none"/>
-        </g>
-        <g id="Rectangle_1573" data-name="Rectangle 1573" transform="translate(72.846 95.926)" fill="none" stroke="#363535" stroke-width="1" stroke-dasharray="1">
-          <rect width="16.41" height="17.227" rx="3" stroke="none"/>
-          <rect x="0.5" y="0.5" width="15.41" height="16.227" rx="2.5" fill="none"/>
-        </g>
-        <g id="Polygon_5" data-name="Polygon 5" transform="translate(59 103) rotate(90)" fill="#fff">
-          <path d="M 3.065736770629883 2.5 L 0.9342633485794067 2.5 L 2 0.9013950228691101 L 3.065736770629883 2.5 Z" stroke="none"/>
-          <path d="M 2 0 L 4 3 L 0 3 L 2 0 Z" stroke="none" fill="#363535"/>
-        </g>
-        <line id="Line_192" data-name="Line 192" x2="17" transform="translate(39 105)" fill="none" stroke="#363535" stroke-width="1"/>
-        <g id="Polygon_6" data-name="Polygon 6" transform="matrix(-0.358, 0.934, -0.934, -0.358, 58.388, 110.3)" fill="#fff">
-          <path d="M 3.065736532211304 2.5 L 0.9342632293701172 2.5 L 1.99999988079071 0.9013950228691101 L 3.065736532211304 2.5 Z" stroke="none"/>
-          <path d="M 1.99999988079071 0 L 4 3 L -2.384185791015625e-07 3 L 1.99999988079071 0 Z" stroke="none" fill="#363535"/>
-        </g>
-        <line id="Line_193" data-name="Line 193" x2="17" transform="matrix(0.934, 0.358, -0.358, 0.934, 39, 105)" fill="none" stroke="#363535" stroke-width="1"/>
-        <g id="Polygon_7" data-name="Polygon 7" transform="translate(56.953 95.791) rotate(69)" fill="#fff">
-          <path d="M 3.065761566162109 2.499997138977051 L 0.9342533349990845 2.499997138977051 L 2.000007390975952 0.9013741612434387 L 3.065761566162109 2.499997138977051 Z" stroke="none"/>
-          <path d="M 2.000007390975952 -2.622604370117188e-06 L 4.000017166137695 2.999997138977051 L -2.384185791015625e-06 2.999997138977051 L 2.000007390975952 -2.622604370117188e-06 Z" stroke="none" fill="#363535"/>
-        </g>
-        <line id="Line_194" data-name="Line 194" x2="17" transform="translate(39 104.825) rotate(-21)" fill="none" stroke="#363535" stroke-width="1"/>
+
+<div id="infoBox" style="display: none;">  
+  <div id="infoTop"> 
+    <p id="nodeName" style="font-family: CenturyGothicPro-Bold; margin:6px;">Node: <a id = "nodehref" href="https://www.w3schools.com" target="_blank" style="color: #00709d;">placeholder1</a>   <img style = "width: 20px; margin-bottom: 5px;" src="https://www.phosphosite.org/images/header/logo_psp_white_cp.png"/></p>
+    <p id = "nodeType" style="font-family: CenturyGothicPro-Bold; margin:6px;">Type: <a id="typetext">placeholder2<a> </p>
+    <p style="font-family: CenturyGothicPro-Bold; margin:6px;"> <u>Phosphorylation Info</u> <h style="font-family: CenturyGothicPro-Bold; font-size: 12px;">*(scrollable)</h></p>
+  </div>
+  <table id = "phosTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th style="background-color:rgba(240, 240, 240, .8);">Site ID</th>
+            <th style="background-color:rgba(240, 240, 240, .8)">log2FC</th>
+            <th style="background-color:rgba(240, 240, 240, .8)">pValue</th>
+        </tr>
+    </thead>
+    <tbody id = "tbody">
+    </tbody>
+</table>
+
+</div>
+
+<div id="guiplace"> </div>
+
+  <!-- LEGEND SHAPES -->
+  <div class="dropdown" id = "dropdown" value = "0" onclick="hideShowLegend(this.value)" style="cursor: pointer;">
+    <button class="dropbtn" id = "dropbtn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 13"> <g id="Rectangle_1580" data-name="Rectangle 1580" fill="#fff" stroke="#000000" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <g id="Polygon_11" data-name="Polygon 11" transform="translate(11 2) rotate(90)" fill="#9f9f9f"> <path d="M 8.145074844360352 7.5 L 0.8549256324768066 7.5 L 4.5 1.019867777824402 L 8.145074844360352 7.5 Z" stroke="none"/> <path d="M 4.5 2.039735317230225 L 1.709851264953613 7 L 7.290148735046387 7 L 4.5 2.039735317230225 M 4.5 0 L 9 8 L 0 8 L 4.5 0 Z" stroke="none" fill="#000000"/> </g> </svg>
+    </button>
+    <div class="dropdown-content" id = "dropdown-content">
+      <svg xmlns="http://www.w3.org/2000/svg" width="70" viewBox="0 0 75 11">
+        <text id="hide_legend" data-name="hide legend" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">hide legend</tspan></text>
       </svg>
     </div>
-  
-  <!-- LEGEND NUMBERS -->
-  <div id = "legendNumbers"> 
-    <p id="p1" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:26px; z-index:150; font-size: 20; bottom:220px">&ndash;</p>
-    <p id="p2" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:98px; z-index:150; font-size: 20; bottom:220px">&ndash;</p>
-  
-  
-    <p id="s1" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:26px; z-index:150;font-size: 20; bottom:140px">&ndash;</p>
-    <p id="s2" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:98px; z-index:150;font-size: 20; bottom:140px">&ndash;</p>
-  
-    <p id="c1" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:26px; z-index:150;font-size: 20; bottom:70px">&ndash;</p>
-    <p id="c2" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:98px; z-index:150;font-size: 20; bottom:70px">&ndash;</p>
-  
-    <p id="w1" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:26px; z-index:150;font-size: 20; bottom:-12px">&ndash;</p>
-    <p id="w2" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:98px; z-index:150;font-size: 20; bottom:-12px">&ndash;</p>
   </div>
-  
-  <!-- LEGEND REMOVERS -->
-  <div id="legendRemovers"> 
-  <div id="nodeColorRemover">
-    <svg xmlns="http://www.w3.org/2000/svg" width="119px"  style="z-index: 151; position: absolute;right: 5px; bottom: 240px;" viewBox="0 0 95 61">
-      <rect id="Rectangle_1579" data-name="Rectangle 1579" width="95" height="61" rx="15" fill="rgba(255,255,255,0.85)"/>
-    </svg>
-  </div>
-  
-  <div id="nodeSizeRemover">
-    <svg xmlns="http://www.w3.org/2000/svg" width="119px"  style="z-index: 151; position: absolute;right: 5px; bottom: 160px;" viewBox="0 0 95 61">
-      <rect id="Rectangle_1579" data-name="Rectangle 1579" width="95" height="61" rx="15" fill="rgba(255,255,255,0.85)"/>
-    </svg>
-  </div>
-  
-  <div id="edgeColorRemover">
-    <svg xmlns="http://www.w3.org/2000/svg" width="119px"  style="z-index: 151; position: absolute;right: 5px; bottom: 80px;" viewBox="0 0 95 61">
-      <rect id="Rectangle_1579" data-name="Rectangle 1579" width="95" height="61" rx="15" fill="rgba(255,255,255,0.85)"/>
-    </svg>
-  </div>
-  
-  <div id="edgeWeightRemover">
-    <svg xmlns="http://www.w3.org/2000/svg" width="119px"  style="z-index: 151; position: absolute;right: 5px; bottom: 10px;" viewBox="0 0 95 61">
-      <rect id="Rectangle_1579" data-name="Rectangle 1579" width="95" height="61" rx="15" fill="rgba(255,255,255,0.85)"/>
-    </svg>
-  </div>
-  </div>
-  
-    <div id="3d-graph"></div>
-  
-      </div>
-    </div>
-  <script>
-  
-  function hideShowLegend(val){
-    if(val == 0 || val == undefined){
-      document.getElementById("legendPlace").style.display = "none";
-      document.getElementById("legendNumbers").style.display = "none";
-      document.getElementById("legendRemovers").style.display = "none";
-      document.getElementById("dropdown").value = 1;
-      document.getElementById("dropbtn").style.transform = "rotate(180deg)";
-      document.getElementById("dropdown").style.right = "0px";
-      document.getElementById("dropdown-content").style.left = "-71px";
-      document.getElementById("dropdown-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="70" viewBox="0 0 75 11"> <text id="show_legend" data-name="show legend" transform="translate(32 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-31.145" y="0">show legend</tspan></text> </svg>'
-    }
-    else{
-      document.getElementById("legendPlace").style.display = "block";
-      document.getElementById("legendNumbers").style.display = "block";
-      document.getElementById("legendRemovers").style.display = "block";
-      document.getElementById("dropdown").value = 0;
-      document.getElementById("dropbtn").style.transform = "rotate(0deg)";
-      document.getElementById("dropdown").style.right = "85px";
-      document.getElementById("dropdown-content").style.left = "25px";
-      document.getElementById("dropdown-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="70" viewBox="0 0 75 11"> <text id="hide_legend" data-name="hide legend" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">hide legend</tspan></text> </svg>'
-    }
-  }
-  function hideShowMenu(val) {
-    if(val==0 || val == undefined){
-      document.getElementById("nqText").style.display = "none";
-      document.getElementById("nodequeryMain").style.display = "none";
-      document.getElementById("screenshotButton").style.display = "none";
-      document.getElementById("resetButton").style.display = "none";
-      document.getElementById("openbutton-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="80px" viewBox="0 0 81 11"> <text id="close_controls" data-name="close controls" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">open controls</tspan></text> </svg>';
-      document.getElementById("openbutton-button").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 13"> <g id="Rectangle_1582" data-name="Rectangle 1582" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <line id="Line_201" data-name="Line 201" x2="6.5" transform="translate(3.25 4.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> <line id="Line_202" data-name="Line 202" x2="6.5" transform="translate(3.25 6.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> <line id="Line_203" data-name="Line 203" x2="6.5" transform="translate(3.25 8.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> </svg> '
-      document.getElementById("openbutton").value = 1;
-      document.getElementById("guiplace").style.display = "none";
-      
-    }
-    else{
-      document.getElementById("nqText").style.display = "block";
-      document.getElementById("nodequeryMain").style.display = "block";
-      document.getElementById("screenshotButton").style.display = "block";
-      document.getElementById("resetButton").style.display = "inline-block";
-      document.getElementById("openbutton-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="80px" viewBox="0 0 81 11"> <text id="close_controls" data-name="close controls" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">close controls</tspan></text> </svg>'
-      document.getElementById("openbutton-button").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 16"> <g id="Rectangle_1581" data-name="Rectangle 1581" transform="translate(0 1)" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <text id="x" transform="translate(6.5 11)" fill="#9f9f9f" stroke="#2e3137" stroke-width="1" font-size="14" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-3.92" y="0">x</tspan></text> </svg>'
-      document.getElementById("openbutton").value = 0;
-      document.getElementById("guiplace").style.display = "block";
-    }
-  }
-  
-  //////////////// DATA CREATION ////////////////
 
-  const CAMERA_DISTANCE2NODES_FACTOR = 170;
-  //////////////// GRAPH DATA OBJECT ////////////////
-  var file_names = ["Toy Data"]
-  var finalDataObj = toy_network
-  
-  var nodesList = (finalDataObj["nodes"].map(el => el.id)).filter(x => x != undefined)
-  var nodeSizes = (finalDataObj["nodes"].map(el => el.nodeSize)).filter(x => x != undefined)
-  var nodeColors = ((finalDataObj["nodes"].map(el => el.nodeColors)).flat()).filter(x => x != undefined)
-  var nodeSizeRange = [Math.min.apply(Math, nodeSizes), Math.max.apply(Math, nodeSizes)]
-  var nodeColorRange = [Math.min.apply(Math, nodeColors), Math.max.apply(Math, nodeColors)]
-  var nodeColorThreshold = null
-  
-  if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
-    var minPositive = 0
-    var maxPositive = 0
-    nodeColorRange[0]<0 ? minPositive = - nodeColorRange[0] : minPositive = nodeColorRange[0]
-    nodeColorRange[1]<0 ? maxPositive = - nodeColorRange[1] : maxPositive = nodeColorRange[1]
-    minPositive>maxPositive  ? nodeColorThreshold = minPositive : nodeColorThreshold = maxPositive
+  <div id="legendPlace">
+    <svg id = "legend" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="124.5px" viewBox="0 0 108 275">
+      <defs>
+        <pattern id="pattern" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" viewBox="0 0 716 152">
+          <image width="716" height="152" xlink:href="data:image/png;base64,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"/>
+        </pattern>
+        <pattern id="pattern-2" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" viewBox="0 0 708 162">
+          <image width="708" height="162" xlink:href="data:image/jpeg;base64,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"/>
+        </pattern>
+      </defs>
+      <g id="Path_2281" data-name="Path 2281" fill="#fff" stroke-linecap="round">
+        <path d="M 88 274.3999938964844 L 20 274.3999938964844 C 17.38075065612793 274.3999938964844 14.84017848968506 273.8871459960938 12.44882106781006 272.8756713867188 C 10.13878536224365 271.8986206054688 8.064000129699707 270.4997253417969 6.282142639160156 268.7178649902344 C 4.500285625457764 266.9360046386719 3.10139274597168 264.8612060546875 2.124321460723877 262.5511779785156 C 1.112857103347778 260.1598205566406 0.6000000238418579 257.6192626953125 0.6000000238418579 255 L 0.6000000238418579 20 C 0.6000000238418579 17.38075065612793 1.112857103347778 14.84017848968506 2.124321460723877 12.44882106781006 C 3.10139274597168 10.13878536224365 4.500285625457764 8.064000129699707 6.282142639160156 6.282142639160156 C 8.064000129699707 4.500285625457764 10.13878536224365 3.10139274597168 12.44882106781006 2.124321460723877 C 14.84017848968506 1.112857103347778 17.38075065612793 0.6000000238418579 20 0.6000000238418579 L 88 0.6000000238418579 C 90.61924743652344 0.6000000238418579 93.15982055664062 1.112857103347778 95.55117797851562 2.124321460723877 C 97.86121368408203 3.10139274597168 99.93599700927734 4.500285625457764 101.7178573608398 6.282142639160156 C 103.4997177124023 8.064000129699707 104.8986053466797 10.13878536224365 105.8756790161133 12.44882106781006 C 106.8871459960938 14.84017848968506 107.4000015258789 17.38075065612793 107.4000015258789 20 L 107.4000015258789 255 C 107.4000015258789 257.6192626953125 106.8871459960938 260.1598205566406 105.8756790161133 262.5511779785156 C 104.8986053466797 264.8612060546875 103.4997177124023 266.9360046386719 101.7178573608398 268.7178649902344 C 99.93599700927734 270.4997253417969 97.86121368408203 271.8986206054688 95.55117797851562 272.8756713867188 C 93.15982055664062 273.8871459960938 90.61924743652344 274.3999938964844 88 274.3999938964844 Z" stroke="none"/>
+        <path d="M 20 1.20001220703125 C 17.46150207519531 1.20001220703125 14.99953460693359 1.6968994140625 12.68257141113281 2.6768798828125 C 10.44403839111328 3.623748779296875 8.433357238769531 4.979461669921875 6.706390380859375 6.706390380859375 C 4.979461669921875 8.433349609375 3.623748779296875 10.44403076171875 2.676895141601562 12.68258666992188 C 1.696891784667969 14.99954223632812 1.199996948242188 17.46148681640625 1.199996948242188 20 L 1.199996948242188 255 C 1.199996948242188 257.5385131835938 1.696891784667969 260.0004577636719 2.676895141601562 262.3174438476562 C 3.623748779296875 264.5559692382812 4.979461669921875 266.566650390625 6.706390380859375 268.2936096191406 C 8.433357238769531 270.0205383300781 10.44403839111328 271.3762512207031 12.68257141113281 272.3231201171875 C 14.99953460693359 273.3031005859375 17.46150207519531 273.7999877929688 20 273.7999877929688 L 88 273.7999877929688 C 90.53849792480469 273.7999877929688 93.00046539306641 273.3031005859375 95.31742858886719 272.3231201171875 C 97.55596160888672 271.3762512207031 99.56664276123047 270.0205383300781 101.2936096191406 268.2936096191406 C 103.0205383300781 266.566650390625 104.3762512207031 264.5559692382812 105.3231048583984 262.3174438476562 C 106.303108215332 260.0004577636719 106.8000030517578 257.5385131835938 106.8000030517578 255 L 106.8000030517578 20 C 106.8000030517578 17.46148681640625 106.303108215332 14.99954223632812 105.3231048583984 12.68258666992188 C 104.3762512207031 10.44403076171875 103.0205383300781 8.433349609375 101.2936096191406 6.706390380859375 C 99.56664276123047 4.979461669921875 97.55596160888672 3.623748779296875 95.31742858886719 2.6768798828125 C 93.00046539306641 1.6968994140625 90.53849792480469 1.20001220703125 88 1.20001220703125 L 20 1.20001220703125 M 20 0 L 88 0 C 99.04567718505859 0 108 8.954315185546875 108 20 L 108 255 C 108 266.0456848144531 99.04567718505859 275 88 275 L 20 275 C 8.954322814941406 275 0 266.0456848144531 0 255 L 0 20 C 0 8.954315185546875 8.954322814941406 0 20 0 Z" stroke="none" fill="#4e4c4c"/>
+      </g>
+      <g id="WhatsApp_Image_2021-01-19_at_20.50.37_1_" data-name="WhatsApp Image 2021-01-19 at 20.50.37 (1)" transform="translate(16.5 29.9)" stroke="#000" stroke-width="1" fill="url(#pattern)">
+        <rect width="70" height="19" stroke="none"/>
+        <rect x="0.5" y="0.5" width="69" height="18" fill="none"/>
+      </g>
+      <g id="Path_2277" data-name="Path 2277" transform="translate(20.301 101.825)" fill="none">
+        <path d="M0,0H5.889V5.945H0Z" stroke="none"/>
+        <path d="M 1 0.9999985694885254 L 1 4.944998264312744 L 4.888999938964844 4.944998264312744 L 4.888999938964844 0.9999985694885254 L 1 0.9999985694885254 M 0 -1.430511474609375e-06 L 5.888999938964844 -1.430511474609375e-06 L 5.888999938964844 5.944998264312744 L 0 5.944998264312744 L 0 -1.430511474609375e-06 Z" stroke="none" fill="#363535"/>
+      </g>
+      <g id="Rectangle_1567" data-name="Rectangle 1567" transform="translate(17.893 99.567)" fill="none" stroke="#363535" stroke-width="1" stroke-dasharray="1">
+        <rect width="10.707" height="10.461" rx="3" stroke="none"/>
+        <rect x="0.5" y="0.5" width="9.707" height="9.461" rx="2.5" fill="none"/>
+      </g>
+      <g id="Path_2278" data-name="Path 2278" transform="translate(75.051 98.66)" fill="none">
+        <path d="M0,0H12V11.759H0Z" stroke="none"/>
+        <path d="M 1 0.9999990463256836 L 1 10.75869846343994 L 10.9990406036377 10.75869846343994 L 10.9990406036377 0.9999990463256836 L 1 0.9999990463256836 M 0 -9.5367431640625e-07 L 11.9990406036377 -9.5367431640625e-07 L 11.9990406036377 11.75869846343994 L 0 11.75869846343994 L 0 -9.5367431640625e-07 Z" stroke="none" fill="#363535"/>
+      </g>
+      <g id="Rectangle_1568" data-name="Rectangle 1568" transform="translate(69.486 92.693)" fill="none" stroke="#363535" stroke-width="1" stroke-dasharray="1">
+        <rect width="23.13" height="23.691" rx="3" stroke="none"/>
+        <rect x="0.5" y="0.5" width="22.13" height="22.691" rx="2.5" fill="none"/>
+      </g>
+      <g id="Rectangle_1570" data-name="Rectangle 1570" transform="translate(66.601 89.456)" fill="none" stroke="#363535" stroke-width="1" stroke-dasharray="1">
+        <rect width="28.9" height="30.166" rx="4" stroke="none"/>
+        <rect x="0.5" y="0.5" width="27.9" height="29.166" rx="3.5" fill="none"/>
+      </g>
+      <g id="WhatsApp_Image_2021-01-19_at_20.50.38" data-name="WhatsApp Image 2021-01-19 at 20.50.38" transform="translate(16.5 158.119)" stroke="#000" stroke-width="1" fill="url(#pattern-2)">
+        <rect width="70" height="19" stroke="none"/>
+        <rect x="0.5" y="0.5" width="69" height="18" fill="none"/>
+      </g>
+      <line id="Line_189" data-name="Line 189" y1="21" x2="22" transform="translate(16.5 228.675)" fill="none" stroke="#363535" stroke-width="1"/>
+      <line id="Line_190" data-name="Line 190" y1="21" x2="22" transform="translate(60.262 228.675)" fill="none" stroke="#363535" stroke-width="11"/>
+      <line id="Line_191" data-name="Line 191" y1="21" x2="22" transform="translate(36.63 228.675)" fill="none" stroke="#363535" stroke-width="5"/>
+      <text id="Phosphorylation_log_FoldChange_" data-name="Phosphorylation
+    (log2fc)" transform="translate(51.5 14.9)" font-size="10" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-38.6" y="0">Phosphorylation</tspan><tspan font-size="8" font-family="CenturyGothicPro, Century Gothic Pro" font-weight="400"><tspan x="-16.428" y="10">(log2FC)</tspan></tspan></text>
+      <text id="Node_Size" data-name="Node Size" transform="translate(48.5 85.456)" font-size="10" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-24.1" y="0">Node Size</tspan></text>
+      <text id="Edge_Color" data-name="Edge Color" transform="translate(49.607 152.119)" font-size="10" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-26.9" y="0">Edge Color</tspan></text>
+      <text id="Edge_Weight" data-name="Edge Weight" transform="translate(51.404 221.675)" font-size="10" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-30.25" y="0">Edge Weight</tspan></text>
+      <g id="Rectangle_1572" data-name="Rectangle 1572" transform="translate(15.469 97.159)" fill="none" stroke="#363535" stroke-width="1" stroke-dasharray="1">
+        <rect width="15.554" height="15.277" rx="3" stroke="none"/>
+        <rect x="0.5" y="0.5" width="14.554" height="14.277" rx="2.5" fill="none"/>
+      </g>
+      <g id="Rectangle_1573" data-name="Rectangle 1573" transform="translate(72.846 95.926)" fill="none" stroke="#363535" stroke-width="1" stroke-dasharray="1">
+        <rect width="16.41" height="17.227" rx="3" stroke="none"/>
+        <rect x="0.5" y="0.5" width="15.41" height="16.227" rx="2.5" fill="none"/>
+      </g>
+      <g id="Polygon_5" data-name="Polygon 5" transform="translate(59 103) rotate(90)" fill="#fff">
+        <path d="M 3.065736770629883 2.5 L 0.9342633485794067 2.5 L 2 0.9013950228691101 L 3.065736770629883 2.5 Z" stroke="none"/>
+        <path d="M 2 0 L 4 3 L 0 3 L 2 0 Z" stroke="none" fill="#363535"/>
+      </g>
+      <line id="Line_192" data-name="Line 192" x2="17" transform="translate(39 105)" fill="none" stroke="#363535" stroke-width="1"/>
+      <g id="Polygon_6" data-name="Polygon 6" transform="matrix(-0.358, 0.934, -0.934, -0.358, 58.388, 110.3)" fill="#fff">
+        <path d="M 3.065736532211304 2.5 L 0.9342632293701172 2.5 L 1.99999988079071 0.9013950228691101 L 3.065736532211304 2.5 Z" stroke="none"/>
+        <path d="M 1.99999988079071 0 L 4 3 L -2.384185791015625e-07 3 L 1.99999988079071 0 Z" stroke="none" fill="#363535"/>
+      </g>
+      <line id="Line_193" data-name="Line 193" x2="17" transform="matrix(0.934, 0.358, -0.358, 0.934, 39, 105)" fill="none" stroke="#363535" stroke-width="1"/>
+      <g id="Polygon_7" data-name="Polygon 7" transform="translate(56.953 95.791) rotate(69)" fill="#fff">
+        <path d="M 3.065761566162109 2.499997138977051 L 0.9342533349990845 2.499997138977051 L 2.000007390975952 0.9013741612434387 L 3.065761566162109 2.499997138977051 Z" stroke="none"/>
+        <path d="M 2.000007390975952 -2.622604370117188e-06 L 4.000017166137695 2.999997138977051 L -2.384185791015625e-06 2.999997138977051 L 2.000007390975952 -2.622604370117188e-06 Z" stroke="none" fill="#363535"/>
+      </g>
+      <line id="Line_194" data-name="Line 194" x2="17" transform="translate(39 104.825) rotate(-21)" fill="none" stroke="#363535" stroke-width="1"/>
+    </svg>
+  </div>
+
+<!-- LEGEND NUMBERS -->
+<div id = "legendNumbers"> 
+  <p id="p1" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:26px; z-index:150; font-size: 20; bottom:220px">&ndash;</p>
+  <p id="p2" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:98px; z-index:150; font-size: 20; bottom:220px">&ndash;</p>
+
+  <p id="s1" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:26px; z-index:150;font-size: 20; bottom:140px">&ndash;</p>
+  <p id="s2" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:98px; z-index:150;font-size: 20; bottom:140px">&ndash;</p>
+
+  <p id="c1" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:26px; z-index:150;font-size: 20; bottom:70px">&ndash;</p>
+  <p id="c2" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:98px; z-index:150;font-size: 20; bottom:70px">&ndash;</p>
+
+  <p id="w1" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:26px; z-index:150;font-size: 20; bottom:-12px">&ndash;</p>
+  <p id="w2" style = "font-family:'CenturyGothicPro-Bold'; position:absolute; right:98px; z-index:150;font-size: 20; bottom:-12px">&ndash;</p>
+</div>
+
+<!-- LEGEND REMOVERS -->
+<div id="legendRemovers"> 
+<div id="nodeColorRemover">
+  <svg xmlns="http://www.w3.org/2000/svg" width="119px"  style="z-index: 151; position: absolute;right: 5px; bottom: 240px;" viewBox="0 0 95 61">
+    <rect id="Rectangle_1579" data-name="Rectangle 1579" width="95" height="61" rx="15" fill="rgba(255,255,255,0.85)"/>
+  </svg>
+</div>
+
+<div id="nodeSizeRemover">
+  <svg xmlns="http://www.w3.org/2000/svg" width="119px"  style="z-index: 151; position: absolute;right: 5px; bottom: 160px;" viewBox="0 0 95 61">
+    <rect id="Rectangle_1579" data-name="Rectangle 1579" width="95" height="61" rx="15" fill="rgba(255,255,255,0.85)"/>
+  </svg>
+</div>
+
+<div id="edgeColorRemover">
+  <svg xmlns="http://www.w3.org/2000/svg" width="119px"  style="z-index: 151; position: absolute;right: 5px; bottom: 80px;" viewBox="0 0 95 61">
+    <rect id="Rectangle_1579" data-name="Rectangle 1579" width="95" height="61" rx="15" fill="rgba(255,255,255,0.85)"/>
+  </svg>
+</div>
+
+<div id="edgeWeightRemover">
+  <svg xmlns="http://www.w3.org/2000/svg" width="119px"  style="z-index: 151; position: absolute;right: 5px; bottom: 10px;" viewBox="0 0 95 61">
+    <rect id="Rectangle_1579" data-name="Rectangle 1579" width="95" height="61" rx="15" fill="rgba(255,255,255,0.85)"/>
+  </svg>
+</div>
+</div>
+
+<div id="3d-graph" class="full-height"> </div>
+
+<div id = "footer" style="font-family: CenturyGothicPro; z-index: 1000;">
+    <span style="font-size:0.8vw;color:#6f6f6f;"> Left-click: rotate, Mouse-wheel: zoom, Right-click: pan, Double-click on node: node info, Double-click on background: reset view  </span>
+</div>
+
+<a href="#"  id="downloadbtn" style="display: none; width: 0px; height: 0px;"><button> Download Video </button></a>
+
+
+<script>
+
+/////////////////////////////////////////////////
+///// ENTER AND EXIT FULLSCREEN FUNCTIONS //////
+///////////////////////////////////////////////
+function fullscreen() {
+    var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
+        (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
+        (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
+        (document.msFullscreenElement && document.msFullscreenElement !== null);
+
+    var docElm = document.documentElement;
+    if (!isInFullScreen) {
+        if (docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+        } else if (docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+        } else if (docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+        } else if (docElm.msRequestFullscreen) {
+            docElm.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
+
+////////////////////////////////////////////////
+// DOUBLE CLICK IMPLEMENTATION FOR NODE CLICK //
+////////////////////////////////////////////////
+var doubleclick = false
+window.addEventListener("dblclick", event => {doubleclick = true})
+setInterval(myTimer, 100);
+function myTimer() {doubleclick = false}
+
+////////////////////////////////////////////////
+// HIDE SHOW LEGEND AND MENU IMPLEMENTATIONS ///
+////////////////////////////////////////////////
+
+function hideShowLegend(val){
+  if(val == 0 || val == undefined){
+    document.getElementById("legendPlace").style.display = "none";
+    document.getElementById("legendNumbers").style.display = "none";
+    document.getElementById("legendRemovers").style.display = "none";
+    document.getElementById("dropdown").value = 1;
+    document.getElementById("dropbtn").style.transform = "rotate(180deg)";
+    document.getElementById("dropdown").style.right = "0px";
+    document.getElementById("dropdown-content").style.left = "-71px";
+    document.getElementById("dropdown-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="70" viewBox="0 0 75 11"> <text id="show_legend" data-name="show legend" transform="translate(32 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-31.145" y="0">show legend</tspan></text> </svg>'
   }
-  
-  var edgeWeights = (finalDataObj["links"].map(el => el.edgeWeight)).filter(x => x != undefined)
-  var edgeColors = (finalDataObj["links"].map(el => el.edgeColor)).filter(x => x != undefined)
-  var edgeWeightRange = [Math.min.apply(Math, edgeWeights), Math.max.apply(Math, edgeWeights)]
-  var edgeColorRange = [Math.min.apply(Math, edgeColors), Math.max.apply(Math, edgeColors)]
-  
-  // LEGEND IMPLEMENTATION
-  if(nodeColorThreshold != null){
-    var nodeColorThresholdL = nodeColorThreshold > 3 ? 3 : nodeColorThreshold
-    document.getElementById("p1").innerHTML = Number(-nodeColorThresholdL).toFixed(2)
-    document.getElementById("p2").innerHTML = Number(nodeColorThresholdL).toFixed(2)
-    document.getElementById("p1").style.bottom ="225px"
-    document.getElementById("p2").style.bottom = "225px"
-    document.getElementById("p1").style.right = "85px"
-    document.getElementById("p2").style.right = "15px"
-    document.getElementById("p1").style.fontFamily = "CenturyGothicPro"
-    document.getElementById("p2").style.fontFamily = "CenturyGothicPro"
-    document.getElementById("p1").style.fontSize = 15
-    document.getElementById("p2").style.fontSize = 15
-    document.getElementById("nodeColorRemover").style.display = "none"
+  else{
+    document.getElementById("legendPlace").style.display = "block";
+    document.getElementById("legendNumbers").style.display = "block";
+    document.getElementById("legendRemovers").style.display = "block";
+    document.getElementById("dropdown").value = 0;
+    document.getElementById("dropbtn").style.transform = "rotate(0deg)";
+    document.getElementById("dropdown").style.right = "85px";
+    document.getElementById("dropdown-content").style.left = "25px";
+    document.getElementById("dropdown-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="70" viewBox="0 0 75 11"> <text id="hide_legend" data-name="hide legend" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">hide legend</tspan></text> </svg>'
   }
-  
-  if(nodeSizes.length>0 && nodeSizes.length>0){
-    document.getElementById("s1").innerHTML = Number(nodeSizeRange[0]).toFixed(2)
-    document.getElementById("s2").innerHTML = Number(nodeSizeRange[1]).toFixed(2)
-    document.getElementById("s1").style.bottom = "145px"
-    document.getElementById("s2").style.bottom = "145px"
-    document.getElementById("s1").style.right = nodeSizeRange[0]<0 ? "80px":"85px"
-    document.getElementById("s2").style.right = nodeSizeRange[1]<0 ? "10px":"15px"
-    document.getElementById("s1").style.fontFamily = "CenturyGothicPro"
-    document.getElementById("s2").style.fontFamily = "CenturyGothicPro"
-    document.getElementById("s1").style.fontSize = 15
-    document.getElementById("s2").style.fontSize = 15
-    document.getElementById("nodeSizeRemover").style.display = "none"
+}
+
+function hideShowMenu(val) {
+  if(val==0 || val == undefined){
+    // document.getElementById("nqText").style.display = "none";
+    document.getElementById("nodequeryMain").style.display = "none";
+    document.getElementById("openbutton-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="80px" viewBox="0 0 81 11"> <text id="close_controls" data-name="close controls" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">open controls</tspan></text> </svg>';
+    document.getElementById("openbutton-button").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 13"> <g id="Rectangle_1582" data-name="Rectangle 1582" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <line id="Line_201" data-name="Line 201" x2="6.5" transform="translate(3.25 4.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> <line id="Line_202" data-name="Line 202" x2="6.5" transform="translate(3.25 6.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> <line id="Line_203" data-name="Line 203" x2="6.5" transform="translate(3.25 8.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> </svg> '
+    document.getElementById("openbutton").value = 1;
+    document.getElementById("guiplace").style.display = "none";
+    
   }
-  
-  if(edgeColors.length>0 && edgeColors.length>0){
-    document.getElementById("c1").innerHTML = Number(edgeColorRange[0]).toFixed(2)
-    document.getElementById("c2").innerHTML = Number(edgeColorRange[1]).toFixed(2)
-    document.getElementById("c1").style.bottom = "75px"
-    document.getElementById("c2").style.bottom = "75px"
-    document.getElementById("c1").style.right = nodeSizeRange[0]<0 ? "80px":"85px"
-    document.getElementById("c2").style.right = nodeSizeRange[1]<0 ? "10px":"15px"
-    document.getElementById("c1").style.fontFamily = "CenturyGothicPro"
-    document.getElementById("c2").style.fontFamily = "CenturyGothicPro"
-    document.getElementById("c1").style.fontSize = 15
-    document.getElementById("c2").style.fontSize = 15
-    document.getElementById("edgeColorRemover").style.display = "none"
+  else{
+    // document.getElementById("nqText").style.display = "block";
+    document.getElementById("nodequeryMain").style.display = "block";
+    document.getElementById("openbutton-content").innerHTML = ''
+    document.getElementById("openbutton-button").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 16"> <g id="Rectangle_1581" data-name="Rectangle 1581" transform="translate(0 1)" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <text id="x" transform="translate(6.5 11)" fill="#9f9f9f" stroke="#2e3137" stroke-width="1" font-size="14" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-3.92" y="0">x</tspan></text> </svg>'
+    document.getElementById("openbutton").value = 0;
+    document.getElementById("guiplace").style.display = "block";
   }
-  
-  if(edgeWeights.length>0 && edgeWeights.length>0){
-    document.getElementById("w1").innerHTML = Number(edgeWeightRange[0]).toFixed(2)
-    document.getElementById("w2").innerHTML = Number(edgeWeightRange[1]).toFixed(2)
-    document.getElementById("w1").style.bottom = "-5px"
-    document.getElementById("w2").style.bottom = "-5px"
-    document.getElementById("w1").style.right = edgeWeightRange[0]<0 ? "80px":"85px"
-    document.getElementById("w2").style.right = edgeWeightRange[1]<0 ? "10px":"15px"
-    document.getElementById("w1").style.fontFamily = "CenturyGothicPro"
-    document.getElementById("w2").style.fontFamily = "CenturyGothicPro"
-    document.getElementById("w1").style.fontSize = 15
-    document.getElementById("w2").style.fontSize = 15
-    document.getElementById("edgeWeightRemover").style.display = "none"
+}
+////////////////////////////////////////////////
+//////////////// DATA CREATION ////////////////
+///////////////////////////////////////////////
+
+var file_names = ["Toy Data"]
+var finalDataObj = toy_network
+
+const CAMERA_DISTANCE2NODES_FACTOR = 170;
+
+var nodesList = (finalDataObj["nodes"].map(el => el.id)).filter(x => x != undefined)
+var nodeSizes = (finalDataObj["nodes"].map(el => el.nodeSize)).filter(x => x != undefined)
+var nodeColors = ((finalDataObj["nodes"].map(el => el.nodeColors)).flat()).filter(x => x != undefined)
+var nodeSizeRange = [Math.min.apply(Math, nodeSizes), Math.max.apply(Math, nodeSizes)]
+var nodeColorRange = [Math.min.apply(Math, nodeColors), Math.max.apply(Math, nodeColors)]
+var nodeColorThreshold = null
+
+if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
+  var minPositive = 0
+  var maxPositive = 0
+  nodeColorRange[0]<0 ? minPositive = - nodeColorRange[0] : minPositive = nodeColorRange[0]
+  nodeColorRange[1]<0 ? maxPositive = - nodeColorRange[1] : maxPositive = nodeColorRange[1]
+  minPositive>maxPositive  ? nodeColorThreshold = minPositive : nodeColorThreshold = maxPositive
+}
+
+var edgeWeights = (finalDataObj["links"].map(el => el.edgeWeight)).filter(x => x != undefined)
+var edgeColors = (finalDataObj["links"].map(el => el.edgeColor)).filter(x => x != undefined)
+var edgeWeightRange = [Math.min.apply(Math, edgeWeights), Math.max.apply(Math, edgeWeights)]
+var edgeColorRange = [Math.min.apply(Math, edgeColors), Math.max.apply(Math, edgeColors)]
+
+const searchNodes = new Set();
+const searchLinks = new Set();
+
+/////////////////////////////////////////////////
+///////// LEGEND IMPLEMENTATION /////////////////
+/////////////////////////////////////////////////
+
+function nodeColorLegend(phosOption){
+  if(nodeColorThreshold != null && phosOption == "Show"){
+  var nodeColorThresholdL = nodeColorThreshold > 3 ? 3 : nodeColorThreshold
+  document.getElementById("p1").innerHTML = Number(-nodeColorThresholdL).toFixed(2)
+  document.getElementById("p2").innerHTML = Number(nodeColorThresholdL).toFixed(2)
+  document.getElementById("p1").style.bottom ="225px"
+  document.getElementById("p2").style.bottom = "225px"
+  document.getElementById("p1").style.right = "85px"
+  document.getElementById("p2").style.right = "15px"
+  document.getElementById("p1").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("p2").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("p1").style.fontSize = 15
+  document.getElementById("p2").style.fontSize = 15
+  document.getElementById("nodeColorRemover").style.display = "none"
+}
+else{
+  if(searchNodes.size == 0) {
+  document.getElementById("p1").innerHTML = "&ndash;"
+  document.getElementById("p2").innerHTML = "&ndash;"
+  document.getElementById("p1").style.bottom ="220px"
+  document.getElementById("p2").style.bottom = "220px"
+  document.getElementById("p1").style.right = "98px"
+  document.getElementById("p2").style.right = "26px"
+  document.getElementById("p1").style.fontFamily = "CenturyGothicPro-Bold"
+  document.getElementById("p2").style.fontFamily = "CenturyGothicPro-Bold"
+  document.getElementById("p1").style.fontSize = 20
+  document.getElementById("p2").style.fontSize = 20
+  document.getElementById("nodeColorRemover").style.display = "block"
   }
-  
-  // cross-linking the node objects
-  finalDataObj.links.forEach(link => {
-        const a = (finalDataObj.nodes.filter(x => x.id === link.source))[0]
-        const b = (finalDataObj.nodes.filter(x => x.id === link.target))[0]
-        !a.neighbors && (a.neighbors = []);
-        !b.neighbors && (b.neighbors = []);
-        a.neighbors.push(b);
-        b.neighbors.push(a);
-  
-        !a.links && (a.links = []);
-        !b.links && (b.links = []);
-        a.links.push(link);
-        b.links.push(link);
-      });
-  
-  
-  const highlightNodes = new Set();
-  const highlightLinks = new Set();
-  
-  const searchNodes = new Set();
-  const searchLinks = new Set();
-  let hoverNode = null;
-  
-  ////////// GUI CONTROL CREATION ////////////////
-  const fnames = {};
-   for (const key of file_names) {
-    fnames[key] = key;
-   }
-  
-   const PARAMS = {
-    Files: file_names[0],
-    PosLogFold : 0,
-    NegLogFold : 0,
-    Background : "#ffffff"
-  };
-  
-  const pane = new Tweakpane.Pane({
-    container: document.getElementById('guiplace'),
+}
+}
+
+nodeColorLegend("Show");
+
+
+if(nodeSizes.length>0 && nodeSizes.length>0){
+  document.getElementById("s1").innerHTML = Number(nodeSizeRange[0]).toFixed(2)
+  document.getElementById("s2").innerHTML = Number(nodeSizeRange[1]).toFixed(2)
+  document.getElementById("s1").style.bottom = "145px"
+  document.getElementById("s2").style.bottom = "145px"
+  document.getElementById("s1").style.right = nodeSizeRange[0]<0 ? "80px":"85px"
+  document.getElementById("s2").style.right = nodeSizeRange[1]<0 ? "10px":"15px"
+  document.getElementById("s1").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("s2").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("s1").style.fontSize = 15
+  document.getElementById("s2").style.fontSize = 15
+  document.getElementById("nodeSizeRemover").style.display = "none"
+}
+
+if(edgeColors.length>0 && edgeColors.length>0){
+  document.getElementById("c1").innerHTML = Number(edgeColorRange[0]).toFixed(2)
+  document.getElementById("c2").innerHTML = Number(edgeColorRange[1]).toFixed(2)
+  document.getElementById("c1").style.bottom = "75px"
+  document.getElementById("c2").style.bottom = "75px"
+  document.getElementById("c1").style.right = nodeSizeRange[0]<0 ? "80px":"85px"
+  document.getElementById("c2").style.right = nodeSizeRange[1]<0 ? "10px":"15px"
+  document.getElementById("c1").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("c2").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("c1").style.fontSize = 15
+  document.getElementById("c2").style.fontSize = 15
+  document.getElementById("edgeColorRemover").style.display = "none"
+}
+
+if(edgeWeights.length>0 && edgeWeights.length>0){
+  document.getElementById("w1").innerHTML = Number(edgeWeightRange[0]).toFixed(2)
+  document.getElementById("w2").innerHTML = Number(edgeWeightRange[1]).toFixed(2)
+  document.getElementById("w1").style.bottom = "-5px"
+  document.getElementById("w2").style.bottom = "-5px"
+  document.getElementById("w1").style.right = edgeWeightRange[0]<0 ? "80px":"85px"
+  document.getElementById("w2").style.right = edgeWeightRange[1]<0 ? "10px":"15px"
+  document.getElementById("w1").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("w2").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("w1").style.fontSize = 15
+  document.getElementById("w2").style.fontSize = 15
+  document.getElementById("edgeWeightRemover").style.display = "none"
+}
+
+// cross-linking the node objects
+finalDataObj.links.forEach(link => {
+      const a = (finalDataObj.nodes.filter(x => x.id === link.source))[0]
+      const b = (finalDataObj.nodes.filter(x => x.id === link.target))[0]
+      !a.neighbors && (a.neighbors = []);
+      !b.neighbors && (b.neighbors = []);
+      a.neighbors.push(b);
+      b.neighbors.push(a);
+
+      !a.links && (a.links = []);
+      !b.links && (b.links = []);
+      a.links.push(link);
+      b.links.push(link);
+    });
+
+
+/////////////////////////////////////////
+////////// GUI CONTROLS ////////////////
+////////////////////////////////////////
+const fnames = {};
+ for (const key of file_names) {
+  fnames[key] = key;
+ }
+
+ var index = 0
+
+ const PARAMS = {
+  Files: file_names[index],
+  PosL2FC : 0,
+  NegL2FC : 0,
+  Background : "#ffffff",
+  Phosphorylation: "Show",
+  Labels: "Off"
+};
+
+const phosOpt = ["Hide", "Show"];
+const labelOpt = ["On", "Off"];
+
+const pane = new Tweakpane.Pane({
+  container: document.getElementById('guiplace'),
+});
+
+pane.registerPlugin(TweakpaneEssentialsPlugin);
+
+const tab = pane.addTab({
+  pages: [
+    {title: 'Controls'},
+    {title: 'Screen Record'}
+  ],
+});
+
+  tab.pages[0].addInput(PARAMS, 'Files', {options: fnames, label: 'Network'}).on('change', (ev) => {
+  changeState();
   });
-  
-  pane.addInput(PARAMS, 'Files', {options: fnames}).on('change', (ev) => {
-    changeState();
-    });
-  pane.addInput(PARAMS, 'PosLogFold', {min: 0, max: nodeColorThreshold}).on('change', (ev) => {
-    updateHighlight();
-    });
-  pane.addInput(PARAMS, 'NegLogFold', {min: -nodeColorThreshold, max: 0}).on('change', (ev) => {
-    updateHighlight();
-    });
-  pane.addInput(PARAMS, 'Background').on('change', (ev) => {
-    updateBackground();
-    });
-  
-  //////////////// GRAPH CREATION ////////////////
-  var directed = sessionStorage.getItem("directed")
-  var elem = document.getElementById('3d-graph');
-  var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
-    (elem)
-    .backgroundColor("#ffffff")
-    .graphData(finalDataObj)
-    .linkCurvature('curvature')
-    .nodeThreeObject(node => CreateNode(node))
-    .onNodeClick(node => {
-          searchNodes.clear();
-          searchLinks.clear();
-            // Aim at node from outside it
-            const distance = 100;
-            const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-  
-            const newPos = node.x || node.y || node.z
-              ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
-              : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
-  
-            Graph.cameraPosition(
-              newPos, // new position
-              node, // lookAt ({ x, y, z })
-              3000  // ms transition duration
-            )      
-            
-            if (node) {
-              searchNodes.add(node);
-              node.neighbors.forEach(neighbor => searchNodes.add(neighbor));
-              node.links.forEach(link => searchLinks.add(link));
-            }
-            updateHighlight();
-          })
-    .linkWidth(link => (highlightLinks.has(link) || searchLinks.has(link)) ? 2 : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1]) : 1) // subject to change
-    .linkDirectionalArrowLength(directed => (directed) ? 5 : 0)        
-    .linkDirectionalArrowRelPos(0.5)
-    .linkColor(link => (link.edgeColor == undefined) ? "#808080" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
-    .linkDirectionalParticleWidth(2)
-    .linkOpacity(0.6)
-    .linkDirectionalParticles(link => (highlightLinks.has(link) || searchLinks.has(link)) ? 4 : 0)
-    .onNodeHover(node => {
-            // no state change
-            if ((!node && !highlightNodes.size) || (node && hoverNode === node)) return;
-  
-            highlightNodes.clear();
-            highlightLinks.clear();
-            if (node) {
-              highlightNodes.add(node);
-              node.neighbors.forEach(neighbor => highlightNodes.add(neighbor));
-              node.links.forEach(link => highlightLinks.add(link));
-            }
-  
-            hoverNode = node || null;
-  
-            updateHighlight();
-          })
-    .onLinkHover(link => {
-      highlightNodes.clear();
-      highlightLinks.clear();
-  
-      if (link) {
-        highlightLinks.add(link);
-        highlightNodes.add(link.source);
-        highlightNodes.add(link.target);
-      }
-  
-      updateHighlight();
-    });
-  
-    function updateHighlight() {
-        // trigger update of highlighted objects in scene
-        Graph
-          .nodeThreeObject(Graph.nodeThreeObject())
-          .linkWidth(Graph.linkWidth())
-          .linkDirectionalParticles(Graph.linkDirectionalParticles());
-      }
-    
-      function updateBackground() {
-        Graph
-          .backgroundColor(PARAMS.Background)
-      }
-  
-  
-      function updateSearch() {
-        var x = document.getElementById("nodequery");
-        if(x.value == ""){
-          searchNodes.clear();
-          searchLinks.clear();
-          var nodenum = Graph.graphData().nodes.length
-          Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
-          updateHighlight();
-        }
-  
-        else{
-          var currentData = Graph.graphData()
-          var thisNode = currentData["nodes"].filter(ix => ix.id == x.value)[0]
+  tab.pages[0].addInput(PARAMS, 'PosL2FC', {min: 0, max: nodeColorThreshold, label: 'Pos-Log2FC'}).on('change', (ev) => {
+  updateHighlight();
+  });
+  tab.pages[0].addInput(PARAMS, 'NegL2FC', {min: -nodeColorThreshold, max: 0, label: 'Neg-Log2FC'}).on('change', (ev) => {
+  updateHighlight();
+  });
+
+  tab.pages[0].addInput(PARAMS, 'Background').on('change', (ev) => {
+  updateBackground();
+  });
+
+  tab.pages[0].addInput(PARAMS, 'Phosphorylation', {
+  view: 'radiogrid',
+  groupName: 'Phosphorylation',
+  size: [2, 1],
+  cells: (x, y) => ({
+    title: phosOpt[y * 3 + x],
+    value: phosOpt[y * 3 + x],
+  }),
+  label: 'Partitions',
+}).on('change', (ev) => {
+  nodeColorLegend(PARAMS.Phosphorylation);
+  Graph.nodeThreeObject(Graph.nodeThreeObject())
+});
+
+tab.pages[0].addInput(PARAMS, 'Labels', {
+  view: 'radiogrid',
+  groupName: 'Labels',
+  size: [2, 1],
+  cells: (x, y) => ({
+    title: labelOpt[y * 3 + x],
+    value: labelOpt[y * 3 + x],
+  }),
+  label: 'Labels',
+}).on('change', (ev) => {
+  Graph.nodeThreeObject(Graph.nodeThreeObject())
+});
+
+tab.pages[0].addButton({title: 'Enter/Exit Fullscreen'}).on('click',()=>{
+  fullscreen();
+});
+
+tab.pages[0].addButton({title: 'Take a screenshot'}).on('click',()=>{
+  snapshot();  
+});
+tab.pages[0].addButton({title: 'Reset'}).on('click',()=>{
+  queryReset();
+});
+
+
+// const f1 = tab.pages[1].addFolder({
+//   title: 'Animation',
+// });
+
+// const startAnimation = f1.addButton({title: 'Start Animation ▶', disabled: false})
+
+// const pauseAnimation = f1.addButton({title: 'Pause Animation ❚❚', disabled: true})
+
+// const stopAnimation =f1.addButton({title: 'Stop Animation ▣',  disabled: true})
+
+// startAnimation.on('click', () => {
+//   stopAnimation.disabled == true ? stopAnimation.disabled = false : true
+//   startAnimation.disabled == true ? startAnimation.disabled = false : startAnimation.disabled = true
+//   pauseAnimation.disabled == true ? pauseAnimation.disabled = false : true
+// });
+
+// stopAnimation.on('click', () => {
+//   startAnimation.disabled == true ? startAnimation.disabled = false: true
+//   stopAnimation.disabled = !stopAnimation.disabled;
+//   pauseAnimation.disabled == false ? pauseAnimation.disabled = true : true
+// });
+
+// pauseAnimation.on('click', () => {
+//   startAnimation.disabled == true ? startAnimation.disabled = false : true
+//   pauseAnimation.disabled == false ? pauseAnimation.disabled = true : true
+// });
+
+
+// tab.pages[1].addSeparator();
+// tab.pages[1].addSeparator();
+
+const f2 = tab.pages[1].addFolder({
+  title: 'Screen Record',
+});
+
+const startRecord = f2.addButton({title: 'Start Recording ▶',disabled: false})
+
+const stopRecord =f2.addButton({title: 'Stop Recording ▣',  disabled: true})
+
+f2.addSeparator();
+
+const downloadRecord = f2.addButton({title: 'Download Recording ↴',  disabled: true})
+
+startRecord.on('click', () => {
+  stopRecord.disabled = !stopRecord.disabled;
+  startRecord.disabled = !startRecord.disabled;
+
+  startRecording()
+
+  if(!downloadRecord.disabled){
+    downloadRecord.disabled = !downloadRecord.disabled;
+  }
+
+});
+
+stopRecord.on('click', () => {
+  stopRecord.disabled = !stopRecord.disabled;
+  startRecord.disabled = !startRecord.disabled;
+  stopScreen()
+  downloadRecord.disabled = !downloadRecord.disabled;
+});
+
+downloadRecord.on('click', () => {
+  downloadRecord.disabled = !downloadRecord.disabled;
+  downloadVideo()
+});
+
+
+/////////////////////////////////////////////////
+//////////////// GRAPH CREATION ////////////////
+/////////////////////////////////////////////////
+const regex = new RegExp('[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}')
+var elem = document.getElementById('3d-graph');
+var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
+  (elem)
+  .backgroundColor("#ffffff")
+  .graphData(finalDataObj)
+  .linkCurvature('curvature')
+  .nodeThreeObject(node => CreateNode(node))
+  .onNodeClick(node => {
+    if(doubleclick){
+        resetRows();
+        searchNodes.clear();
+        searchLinks.clear();
+          // Aim at node from outside it
           const distance = 100;
-            const distRatio = 1 + distance/Math.hypot(thisNode.x, thisNode.y, thisNode.z);
-            Graph
-            .cameraPosition(
-                { x: thisNode.x * distRatio, y: thisNode.y * distRatio, z: thisNode.z * distRatio }, // new position
-                thisNode, // lookAt ({ x, y, z })
-                2000  // ms transition duration
-              )
-            searchNodes.clear();
-            searchLinks.clear();
-            if (thisNode) {
-              searchNodes.add(thisNode);
-              thisNode.neighbors.forEach(neighbor => searchNodes.add(neighbor));
-              thisNode.links.forEach(link => searchLinks.add(link));
+          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+
+          const newPos = node.x || node.y || node.z
+            ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+            : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+          Graph.cameraPosition(
+            newPos, // new position
+            node, // lookAt ({ x, y, z })
+            3000  // ms transition duration
+          )      
+          
+          if (node) {
+            searchNodes.add(node);
+            node.neighbors.forEach(neighbor => searchNodes.add(neighbor));
+            node.links.forEach(link => searchLinks.add(link));
+            addRows(node.partitionIDs, node.nodeColors, node.pValues)
+            document.getElementById("nodehref").innerHTML = node.id
+
+            if(regex.test((node.id).toUpperCase())){
+              document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+(node.id).toUpperCase() 
             }
-            updateHighlight();
-            
-        }
-  
+            else if (hgnc_dict[(node.id).toUpperCase()] == undefined){
+              document.getElementById("nodehref").href = "https://www.phosphosite.org/simpleSearchSubmitAction.action?searchStr="+node.id
+            }
+            else{
+              document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+hgnc_dict[(node.id).toUpperCase()]
+            }
+
+            document.getElementById("typetext").innerHTML = node.type == 1 ? "Kinase" : "Substrate"
+
+          }
+          updateHighlight();
+          nodeColorLegend("Show");
+          document.getElementById("infoBox").style.display =  "block";
+        }})
+
+  .onNodeDragEnd(node => {
+    node.fx = node.x;
+    node.fy = node.y;
+    node.fz = node.z; })
+  .onBackgroundClick(undefined=>{if(doubleclick){queryReset()}})
+  .linkWidth(link => (searchLinks.has(link)) ? 1 : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1])+0.5 : .8) // subject to change
+  .linkDirectionalArrowLength(directed => (directed) ? 5 : 0)        
+  .linkDirectionalArrowRelPos(0.5)
+  //.linkColor(link => (link.edgeColor == undefined) ? "#808080" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
+  .linkColor(link => (searchLinks.has(link))?"#ff3b3b":(link.edgeColor == undefined) ? "#cccccc" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
+  .linkDirectionalParticleWidth(1.5)
+  .linkOpacity(0.6)
+  .linkDirectionalParticles(link => (searchLinks.has(link)) ? 4 : 0)
+
+  Graph.d3Force('link')
+  .distance(35)
+
+  Graph.d3Force('charge')
+  .theta(0.5)
+  .strength(-50)
+
+
+ 
+elementResizeDetectorMaker().listenTo(
+    document.getElementById('3d-graph'),
+    el => {
+      Graph.width(el.offsetWidth)
+      Graph.height(el.offsetHeight)
     }
-      
-  // NODE AND LINK CREATION FUNCTIONS
-  function normalized(value, actual_bounds, desired_bounds) { 
-    return (desired_bounds[0] + (value - actual_bounds[0]) * (desired_bounds[1] - desired_bounds[0]) / (actual_bounds[1] - actual_bounds[0]))
-  }
+  );
+
+  console.log(finalDataObj)
+/////////////////////////////////////////////////
+////////////// UPDATE FUNCTIONS /////////////////
+/////////////////////////////////////////////////
+
+  function updateHighlight() {
+      // trigger update of highlighted objects in scene
+      Graph
+        .nodeThreeObject(Graph.nodeThreeObject())
+        .linkWidth(Graph.linkWidth())
+        .linkDirectionalParticles(Graph.linkDirectionalParticles());
+    }
   
-  function nodeColoring (l2fc_value) {
-  
-      if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
-      
-      var threshold_max = PARAMS.PosLogFold
-      var threshold_min = PARAMS.NegLogFold
-      var rainbow = new Rainbow(); 
-      nodeColorThreshold > 3 ? rainbow.setNumberRange(-3, 3) : rainbow.setNumberRange(-nodeColorThreshold, nodeColorThreshold)
-      
-      rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044');
-    
-      if ((l2fc_value >= threshold_min && l2fc_value <= threshold_max) || l2fc_value == "null") {
-        return "0xcccccc"
+    function updateBackground() {
+      Graph
+        .backgroundColor(PARAMS.Background)
+    }
+
+
+    function updateSearch() {
+      resetRows();
+      var x = document.getElementById("nodequery");
+      if(x.value == ""){
+        searchNodes.clear();
+        searchLinks.clear();
+        var nodenum = Graph.graphData().nodes.length
+        Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
+        updateHighlight();
+        document.getElementById("infoBox").style.display =  "none";
       }
+
       else{
-        var hexColour = rainbow.colourAt(l2fc_value);
-        var stringColor = '0x' + hexColour
-        return stringColor
+        var currentData = Graph.graphData()
+        var thisNode = currentData["nodes"].filter(ix => ix.id == x.value)[0]
+        const distance = 100;
+          const distRatio = 1 + distance/Math.hypot(thisNode.x, thisNode.y, thisNode.z);
+          Graph
+          .cameraPosition(
+              { x: thisNode.x * distRatio, y: thisNode.y * distRatio, z: thisNode.z * distRatio }, // new position
+              thisNode, // lookAt ({ x, y, z })
+              2000  // ms transition duration
+            )
+          searchNodes.clear();
+          searchLinks.clear();
+          if (thisNode) {
+            searchNodes.add(thisNode);
+            thisNode.neighbors.forEach(neighbor => searchNodes.add(neighbor));
+            thisNode.links.forEach(link => searchLinks.add(link));
+            addRows(thisNode.partitionIDs, thisNode.nodeColors, thisNode.pValues)
+            document.getElementById("nodehref").innerHTML = thisNode.id
+
+            if(regex.test((thisNode.id).toUpperCase())){
+              document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+(thisNode.id).toUpperCase() 
+            }
+            else if (hgnc_dict[(thisNode.id).toUpperCase()] == undefined){
+              document.getElementById("nodehref").href = "https://www.phosphosite.org/simpleSearchSubmitAction.action?searchStr="+thisNode.id
+            }
+            else{
+              document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+hgnc_dict[(thisNode.id).toUpperCase()]
+            }
+
+            document.getElementById("typetext").innerHTML = thisNode.type == 1 ? "Kinase" : "Substrate"
+          }
+          updateHighlight();
+          nodeColorLegend("Show");
+          document.getElementById("infoBox").style.display =  "block";
       }
-  
-    }
+
   }
-  
-  function linkColoring (value, color1, color2, color3, color4, color5) {
-    if (edgeColorRange[0] != undefined && edgeColorRange[1] != undefined){
-      var rainbow = new Rainbow(); 
-      rainbow.setNumberRange(-2, 2);
-      value = normalized(value,edgeColorRange,[-2,2])
-      rainbow.setSpectrum(color1, color2, color3, color4, color5)
-      var hexColour = rainbow.colourAt(value);
-      return parseInt(hexColour, 16)
-    }
+
+/////////////////////////////////////////////////  
+//////// NODE AND LINK CREATION FUNCTIONS ///////
+/////////////////////////////////////////////////  
+
+function normalized(value, actual_bounds, desired_bounds) { 
+  return (desired_bounds[0] + (value - actual_bounds[0]) * (desired_bounds[1] - desired_bounds[0]) / (actual_bounds[1] - actual_bounds[0]))
+}
+
+function nodeColoring (l2fc_value) {
+  if(l2fc_value == "kinase"){
+    return "0xf5aa3b"
   }
+
+    if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
+    
+    var threshold_max = PARAMS.PosL2FC
+    var threshold_min = PARAMS.NegL2FC
+    var rainbow = new Rainbow(); 
+    nodeColorThreshold > 3 ? rainbow.setNumberRange(-3, 3) : rainbow.setNumberRange(-nodeColorThreshold, nodeColorThreshold)
+    
+    rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044');
   
-  function CreateNode(node)
-  {
-    // NODE SIZE
-    var node_size = node.nodeSize
-    if(node_size == undefined){
-      node_size = 1
+    if ((l2fc_value >= threshold_min && l2fc_value <= threshold_max) || l2fc_value == "null") {
+      return "0xcccccc"
     }
     else{
-      node_size = normalized(node_size,nodeSizeRange,[0,1]) + 0.5
+      var hexColour = rainbow.colourAt(l2fc_value);
+      var stringColor = '0x' + hexColour
+      return stringColor
     }
-  
-    // NODE PARTITIONS
-    var num_sites = (node.nodeColors).length
-    if (num_sites > 1 ) { // partitions
-      verticalPartitions = num_sites
-    }
-    else {
-      verticalPartitions = 1
-    }
-      
-    if(node.type == 1){ // if it is a kinase
-      radialPartitions = 25
-  
-      if (highlightNodes.has(node) || searchNodes.has(node)){
-      var mesh = new THREE.Mesh(
-      new THREE.CylinderGeometry(node_size*0.001, node_size*8, node_size*9*verticalPartitions, radialPartitions, verticalPartitions),
-      new THREE.MeshLambertMaterial({
-        transparent: false,
-        depthWrite: false,
-        opacity: 1,
-        wireframe: false,
-        emissive: "#181818",
-        vertexColors: THREE.FaceColors,
-      }));
-  
-      }
-      else{
-      var mesh = new THREE.Mesh(
-      new THREE.CylinderGeometry(node_size*0.001, node_size*8, node_size*9*verticalPartitions, radialPartitions, verticalPartitions),
-      new THREE.MeshLambertMaterial({
-        transparent: false,
-        depthWrite: true,
-        opacity: 1,
-        wireframe: false,
-        emissive: "#181818",
-        vertexColors: THREE.FaceColors,
-      }));
-      }
-  
-    }
-  
-    else{ // if it is not a kinase
-      radialPartitions = 25
-      if (highlightNodes.has(node) || searchNodes.has(node)){
-      var mesh = new THREE.Mesh(
-      new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
-      new THREE.MeshLambertMaterial({
-        transparent: false,
-        depthWrite: false,
-        opacity: 1,
-        wireframe: false,
-        emissive: "#181818",
-        vertexColors: THREE.FaceColors,
-      }));
-      }
-      else{
-      var mesh = new THREE.Mesh(
-      new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
-      new THREE.MeshLambertMaterial({
-        transparent: false,
-        depthWrite: true,
-        opacity: 1,
-        wireframe: false,
-        emissive: "#181818",
-        vertexColors: THREE.FaceColors,
-      }));
-      }
-  
-    }
-  
-    // NODE COLORING
-    if(verticalPartitions == 1){ // NO PARTITIONS!
-  
-      // NodeColor does not exist 
-      if (node.nodeColors.length == 0)  { 
-        nodeColor = "null"
-      }
-      else  {// NodeColor exists  
-        nodeColor = node.nodeColors[0]
-      }
-      var face = 0
-      for(face = 0; face<50;face++){
-        mesh.geometry.faces[face].color.setHex(nodeColoring(nodeColor))
-      }
+
+  }
+}
+
+function linkColoring (value, color1, color2, color3, color4, color5) {
+  if (edgeColorRange[0] != undefined && edgeColorRange[1] != undefined){
+    var rainbow = new Rainbow(); 
+    rainbow.setNumberRange(-2, 2);
+    value = normalized(value,edgeColorRange,[-2,2])
+    rainbow.setSpectrum(color1, color2, color3, color4, color5)
+    var hexColour = rainbow.colourAt(value);
+    return parseInt(hexColour, 16)
+  }
+}
+
+function CreateNode(node)
+{
+  // NODE SIZE
+  var node_size = node.nodeSize
+  if(node_size == undefined){
+    node_size = 1
+  }
+  else{
+    node_size = normalized(node_size,nodeSizeRange,[0,1]) + 0.5
+  }
+
+  // NODE PARTITIONS
+  var num_sites = (node.nodeColors).length
+  if (num_sites > 1 && (PARAMS.Phosphorylation == "Show" || searchNodes.has(node))) { // partitions
+    verticalPartitions = num_sites
+  }
+  else {
+    verticalPartitions = 1
+  }
     
-      face = 50
-      for(face = 50; face<75;face++){
-        mesh.geometry.faces[face].color.setHex("0xb5b5b5");
+  if(node.type == 1){ // if it is a kinase
+    radialPartitions = 25
+
+    if (searchNodes.has(node) || PARAMS.Labels == "On"){
+    var mesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(node_size*0.001, node_size*8, node_size*9*verticalPartitions, radialPartitions, verticalPartitions),
+    new THREE.MeshLambertMaterial({
+      transparent: false,
+      depthWrite: false,
+      opacity: 1,
+      wireframe: false,
+      emissive: "#181818",
+      vertexColors: THREE.FaceColors,
+    }));
+
+    }
+    else{
+    var mesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(node_size*0.001, node_size*8, node_size*9*verticalPartitions, radialPartitions, verticalPartitions),
+    new THREE.MeshLambertMaterial({
+      transparent: false,
+      depthWrite: true,
+      opacity: 1,
+      wireframe: false,
+      emissive: "#181818",
+      vertexColors: THREE.FaceColors,
+    }));
+    }
+
+  }
+
+  else{ // if it is not a kinase
+    radialPartitions = 25
+    if (searchNodes.has(node) || PARAMS.Labels == "On"){
+    var mesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
+    new THREE.MeshLambertMaterial({
+      transparent: false,
+      depthWrite: false,
+      opacity: 1,
+      wireframe: false,
+      emissive: "#181818",
+      vertexColors: THREE.FaceColors,
+    }));
+    }
+    else{
+    var mesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
+    new THREE.MeshLambertMaterial({
+      transparent: false,
+      depthWrite: true,
+      opacity: 1,
+      wireframe: false,
+      emissive: "#181818",
+      vertexColors: THREE.FaceColors,
+    }));
+    }
+
+  }
+
+  // NODE COLORING
+  if(verticalPartitions == 1){ // NO PARTITIONS!
+
+    if(PARAMS.Phosphorylation == "Hide"){ // we are in phos hide mode
+      if(searchNodes.has(node)){
+        nodeColor =  node.nodeColors.length > 0 ? node.nodeColors[0] : null
       }
-  
-      face = 75
-      for(face = 75; face<100;face++){
-        mesh.geometry.faces[face].color.setHex("0xb5b5b5");
+      else{
+        nodeColor = node.type == 1 ? "kinase" : "null"
       }
     }
-    else{ // THERE ARE PARTITIONS!
-  
-      for (var i = 0; i < radialPartitions*2*(verticalPartitions); i+= (verticalPartitions*2))
-      {
-            j = 0
-            for (var k = 0; k<node.nodeColors.length; k++) {
-              nodeColor = node.nodeColors[k]
-              mesh.geometry.faces[i+(j*2)].color.setHex(nodeColoring(nodeColor)); 
-              mesh.geometry.faces[i+(j*2)+1].color.setHex(nodeColoring(nodeColor));
-              var x = 0
-              for(x = i+(j*2)+2;x<i+(j*2)+27;x++){
-                mesh.geometry.faces[x].color.setHex("0xb5b5b5");                  
-              }
-              for(x = i+(j*2)+27;x<i+(j*2)+52;x++){
-                mesh.geometry.faces[x].color.setHex("0xb5b5b5");                  
-              }
-              j = j + 1
-              }
-      }
+    else{ // we are in phos show mode
+      nodeColor =  node.nodeColors.length > 0 ? node.nodeColors[0] : null
+    }
+
+    var face = 0
+    for(face = 0; face<50;face++){
+      mesh.geometry.faces[face].color.setHex(nodeColoring(nodeColor))
     }
   
-    if (highlightNodes.has(node) || searchNodes.has(node)){
-    const sprite = new SpriteText(node.id);
-    sprite.color = 'rgb(0,0,0)';
-    sprite.textHeight = 7;
-    sprite.fontFace = "Trebuchet MS"
-    mesh.add(sprite);
+    face = 50
+    for(face = 50; face<75;face++){
+      mesh.geometry.faces[face].color.setHex("0xb5b5b5");
     }
-  
-    return mesh
+
+    face = 75
+    for(face = 75; face<100;face++){
+      if(PARAMS.Phosphorylation == "Hide" && node.type == 1 && !searchNodes.has(node)){mesh.geometry.faces[face].color.setHex("0xc78b32");}
+      else{mesh.geometry.faces[face].color.setHex("0xb5b5b5");}
+    }
   }
-  
-  /// NODE QUERY FUNCTIONS
-  function removeOptions(selectElement) {
-     var i, L = selectElement.options.length - 1;
-     for(i = L; i >= 0; i--) {
-        selectElement.remove(i)
-     }
-     selectElement.fstdropdown.rebind()
+  else{ // THERE ARE PARTITIONS!
+
+    for (var i = 0; i < radialPartitions*2*(verticalPartitions); i+= (verticalPartitions*2))
+    {
+          j = 0
+          for (var k = 0; k<node.nodeColors.length; k++) {
+            nodeColor = node.nodeColors[k]
+            mesh.geometry.faces[i+(j*2)].color.setHex(nodeColoring(nodeColor)); 
+            mesh.geometry.faces[i+(j*2)+1].color.setHex(nodeColoring(nodeColor));
+            var x = 0
+            for(x = i+(j*2)+2;x<i+(j*2)+27;x++){
+              mesh.geometry.faces[x].color.setHex("0xb5b5b5");                  
+            }
+            for(x = i+(j*2)+27;x<i+(j*2)+52;x++){
+              mesh.geometry.faces[x].color.setHex("0xb5b5b5");                  
+            }
+            j = j + 1
+            }
+    }
   }
-  function addOptions(addText, selectElement)
-  {
-      // Create an Option object       
-      var opt = document.createElement("option")
-  
-      // Assign text and value to Option object
-      opt.text = addText;
-      opt.value = addText;
-  
-      // Add an Option object to Drop Down List Box
-      selectElement.options.add(opt);
+
+  if (searchNodes.has(node) || PARAMS.Labels == "On"){
+  const sprite = new SpriteText(node.id);
+  sprite.color = 'rgb(0,0,0)';
+  sprite.textHeight = 7;
+  sprite.fontFace = "CenturyGothicPro-Bold"
+  mesh.add(sprite);
   }
-  nodesList = nodesList.sort()
-  var x = document.getElementById("nodequery")
-  var nodeindexes = 0
-  for(nodeindexes = 0; nodeindexes<nodesList.length;nodeindexes++){
-    var optext = nodesList[nodeindexes]
-    addOptions(optext,x)
+
+  return mesh
+}
+
+
+/////////////////////////////////////////////////  
+///////////// NODE QUERY FUNCTIONS //////////////
+/////////////////////////////////////////////////
+
+function removeOptions(selectElement) {
+   var i, L = selectElement.options.length - 1;
+   for(i = L; i >= 0; i--) {
+      selectElement.remove(i)
+   }
+   selectElement.fstdropdown.rebind()
+}
+function addOptions(addText, selectElement)
+{
+    // Create an Option object       
+    var opt = document.createElement("option")
+
+    // Assign text and value to Option object
+    opt.text = addText;
+    opt.value = addText;
+
+    // Add an Option object to Drop Down List Box
+    selectElement.options.add(opt);
+}
+nodesList = nodesList.sort()
+var x = document.getElementById("nodequery")
+var nodeindexes = 0
+for(nodeindexes = 0; nodeindexes<nodesList.length;nodeindexes++){
+  var optext = nodesList[nodeindexes]
+  addOptions(optext,x)
+}
+     
+/////////////////////////////////////////////////
+/////// SNAPSHOT AND RESET FUNCTIONS ///////////
+/////////////////////////////////////////////////
+
+function queryReset(){
+  document.getElementById("nodequery").selectedIndex = 0;
+  document.getElementById("nodequery").fstdropdown.rebind()
+  var nodenum = Graph.graphData().nodes.length
+  Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
+  searchNodes.clear();
+  searchLinks.clear();
+  if(PARAMS.Phosphorylation=="Hide"){
+    nodeColorLegend("Hide");
   }
-          
-  function queryReset(){
-    document.getElementById("nodequery").selectedIndex = 0;
-    document.getElementById("nodequery").fstdropdown.rebind()
-    var nodenum = Graph.graphData().nodes.length
-    Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
-    searchNodes.clear();
-    searchLinks.clear();
-    updateHighlight();
+  updateHighlight();
+  resetRows();
+  document.getElementById("infoBox").style.display = "none";
+}
+
+function snapshot(){
+const d = new Date();
+let hour = String(d.getHours()).padStart(2, '0');
+let minutes = String(d.getMinutes()).padStart(2, '0');
+let seconds = String(d.getSeconds()).padStart(2, '0');
+var ImageBase64 = Graph.renderer().domElement.toDataURL("image/png");
+var a = document.createElement("a"); //Create <a>
+a.href = ImageBase64; //Image Base64 Goes here
+a.download = hour+"-"+minutes+"-"+seconds+"_PhosNetVis-Snapshot.png"; //File name Here
+a.click(); //Downloaded file
+}
+
+/////////////////////////////////////////////////
+/////// NETWORK FILE CHANGE FUNCTION ////////////
+/////////////////////////////////////////////////
+
+function changeState(){
+var new_file_name = PARAMS.Files
+localStorage.setItem('idx',file_names.indexOf(new_file_name))
+location.reload();
+}
+
+
+/////////////////////////////////////////////////
+//////////// INFO TABLE FUNCTIONS ///////////////
+/////////////////////////////////////////////////
+
+function addRows(ids,log2FCs,pValues){
+  totalLength = ids.length
+  if(totalLength!=0){
+    for(let i = totalLength-1; i >= 0; i--){
+      addRow(ids[i],log2FCs[i],pValues[i])
+    }
   }
-  
-  function snapshot(){
-  const d = new Date();
-  let hour = String(d.getHours()).padStart(2, '0');
-  let minutes = String(d.getMinutes()).padStart(2, '0');
-  let seconds = String(d.getSeconds()).padStart(2, '0');
-  var ImageBase64 = Graph.renderer().domElement.toDataURL("image/png");
-  var a = document.createElement("a"); //Create <a>
-  a.href = ImageBase64; //Image Base64 Goes here
-  a.download = hour+"-"+minutes+"-"+seconds+"_PhosNetVis-Snapshot.png"; //File name Here
-  a.click(); //Downloaded file
+  else{
+    addRow("--","--","--")
   }
-  
-  
-  function changeState(){
-  var new_file_name = PARAMS.Files
-  localStorage.setItem('idx',file_names.indexOf(new_file_name))
-  location.reload();
+}
+
+function addRow(id,log2FC,pValue) {
+  var table = document.getElementById("tbody");
+  var row = table.insertRow(0);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+  cell1.innerHTML = id;
+
+  if(log2FC==undefined){
+    cell2.innerHTML="--"
   }
-    </script>
-  </body>
+  else{
+    cell2.innerHTML = log2FC=="--"?"--":parseFloat(log2FC).toFixed(3);
+  }
+
+  pvalueRound =  parseFloat(pValue).toFixed(3);
+  if(pValue==undefined){
+    cell3.innerHTML = "--"
+  }
+  else{
+    cell3.innerHTML = pValue=="--"?"--":pvalueRound>0 ? pvalueRound : "<0.001" ;
+  }
+
+}
+
+function resetRows(){
+  document.getElementById('tbody').innerHTML = ''
+}
+
+  </script>
+</body>
