@@ -21,10 +21,10 @@
 
 ## License
 
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
-[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[![CC-BY-NC-SA-4.0](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode)
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode)
 
-
+All data is free to use for non-commercial purposes. For commercial use please contact [MSIP](https://www.ip.mountsinai.org/).
 
 
 ## Feedback
