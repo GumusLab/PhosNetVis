@@ -24,7 +24,7 @@
 [![CC-BY-NC-SA-4.0](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode)
 [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode)
 
-All data is free to use for non-commercial purposes. For commercial use please contact [MSIP](https://www.ip.mountsinai.org/).
+All data is free to use for non-commercial purposes. For commercial use please contact [MSIP](https://ip.mountsinai.org/).
 
 
 ## Feedback
