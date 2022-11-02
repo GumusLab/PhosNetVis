@@ -186,7 +186,7 @@ shinyApp(
         
         if("pValue" %in% colnames(results)) # input_pvalue parameter!
         {
-          results <- results[which(results$pValue<input$input_pvalue),]
+          results <- results[which(results$pValue<=input$input_pvalue),]
         }
 
         
