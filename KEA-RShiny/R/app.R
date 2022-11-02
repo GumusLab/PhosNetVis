@@ -226,7 +226,7 @@ shinyApp(
         ### START - GSEA Results to Network Format
         
         # filtering by output pvalue 
-        gsea_result <- gsea_result[which(gsea_result$padj<input$output_pvalue),]
+        gsea_result <- gsea_result[which(gsea_result$padj<=input$output_pvalue),]
         if(nrow(gsea_result) == 0){
           w$hide()
           sendSweetAlert(
