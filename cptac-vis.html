@@ -7,6 +7,7 @@
   <script src="js/hgnc_dict.js"></script>
   <script src="js/recordScript.js"></script>
   <script src="js/animation.js"></script>
+  <script src="data/cptac-networks.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.3/underscore-umd-min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
@@ -424,7 +425,7 @@ const CAMERA_DISTANCE2NODES_FACTOR = 170;
 
 var file_names = JSON.parse(localStorage.getItem("file_names"))
 var index = localStorage.getItem("idx")
-var finalDataObj = parseCSV(localStorage.getItem(file_names[index]))
+var finalDataObj = cpip
 
 function thresholdDecider(DataObj){
 
@@ -612,6 +613,10 @@ finalDataObj.links.forEach(link => {
 /////////////////////////////////////////
 ////////// GUI CONTROLS ////////////////
 ////////////////////////////////////////
+
+var file_names = ["CD8+/IFNG+"]
+var index = localStorage.getItem("idx")
+
 const fnames = {};
  for (const key of file_names) {
   fnames[key] = key;
@@ -1206,9 +1211,9 @@ a.click(); //Downloaded file
 /////////////////////////////////////////////////
 
 function changeState(){
-let new_file_name = PARAMS.Network
-localStorage.setItem('idx',file_names.indexOf(new_file_name))
-location.reload();
+  var new_file_name = PARAMS.Files
+  localStorage.setItem('idx',file_names.indexOf(new_file_name))
+  location.reload();
 }
 
 /////////////////////////////////////////////////
