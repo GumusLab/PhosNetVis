@@ -14,15 +14,7 @@
 
 .imgButton{
     margin-left: 20px;
-}
-
-.downloadButton {
-    background-color: #576072;
-    color: white;
-    font-family: 'Helvetica';
-    font-weight: 100;
-    font-size: 15px;
-    padding: 10px;
+    margin-top: -20px;
 }
 
 button {
@@ -45,7 +37,7 @@ button {
     padding:5px;
 }
 
-#covidImg, #toyImg {
+#covidImg, #toyImg , #cptacImg{
     border: 3px solid #576072;
     display: inline-block;
     vertical-align: top
@@ -66,13 +58,12 @@ button {
 .rect {
     margin-left: 20px;
     width:153px;
-    height:55px;
+    height:45px;
 }
 
 #textDesc {
     margin-left: 20px;
     margin-top: 10px;
-
 }
 
 text {
@@ -92,9 +83,9 @@ text {
     <table class="tableCentercontent">
 		<tr>
 			<td>
-      <div class="imgContainer">
+      <div>
 				<div>
-                    <img id="covidImg" onclick="covidVisualization()" style = "cursor: pointer"  src="./img/p2.png" width="450px" class="left" />
+                    <img id="covidImg" onclick="covidVisualization()" style = "cursor: pointer"  src="./img/p2.png" width="400px" class="left" />
 				</div>
                 <div>
                     <svg id="textDesc" xmlns="http://www.w3.org/2000/svg" width="380" height="135" viewBox="0 0 380 135">
@@ -105,10 +96,26 @@ text {
 
          </div>
 			</td>
-              <td>
+
+      <td>
+        <div>
+          <div>
+                      <img id="cptacImg" onclick="alert('in progress')" style = "cursor: pointer"  src="./img/p3.png" width="400px" class="left" />
+          </div>
+                  <div>
+                      <svg id="textDesc" xmlns="http://www.w3.org/2000/svg" width="380" height="135" viewBox="0 0 380 135">
+                          <text id="SARS-CoV-2" data-name="SARS-CoV-2," fill="#576072" font-size="17" font-family="Helvetica" font-weight="600"><tspan x="0" y="17">CPTAC Pan-can Dataset</tspan><tspan font-size="15"><tspan x="0" y="36"></tspan></tspan><tspan font-size="12" font-family="Helvetica" font-weight="400"><tspan x="0" y="50">Created with data from Clinical Proteomic Tumor Analysis Consortium </tspan><tspan x="0" y="64">using pan-can tumor subtype associations and known kinase substrate </tspan><tspan x="0" y="78">interactions coming from PhosphoSitePlus. </tspan></tspan></text>
+                        </svg>                                          
+                  </div>
+                  <div class="rect"></div>
+  
+           </div>
+        </td>
+
+      <td>
       <div class="imgContainer">
 				<div>
-                    <img id="toyImg" onclick="window.location.href = 'toy-vis.html'" style = "cursor: pointer" src="./img/p1.png" width="450px" class="left"/>
+                    <img id="toyImg" onclick="window.location.href = 'toy-vis.html'" style = "cursor: pointer" src="./img/p1.png" width="400px" class="left"/>
 				</div>
                 <div>
                     <svg id="textDesc" xmlns="http://www.w3.org/2000/svg" width="380" height="135" viewBox="0 0 380 135">
@@ -118,7 +125,7 @@ text {
                       </svg>                      
                 </div>
                 <div class="imgButton">
-                    <button style = "font-family: helveticaBold; font-size: 17px;" class="downloadButton" onclick="location.href='https://github.com/GumusLab/PhosNetVis-DataExamples/archive/refs/heads/master.zip'">DOWNLOAD TOY NETWORK DATASETS</button>
+                    <button style = "font-family: helveticaBold; font-size: 17.5px;" class="downloadButton" onclick="location.href='https://github.com/GumusLab/PhosNetVis-DataExamples/archive/refs/heads/master.zip'">DOWNLOAD TOY NETWORK DATASETS</button>
                   </div>
          </div>
 			</td>
