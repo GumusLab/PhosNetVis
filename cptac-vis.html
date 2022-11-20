@@ -334,107 +334,19 @@ function hideShowMenu(val) {
 //////////////// DATA CREATION ////////////////
 ///////////////////////////////////////////////
 
-function linkExist(sourceTargetTuples,kinaseID,targetID){
-  for (let idx = 0; idx < sourceTargetTuples.length; idx++) {
-    currTuple = sourceTargetTuples[idx]
-    if (currTuple[0] === kinaseID && currTuple[1] === targetID){
-      return true
-    }
-  }
-return false
-}
-
-function parseCSV(file_name) {
-let dict = {"nodes": [], "links": []}
-
-var userData = JSON.parse(window.localStorage.getItem(file_name));
-for (let i = 0; i < userData.length; i++) {
-  dataLine = userData[i]
-  kinaseID =  dataLine['KinaseID']
-  kinaseSize = dataLine['KinaseSize']
-  edgeWeight = dataLine['EdgeWeight']
-  edgeColor = dataLine['EdgeColor']
-  targetID = dataLine['TargetID']
-  targetSize = dataLine['TargetSize']
-  diffPhos = dataLine['log2FC']
-  PhosphoSiteID = dataLine['PhosphoSiteID']
-  pValue = dataLine['pValue']
-
-  currentNodeList = dict["nodes"].map(el => el.id)
-
-  //kinase is type 1, target is type 2
-  if (!(currentNodeList.includes(kinaseID))){ // if kinase id does not occur in nodes
-    dict["nodes"].push({'id': kinaseID, "type": 1, "nodeSize": kinaseSize, "nodeColors": [], "partitionIDs":[], "pValues":[]})
-    currentNodeList.push(kinaseID)
-  }
-  else { // kinase id occurs, need to check if it is labeled as target and change its type into kinase (1)
-    nodeIndex = currentNodeList.indexOf(kinaseID)
-    dict['nodes'][nodeIndex]['type'] = 1
-  }
-
-  if (!(currentNodeList.includes(targetID))){
-    let currentNodeColors = []
-    if(diffPhos!=undefined){currentNodeColors.push(diffPhos)}
-    let currentNodePartitions = []
-    if(PhosphoSiteID!=undefined){currentNodePartitions.push(PhosphoSiteID)}
-    let currentpValues = []
-    if(pValue!=undefined){currentpValues.push(pValue)}
-    dict["nodes"].push({'id': targetID, "type": 2, "nodeSize": targetSize, "nodeColors": currentNodeColors, "partitionIDs": currentNodePartitions, "pValues": currentpValues})
-  }
-
-  else{ // target id occurs again (must need partitions!!!), need to append diffPhos to nodecolors and PhosphoSiteID to partitionIDs
-        // no need to update its type as target !!!!!!!!
-      nonDirtyNodeList = dict["nodes"].map(el => el.id)
-      nodeIndex = nonDirtyNodeList.indexOf(targetID)
-      if(PhosphoSiteID != undefined && !(dict['nodes'][nodeIndex]['partitionIDs'].includes(PhosphoSiteID))){
-        dict['nodes'][nodeIndex]['partitionIDs'].push(PhosphoSiteID)
-        if(diffPhos!=undefined){dict['nodes'][nodeIndex]['nodeColors'].push(diffPhos)}
-        if(pValue!=undefined){ dict['nodes'][nodeIndex]['pValues'].push(pValue)}
-      }
-  }
-
-  sourceTargetTuples = dict["links"].map(el => [el.source,el.target])
-
-  if(!(linkExist(sourceTargetTuples,kinaseID,targetID))){
-    if(kinaseID===targetID){
-      //dict['links'].push({'source': kinaseID, 'target': targetID, 'edgeWeight': edgeWeight, 'edgeColor': edgeColor, 'curvature':.4})
-    }
-    else{
-      dict['links'].push({'source': kinaseID, 'target': targetID, 'edgeWeight': edgeWeight, 'edgeColor': edgeColor, 'curvature':0})
-    }
-  }
-}
-
-
-for(let nodeIndex = 0 ; nodeIndex<dict['nodes'].length; nodeIndex++){
-
- 
-    let tempColors = dict['nodes'][nodeIndex]['nodeColors']
-    
-    indices = Array.from(tempColors.keys()).sort( (a,b) => tempColors[b]-tempColors[a])
-        
-    dict['nodes'][nodeIndex]['partitionIDs'] = indices.map(i => dict['nodes'][nodeIndex]['partitionIDs'][i])
-    dict['nodes'][nodeIndex]['nodeColors'] = indices.map(i => dict['nodes'][nodeIndex]['nodeColors'][i])
-    dict['nodes'][nodeIndex]['pValues'] = indices.map(i => dict['nodes'][nodeIndex]['pValues'][i])
-
-    if(dict['nodes'][nodeIndex]['nodeColors'].length>10){
-    dict['nodes'][nodeIndex]['partitionIDs'] = [...dict['nodes'][nodeIndex]['partitionIDs'].slice(0,5), ...dict['nodes'][nodeIndex]['partitionIDs'].slice(-5)]
-    dict['nodes'][nodeIndex]['nodeColors'] = [...dict['nodes'][nodeIndex]['nodeColors'].slice(0,5), ...dict['nodes'][nodeIndex]['nodeColors'].slice(-5)]
-    dict['nodes'][nodeIndex]['pValues'] = [...dict['nodes'][nodeIndex]['pValues'].slice(0,5), ...dict['nodes'][nodeIndex]['pValues'].slice(-5)]
-  }
-
-}
-
-dict['ids'] = dict["nodes"].map(el => el.id)
-
-return dict;
-}
-
 const CAMERA_DISTANCE2NODES_FACTOR = 170;
 
-var file_names = JSON.parse(localStorage.getItem("file_names"))
-var index = localStorage.getItem("idx")
-var finalDataObj = cpip
+ var file_names = ["Brain/Neuro", "ccRCC/Endothelial", "CD8-/IFNG-", "CD8-/IFNG+", "CD8+/IFNG+", "Eosinophils/Endothelial", " Fibroblast/TGFBeta"]
+ var index = localStorage.getItem("cptacidx")
+ var finalDataObj = null
+
+if(index==0){finalDataObj = brain_neuro}
+else if(index==1){finalDataObj = ccrc_endothelial}
+else if(index==2){finalDataObj = cnin}
+else if(index==3){finalDataObj = cnip}
+else if(index==4){finalDataObj = cpip}
+else if(index==5){finalDataObj = eosino_endo}
+else{finalDataObj = fib_tgf}
 
 function thresholdDecider(DataObj){
 
@@ -623,9 +535,6 @@ finalDataObj.links.forEach(link => {
 ////////// GUI CONTROLS ////////////////
 ////////////////////////////////////////
 
-var file_names = ["CD8+/IFNG+"]
-var index = localStorage.getItem("idx")
-
 const fnames = {};
  for (const key of file_names) {
   fnames[key] = key;
@@ -652,7 +561,7 @@ pane.registerPlugin(TweakpaneEssentialsPlugin);
 const tab = pane.addTab({
   pages: [
     {title: 'Controls'},
-    {title: 'Animate & Record'}
+    {title: 'Record'}
   ],
 });
 
@@ -707,64 +616,6 @@ tab.pages[0].addButton({title: 'Take a screenshot'}).on('click',()=>{
 tab.pages[0].addButton({title: 'Reset'}).on('click',()=>{
   queryReset();
 });
-
-
-const f1 = tab.pages[1].addFolder({
-  title: 'Animation',
-});
-
-const startAnimation = f1.addButton({title: 'Start Animation ▶', disabled: false})
-
-// const pauseAnimation = f1.addButton({title: 'Stop Animation ❚❚', disabled: true})
-
-const stopAnimation =f1.addButton({title: 'Stop Animation ❚❚',  disabled: true})
-
-const fileMonitor = f1.addMonitor(PARAMS, 'Network', {
-  multiline: false,
-  lineCount: 1,
-});
-
-
-startAnimation.on('click', () => {
-  if(animate()){
-    stopAnimation.disabled === true ? stopAnimation.disabled = false : true
-  startAnimation.disabled === true ? startAnimation.disabled = false : startAnimation.disabled = true
-  }  
-});
-
-stopAnimation.on('click', () => {
-  if(animationActive){
-  startAnimation.disabled === true ? startAnimation.disabled = false: true
-  stopAnimation.disabled = !stopAnimation.disabled;
-  clearInterval(animationInterval)
-  animationIndex = -1
-  PARAMS.Network = file_names[localStorage.getItem("idx")]
-  let newthresholds = thresholdDecider(finalDataObj)
-  nodeSizes = newthresholds["nodeSizes"]
-  nodeColors = newthresholds["nodeColors"]
-  nodeSizeRange = newthresholds["nodeSizeRange"]
-  nodeColorRange = newthresholds["nodeColorRange"]
-  nodeColorThreshold = newthresholds["nodeColorThreshold"]
-  edgeWeights = newthresholds["edgeWeights"]
-  edgeColors = newthresholds["edgeColors"]
-  edgeWeightRange = newthresholds["edgeWeightRange"]
-  edgeColorRange = newthresholds["edgeColorRange"]
-  restOfLegends();
-  animationActive = false
-  resetRows();
-  if(clickedNode!=null){
-    let animationFinalClicked = finalDataObj["nodes"].find(x => x.id === clickedNode);
-    addRows(animationFinalClicked.partitionIDs, animationFinalClicked.nodeColors, animationFinalClicked.pValues)
-  }
-  nodeColorLegend(PARAMS.Phosphorylation);
-  Graph.nodeThreeObject(Graph.nodeThreeObject());
-  Graph.linkWidth(link => (searchLinks.has(link)) ? 1 : animationActive === true ? linkWidthAnimation(link) : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1])+.5 : .8) // subject to change
-}
-});
-
-
-tab.pages[1].addSeparator();
-tab.pages[1].addSeparator();
 
 const f2 = tab.pages[1].addFolder({
   title: 'Screen Record',
@@ -846,7 +697,22 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
               document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+(node.id).toUpperCase() 
             }
             else if (hgnc_dict[(node.id).toUpperCase()] === undefined){
-              document.getElementById("nodehref").href = "https://www.phosphosite.org/simpleSearchSubmitAction.action?searchStr="+node.id
+              if((node.id).indexOf("_") == -1){
+                document.getElementById("nodehref").href = "https://www.phosphosite.org/simpleSearchSubmitAction.action?searchStr="+node.id
+              }
+              else{
+                var new_node_id = ((node.id).substring(0,(node.id).indexOf("_")))
+                if(regex.test((new_node_id).toUpperCase())){
+                  document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+(new_node_id).toUpperCase()
+                }
+                else if (hgnc_dict[(new_node_id).toUpperCase()] === undefined){
+                  document.getElementById("nodehref").href = "https://www.phosphosite.org/simpleSearchSubmitAction.action?searchStr="+node.id
+                }
+                else{
+                  document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+hgnc_dict[(new_node_id).toUpperCase()]
+                }
+              }
+              
             }
             else{
               document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+hgnc_dict[(node.id).toUpperCase()]
@@ -874,11 +740,11 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
   .linkDirectionalParticles(link => (searchLinks.has(link)) ? 4 : 0)
 
   Graph.d3Force('link')
-  .distance(35)
+  .distance(30)
 
   Graph.d3Force('charge')
   .theta(0.5)
-  .strength(-100)
+  .strength(-70)
 
 
  
@@ -947,7 +813,22 @@ elementResizeDetectorMaker().listenTo(
               document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+(thisNode.id).toUpperCase() 
             }
             else if (hgnc_dict[(thisNode.id).toUpperCase()] === undefined){
-              document.getElementById("nodehref").href = "https://www.phosphosite.org/simpleSearchSubmitAction.action?searchStr="+thisNode.id
+              if((thisNode.id).indexOf("_") == -1){
+                document.getElementById("nodehref").href = "https://www.phosphosite.org/simpleSearchSubmitAction.action?searchStr="+thisNode.id
+              }
+              else{
+                var new_node_id = ((thisNode.id).substring(0,(thisNode.id).indexOf("_")))
+                if(regex.test((new_node_id).toUpperCase())){
+                  document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+(new_node_id).toUpperCase()
+                }
+                else if (hgnc_dict[(new_node_id).toUpperCase()] === undefined){
+                  document.getElementById("nodehref").href = "https://www.phosphosite.org/simpleSearchSubmitAction.action?searchStr="+node.id
+                }
+                else{
+                  document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+hgnc_dict[(new_node_id).toUpperCase()]
+                }
+              }
+              
             }
             else{
               document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+hgnc_dict[(thisNode.id).toUpperCase()]
@@ -1220,79 +1101,10 @@ a.click(); //Downloaded file
 /////////////////////////////////////////////////
 
 function changeState(){
-  var new_file_name = PARAMS.Files
-  localStorage.setItem('idx',file_names.indexOf(new_file_name))
+  var new_file_name = PARAMS.Network
+  localStorage.setItem('cptacidx',file_names.indexOf(new_file_name))
   location.reload();
 }
-
-/////////////////////////////////////////////////
-//////////// ANIMATION FUNCTION /////////////////
-/////////////////////////////////////////////////
-var animationInterval = null
-var allFiles = JSON.parse(localStorage.getItem('all_files'))
-function animate(){
-
-  if(allFiles.length<=1){
-    alert("Please upload at least 2 networks with the exact same nodes and links to animate the changes in phosphorylation levels!")
-    return false
-  }
-  else{ // check if the networks has the exact same nodes and links - don't mess up the idx index
-
-    let fileNodes = (Array.from(new Set([...new Set(allFiles[0].map(el => el.KinaseID)), ...new Set(allFiles[0].map(el => el.TargetID))]))).sort()
-    let fileLinks = (Array.from(new Set([...new Set(allFiles[0].map(el => el.KinaseID+el.TargetID))]))).sort()
-    
-  for(let fileIndex = 1; fileIndex<allFiles.length; fileIndex++){
-
-    let tempNodes = (Array.from(new Set([...new Set(allFiles[fileIndex].map(el => el.KinaseID)), ...new Set(allFiles[fileIndex].map(el => el.TargetID))]))).sort()
-    let tempLinks = (Array.from(new Set([...new Set(allFiles[fileIndex].map(el => el.KinaseID+el.TargetID))]))).sort()
-
-    if(!_.isEqual(fileNodes, tempNodes)){
-      alert("There are node differences in the networks you have uploaded. Please make sure to upload networks with the exact same nodes and links to animate the change in phosphorylation levels!")
-      return false
-    }
-    
-    if(!_.isEqual(fileLinks, tempLinks)){
-      alert("There are link differences in the networks you have uploaded. Please make sure to upload networks with the exact same nodes and links to animate the change in phosphorylation levels!")
-      return false
-    }
-
-  }
-
-  console.log("all good let's animate!!!!!!!!!!")
-  animationActive = true
-  animator()
-  animationInterval =  setInterval(animator, 2000);
-  return true
-}
-
-}
-
-
-function animator(){ // really easy - calculate the animation index, prepare the data, call Graph.nodeThreeObject(Graph.nodeThreeObject()) to awake update nodes and link color link width and change monitor and legend updates
-  animationIndex = (animationIndex+1) % allFiles.length;
-  let tempdata = parseCSV(localStorage.getItem(file_names[animationIndex]));
-  let tempNodes = tempdata["nodes"].reduce((a, v) => ({ ...a, [v.id]: v}), {});
-  let tempLinks = tempdata["links"].reduce((a, v) => ({ ...a, [v.source+v.target]: v}), {});
-  animationData =  Object.assign(tempNodes, tempLinks);
-  let animationthresholds = thresholdDecider(tempdata);
-  nodeSizes = animationthresholds["nodeSizes"]
-  nodeColors = animationthresholds["nodeColors"]
-  nodeSizeRange = animationthresholds["nodeSizeRange"]
-  nodeColorRange = animationthresholds["nodeColorRange"]
-  nodeColorThreshold = animationthresholds["nodeColorThreshold"]
-  edgeWeights = animationthresholds["edgeWeights"]
-  edgeColors = animationthresholds["edgeColors"]
-  edgeWeightRange = animationthresholds["edgeWeightRange"]
-  edgeColorRange = animationthresholds["edgeColorRange"]
-  restOfLegends();
-  nodeColorLegend(PARAMS.Phosphorylation);
-  PARAMS.Network = file_names[animationIndex];
-  resetRows();
-  Graph.nodeThreeObject(Graph.nodeThreeObject());
-  Graph.linkWidth(link => (searchLinks.has(link)) ? 1 : animationActive === true ? linkWidthAnimation(link) : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1])+.5 : .8) // subject to change
-}
-
-
 /////////////////////////////////////////////////
 //////////// INFO TABLE FUNCTIONS ///////////////
 /////////////////////////////////////////////////

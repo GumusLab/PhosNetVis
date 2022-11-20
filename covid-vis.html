@@ -343,9 +343,7 @@ else if(index==4){finalDataObj = time02_network}
 else{finalDataObj = time00_network}
 
   const CAMERA_DISTANCE2NODES_FACTOR = 170;
-  
-  var index = localStorage.getItem("idx")  
-  
+    
   var nodesList = (finalDataObj["nodes"].map(el => el.id)).filter(x => x != undefined)
   var nodeSizes = (finalDataObj["nodes"].map(el => el.nodeSize)).filter(x => x != undefined)
   var nodeColors = ((finalDataObj["nodes"].map(el => el.nodeColors)).flat()).filter(x => x != undefined)
