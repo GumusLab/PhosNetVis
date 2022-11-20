@@ -336,7 +336,7 @@ function hideShowMenu(val) {
 
 const CAMERA_DISTANCE2NODES_FACTOR = 170;
 
- var file_names = ["Brain/Neuro", "ccRCC/Endothelial", "CD8-/IFNG-", "CD8-/IFNG+", "CD8+/IFNG+", "Eosinophils/Endothelial", " Fibroblast/TGFBeta"]
+ var file_names = ["Fibroblast/TGFBeta", "ccRCC/Endothelial", "CD8-/IFNG-", "CD8-/IFNG+", "CD8+/IFNG+", "Eosinophils/Endothelial", "Brain/Neuro"]
  var index = localStorage.getItem("cptacidx")
  if(index == undefined || index == null){
   index = 0
@@ -344,13 +344,13 @@ const CAMERA_DISTANCE2NODES_FACTOR = 170;
  
  var finalDataObj = null
 
-if(index==0){finalDataObj = brain_neuro}
+if(index==0){finalDataObj = fib_tgf }
 else if(index==1){finalDataObj = ccrc_endothelial}
 else if(index==2){finalDataObj = cnin}
 else if(index==3){finalDataObj = cnip}
 else if(index==4){finalDataObj = cpip}
 else if(index==5){finalDataObj = eosino_endo}
-else{finalDataObj = fib_tgf}
+else{finalDataObj = brain_neuro}
 
 function thresholdDecider(DataObj){
 
