@@ -338,6 +338,10 @@ const CAMERA_DISTANCE2NODES_FACTOR = 170;
 
  var file_names = ["Brain/Neuro", "ccRCC/Endothelial", "CD8-/IFNG-", "CD8-/IFNG+", "CD8+/IFNG+", "Eosinophils/Endothelial", " Fibroblast/TGFBeta"]
  var index = localStorage.getItem("cptacidx")
+ if(index == undefined || index == null){
+  index = 0
+ }
+ 
  var finalDataObj = null
 
 if(index==0){finalDataObj = brain_neuro}
