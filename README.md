@@ -1,7 +1,7 @@
 
 ![Logo](https://i.hizliresim.com/l6cau2g.png)
 
-## [PhosNetVis](https://phosnetvis.app) is a web-based platform for integrated kinase enrichment analyses and interactive 3D network visualizations of phosphoproteomics datasets. 
+## [PhosNetVis](https://phosnetvis.app) is web-based kinase enrichment analyses and interactive 3D network visualizations of phosphoproteomics datasets.
 
 <p align="center">
   <img src="https://i.hizliresim.com/5uvbaww.gif" />
@@ -16,7 +16,7 @@
 
 ## Contributors
 
-#### Dr. Jeffrey Johnson | Dr. Selim Kalaycı
+#### Dr. Jeffrey Johnson | Dr. Selim Kalaycı | Dr. Mehdi Bouhaddou
 
 
 ## License
