@@ -16,7 +16,7 @@
 
 ## Contributors
 
-#### Dr. Jeffrey Johnson | Dr. Selim Kalaycı
+#### Dr. Jeffrey Johnson | Dr. Selim Kalaycı | Dr. Mehdi Bouhaddou
 
 
 ## License
