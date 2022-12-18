@@ -351,6 +351,7 @@ for (let i = 0; i < userData.length; i++) {
   dataLine = userData[i]
   kinaseID =  dataLine['KinaseID']
   kinaseSize = dataLine['KinaseSize']
+  kinaseActivity = dataLine['KinaseActivity']
   edgeWeight = dataLine['EdgeWeight']
   edgeColor = dataLine['EdgeColor']
   targetID = dataLine['TargetID']
@@ -363,7 +364,7 @@ for (let i = 0; i < userData.length; i++) {
 
   //kinase is type 1, target is type 2
   if (!(currentNodeList.includes(kinaseID))){ // if kinase id does not occur in nodes
-    dict["nodes"].push({'id': kinaseID, "type": 1, "nodeSize": kinaseSize, "nodeColors": [], "partitionIDs":[], "pValues":[]})
+    dict["nodes"].push({'id': kinaseID, "type": 1, "kinaseActivity":kinaseActivity, "nodeSize": kinaseSize, "nodeColors": [], "partitionIDs":[], "pValues":[]})
     currentNodeList.push(kinaseID)
   }
   else { // kinase id occurs, need to check if it is labeled as target and change its type into kinase (1)
@@ -378,7 +379,7 @@ for (let i = 0; i < userData.length; i++) {
     if(PhosphoSiteID!=undefined){currentNodePartitions.push(PhosphoSiteID)}
     let currentpValues = []
     if(pValue!=undefined){currentpValues.push(pValue)}
-    dict["nodes"].push({'id': targetID, "type": 2, "nodeSize": targetSize, "nodeColors": currentNodeColors, "partitionIDs": currentNodePartitions, "pValues": currentpValues})
+    dict["nodes"].push({'id': targetID, "type": 2, "kinaseActivity":0, "nodeSize": targetSize, "nodeColors": currentNodeColors, "partitionIDs": currentNodePartitions, "pValues": currentpValues})
   }
 
   else{ // target id occurs again (must need partitions!!!), need to append diffPhos to nodecolors and PhosphoSiteID to partitionIDs
@@ -434,6 +435,7 @@ const CAMERA_DISTANCE2NODES_FACTOR = 170;
 var file_names = JSON.parse(localStorage.getItem("file_names"))
 var index = localStorage.getItem("idx")
 var finalDataObj = parseCSV(localStorage.getItem(file_names[index]))
+console.log(finalDataObj)
 
     // var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(finalDataObj));
     // var downloadAnchorNode = document.createElement('a');
@@ -1058,6 +1060,20 @@ function CreateNode(node)
       emissive: "#181818",
       vertexColors: THREE.FaceColors,
     }));
+    }
+
+    if(node.kinaseActivity != undefined && PARAMS.Phosphorylation === "Show"){
+      var colorValue = parseInt ( nodeColoring(node.kinaseActivity), 16 );
+      const geometry = new THREE.CylinderGeometry(node_size*0.01, node_size*11, node_size*11*verticalPartitions, radialPartitions, verticalPartitions);
+      const material = new THREE.MeshBasicMaterial({
+        color: new THREE.Color( colorValue ),
+        transparent: true,
+        depthWrite: false,
+        opacity: 0.3
+      });
+      const glowEffect = new THREE.Mesh(geometry, material);
+      glowEffect.name = "glow";
+      mesh.add(glowEffect);
     }
 
   }
