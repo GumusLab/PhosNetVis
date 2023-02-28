@@ -971,6 +971,17 @@ elementResizeDetectorMaker().listenTo(
             }
 
             document.getElementById("typetext").innerHTML = thisNode.type === 1 ? "Kinase" : "Substrate"
+
+            if(thisNode.type === 1 && thisNode.kinaseActivity != undefined){
+              document.getElementById("activityText").style.display = "inline" 
+              document.getElementById("activityNum").style.display = "inline" 
+              document.getElementById("activityNum").innerHTML = parseFloat(thisNode.kinaseActivity).toFixed(3) 
+            }
+            else{
+              document.getElementById("activityText").style.display = "none"
+              document.getElementById("activityNum").style.display = "none"
+            }
+
           }
           updateHighlight();
           nodeColorLegend("Show");
