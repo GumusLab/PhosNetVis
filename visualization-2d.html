@@ -1,0 +1,278 @@
+<head>
+  <style> body { margin: 0; } </style>
+
+  <script src="//unpkg.com/force-graph"></script>
+  <script src="//unpkg.com/d3-quadtree"></script>
+  <script src="//unpkg.com/d3-force"></script>
+  <script src="//unpkg.com/d3-bboxCollide"></script>
+  <script src="libraries/rainbowvis.js"></script>
+
+  <style type="text/css">
+
+    @font-face {
+      font-family: "MyriadPro-Regular";
+      src: url("fonts/MYRIADPROREGULAR.woff") format("woff");
+    }
+    
+    @font-face {
+    font-family: "Century Gothic";
+    src: url("fonts/CenturyGothic.woff") format("woff");
+    }
+    
+    @font-face {
+    font-family: "CenturyGothicPro";
+    src: url("fonts/CenturyGothic.woff") format("woff");
+    }
+    
+    @font-face {
+    font-family: "CenturyGothicPro-Bold";
+    src: url("fonts/CenturyGothic-Bold.woff") format("woff");
+    }
+  
+    @font-face {
+      font-family: "helveticaBold";
+      src: url("fonts/helvetica-bold-webfont.woff") format("woff");
+      }
+  
+  </style>
+</head>
+
+<body>
+  <div id="graph"></div>
+<div>
+    <svg onclick="window.location.href = 'visualization.html'" xmlns="http://www.w3.org/2000/svg" width = "150px" style="top:2%;left:1%;position:absolute;cursor: pointer;z-index:10;"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470.47 119.751">
+      <g id="Group_250" data-name="Group 250" transform="translate(-97.561 -505.286)">
+        <g id="Group_226" data-name="Group 226" transform="translate(-257 -5)">
+          <g id="phos_copy" data-name="phos copy" transform="translate(354.561 510.286)">
+            <g id="Layer_1" transform="translate(0)">
+              <rect id="Rectangle_1" data-name="Rectangle 1" width="39.28" height="1.767" transform="translate(61.753 101.969) rotate(-68.97)" fill="#424a60"/>
+              <rect id="Rectangle_2" data-name="Rectangle 2" width="49.733" height="4.688" transform="matrix(0.81, -0.586, 0.586, 0.81, 87.827, 47.378)" fill="#424a60"/>
+              <rect id="Rectangle_3" data-name="Rectangle 3" width="67.981" height="6.357" transform="matrix(0.914, -0.406, 0.406, 0.914, 11.86, 82.574)" fill="#424a60"/>
+              <rect id="Rectangle_4" data-name="Rectangle 4" width="3.436" height="35.22" transform="matrix(0.914, -0.406, 0.406, 0.914, 59.046, 11.332)" fill="#424a60"/>
+              <rect id="Rectangle_5" data-name="Rectangle 5" width="4.688" height="49.733" transform="matrix(0.914, -0.406, 0.406, 0.914, 81.117, 62.513)" fill="#424a60"/>
+              <circle id="Ellipse_1" data-name="Ellipse 1" cx="11.722" cy="11.722" r="11.722" transform="translate(122.774 6.833)" fill="#dc298d"/>
+              <circle id="Ellipse_2" data-name="Ellipse 2" cx="11.722" cy="11.722" r="11.722" transform="translate(48.648 96.307)" fill="#7383bf"/>
+              <circle id="Ellipse_3" data-name="Ellipse 3" cx="11.722" cy="11.722" r="11.722" transform="translate(0 72.578)" fill="#dc298d"/>
+              <circle id="Ellipse_4" data-name="Ellipse 4" cx="7.033" cy="7.033" r="7.033" transform="translate(51.982)" fill="#969696"/>
+              <circle id="Ellipse_5" data-name="Ellipse 5" cx="7.033" cy="7.033" r="7.033" transform="translate(95.081 96.952)" fill="#ebba16"/>
+              <circle id="Ellipse_6" data-name="Ellipse 6" cx="20.068" cy="20.068" r="20.068" transform="translate(60.424 35.278)" fill="#06abeb"/>
+            </g>
+          </g>
+        </g>
+        <g id="Group_249" data-name="Group 249" transform="translate(5 0.5)">
+          <g id="Group_230" data-name="Group 230" transform="translate(-357.47 -17.5)">
+            <text id="Back_to_3D" data-name="Back to 3D" transform="translate(765.5 602.162)" font-size="59" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="-154.639" y="0">Back to 3D</tspan></text>
+          </g>
+          <g id="Group_248" data-name="Group 248" transform="translate(-353.47 122.5)">
+            <text id="_" data-name="&lt;" transform="translate(588.5 455.162)" font-size="59" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="-17.7" y="0">&lt;</tspan></text>
+          </g>
+        </g>
+      </g>
+    </svg>
+    
+  </div>
+  <script>
+
+function linkExist(sourceTargetTuples,kinaseID,targetID){
+  for (let idx = 0; idx < sourceTargetTuples.length; idx++) {
+    currTuple = sourceTargetTuples[idx]
+    if (currTuple[0] === kinaseID && currTuple[1] === targetID){
+      return true
+    }
+  }
+return false
+}
+
+function parseCSV(file_name) {
+let dict = {"nodes": [], "links": []}
+
+var userData = JSON.parse(window.localStorage.getItem(file_name));
+for (let i = 0; i < userData.length; i++) {
+  dataLine = userData[i]
+  kinaseID =  dataLine['KinaseID']
+  kinaseSize = dataLine['KinaseSize']
+  kinaseActivity = dataLine['KinaseActivity']
+  edgeWeight = dataLine['EdgeWeight']
+  edgeColor = dataLine['EdgeColor']
+  targetID = dataLine['TargetID']
+  targetSize = dataLine['TargetSize']
+  diffPhos = dataLine['log2FC']
+  PhosphoSiteID = dataLine['PhosphoSiteID']
+  pValue = dataLine['pValue']
+
+  currentNodeList = dict["nodes"].map(el => el.id)
+
+  //kinase is type 1, target is type 2
+  if (!(currentNodeList.includes(kinaseID))){ // if kinase id does not occur in nodes
+    dict["nodes"].push({'id': kinaseID, "type": 1, "kinaseActivity":kinaseActivity, "nodeSize": kinaseSize, "nodeColors": [], "partitionIDs":[], "pValues":[]})
+    currentNodeList.push(kinaseID)
+  }
+  else { // kinase id occurs, need to check if it is labeled as target and change its type into kinase (1)
+    nodeIndex = currentNodeList.indexOf(kinaseID)
+    dict['nodes'][nodeIndex]['type'] = 1
+  }
+
+  if (!(currentNodeList.includes(targetID))){
+    let currentNodeColors = []
+    if(diffPhos!=undefined){currentNodeColors.push(diffPhos)}
+    let currentNodePartitions = []
+    if(PhosphoSiteID!=undefined){currentNodePartitions.push(PhosphoSiteID)}
+    let currentpValues = []
+    if(pValue!=undefined){currentpValues.push(pValue)}
+    dict["nodes"].push({'id': targetID, "type": 2, "kinaseActivity":0, "nodeSize": targetSize, "nodeColors": currentNodeColors, "partitionIDs": currentNodePartitions, "pValues": currentpValues})
+  }
+
+  else{ // target id occurs again (must need partitions!!!), need to append diffPhos to nodecolors and PhosphoSiteID to partitionIDs
+        // no need to update its type as target !!!!!!!!
+      nonDirtyNodeList = dict["nodes"].map(el => el.id)
+      nodeIndex = nonDirtyNodeList.indexOf(targetID)
+      if(PhosphoSiteID != undefined && !(dict['nodes'][nodeIndex]['partitionIDs'].includes(PhosphoSiteID))){
+        dict['nodes'][nodeIndex]['partitionIDs'].push(PhosphoSiteID)
+        if(diffPhos!=undefined){dict['nodes'][nodeIndex]['nodeColors'].push(diffPhos)}
+        if(pValue!=undefined){ dict['nodes'][nodeIndex]['pValues'].push(pValue)}
+      }
+  }
+
+  sourceTargetTuples = dict["links"].map(el => [el.source,el.target])
+
+  if(!(linkExist(sourceTargetTuples,kinaseID,targetID))){
+    if(kinaseID===targetID){
+      dict['links'].push({'source': kinaseID, 'target': targetID, 'edgeWeight': edgeWeight, 'edgeColor': edgeColor, 'curvature':.4})
+    }
+    else{
+      dict['links'].push({'source': kinaseID, 'target': targetID, 'edgeWeight': edgeWeight, 'edgeColor': edgeColor, 'curvature':0})
+    }
+  }
+}
+
+
+for(let nodeIndex = 0 ; nodeIndex<dict['nodes'].length; nodeIndex++){
+
+ 
+    let tempColors = dict['nodes'][nodeIndex]['nodeColors']
+    
+    indices = Array.from(tempColors.keys()).sort( (a,b) => tempColors[b]-tempColors[a])
+        
+    dict['nodes'][nodeIndex]['partitionIDs'] = indices.map(i => dict['nodes'][nodeIndex]['partitionIDs'][i])
+    dict['nodes'][nodeIndex]['nodeColors'] = indices.map(i => dict['nodes'][nodeIndex]['nodeColors'][i])
+    dict['nodes'][nodeIndex]['pValues'] = indices.map(i => dict['nodes'][nodeIndex]['pValues'][i])
+
+    if(dict['nodes'][nodeIndex]['nodeColors'].length>10){
+    dict['nodes'][nodeIndex]['partitionIDs'] = [...dict['nodes'][nodeIndex]['partitionIDs'].slice(0,5), ...dict['nodes'][nodeIndex]['partitionIDs'].slice(-5)]
+    dict['nodes'][nodeIndex]['nodeColors'] = [...dict['nodes'][nodeIndex]['nodeColors'].slice(0,5), ...dict['nodes'][nodeIndex]['nodeColors'].slice(-5)]
+    dict['nodes'][nodeIndex]['pValues'] = [...dict['nodes'][nodeIndex]['pValues'].slice(0,5), ...dict['nodes'][nodeIndex]['pValues'].slice(-5)]
+  }
+
+}
+
+dict['ids'] = dict["nodes"].map(el => el.id)
+
+return dict;
+}
+
+var file_names = JSON.parse(localStorage.getItem("file_names"))
+var index = localStorage.getItem("idx")
+var finalDataObj = parseCSV(localStorage.getItem(file_names[index]))
+
+function thresholdDecider(DataObj){ // need to add rectangleCollide = d3.bboxCollide here
+
+let nodeSizes = (DataObj["nodes"].map(el => el.nodeSize)).filter(x => x != undefined)
+let nodeColors = ((DataObj["nodes"].map(el => el.nodeColors)).flat()).filter(x => x != undefined)
+let nodeSizeRange = [Math.min.apply(Math, nodeSizes), Math.max.apply(Math, nodeSizes)]
+let nodeColorRange = [Math.min.apply(Math, nodeColors), Math.max.apply(Math, nodeColors)]
+let nodeColorThreshold = null
+
+if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
+  let minPositive = 0
+  let maxPositive = 0
+  nodeColorRange[0]<0 ? minPositive = - nodeColorRange[0] : minPositive = nodeColorRange[0]
+  nodeColorRange[1]<0 ? maxPositive = - nodeColorRange[1] : maxPositive = nodeColorRange[1]
+  minPositive>maxPositive  ? nodeColorThreshold = minPositive : nodeColorThreshold = maxPositive
+}
+
+let edgeWeights = (DataObj["links"].map(el => el.edgeWeight)).filter(x => x != undefined)
+let edgeColors = (DataObj["links"].map(el => el.edgeColor)).filter(x => x != undefined)
+let edgeWeightRange = [Math.min.apply(Math, edgeWeights), Math.max.apply(Math, edgeWeights)]
+let edgeColorRange = [Math.min.apply(Math, edgeColors), Math.max.apply(Math, edgeColors)]
+
+return {"nodeSizes":nodeSizes, "nodeColors":nodeColors, "nodeSizeRange":nodeSizeRange, "nodeColorRange":nodeColorRange, "nodeColorThreshold":nodeColorThreshold, "edgeWeights":edgeWeights, "edgeColors":edgeColors, "edgeWeightRange":edgeWeightRange, "edgeColorRange":edgeColorRange}
+
+}
+
+var thresholds = thresholdDecider(finalDataObj)
+var [nodeSizes, nodeColors, nodeSizeRange, nodeColorRange, nodeColorThreshold, edgeWeights, edgeColors, edgeWeightRange, edgeColorRange] = [thresholds["nodeSizes"], thresholds["nodeColors"], thresholds["nodeSizeRange"], thresholds["nodeColorRange"], thresholds["nodeColorThreshold"], thresholds["edgeWeights"],thresholds["edgeColors"],thresholds["edgeWeightRange"],thresholds["edgeColorRange"]]
+var nodesList = finalDataObj["ids"]
+
+var rectangleCollide = d3.bboxCollide([[-8,-14],[8,14]])
+
+    const Graph = ForceGraph()
+      (document.getElementById('graph'))
+
+      .nodeCanvasObject((node, ctx) => {
+        var arrayLength = node.nodeColors.length;
+
+        ctx.fillStyle = '#808080';
+          ctx.fillRect(node.x - 6, node.y - 2.5, 12, 5);
+
+        if (arrayLength == 0 || arrayLength == undefined){
+          ctx.fillStyle = '#808080';
+          ctx.fillRect(node.x - 6, node.y - 2.5, 12, 5);
+        }
+        else{
+          const partitionNum = 5
+          arrayLength = arrayLength >= partitionNum ? partitionNum : arrayLength;
+
+        for (var i = 0; i < arrayLength; i++) {
+            ctx.fillStyle = nodeColoring(node.nodeColors[i]);
+            ctx.fillRect(node.x - 6, node.y - 2.5 + i*5, 12, 5);       
+          }
+        }
+        })
+        .nodePointerAreaPaint(nodePaint)
+        .nodeId('id')
+        .nodeLabel('id')
+        .graphData(finalDataObj);
+
+        Graph.d3Force('collide', rectangleCollide);
+        Graph.d3Force('charge').strength(-70);
+        Graph.zoom(1.3)
+        // Graph.d3Force('link').distance(link => 70);
+
+
+        function nodePaint(node, color, ctx) {
+          var partition = node.nodeColors.length < 5 ? node.nodeColors.length : 5
+          if(partition == 0){ partition = 1}
+          ctx.fillStyle = color
+          ctx.fillRect(node.x-6, node.y-2.5, 12, 5*partition);
+         }
+
+        function normalized(value, actual_bounds, desired_bounds) { 
+          return (desired_bounds[0] + (value - actual_bounds[0]) * (desired_bounds[1] - desired_bounds[0]) / (actual_bounds[1] - actual_bounds[0]))
+        }
+
+        function nodeColoring (l2fc_value) {
+          if(l2fc_value === "kinase"){
+            return "#f5aa3b"
+          }
+
+            if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
+            
+            let rainbow = new Rainbow(); 
+            nodeColorThreshold > 3 ? rainbow.setNumberRange(-3, 3) : rainbow.setNumberRange(-nodeColorThreshold, nodeColorThreshold)
+            
+            rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044');
+          
+            if (l2fc_value === "null") {
+              return "#cccccc"
+            }
+            else{
+              let hexColour = rainbow.colourAt(l2fc_value);
+              let stringColor = '#' + hexColour
+              return stringColor
+            }
+
+          }
+        }
+
+  </script>
+</body>

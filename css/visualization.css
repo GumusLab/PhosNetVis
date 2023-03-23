@@ -42,7 +42,7 @@
     font-size: 55px;
     position: absolute;
     left: 1px;   /* position inside relatively positioned parent */
-    top: 136px;
+    top: 105px;
     z-index: 50; 
     width: 261px;
   }
@@ -77,7 +77,7 @@
     font-family: Helvetica, sans-serif;
     font-size: 17px;
     left: 1px;
-    top: 133.5px;
+    top: 102.5px;
     z-index: 300; 
     cursor:pointer;
   }

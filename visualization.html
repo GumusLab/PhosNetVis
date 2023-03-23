@@ -411,13 +411,13 @@ for(let nodeIndex = 0 ; nodeIndex<dict['nodes'].length; nodeIndex++){
  
     let tempColors = dict['nodes'][nodeIndex]['nodeColors']
     
-    indices = Array.from(tempColors.keys()).sort( (a,b) => tempColors[b]-tempColors[a])
+    indices = Array.from(tempColors.keys()).sort( (a,b) => tempColors[b]-tempColors[a]) // sorting partitions by colors
         
     dict['nodes'][nodeIndex]['partitionIDs'] = indices.map(i => dict['nodes'][nodeIndex]['partitionIDs'][i])
     dict['nodes'][nodeIndex]['nodeColors'] = indices.map(i => dict['nodes'][nodeIndex]['nodeColors'][i])
     dict['nodes'][nodeIndex]['pValues'] = indices.map(i => dict['nodes'][nodeIndex]['pValues'][i])
 
-    if(dict['nodes'][nodeIndex]['nodeColors'].length>10){
+    if(dict['nodes'][nodeIndex]['nodeColors'].length>10){ // only getting top 5 (may update it with pvalues if exist)
     dict['nodes'][nodeIndex]['partitionIDs'] = [...dict['nodes'][nodeIndex]['partitionIDs'].slice(0,5), ...dict['nodes'][nodeIndex]['partitionIDs'].slice(-5)]
     dict['nodes'][nodeIndex]['nodeColors'] = [...dict['nodes'][nodeIndex]['nodeColors'].slice(0,5), ...dict['nodes'][nodeIndex]['nodeColors'].slice(-5)]
     dict['nodes'][nodeIndex]['pValues'] = [...dict['nodes'][nodeIndex]['pValues'].slice(0,5), ...dict['nodes'][nodeIndex]['pValues'].slice(-5)]
@@ -714,6 +714,12 @@ tab.pages[0].addButton({title: 'Reset'}).on('click',()=>{
   queryReset();
 });
 
+tab.pages[0].addSeparator();
+tab.pages[0].addSeparator();
+
+tab.pages[0].addButton({title: 'Switch to 2D'}).on('click',()=>{
+  window.location.href = 'visualization-2d.html'
+});
 
 const f1 = tab.pages[1].addFolder({
   title: 'Animation',
