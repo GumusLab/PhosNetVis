@@ -51,9 +51,24 @@ function createNodeAnimation(node){
     }));
     }
 
+    if(newNode.kinaseActivity != undefined && PARAMS.Phosphorylation === "Show"){
+      
+      var colorValue = parseInt ( nodeColoring(newNode.kinaseActivity), 16 );
+      const geometry = new THREE.CylinderGeometry(node_size*0.01, node_size*11, node_size*11*verticalPartitions, radialPartitions, verticalPartitions);
+      const material = new THREE.MeshBasicMaterial({
+        color: new THREE.Color( colorValue ),
+        transparent: true,
+        depthWrite: false,
+        opacity: 0.3
+      });
+      const glowEffect = new THREE.Mesh(geometry, material);
+      glowEffect.name = "glow";
+      mesh.add(glowEffect);
+    }
+
   }
 
-  else{ // if it is not a kinase
+  else{ // if it is substrate
     radialPartitions = 25
     if (searchNodes.has(node) || PARAMS.Labels === "On"){
     var mesh = new THREE.Mesh(
