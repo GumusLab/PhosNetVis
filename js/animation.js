@@ -57,7 +57,7 @@ function createNodeAnimation(node){
     radialPartitions = 25
     if (searchNodes.has(node) || PARAMS.Labels === "On"){
     var mesh = new THREE.Mesh(
-    new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
+    new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*6*verticalPartitions, radialPartitions, verticalPartitions),
     new THREE.MeshLambertMaterial({
       transparent: false,
       depthWrite: false,
@@ -69,7 +69,7 @@ function createNodeAnimation(node){
     }
     else{
     var mesh = new THREE.Mesh(
-    new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
+    new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*6*verticalPartitions, radialPartitions, verticalPartitions),
     new THREE.MeshLambertMaterial({
       transparent: false,
       depthWrite: true,
