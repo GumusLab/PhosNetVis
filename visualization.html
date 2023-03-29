@@ -896,12 +896,12 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
   .linkOpacity(0.6)
   .linkDirectionalParticles(link => (searchLinks.has(link)) ? 4 : 0)
 
-  Graph.d3Force('link')
-  .distance(35)
+  // Graph.d3Force('link')
+  // .distance(35)
 
   Graph.d3Force('charge')
   .theta(0.5)
-  .strength(-100)
+  .strength(-200)
 
 
  
