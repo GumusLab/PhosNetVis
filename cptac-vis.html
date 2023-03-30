@@ -25,7 +25,6 @@
   <script src="//unpkg.com/element-resize-detector/dist/element-resize-detector.min.js"></script>
   <link rel="stylesheet" href="css/fstdropdown.css">
   <link rel="stylesheet" href="css/visualization.css">
-  <a href="index.html"></a>
   <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
   <title>CPTAC Vis</title>
 
@@ -619,6 +618,13 @@ tab.pages[0].addButton({title: 'Take a screenshot'}).on('click',()=>{
 });
 tab.pages[0].addButton({title: 'Reset'}).on('click',()=>{
   queryReset();
+});
+
+tab.pages[0].addSeparator();
+tab.pages[0].addSeparator();
+
+tab.pages[0].addButton({title: 'Switch to 2D'}).on('click',()=>{
+  window.location.href = 'cptac-2d.html'
 });
 
 const f2 = tab.pages[1].addFolder({

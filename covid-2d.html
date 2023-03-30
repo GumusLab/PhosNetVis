@@ -1,0 +1,197 @@
+<head>
+  <style> body { margin: 0; } </style>
+
+  <script src="//unpkg.com/force-graph"></script>
+  <script src="//unpkg.com/d3-quadtree"></script>
+  <script src="//unpkg.com/d3-force"></script>
+  <script src="data/covid-networks.js"></script>
+  <script src="//unpkg.com/d3-bboxCollide"></script>
+  <script src="libraries/rainbowvis.js"></script>
+
+  <style type="text/css">
+
+    @font-face {
+      font-family: "MyriadPro-Regular";
+      src: url("fonts/MYRIADPROREGULAR.woff") format("woff");
+    }
+    
+    @font-face {
+    font-family: "Century Gothic";
+    src: url("fonts/CenturyGothic.woff") format("woff");
+    }
+    
+    @font-face {
+    font-family: "CenturyGothicPro";
+    src: url("fonts/CenturyGothic.woff") format("woff");
+    }
+    
+    @font-face {
+    font-family: "CenturyGothicPro-Bold";
+    src: url("fonts/CenturyGothic-Bold.woff") format("woff");
+    }
+  
+    @font-face {
+      font-family: "helveticaBold";
+      src: url("fonts/helvetica-bold-webfont.woff") format("woff");
+      }
+  
+  </style>
+</head>
+
+<body>
+  <div id="graph"></div>
+<div>
+    <svg onclick="window.location.href = 'covid-vis.html'" xmlns="http://www.w3.org/2000/svg" width = "150px" style="top:2%;left:1%;position:absolute;cursor: pointer;z-index:10;"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470.47 119.751">
+      <g id="Group_250" data-name="Group 250" transform="translate(-97.561 -505.286)">
+        <g id="Group_226" data-name="Group 226" transform="translate(-257 -5)">
+          <g id="phos_copy" data-name="phos copy" transform="translate(354.561 510.286)">
+            <g id="Layer_1" transform="translate(0)">
+              <rect id="Rectangle_1" data-name="Rectangle 1" width="39.28" height="1.767" transform="translate(61.753 101.969) rotate(-68.97)" fill="#424a60"/>
+              <rect id="Rectangle_2" data-name="Rectangle 2" width="49.733" height="4.688" transform="matrix(0.81, -0.586, 0.586, 0.81, 87.827, 47.378)" fill="#424a60"/>
+              <rect id="Rectangle_3" data-name="Rectangle 3" width="67.981" height="6.357" transform="matrix(0.914, -0.406, 0.406, 0.914, 11.86, 82.574)" fill="#424a60"/>
+              <rect id="Rectangle_4" data-name="Rectangle 4" width="3.436" height="35.22" transform="matrix(0.914, -0.406, 0.406, 0.914, 59.046, 11.332)" fill="#424a60"/>
+              <rect id="Rectangle_5" data-name="Rectangle 5" width="4.688" height="49.733" transform="matrix(0.914, -0.406, 0.406, 0.914, 81.117, 62.513)" fill="#424a60"/>
+              <circle id="Ellipse_1" data-name="Ellipse 1" cx="11.722" cy="11.722" r="11.722" transform="translate(122.774 6.833)" fill="#dc298d"/>
+              <circle id="Ellipse_2" data-name="Ellipse 2" cx="11.722" cy="11.722" r="11.722" transform="translate(48.648 96.307)" fill="#7383bf"/>
+              <circle id="Ellipse_3" data-name="Ellipse 3" cx="11.722" cy="11.722" r="11.722" transform="translate(0 72.578)" fill="#dc298d"/>
+              <circle id="Ellipse_4" data-name="Ellipse 4" cx="7.033" cy="7.033" r="7.033" transform="translate(51.982)" fill="#969696"/>
+              <circle id="Ellipse_5" data-name="Ellipse 5" cx="7.033" cy="7.033" r="7.033" transform="translate(95.081 96.952)" fill="#ebba16"/>
+              <circle id="Ellipse_6" data-name="Ellipse 6" cx="20.068" cy="20.068" r="20.068" transform="translate(60.424 35.278)" fill="#06abeb"/>
+            </g>
+          </g>
+        </g>
+        <g id="Group_249" data-name="Group 249" transform="translate(5 0.5)">
+          <g id="Group_230" data-name="Group 230" transform="translate(-357.47 -17.5)">
+            <text id="Back_to_3D" data-name="Back to 3D" transform="translate(765.5 602.162)" font-size="59" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="-154.639" y="0">Back to 3D</tspan></text>
+          </g>
+          <g id="Group_248" data-name="Group 248" transform="translate(-353.47 122.5)">
+            <text id="_" data-name="&lt;" transform="translate(588.5 455.162)" font-size="59" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="-17.7" y="0">&lt;</tspan></text>
+          </g>
+        </g>
+      </g>
+    </svg>
+    
+  </div>
+  <script>
+
+function linkExist(sourceTargetTuples,kinaseID,targetID){
+  for (let idx = 0; idx < sourceTargetTuples.length; idx++) {
+    currTuple = sourceTargetTuples[idx]
+    if (currTuple[0] === kinaseID && currTuple[1] === targetID){
+      return true
+    }
+  }
+return false
+}
+
+var index = localStorage.getItem("idx")
+var finalDataObj = null
+if(index==0){finalDataObj = time24_network}
+else if(index==1){finalDataObj = time12_network}
+else if(index==2){finalDataObj = time08_network}
+else if(index==3){finalDataObj = time04_network}
+else if(index==4){finalDataObj = time02_network}
+else{finalDataObj = time00_network}
+
+function thresholdDecider(DataObj){ // need to add rectangleCollide = d3.bboxCollide here
+
+let nodeSizes = (DataObj["nodes"].map(el => el.nodeSize)).filter(x => x != undefined)
+let nodeColors = ((DataObj["nodes"].map(el => el.nodeColors)).flat()).filter(x => x != undefined)
+let nodeSizeRange = [Math.min.apply(Math, nodeSizes), Math.max.apply(Math, nodeSizes)]
+let nodeColorRange = [Math.min.apply(Math, nodeColors), Math.max.apply(Math, nodeColors)]
+let nodeColorThreshold = null
+
+if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
+  let minPositive = 0
+  let maxPositive = 0
+  nodeColorRange[0]<0 ? minPositive = - nodeColorRange[0] : minPositive = nodeColorRange[0]
+  nodeColorRange[1]<0 ? maxPositive = - nodeColorRange[1] : maxPositive = nodeColorRange[1]
+  minPositive>maxPositive  ? nodeColorThreshold = minPositive : nodeColorThreshold = maxPositive
+}
+
+let edgeWeights = (DataObj["links"].map(el => el.edgeWeight)).filter(x => x != undefined)
+let edgeColors = (DataObj["links"].map(el => el.edgeColor)).filter(x => x != undefined)
+let edgeWeightRange = [Math.min.apply(Math, edgeWeights), Math.max.apply(Math, edgeWeights)]
+let edgeColorRange = [Math.min.apply(Math, edgeColors), Math.max.apply(Math, edgeColors)]
+
+return {"nodeSizes":nodeSizes, "nodeColors":nodeColors, "nodeSizeRange":nodeSizeRange, "nodeColorRange":nodeColorRange, "nodeColorThreshold":nodeColorThreshold, "edgeWeights":edgeWeights, "edgeColors":edgeColors, "edgeWeightRange":edgeWeightRange, "edgeColorRange":edgeColorRange}
+
+}
+
+var thresholds = thresholdDecider(finalDataObj)
+var [nodeSizes, nodeColors, nodeSizeRange, nodeColorRange, nodeColorThreshold, edgeWeights, edgeColors, edgeWeightRange, edgeColorRange] = [thresholds["nodeSizes"], thresholds["nodeColors"], thresholds["nodeSizeRange"], thresholds["nodeColorRange"], thresholds["nodeColorThreshold"], thresholds["edgeWeights"],thresholds["edgeColors"],thresholds["edgeWeightRange"],thresholds["edgeColorRange"]]
+var nodesList = finalDataObj["ids"]
+
+var rectangleCollide = d3.bboxCollide([[-8,-14],[8,14]])
+
+    const Graph = ForceGraph()
+      (document.getElementById('graph'))
+
+      .nodeCanvasObject((node, ctx) => {
+        var arrayLength = node.nodeColors.length;
+
+        ctx.fillStyle = '#808080';
+          ctx.fillRect(node.x - 6, node.y - 2.5, 12, 5);
+
+        if (arrayLength == 0 || arrayLength == undefined){
+          ctx.fillStyle = '#808080';
+          ctx.fillRect(node.x - 6, node.y - 2.5, 12, 5);
+        }
+        else{
+          const partitionNum = 5
+          arrayLength = arrayLength >= partitionNum ? partitionNum : arrayLength;
+
+        for (var i = 0; i < arrayLength; i++) {
+            ctx.fillStyle = nodeColoring(node.nodeColors[i]);
+            ctx.fillRect(node.x - 6, node.y - 2.5 + i*5, 12, 5);       
+          }
+        }
+        })
+        .nodePointerAreaPaint(nodePaint)
+        .nodeId('id')
+        .nodeLabel('id')
+        .graphData(finalDataObj);
+
+        Graph.d3Force('collide', rectangleCollide);
+        // Graph.d3Force('charge').strength(-70);
+        Graph.zoom(1.3)
+        // Graph.d3Force('link').distance(link => 70);
+
+
+        function nodePaint(node, color, ctx) {
+          var partition = node.nodeColors.length < 5 ? node.nodeColors.length : 5
+          if(partition == 0){ partition = 1}
+          ctx.fillStyle = color
+          ctx.fillRect(node.x-6, node.y-2.5, 12, 5*partition);
+         }
+
+        function normalized(value, actual_bounds, desired_bounds) { 
+          return (desired_bounds[0] + (value - actual_bounds[0]) * (desired_bounds[1] - desired_bounds[0]) / (actual_bounds[1] - actual_bounds[0]))
+        }
+
+        function nodeColoring (l2fc_value) {
+          if(l2fc_value === "kinase"){
+            return "#f5aa3b"
+          }
+
+            if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
+            
+            let rainbow = new Rainbow(); 
+            nodeColorThreshold > 3 ? rainbow.setNumberRange(-3, 3) : rainbow.setNumberRange(-nodeColorThreshold, nodeColorThreshold)
+            
+            rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044');
+          
+            if (l2fc_value === "null") {
+              return "#cccccc"
+            }
+            else{
+              let hexColour = rainbow.colourAt(l2fc_value);
+              let stringColor = '#' + hexColour
+              return stringColor
+            }
+
+          }
+        }
+
+  </script>
+</body>
