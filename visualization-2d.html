@@ -267,13 +267,13 @@ return {"nodeSizes":nodeSizes, "nodeColors":nodeColors, "nodeSizeRange":nodeSize
 var thresholds = thresholdDecider(finalDataObj)
 var [nodeSizes, nodeColors, nodeSizeRange, nodeColorRange, nodeColorThreshold, edgeWeights, edgeColors, edgeWeightRange, edgeColorRange] = [thresholds["nodeSizes"], thresholds["nodeColors"], thresholds["nodeSizeRange"], thresholds["nodeColorRange"], thresholds["nodeColorThreshold"], thresholds["edgeWeights"],thresholds["edgeColors"],thresholds["edgeWeightRange"],thresholds["edgeColorRange"]]
 var nodesList = finalDataObj["ids"]
+var rectangleCollide = d3.bboxCollide([[-14,-18],[14,18]])
 
-var rectangleCollide = d3.bboxCollide([[-8,-14],[8,14]])
-
-    const Graph = ForceGraph({rendererConfig:{preserveDrawingBuffer : true}})
+    const Graph = ForceGraph()
       (document.getElementById('graph'))
 
       .nodeCanvasObject((node, ctx) => {
+
         var arrayLength = node.nodeColors.length;
 
         ctx.fillStyle = '#808080';
@@ -292,8 +292,21 @@ var rectangleCollide = d3.bboxCollide([[-8,-14],[8,14]])
             ctx.fillRect(node.x - 6, node.y - 2.5 + i*5, 12, 5);       
           }
         }
-        })
+
+        if (PARAMS.Labels === "On"){
+          const label = node.id;
+          var fontSize = 7;
+          ctx.font = `${fontSize}px Arial`;
+          const textWidth = ctx.measureText(label).width;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = '#808080'
+          ctx.fillText(label, node.x, node.y-6);
+        }
+      })
         .nodePointerAreaPaint(nodePaint)
+        .nodeAutoColorBy('group')
+        // .nodeCanvasObjectMode(node => 'after')
         .nodeId('id')
         .nodeLabel('id')
         .graphData(finalDataObj);
@@ -314,40 +327,40 @@ var rectangleCollide = d3.bboxCollide([[-8,-14],[8,14]])
 /////////////////////////////////////////
 ////////// COLORING ////////////////////
 ///////////////////////////////////////
-        function nodePaint(node, color, ctx) {
-          var partition = node.nodeColors.length < 5 ? node.nodeColors.length : 5
-          if(partition == 0){ partition = 1}
-          ctx.fillStyle = color
-          ctx.fillRect(node.x-6, node.y-2.5, 12, 5*partition);
-         }
+function nodePaint(node, color, ctx) {
+  var partition = node.nodeColors.length < 5 ? node.nodeColors.length : 5
+  if(partition == 0){ partition = 1}
+  ctx.fillStyle = color
+  ctx.fillRect(node.x-6, node.y-2.5, 12, 5*partition);
+  }
 
-        function normalized(value, actual_bounds, desired_bounds) { 
-          return (desired_bounds[0] + (value - actual_bounds[0]) * (desired_bounds[1] - desired_bounds[0]) / (actual_bounds[1] - actual_bounds[0]))
-        }
+function normalized(value, actual_bounds, desired_bounds) { 
+  return (desired_bounds[0] + (value - actual_bounds[0]) * (desired_bounds[1] - desired_bounds[0]) / (actual_bounds[1] - actual_bounds[0]))
+}
 
-        function nodeColoring (l2fc_value) {
-          if(l2fc_value === "kinase"){
-            return "#f5aa3b"
-          }
+function nodeColoring (l2fc_value) {
+  if(l2fc_value === "kinase"){
+    return "#f5aa3b"
+  }
 
-            if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
-            
-            let rainbow = new Rainbow(); 
-            nodeColorThreshold > 3 ? rainbow.setNumberRange(-3, 3) : rainbow.setNumberRange(-nodeColorThreshold, nodeColorThreshold)
-            
-            rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044');
-          
-            if (l2fc_value === "null") {
-              return "#cccccc"
-            }
-            else{
-              let hexColour = rainbow.colourAt(l2fc_value);
-              let stringColor = '#' + hexColour
-              return stringColor
-            }
+    if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
+    
+    let rainbow = new Rainbow(); 
+    nodeColorThreshold > 3 ? rainbow.setNumberRange(-3, 3) : rainbow.setNumberRange(-nodeColorThreshold, nodeColorThreshold)
+    
+    rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044');
+  
+    if (l2fc_value === "null") {
+      return "#cccccc"
+    }
+    else{
+      let hexColour = rainbow.colourAt(l2fc_value);
+      let stringColor = '#' + hexColour
+      return stringColor
+    }
 
-          }
-        }
+  }
+}
 
 /////////////////////////////////////////
 ////////// GUI CONTROLS ////////////////
@@ -385,6 +398,19 @@ changeState();
 
 tab.pages[0].addInput(PARAMS, 'Background').on('change', (ev) => {
 updateBackground();
+});
+
+tab.pages[0].addInput(PARAMS, 'Labels', {
+  view: 'radiogrid',
+  groupName: 'Labels',
+  size: [2, 1],
+  cells: (x, y) => ({
+    title: labelOpt[y * 3 + x],
+    value: labelOpt[y * 3 + x],
+  }),
+  label: 'Labels',
+}).on('change', (ev) => {
+  Graph.nodeCanvasObject(Graph.nodeCanvasObject())
 });
 
 tab.pages[0].addButton({title: 'Enter/Exit Fullscreen'}).on('click',()=>{
