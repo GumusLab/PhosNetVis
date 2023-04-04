@@ -11,10 +11,10 @@
   <style> body { margin: 0; } </style>
 
   <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-  <script src="//unpkg.com/force-graph"></script>
-  <script src="//unpkg.com/d3-quadtree"></script>
-  <script src="//unpkg.com/d3-force"></script>
-  <script src="//unpkg.com/d3-bboxCollide"></script>
+  <script src="https://cdn.jsdelivr.net/npm/force-graph@1.43.0/dist/force-graph.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-quadtree@3.0.1/dist/d3-quadtree.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-force@3.0.0/dist/d3-force.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-bboxCollide@1.0.4/build/d3-bboxCollide.min.js"></script>
   <script src="libraries/rainbowvis.js"></script>
   <script src="js/hgnc_dict.js"></script>
   <script src="js/recordScript.js"></script>
@@ -24,7 +24,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@tweakpane/plugin-essentials@0.1.5/dist/tweakpane-plugin-essentials.min.js"></script>
   <script src="js/fstdropdown.js"></script>
   <script src="js/reimg.js"></script>
-  <script src="//unpkg.com/element-resize-detector/dist/element-resize-detector.min.js"></script>
+  <script src="/libraries/element-resize-detector.min.js"></script>
   <link rel="stylesheet" href="css/fstdropdown-2d.css">
   <link rel="stylesheet" href="css/visualization.css">
   <style type="text/css">
@@ -296,11 +296,11 @@ var rectangleCollide = d3.bboxCollide([[-14,-18],[14,18]])
         if (PARAMS.Labels === "On"){
           const label = node.id;
           var fontSize = 7;
-          ctx.font = `${fontSize}px Arial`;
+          ctx.font = `bold ${fontSize}px Arial`;
           const textWidth = ctx.measureText(label).width;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillStyle = '#808080'
+          ctx.fillStyle = '#303030'
           ctx.fillText(label, node.x, node.y-6);
         }
       })
@@ -313,7 +313,7 @@ var rectangleCollide = d3.bboxCollide([[-14,-18],[14,18]])
 
         Graph.d3Force('collide', rectangleCollide);
         Graph.d3Force('charge').strength(-70);
-        Graph.zoom(1.3)
+        Graph.zoom(1.2)
         // Graph.d3Force('link').distance(link => 70);
   
         elementResizeDetectorMaker().listenTo(
