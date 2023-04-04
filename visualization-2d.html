@@ -273,7 +273,17 @@ var rectangleCollide = d3.bboxCollide([[-14,-18],[14,18]])
       (document.getElementById('graph'))
 
       .nodeCanvasObject((node, ctx) => {
-
+        
+      var labelMargin = 6
+      if(node.type=="1"){
+           labelMargin = 9.5
+           ctx.fillStyle = '#808080';
+           ctx.beginPath(); 
+           ctx.moveTo(node.x, node.y - 7); 
+           ctx.lineTo(node.x - 6, node.y -2.5); 
+           ctx.lineTo(node.x + 6, node.y -2.5); 
+           ctx.fill();
+      }
         var arrayLength = node.nodeColors.length;
 
         ctx.fillStyle = '#808080';
@@ -293,21 +303,25 @@ var rectangleCollide = d3.bboxCollide([[-14,-18],[14,18]])
           }
         }
 
-        if (PARAMS.Labels === "On"){
+        if (PARAMS.Labels == "On"){
           const label = node.id;
-          var fontSize = 7;
+          var fontSize = 6;
           ctx.font = `bold ${fontSize}px Arial`;
           const textWidth = ctx.measureText(label).width;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillStyle = '#303030'
-          ctx.fillText(label, node.x, node.y-6);
+          ctx.fillText(label, node.x, node.y-labelMargin);
         }
       })
         .nodePointerAreaPaint(nodePaint)
         .nodeAutoColorBy('group')
         // .nodeCanvasObjectMode(node => 'after')
-        .nodeId('id')
+        // .nodeId('id')
+        .onNodeDragEnd(node => {
+        node.fx = node.x;
+        node.fy = node.y;
+        })
         .nodeLabel('id')
         .graphData(finalDataObj);
 
@@ -331,6 +345,13 @@ function nodePaint(node, color, ctx) {
   var partition = node.nodeColors.length < 5 ? node.nodeColors.length : 5
   if(partition == 0){ partition = 1}
   ctx.fillStyle = color
+  if(node.type=="1"){
+    ctx.beginPath(); 
+           ctx.moveTo(node.x, node.y - 7); 
+           ctx.lineTo(node.x - 6, node.y -2.5); 
+           ctx.lineTo(node.x + 6, node.y -2.5); 
+           ctx.fill();
+  }
   ctx.fillRect(node.x-6, node.y-2.5, 12, 5*partition);
   }
 
