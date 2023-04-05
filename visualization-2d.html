@@ -27,6 +27,8 @@
   <script src="/libraries/element-resize-detector.min.js"></script>
   <link rel="stylesheet" href="css/fstdropdown-2d.css">
   <link rel="stylesheet" href="css/visualization.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+  <title>2D Visualization</title>
   <style type="text/css">
 
     @font-face {
@@ -59,7 +61,6 @@
 
 <body>
   <div id="graph"></div>
-<div>
 
 <div>
     <svg version="1.1" id="Layer_1" onclick="window.location.href = 'index.html'" xmlns="http://www.w3.org/2000/svg" width = "150px" style="top:2%;left:1%;position:absolute;cursor: pointer;z-index:10;" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 710.3 222.4" xml:space="preserve"> <style type="text/css"> .st0b{fill:#424A60;} .st1b{fill:#DC298D;} .st2b{fill:#7383BF;} .st3b{fill:#969696;} .st4b{fill:#EBBA16;} .st5b{fill:#06ABEB;} .st6b{font-family:'helveticaBold';} .st7b{font-size:84.3397px;} .st8b{letter-spacing:-1;} </style> <g id="Layer_1_00000056390415183483724190000009750584087129516189_"> <g id="path5"> <rect x="92.8" y="154.2" transform="matrix(0.3589 -0.9334 0.9334 0.3589 -62.6169 220.6174)" class="st0b" width="72.9" height="3.3"/> </g> <rect id="path4" x="156.9" y="60.1" transform="matrix(0.8102 -0.5861 0.5861 0.8102 0.7614 131.2305)" class="st0b" width="92.3" height="8.7"/> <g id="path3"> <rect x="19" y="127.2" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -46.9835 44.8278)" class="st0b" width="126.2" height="11.8"/> </g> <g id="path2"> <rect x="122.6" y="16.9" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -9.3065 55.4032)" class="st0b" width="6.4" height="65.4"/> </g> <rect id="path1" x="169" y="110.3" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -48.6296 83.9257)" class="st0b" width="8.7" height="92.3"/> <circle id="circle6" class="st1b" cx="249.7" cy="34.5" r="21.8"/> <circle id="circle5" class="st2b" cx="112.1" cy="200.6" r="21.8"/> <circle id="circle4" class="st1b" cx="21.8" cy="156.5" r="21.8"/> <circle id="circle3" class="st3b" cx="109.6" cy="13.1" r="13.1"/> <circle id="circle2" class="st4b" cx="189.6" cy="193.1" r="13.1"/> <circle id="circle1" class="st5b" cx="149.5" cy="102.8" r="37.3"/> </g> <g id="Layer_2_00000013871697503241264390000008040421359665832584_"> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 243.0089 140.7256)" class="st6b st7b">PhosNet</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 585.1035 139.5315)" class="st6b st7b st8b">V</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 639.8698 139.3403)" class="st6b st7b">is</text> </g> </svg>
@@ -450,8 +451,6 @@ return {"nodeSizes":nodeSizes, "nodeColors":nodeColors, "nodeSizeRange":nodeSize
 ////////// GRAPH CREATION //////////////
 ///////////////////////////////////////
 
-// TODO: Need to add curvature for self phos kinases
-
 var thresholds = thresholdDecider(finalDataObj)
 var [nodeSizes, nodeColors, nodeSizeRange, nodeColorRange, nodeColorThreshold, edgeWeights, edgeColors, edgeWeightRange, edgeColorRange] = [thresholds["nodeSizes"], thresholds["nodeColors"], thresholds["nodeSizeRange"], thresholds["nodeColorRange"], thresholds["nodeColorThreshold"], thresholds["edgeWeights"],thresholds["edgeColors"],thresholds["edgeWeightRange"],thresholds["edgeColorRange"]]
 var nodesList = finalDataObj["ids"]
@@ -512,11 +511,9 @@ var rectangleCollide = d3.bboxCollide([[-13,-18],[13,18]])
         node.fy = node.y;
         })
         .nodeLabel('id')
-        // .linkDirectionalArrowLength(4)   
         .linkColor(link => (link.edgeColor === undefined) ? "#cccccc" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
-        //.linkColor("#fcba03")
-        .linkWidth(1)
-        .linkWidth(link => (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,3]) : .8) // subject to change
+        .linkCurvature('curvature')
+        .linkWidth(link => (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0.5,3]) : .8) // subject to change
         .linkDirectionalArrowRelPos(0.5)
         .graphData(finalDataObj);
 
