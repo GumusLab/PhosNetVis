@@ -450,6 +450,8 @@ return {"nodeSizes":nodeSizes, "nodeColors":nodeColors, "nodeSizeRange":nodeSize
 ////////// GRAPH CREATION //////////////
 ///////////////////////////////////////
 
+// TODO: Need to add curvature for self phos kinases
+
 var thresholds = thresholdDecider(finalDataObj)
 var [nodeSizes, nodeColors, nodeSizeRange, nodeColorRange, nodeColorThreshold, edgeWeights, edgeColors, edgeWeightRange, edgeColorRange] = [thresholds["nodeSizes"], thresholds["nodeColors"], thresholds["nodeSizeRange"], thresholds["nodeColorRange"], thresholds["nodeColorThreshold"], thresholds["edgeWeights"],thresholds["edgeColors"],thresholds["edgeWeightRange"],thresholds["edgeColorRange"]]
 var nodesList = finalDataObj["ids"]
@@ -457,12 +459,11 @@ var rectangleCollide = d3.bboxCollide([[-13,-18],[13,18]])
 
     const Graph = ForceGraph()
       (document.getElementById('graph'))
-
       .nodeCanvasObject((node, ctx) => {
         
       var labelMargin = 5.5
 
-      if(node.type=="1"){
+      if(node.type == "1"){
            labelMargin = 10.5
            ctx.fillStyle = '#808080';
            if(node.kinaseActivity != 0 && node.kinaseActivity != undefined){
@@ -506,13 +507,15 @@ var rectangleCollide = d3.bboxCollide([[-13,-18],[13,18]])
         }
       })
         .nodePointerAreaPaint(nodePaint)
-        .nodeAutoColorBy('group')
         .onNodeDragEnd(node => {
         node.fx = node.x;
         node.fy = node.y;
         })
         .nodeLabel('id')
-        .linkDirectionalArrowLength(4)        
+        // .linkDirectionalArrowLength(4)   
+        .linkColor(link => (link.edgeColor === undefined) ? "#cccccc" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
+        //.linkColor("#fcba03")
+        .linkWidth(1)
         .linkDirectionalArrowRelPos(0.5)
         .graphData(finalDataObj);
 
@@ -571,6 +574,17 @@ function nodeColoring (l2fc_value) {
       return stringColor
     }
 
+  }
+}
+
+function linkColoring (value, color1, color2, color3, color4, color5) {
+  if (edgeColorRange[0] != undefined && edgeColorRange[1] != undefined){
+    let rainbow = new Rainbow(); 
+    rainbow.setNumberRange(-2, 2);
+    value = normalized(value,edgeColorRange,[-2,2])
+    rainbow.setSpectrum(color1, color2, color3, color4, color5)
+    let hexColour = '#' + rainbow.colourAt(value);
+    return hexColour
   }
 }
 
