@@ -574,6 +574,92 @@ function nodeColoring (l2fc_value) {
   }
 }
 
+/////////////////////////////////////////////////
+///////// LEGEND IMPLEMENTATION /////////////////
+/////////////////////////////////////////////////
+
+var animationActive = false
+function nodeColorLegend(phosOption){
+  if(nodeColorThreshold != null && nodeColorThreshold != Infinity && nodeColorThreshold != NaN && phosOption === "Show"){
+  let nodeColorThresholdL = nodeColorThreshold > 3 ? 3 : nodeColorThreshold
+  document.getElementById("p1").innerHTML = Number(-nodeColorThresholdL).toFixed(2)
+  document.getElementById("p2").innerHTML = Number(nodeColorThresholdL).toFixed(2)
+  document.getElementById("p1").style.bottom ="225px"
+  document.getElementById("p2").style.bottom = "225px"
+  document.getElementById("p1").style.right = "85px"
+  document.getElementById("p2").style.right = "15px"
+  document.getElementById("p1").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("p2").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("p1").style.fontSize = 15
+  document.getElementById("p2").style.fontSize = 15
+  document.getElementById("nodeColorRemover").style.display = "none"
+}
+else{
+  if(searchNodes.size === 0) {
+  document.getElementById("p1").innerHTML = "&ndash;"
+  document.getElementById("p2").innerHTML = "&ndash;"
+  document.getElementById("p1").style.bottom ="220px"
+  document.getElementById("p2").style.bottom = "220px"
+  document.getElementById("p1").style.right = "98px"
+  document.getElementById("p2").style.right = "26px"
+  document.getElementById("p1").style.fontFamily = "CenturyGothicPro-Bold"
+  document.getElementById("p2").style.fontFamily = "CenturyGothicPro-Bold"
+  document.getElementById("p1").style.fontSize = 20
+  document.getElementById("p2").style.fontSize = 20
+  document.getElementById("nodeColorRemover").style.display = "block"
+  }
+}
+}
+
+nodeColorLegend("Show");
+
+
+function restOfLegends(){
+
+if(nodeSizes.length>0 && nodeSizes.length>0){
+  document.getElementById("s1").innerHTML = Number(nodeSizeRange[0]).toFixed(2)
+  document.getElementById("s2").innerHTML = Number(nodeSizeRange[1]).toFixed(2)
+  document.getElementById("s1").style.bottom = "145px"
+  document.getElementById("s2").style.bottom = "145px"
+  document.getElementById("s1").style.right = nodeSizeRange[0]<0 ? "80px":"85px"
+  document.getElementById("s2").style.right = nodeSizeRange[1]<0 ? "10px":"15px"
+  document.getElementById("s1").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("s2").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("s1").style.fontSize = 15
+  document.getElementById("s2").style.fontSize = 15
+  document.getElementById("nodeSizeRemover").style.display = "none"
+}
+
+if(edgeColors.length>0 && edgeColors.length>0){
+  document.getElementById("c1").innerHTML = Number(edgeColorRange[0]).toFixed(2)
+  document.getElementById("c2").innerHTML = Number(edgeColorRange[1]).toFixed(2)
+  document.getElementById("c1").style.bottom = "75px"
+  document.getElementById("c2").style.bottom = "75px"
+  document.getElementById("c1").style.right = nodeSizeRange[0]<0 ? "80px":"85px"
+  document.getElementById("c2").style.right = nodeSizeRange[1]<0 ? "10px":"15px"
+  document.getElementById("c1").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("c2").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("c1").style.fontSize = 15
+  document.getElementById("c2").style.fontSize = 15
+  document.getElementById("edgeColorRemover").style.display = "none"
+}
+
+if(edgeWeights.length>0 && edgeWeights.length>0){
+  document.getElementById("w1").innerHTML = Number(edgeWeightRange[0]).toFixed(2)
+  document.getElementById("w2").innerHTML = Number(edgeWeightRange[1]).toFixed(2)
+  document.getElementById("w1").style.bottom = "-5px"
+  document.getElementById("w2").style.bottom = "-5px"
+  document.getElementById("w1").style.right = edgeWeightRange[0]<0 ? "80px":"85px"
+  document.getElementById("w2").style.right = edgeWeightRange[1]<0 ? "10px":"15px"
+  document.getElementById("w1").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("w2").style.fontFamily = "CenturyGothicPro"
+  document.getElementById("w1").style.fontSize = 15
+  document.getElementById("w2").style.fontSize = 15
+  document.getElementById("edgeWeightRemover").style.display = "none"
+}
+}
+
+restOfLegends()
 /////////////////////////////////////////
 ////////// GUI CONTROLS ////////////////
 ////////////////////////////////////////
