@@ -461,7 +461,7 @@ var rectangleCollide = d3.bboxCollide([[-13,-18],[13,18]])
       (document.getElementById('graph'))
       .nodeCanvasObject((node, ctx) => {
         
-      var labelMargin = 5.5
+      var labelMargin = 6
 
       if(node.type == "1"){
            labelMargin = 10.5
@@ -516,6 +516,7 @@ var rectangleCollide = d3.bboxCollide([[-13,-18],[13,18]])
         .linkColor(link => (link.edgeColor === undefined) ? "#cccccc" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
         //.linkColor("#fcba03")
         .linkWidth(1)
+        .linkWidth(link => (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,3]) : .8) // subject to change
         .linkDirectionalArrowRelPos(0.5)
         .graphData(finalDataObj);
 
