@@ -885,7 +885,7 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
     node.fz = node.z; })
   .onBackgroundClick(undefined=>{if(doubleclick){queryReset()}})
   .linkWidth(link => (searchLinks.has(link)) ? 1 : animationActive === true ? linkWidthAnimation(link) : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1])+.5 : .8) // subject to change
-  .linkDirectionalArrowLength(directed => (directed) ? 5 : 0)        
+  .linkDirectionalArrowLength(5)        
   .linkDirectionalArrowRelPos(0.5)
   .linkColor(link => (searchLinks.has(link)) ? "#ff3b3b" : animationActive === true ? linkColorAnimation(link) : (link.edgeColor === undefined) ? "#cccccc" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
   .linkDirectionalParticleWidth(1.5)
