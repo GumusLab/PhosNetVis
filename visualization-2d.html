@@ -274,16 +274,21 @@ var rectangleCollide = d3.bboxCollide([[-14,-18],[14,18]])
 
       .nodeCanvasObject((node, ctx) => {
         
-      var labelMargin = 6
+      var labelMargin = 5.5
+
       if(node.type=="1"){
-           labelMargin = 9.5
+           labelMargin = 10.5
            ctx.fillStyle = '#808080';
+           if(node.kinaseActivity != 0){
+                ctx.fillStyle = nodeColoring(node.kinaseActivity);
+              }
            ctx.beginPath(); 
-           ctx.moveTo(node.x, node.y - 7); 
-           ctx.lineTo(node.x - 6, node.y -2.5); 
-           ctx.lineTo(node.x + 6, node.y -2.5); 
+           ctx.moveTo(node.x, node.y - 7.8); 
+           ctx.lineTo(node.x - 6, node.y - 2.5); 
+           ctx.lineTo(node.x + 6, node.y - 2.5); 
            ctx.fill();
-      }
+        }
+        
         var arrayLength = node.nodeColors.length;
 
         ctx.fillStyle = '#808080';
@@ -316,8 +321,6 @@ var rectangleCollide = d3.bboxCollide([[-14,-18],[14,18]])
       })
         .nodePointerAreaPaint(nodePaint)
         .nodeAutoColorBy('group')
-        // .nodeCanvasObjectMode(node => 'after')
-        // .nodeId('id')
         .onNodeDragEnd(node => {
         node.fx = node.x;
         node.fy = node.y;
