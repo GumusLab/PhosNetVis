@@ -453,7 +453,7 @@ return {"nodeSizes":nodeSizes, "nodeColors":nodeColors, "nodeSizeRange":nodeSize
 var thresholds = thresholdDecider(finalDataObj)
 var [nodeSizes, nodeColors, nodeSizeRange, nodeColorRange, nodeColorThreshold, edgeWeights, edgeColors, edgeWeightRange, edgeColorRange] = [thresholds["nodeSizes"], thresholds["nodeColors"], thresholds["nodeSizeRange"], thresholds["nodeColorRange"], thresholds["nodeColorThreshold"], thresholds["edgeWeights"],thresholds["edgeColors"],thresholds["edgeWeightRange"],thresholds["edgeColorRange"]]
 var nodesList = finalDataObj["ids"]
-var rectangleCollide = d3.bboxCollide([[-14,-18],[14,18]])
+var rectangleCollide = d3.bboxCollide([[-13,-18],[13,18]])
 
     const Graph = ForceGraph()
       (document.getElementById('graph'))
@@ -465,7 +465,7 @@ var rectangleCollide = d3.bboxCollide([[-14,-18],[14,18]])
       if(node.type=="1"){
            labelMargin = 10.5
            ctx.fillStyle = '#808080';
-           if(node.kinaseActivity != 0){
+           if(node.kinaseActivity != 0 && node.kinaseActivity != undefined){
                 ctx.fillStyle = nodeColoring(node.kinaseActivity);
               }
            ctx.beginPath(); 
