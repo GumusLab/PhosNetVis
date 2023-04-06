@@ -515,6 +515,7 @@ var rectangleCollide = d3.bboxCollide([[-13,-18],[13,18]])
         .linkCurvature('curvature')
         .linkWidth(link => (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0.5,3]) : .8) // subject to change
         .linkDirectionalArrowRelPos(0.5)
+        .linkDirectionalArrowLength(5)
         .graphData(finalDataObj);
 
         Graph.d3Force('collide', rectangleCollide);
