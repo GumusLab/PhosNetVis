@@ -5,34 +5,34 @@
   <script src="https://cdn.jsdelivr.net/npm/d3-quadtree@3.0.1/dist/d3-quadtree.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/d3-force@3.0.0/dist/d3-force.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/d3-bboxCollide@1.0.4/build/d3-bboxCollide.min.js"></script>
-  <script src="data/covid-networks.js"></script>
-  <script src="libraries/rainbowvis.js"></script>
+  <script src="..//data/cptac-networks.js"></script>
+  <script src="..//libraries/rainbowvis.js"></script>
 
   <style type="text/css">
 
     @font-face {
       font-family: "MyriadPro-Regular";
-      src: url("fonts/MYRIADPROREGULAR.woff") format("woff");
+      src: url("..//fonts/MYRIADPROREGULAR.woff") format("woff");
     }
     
     @font-face {
     font-family: "Century Gothic";
-    src: url("fonts/CenturyGothic.woff") format("woff");
+    src: url("..//fonts/CenturyGothic.woff") format("woff");
     }
     
     @font-face {
     font-family: "CenturyGothicPro";
-    src: url("fonts/CenturyGothic.woff") format("woff");
+    src: url("..//fonts/CenturyGothic.woff") format("woff");
     }
     
     @font-face {
     font-family: "CenturyGothicPro-Bold";
-    src: url("fonts/CenturyGothic-Bold.woff") format("woff");
+    src: url("..//fonts/CenturyGothic-Bold.woff") format("woff");
     }
   
     @font-face {
       font-family: "helveticaBold";
-      src: url("fonts/helvetica-bold-webfont.woff") format("woff");
+      src: url("..//fonts/helvetica-bold-webfont.woff") format("woff");
       }
   
   </style>
@@ -41,7 +41,7 @@
 <body>
   <div id="graph"></div>
 <div>
-    <svg onclick="window.location.href = 'covid-vis.html'" xmlns="http://www.w3.org/2000/svg" width = "150px" style="top:2%;left:1%;position:absolute;cursor: pointer;z-index:10;"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470.47 119.751">
+    <svg onclick="window.location.href = 'cptac-vis.html'" xmlns="http://www.w3.org/2000/svg" width = "150px" style="top:2%;left:1%;position:absolute;cursor: pointer;z-index:10;"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470.47 119.751">
       <g id="Group_250" data-name="Group 250" transform="translate(-97.561 -505.286)">
         <g id="Group_226" data-name="Group 226" transform="translate(-257 -5)">
           <g id="phos_copy" data-name="phos copy" transform="translate(354.561 510.286)">
@@ -84,14 +84,21 @@ function linkExist(sourceTargetTuples,kinaseID,targetID){
 return false
 }
 
-var index = localStorage.getItem("idx")
-var finalDataObj = null
-if(index==0){finalDataObj = time24_network}
-else if(index==1){finalDataObj = time12_network}
-else if(index==2){finalDataObj = time08_network}
-else if(index==3){finalDataObj = time04_network}
-else if(index==4){finalDataObj = time02_network}
-else{finalDataObj = time00_network}
+var index = localStorage.getItem("cptacidx")
+ if(index == undefined || index == null){
+  index = 0
+ }
+ 
+ var finalDataObj = null
+
+if(index==0){finalDataObj = fib_tgf }
+else if(index==1){finalDataObj = ccrc_endothelial}
+else if(index==2){finalDataObj = cnin}
+else if(index==3){finalDataObj = cnip}
+else if(index==4){finalDataObj = cpip}
+else if(index==5){finalDataObj = eosino_endo}
+else{finalDataObj = brain_neuro}
+
 
 function thresholdDecider(DataObj){ // need to add rectangleCollide = d3.bboxCollide here
 
