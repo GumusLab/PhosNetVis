@@ -765,16 +765,34 @@ localStorage.setItem('idx',file_names.indexOf(new_file_name))
 location.reload();
 }
 
+function cloneCanvas(oldCanvas) {
+
+//create a new canvas
+var newCanvas = document.createElement('canvas');
+var context = newCanvas.getContext('2d');
+
+//set dimensions
+newCanvas.width = oldCanvas.width;
+newCanvas.height = oldCanvas.height;
+
+//apply the old canvas to the new one
+context.drawImage(oldCanvas, 0, 0);
+
+//return the new canvas
+return newCanvas;
+}
+
 function snapshot(){
-let canvas = document.getElementsByTagName('canvas')[0];
-var ctx = canvas.getContext('2d');
+let oldcanvas = document.getElementsByTagName('canvas')[0];
+let canvas = cloneCanvas(oldcanvas)
+var ctx = canvas.getContext('2d')
 ctx.globalCompositeOperation = 'destination-over';
 ctx.fillStyle = PARAMS.Background;
 ctx.fillRect(-1, -1, canvas.width+10, canvas.height+10);
 ctx.fillRect(1, 1, -canvas.width-10, -canvas.height-10);
 ctx.fillRect(0, 0, canvas.width+10, -canvas.height-10);
 ctx.fillRect(0, 0, -canvas.width-10, canvas.height+10);
-ReImg.fromCanvas(document.getElementsByTagName('canvas')[0]).downloadPng();
+ReImg.fromCanvas(canvas).downloadPng();
 }
 
 
