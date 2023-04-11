@@ -274,7 +274,7 @@ function fullscreen() {
 ////////////////////////////////////////////////
 var doubleclick = false
 window.addEventListener("dblclick", event => {doubleclick = true})
-setInterval(myTimer, 100);
+setInterval(myTimer, 200);
 function myTimer() {doubleclick = false}
 
 ////////////////////////////////////////////////
@@ -520,7 +520,7 @@ const Graph = ForceGraph()
           }
         }
 
-        if (PARAMS.Labels == "On"){
+        if (PARAMS.Labels == "On" || searchNodes.has(node)){
           const label = node.id;
           var fontSize = 6;
           ctx.font = `bold ${fontSize}px Arial`;
@@ -540,7 +540,7 @@ const Graph = ForceGraph()
         .onNodeClick(node => {
           if(doubleclick){
             Graph.centerAt(node.x, node.y, 1000);
-            Graph.zoom(8, 2000);
+            Graph.zoom(6, 2000);
 
             clickedNode = node.id
             resetRows();
@@ -551,7 +551,6 @@ const Graph = ForceGraph()
             searchNodes.add(node);
             node.neighbors.forEach(neighbor => searchNodes.add(neighbor));
             node.links.forEach(link => searchLinks.add(link));
-            if(!animationActive){addRows(node.partitionIDs, node.nodeColors, node.pValues)}
 
             document.getElementById("nodehref").innerHTML = node.id
 
@@ -578,15 +577,18 @@ const Graph = ForceGraph()
             }
 
             document.getElementById("infoBox").style.display =  "block";
+
+            Graph.linkDirectionalParticles(Graph.linkDirectionalParticles());
           }
           }
 
         })
-        .linkColor(link => (link.edgeColor === undefined) ? "#cccccc" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
+        .linkColor(link => (searchLinks.has(link)) ? "#ff3b3b": (link.edgeColor === undefined) ? "#cccccc" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
         .linkCurvature('curvature')
-        .linkWidth(link => (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0.5,3]) : .8) // subject to change
+        .linkWidth(link => (searchLinks.has(link)) ? 2 : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0.5,3]) : .8) // subject to change
         .linkDirectionalArrowRelPos(0.5)
         .linkDirectionalArrowLength(5)
+        .linkDirectionalParticles(link => (searchLinks.has(link)) ? 4 : 0)
         .onBackgroundClick(undefined=>{if(doubleclick){queryReset()}})
         .graphData(finalDataObj);
 
@@ -758,9 +760,11 @@ if(edgeWeights.length>0 && edgeWeights.length>0){
 }
 
 restOfLegends()
+
 /////////////////////////////////////////
 ////////// GUI CONTROLS ////////////////
 ////////////////////////////////////////
+
 const fnames = {};
  for (const key of file_names) {
   fnames[key] = key;
@@ -882,6 +886,40 @@ function queryReset(){
   }
   resetRows();
   document.getElementById("infoBox").style.display = "none";
+  Graph.linkDirectionalParticles(Graph.linkDirectionalParticles());
+
+}
+
+/////////////////////////////////////////////////  
+///////////// NODE QUERY FUNCTIONS //////////////
+/////////////////////////////////////////////////
+
+function removeOptions(selectElement) {
+   let i, L = selectElement.options.length - 1;
+   for(i = L; i >= 0; i--) {
+      selectElement.remove(i)
+   }
+   selectElement.fstdropdown.rebind()
+}
+function addOptions(addText, selectElement)
+{
+    // Create an Option object       
+    var opt = document.createElement("option")
+
+    // Assign text and value to Option object
+    opt.text = addText;
+    opt.value = addText;
+
+    // Add an Option object to Drop Down List Box
+    selectElement.options.add(opt);
+}
+
+nodesList = nodesList.sort()
+var x = document.getElementById("nodequery")
+var nodeindexes = 0
+for(nodeindexes = 0; nodeindexes<nodesList.length;nodeindexes++){
+  var optext = nodesList[nodeindexes]
+  addOptions(optext,x)
 }
 
 /////////////////////////////////////////////////
