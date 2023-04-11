@@ -270,6 +270,14 @@ function fullscreen() {
 }
 
 ////////////////////////////////////////////////
+// DOUBLE CLICK IMPLEMENTATION FOR NODE CLICK //
+////////////////////////////////////////////////
+var doubleclick = false
+window.addEventListener("dblclick", event => {doubleclick = true})
+setInterval(myTimer, 100);
+function myTimer() {doubleclick = false}
+
+////////////////////////////////////////////////
 // HIDE SHOW LEGEND AND MENU IMPLEMENTATIONS ///
 ////////////////////////////////////////////////
 
@@ -446,6 +454,21 @@ return {"nodeSizes":nodeSizes, "nodeColors":nodeColors, "nodeSizeRange":nodeSize
 
 }
 
+// cross-linking the node objects
+finalDataObj.links.forEach(link => {
+  const a = (finalDataObj.nodes.filter(x => x.id === link.source))[0]
+  const b = (finalDataObj.nodes.filter(x => x.id === link.target))[0]
+  !a.neighbors && (a.neighbors = []);
+  !b.neighbors && (b.neighbors = []);
+  a.neighbors.push(b);
+  b.neighbors.push(a);
+
+  !a.links && (a.links = []);
+  !b.links && (b.links = []);
+  a.links.push(link);
+  b.links.push(link);
+});
+
 
 /////////////////////////////////////////
 ////////// GRAPH CREATION //////////////
@@ -456,7 +479,12 @@ var [nodeSizes, nodeColors, nodeSizeRange, nodeColorRange, nodeColorThreshold, e
 var nodesList = finalDataObj["ids"]
 var rectangleCollide = d3.bboxCollide([[-13,-18],[13,18]]) // need to update with max nodsize!
 
-    const Graph = ForceGraph()
+const searchNodes = new Set();
+const searchLinks = new Set();
+
+
+const regex = new RegExp('[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}')
+const Graph = ForceGraph()
       (document.getElementById('graph'))
       .nodeCanvasObject((node, ctx) => {
       var nsize = normalized(node.nodeSize, nodeSizeRange, [0, 5])/2
@@ -795,6 +823,58 @@ ctx.fillRect(0, 0, -canvas.width-10, canvas.height+10);
 ReImg.fromCanvas(canvas).downloadPng();
 }
 
+/////////////////////////////////////////////////
+//////////// INFO TABLE FUNCTIONS ///////////////
+/////////////////////////////////////////////////
+
+function addRows(ids,log2FCs,pValues){
+  totalLength = ids.length
+  if(totalLength!=0){
+    for(let i = totalLength-1; i >= 0; i--){
+      addRow(ids[i],log2FCs[i],pValues[i])
+    }
+  }
+  else{
+    log2fc = log2FCs.length>0?log2FCs[0]:"--"
+    pval = pValues.length>0?pValues[0]:"--"
+    addRow("--",log2fc,pval)
+  }
+}
+
+function addRow(id,log2FC,pValue) {
+  let table = document.getElementById("tbody");
+  let row = table.insertRow(0);
+  let cell1 = row.insertCell(0);
+  let cell2 = row.insertCell(1);
+  let cell3 = row.insertCell(2);
+
+  if(id===undefined){
+    cell1.innerHTML="--"
+  }
+  else{
+    cell1.innerHTML = id;
+  }
+
+  if(log2FC===undefined){
+    cell2.innerHTML="--"
+  }
+  else{
+    cell2.innerHTML = log2FC==="--"?"--":parseFloat(log2FC).toFixed(3);
+  }
+
+  pvalueRound =  parseFloat(pValue).toFixed(3);
+  if(pValue===undefined){
+    cell3.innerHTML = "--"
+  }
+  else{
+    cell3.innerHTML = pValue==="--"?"--":pvalueRound>0 ? pvalueRound : "<0.001" ;
+  }
+
+}
+
+function resetRows(){
+  document.getElementById('tbody').innerHTML = ''
+}
 
   </script>
 </body>
