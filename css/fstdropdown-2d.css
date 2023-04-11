@@ -7,7 +7,7 @@
 .fstdiv {
     position: absolute;
     left: 2px;   /* position inside relatively positioned parent */
-    top: 300px;
+    top: 325px;
     z-index: 10; 
     width: 259px;
     font-family: "CenturyGothicPro-Bold";

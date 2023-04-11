@@ -74,7 +74,7 @@
   </div>
 </div>
 
-<div id="nodequeryMain" style="display: none;">
+<div id="nodequeryMain">
   <select class='fstdropdown-select' id="nodequery" onchange="updateSearch()" style="margin-top: -100px;">
       <option value="">Node Query</option>
   </select>
@@ -551,6 +551,7 @@ const Graph = ForceGraph()
             searchNodes.add(node);
             node.neighbors.forEach(neighbor => searchNodes.add(neighbor));
             node.links.forEach(link => searchLinks.add(link));
+            addRows(node.partitionIDs, node.nodeColors, node.pValues)
 
             document.getElementById("nodehref").innerHTML = node.id
 
@@ -577,8 +578,7 @@ const Graph = ForceGraph()
             }
 
             document.getElementById("infoBox").style.display =  "block";
-
-            Graph.linkDirectionalParticles(Graph.linkDirectionalParticles());
+            updateHighlight()
           }
           }
 
@@ -810,7 +810,7 @@ tab.pages[0].addInput(PARAMS, 'Labels', {
   }),
   label: 'Labels',
 }).on('change', (ev) => {
-  Graph.nodeCanvasObject(Graph.nodeCanvasObject())
+  updateHighlight()
 });
 
 tab.pages[0].addButton({title: 'Enter/Exit Fullscreen'}).on('click',()=>{
@@ -819,6 +819,10 @@ tab.pages[0].addButton({title: 'Enter/Exit Fullscreen'}).on('click',()=>{
 
 tab.pages[0].addButton({title: 'Take a screenshot'}).on('click',()=>{
   snapshot();  
+});
+
+tab.pages[0].addButton({title: 'Reset'}).on('click',()=>{
+  queryReset();
 });
 
 tab.pages[0].addSeparator();
@@ -886,9 +890,75 @@ function queryReset(){
   }
   resetRows();
   document.getElementById("infoBox").style.display = "none";
-  Graph.linkDirectionalParticles(Graph.linkDirectionalParticles());
-
+  updateHighlight()
 }
+
+function updateHighlight() {
+      // trigger update of highlighted objects in scene
+      Graph
+        .nodeCanvasObject(Graph.nodeCanvasObject())
+        .linkDirectionalParticles(Graph.linkDirectionalParticles());
+    }
+
+function updateSearch() {
+      resetRows();
+      let x = document.getElementById("nodequery");
+      if(x.value === ""){
+        searchNodes.clear();
+        searchLinks.clear();
+        Graph.centerAt(0, 0, 1000);
+        Graph.zoom(1.2, 1000);
+        updateHighlight();
+        document.getElementById("infoBox").style.display =  "none";
+        clickedNode = null
+      }
+
+      else{
+        let currentData = Graph.graphData()
+        let thisNode = currentData["nodes"].filter(ix => ix.id === x.value)[0]
+        Graph.centerAt(thisNode.x, thisNode.y, 1000);
+        Graph.zoom(6, 2000);
+
+          searchNodes.clear();
+          searchLinks.clear();
+          if (thisNode) {
+            clickedNode = thisNode.id
+            searchNodes.add(thisNode);
+            thisNode.neighbors.forEach(neighbor => searchNodes.add(neighbor));
+            thisNode.links.forEach(link => searchLinks.add(link));
+
+            addRows(thisNode.partitionIDs, thisNode.nodeColors, thisNode.pValues)
+            document.getElementById("nodehref").innerHTML = thisNode.id
+
+            if(regex.test((thisNode.id).toUpperCase())){
+              document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+(thisNode.id).toUpperCase() 
+            }
+            else if (hgnc_dict[(thisNode.id).toUpperCase()] === undefined){
+              document.getElementById("nodehref").href = "https://www.phosphosite.org/simpleSearchSubmitAction.action?searchStr="+thisNode.id
+            }
+            else{
+              document.getElementById("nodehref").href = "http://www.phosphosite.org/uniprotAccAction?id="+hgnc_dict[(thisNode.id).toUpperCase()]
+            }
+
+            document.getElementById("typetext").innerHTML = thisNode.type === 1 ? "Kinase" : "Substrate"
+
+            if(thisNode.type === 1 && thisNode.kinaseActivity != undefined){
+              document.getElementById("activityText").style.display = "inline" 
+              document.getElementById("activityNum").style.display = "inline" 
+              document.getElementById("activityNum").innerHTML = parseFloat(thisNode.kinaseActivity).toFixed(3) 
+            }
+            else{
+              document.getElementById("activityText").style.display = "none"
+              document.getElementById("activityNum").style.display = "none"
+            }
+
+          }
+          updateHighlight();
+          nodeColorLegend("Show");
+          document.getElementById("infoBox").style.display =  "block";
+      }
+
+  }
 
 /////////////////////////////////////////////////  
 ///////////// NODE QUERY FUNCTIONS //////////////
