@@ -487,6 +487,33 @@ const regex = new RegExp('[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]
 const Graph = ForceGraph()
       (document.getElementById('graph'))
       .nodeCanvasObject((node, ctx) => {
+      if(PARAMS.Phosphorylation === "Hide" && !(searchNodes.has(node))){
+        var nsize = 1.5
+        var labelMargin = 6 + nsize/2
+        if(node.type == "1"){
+           labelMargin = 10.5 + nsize*2
+           ctx.fillStyle = '#f5aa3b';
+           ctx.beginPath(); 
+           ctx.moveTo(node.x, node.y - 8 - nsize*2); 
+           ctx.lineTo(node.x - 5 - nsize, node.y - 1.5 - nsize); 
+           ctx.lineTo(node.x + 5 + nsize, node.y - 1.5 - nsize); 
+           ctx.fill();
+        }
+        ctx.fillStyle = '#cccccc';
+        ctx.fillRect(node.x - 5 - nsize, node.y - 1.5 - nsize, 10 + nsize * 2, 3 + nsize * 2);
+
+        if (PARAMS.Labels == "On"){
+          const label = node.id;
+          var fontSize = 6;
+          ctx.font = `bold ${fontSize}px Arial`;
+          const textWidth = ctx.measureText(label).width;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = '#303030'
+          ctx.fillText(label, node.x, node.y-labelMargin);
+        }
+      }
+      else{
       var nsize = normalized(node.nodeSize, nodeSizeRange, [0, 5])/2
       if(isNaN(nsize) == true){nsize = 1.5}
       var labelMargin = 6 + nsize/2
@@ -530,7 +557,7 @@ const Graph = ForceGraph()
           ctx.fillStyle = '#303030'
           ctx.fillText(label, node.x, node.y-labelMargin);
         }
-      })
+      }})
         .nodePointerAreaPaint(nodePaint)
         .onNodeDragEnd(node => {
         node.fx = node.x;
@@ -608,6 +635,19 @@ const Graph = ForceGraph()
 ////////// COLORING ////////////////////
 ///////////////////////////////////////
 function nodePaint(node, color, ctx) {
+  if(PARAMS.Phosphorylation === "Hide" && !(searchNodes.has(node))){
+    var nsize = 1.5
+    ctx.fillStyle = color
+    if(node.type=="1"){
+           ctx.beginPath(); 
+           ctx.moveTo(node.x, node.y - 8 - nsize*2); 
+           ctx.lineTo(node.x - 5 - nsize, node.y - 1.5 - nsize); 
+           ctx.lineTo(node.x + 5 + nsize, node.y - 1.5 - nsize); 
+           ctx.fill();
+  }
+  ctx.fillRect(node.x - 5 - nsize, node.y - 1.6 - nsize, 10 + nsize * 2, 3.1 + nsize * 2)
+  }
+  else{
   var nsize = normalized(node.nodeSize, nodeSizeRange, [0, 5])/2
   if(isNaN(nsize) == true){nsize = 1.5}
   ctx.fillStyle = color
@@ -631,6 +671,7 @@ function nodePaint(node, color, ctx) {
 
   for (var i = 0; i < arrayLength; i++) {
       ctx.fillRect(node.x - 5 - nsize, (node.y - 1.6 - nsize) + i*(3+nsize*2), 10 + nsize*2, 3.1 + nsize*2);
+      }
     }
   }
 }
