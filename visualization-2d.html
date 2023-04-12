@@ -807,6 +807,20 @@ tab.pages[0].addInput(PARAMS, 'Background').on('change', (ev) => {
 updateBackground();
 });
 
+tab.pages[0].addInput(PARAMS, 'Phosphorylation', {
+  view: 'radiogrid',
+  groupName: 'Phosphorylation',
+  size: [2, 1],
+  cells: (x, y) => ({
+    title: phosOpt[y * 3 + x],
+    value: phosOpt[y * 3 + x],
+  }),
+  label: 'Partitions',
+}).on('change', (ev) => {
+  nodeColorLegend(PARAMS.Phosphorylation);
+  Graph.nodeCanvasObject(Graph.nodeCanvasObject())
+});
+
 tab.pages[0].addInput(PARAMS, 'Labels', {
   view: 'radiogrid',
   groupName: 'Labels',
