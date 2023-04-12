@@ -667,7 +667,6 @@ const tab = pane.addTab({
   tab.pages[0].addInput(PARAMS, 'NegL2FC', {min: -nodeColorThreshold, max: 0, label: 'Neg-Log2FC'}).on('change', (ev) => {
   updateHighlight();
   });
-
   tab.pages[0].addInput(PARAMS, 'Background').on('change', (ev) => {
   updateBackground();
   });

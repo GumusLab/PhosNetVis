@@ -493,7 +493,7 @@ const Graph = ForceGraph()
 
       if(node.type == "1"){
            labelMargin = 10.5 + nsize*2
-           ctx.fillStyle = '#808080';
+           ctx.fillStyle = '#cccccc';
            if(node.kinaseActivity != 0 && node.kinaseActivity != undefined){
                 ctx.fillStyle = nodeColoring(node.kinaseActivity);
               }
@@ -507,7 +507,7 @@ const Graph = ForceGraph()
         var arrayLength = node.nodeColors.length;
 
         if (arrayLength == 0 || arrayLength == undefined){
-          ctx.fillStyle = '#808080';
+          ctx.fillStyle = '#cccccc';
           ctx.fillRect(node.x - 5 - nsize, node.y - 1.5 - nsize, 10 + nsize * 2, 3 + nsize * 2);
         }
         else{
@@ -646,12 +646,14 @@ function nodeColoring (l2fc_value) {
 
     if (nodeColorRange[0] != undefined && nodeColorRange[1] != undefined){
     
+    let threshold_max = PARAMS.PosL2FC
+    let threshold_min = PARAMS.NegL2FC
     let rainbow = new Rainbow(); 
     nodeColorThreshold > 3 ? rainbow.setNumberRange(-3, 3) : rainbow.setNumberRange(-nodeColorThreshold, nodeColorThreshold)
     
     rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044');
   
-    if (l2fc_value === "null") {
+    if ((l2fc_value >= threshold_min && l2fc_value <= threshold_max) || l2fc_value === "null") {
       return "#cccccc"
     }
     else{
@@ -795,7 +797,12 @@ const tab = pane.addTab({
 tab.pages[0].addInput(PARAMS, 'Network', {options: fnames, label: 'Network'}).on('change', (ev) => {
 changeState();
 });
-
+tab.pages[0].addInput(PARAMS, 'PosL2FC', {min: 0, max: nodeColorThreshold, label: 'Pos-Log2FC'}).on('change', (ev) => {
+updateHighlight();
+});
+tab.pages[0].addInput(PARAMS, 'NegL2FC', {min: -nodeColorThreshold, max: 0, label: 'Neg-Log2FC'}).on('change', (ev) => {
+updateHighlight();
+});
 tab.pages[0].addInput(PARAMS, 'Background').on('change', (ev) => {
 updateBackground();
 });
