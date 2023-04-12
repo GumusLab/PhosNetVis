@@ -488,7 +488,8 @@ const Graph = ForceGraph()
       (document.getElementById('graph'))
       .nodeCanvasObject((node, ctx) => {
       if(PARAMS.Phosphorylation === "Hide" && !(searchNodes.has(node))){
-        var nsize = 1.5
+        var nsize = normalized(node.nodeSize, nodeSizeRange, [0, 5])/2
+        if(isNaN(nsize) == true){nsize = 1.5}
         var labelMargin = 6 + nsize/2
         if(node.type == "1"){
            labelMargin = 10.5 + nsize*2
@@ -566,8 +567,8 @@ const Graph = ForceGraph()
         .nodeLabel('id')
         .onNodeClick(node => {
           if(doubleclick){
-            Graph.centerAt(node.x, node.y, 1000);
-            Graph.zoom(6, 2000);
+            Graph.centerAt(node.x, node.y, 500);
+            Graph.zoom(6, 500);
 
             clickedNode = node.id
             resetRows();
@@ -605,6 +606,7 @@ const Graph = ForceGraph()
             }
 
             document.getElementById("infoBox").style.display =  "block";
+            nodeColorLegend("Show");
             updateHighlight()
           }
           }
@@ -636,7 +638,8 @@ const Graph = ForceGraph()
 ///////////////////////////////////////
 function nodePaint(node, color, ctx) {
   if(PARAMS.Phosphorylation === "Hide" && !(searchNodes.has(node))){
-    var nsize = 1.5
+    var nsize = normalized(node.nodeSize, nodeSizeRange, [0, 5])/2
+    if(isNaN(nsize) == true){nsize = 1.5}
     ctx.fillStyle = color
     if(node.type=="1"){
            ctx.beginPath(); 
@@ -721,7 +724,6 @@ function linkColoring (value, color1, color2, color3, color4, color5) {
 ///////// LEGEND IMPLEMENTATION /////////////////
 /////////////////////////////////////////////////
 
-var animationActive = false
 function nodeColorLegend(phosOption){
   if(nodeColorThreshold != null && nodeColorThreshold != Infinity && nodeColorThreshold != NaN && phosOption === "Show"){
   let nodeColorThresholdL = nodeColorThreshold > 3 ? 3 : nodeColorThreshold
@@ -943,8 +945,8 @@ function queryReset(){
   clickedNode = null
   document.getElementById("nodequery").selectedIndex = 0;
   document.getElementById("nodequery").fstdropdown.rebind()
-  Graph.centerAt(0, 0, 1000);
-  Graph.zoom(1.2, 1000);
+  Graph.centerAt(0, 0, 500);
+  Graph.zoom(1.2, 500);
   searchNodes.clear();
   searchLinks.clear();
   if(PARAMS.Phosphorylation==="Hide"){
@@ -968,8 +970,8 @@ function updateSearch() {
       if(x.value === ""){
         searchNodes.clear();
         searchLinks.clear();
-        Graph.centerAt(0, 0, 1000);
-        Graph.zoom(1.2, 1000);
+        Graph.centerAt(0, 0, 500);
+        Graph.zoom(1.2, 500);
         updateHighlight();
         document.getElementById("infoBox").style.display =  "none";
         clickedNode = null
@@ -978,8 +980,8 @@ function updateSearch() {
       else{
         let currentData = Graph.graphData()
         let thisNode = currentData["nodes"].filter(ix => ix.id === x.value)[0]
-        Graph.centerAt(thisNode.x, thisNode.y, 1000);
-        Graph.zoom(6, 2000);
+        Graph.centerAt(thisNode.x, thisNode.y, 500);
+        Graph.zoom(6, 500);
 
           searchNodes.clear();
           searchLinks.clear();
