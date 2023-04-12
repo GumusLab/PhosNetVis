@@ -4,7 +4,7 @@ let chunks = [];
 let stream = null
 async function startRecording() {
     try {
-
+        chunks = []
         stream = await navigator.mediaDevices.getDisplayMedia({
             video: {
                 mediaSource: 'screen',

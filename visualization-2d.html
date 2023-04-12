@@ -231,8 +231,9 @@
 </div>
 </div>
 
-
 </div>
+
+<a href="#"  id="downloadbtn" style="display: none; width: 0px; height: 0px;"><button> Download Video </button></a>
 
 <script>
 
@@ -834,7 +835,10 @@ const pane = new Tweakpane.Pane({
 pane.registerPlugin(TweakpaneEssentialsPlugin);
 
 const tab = pane.addTab({
-  pages: [{title: 'Controls'}],
+  pages: [
+    {title: 'Controls'},
+    {title: 'Record'}
+  ],
 });
 
 tab.pages[0].addInput(PARAMS, 'Network', {options: fnames, label: 'Network'}).on('change', (ev) => {
@@ -896,6 +900,41 @@ tab.pages[0].addButton({title: 'Switch to 3D'}).on('click',()=>{
   window.location.href = 'visualization.html'
 });
 
+const f2 = tab.pages[1].addFolder({
+  title: 'Screen Record',
+});
+
+const startRecord = f2.addButton({title: 'Start Recording ▶',disabled: false})
+
+const stopRecord =f2.addButton({title: 'Stop Recording ❚❚',  disabled: true})
+
+f2.addSeparator();
+
+const downloadRecord = f2.addButton({title: 'Download Recording ↴',  disabled: true})
+
+startRecord.on('click', () => {
+  stopRecord.disabled = !stopRecord.disabled;
+  startRecord.disabled = !startRecord.disabled;
+
+  startRecording()
+
+  if(!downloadRecord.disabled){
+    downloadRecord.disabled = !downloadRecord.disabled;
+  }
+
+});
+
+stopRecord.on('click', () => {
+  stopRecord.disabled = !stopRecord.disabled;
+  startRecord.disabled = !startRecord.disabled;
+  stopScreen()
+  downloadRecord.disabled = !downloadRecord.disabled;
+});
+
+downloadRecord.on('click', () => {
+  downloadRecord.disabled = !downloadRecord.disabled;
+  downloadVideo()
+});
 /////////////////////////////////////////////////
 ////////////// UPDATE FUNCTIONS /////////////////
 /////////////////////////////////////////////////
