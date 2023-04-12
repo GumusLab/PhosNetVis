@@ -307,7 +307,7 @@ function hideShowLegend(val){
 function hideShowMenu(val) {
   if(val===0 || val === undefined){
     // document.getElementById("nqText").style.display = "none";
-    // document.getElementById("nodequeryMain").style.display = "none";
+    document.getElementById("nodequeryMain").style.display = "none";
     document.getElementById("openbutton-content").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="80px" viewBox="0 0 81 11"> <text id="close_controls" data-name="close controls" transform="translate(30 8)" fill="#5e6365" font-size="12" font-family="CenturyGothicPro, Century Gothic Pro"><tspan x="-29.45" y="0">open controls</tspan></text> </svg>';
     document.getElementById("openbutton-button").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 13"> <g id="Rectangle_1582" data-name="Rectangle 1582" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <line id="Line_201" data-name="Line 201" x2="6.5" transform="translate(3.25 4.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> <line id="Line_202" data-name="Line 202" x2="6.5" transform="translate(3.25 6.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> <line id="Line_203" data-name="Line 203" x2="6.5" transform="translate(3.25 8.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> </svg> '
     document.getElementById("openbutton").value = 1;
@@ -316,7 +316,7 @@ function hideShowMenu(val) {
   }
   else{
     // document.getElementById("nqText").style.display = "block";
-    // document.getElementById("nodequeryMain").style.display = "block";
+    document.getElementById("nodequeryMain").style.display = "block";
     document.getElementById("openbutton-content").innerHTML = ''
     document.getElementById("openbutton-button").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 16"> <g id="Rectangle_1581" data-name="Rectangle 1581" transform="translate(0 1)" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <text id="x" transform="translate(6.5 11)" fill="#9f9f9f" stroke="#2e3137" stroke-width="1" font-size="14" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-3.92" y="0">x</tspan></text> </svg>'
     document.getElementById("openbutton").value = 0;
