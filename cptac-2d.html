@@ -18,7 +18,7 @@
   <script src="libraries/rainbowvis.js"></script>
   <script src="js/hgnc_dict.js"></script>
   <script src="js/recordScript.js"></script>
-  <script src="data/covid-networks.js"></script>
+  <script src="..//data/cptac-networks.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.3/underscore-umd-min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="css/fstdropdown-2d.css">
   <link rel="stylesheet" href="css/visualization.css">
   <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
-  <title>COVID 2D</title>
+  <title>CPTAC 2D</title>
   <style type="text/css">
 
     @font-face {
@@ -85,7 +85,7 @@
   <div id="infoTop"> 
     <p id="nodeName" style="font-family: CenturyGothicPro-Bold; margin:6px;">Node: <a id = "nodehref" href="https://www.w3schools.com" target="_blank" style="color: #00709d;">placeholder1</a>   <img style = "width: 20px; margin-bottom: 5px;" src="https://www.phosphosite.org/images/header/logo_psp_white_cp.png"/></p>
     <p id = "nodeType" style="font-family: CenturyGothicPro-Bold; margin:6px;">Type: <a id="typetext">placeholder2</a> <a id="activityText">|  Activity: </a> <a id="activityNum">**</a></p>
-    <p style="font-family: CenturyGothicPro-Bold; margin:6px;"> <u>Phosphorylation Info</u> <h style="font-family: CenturyGothicPro-Bold; font-size: 12px;">*(scrollable)</h></p>
+    <p style="font-family: CenturyGothicPro-Bold; margin:6px;"> <u>Association Info</u> <h style="font-family: CenturyGothicPro-Bold; font-size: 12px;">*(scrollable)</h></p>
   </div>
   <table id = "phosTable" class="table table-striped table-bordered">
     <thead>
@@ -160,7 +160,7 @@
       <line id="Line_190" data-name="Line 190" y1="21" x2="22" transform="translate(60.262 228.675)" fill="none" stroke="#363535" stroke-width="11"/>
       <line id="Line_191" data-name="Line 191" y1="21" x2="22" transform="translate(36.63 228.675)" fill="none" stroke="#363535" stroke-width="5"/>
       <text id="Phosphorylation_log_FoldChange_" data-name="Phosphorylation
-    (log2fc)" transform="translate(51.5 14.9)" font-size="10" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-41" y="0">Phosphorylation</tspan><tspan font-size="8" font-family="CenturyGothicPro, Century Gothic Pro" font-weight="400"><tspan x="-16.428" y="10">(log2FC)</tspan></tspan></text>
+    (log2fc)" transform="translate(51.5 14.9)" font-size="10" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-41" y="0">Association</tspan><tspan font-size="8" font-family="CenturyGothicPro, Century Gothic Pro" font-weight="400"><tspan x="-16.428" y="10">(FDR)</tspan></tspan></text>
       <text id="Node_Size" data-name="Node Size" transform="translate(48.5 85.456)" font-size="10" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-24.1" y="0">Node Size</tspan></text>
       <text id="Edge_Color" data-name="Edge Color" transform="translate(49.607 152.119)" font-size="10" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-26.9" y="0">Edge Color</tspan></text>
       <text id="Edge_Weight" data-name="Edge Weight" transform="translate(51.404 221.675)" font-size="10" font-family="CenturyGothicPro-Bold, Century Gothic Pro" font-weight="700"><tspan x="-30.25" y="0">Edge Weight</tspan></text>
@@ -330,15 +330,20 @@ function hideShowMenu(val) {
 ////////// DATA CREATION ///////////////
 ///////////////////////////////////////
 
-var file_names = ["time 00hr - control", "time 02hr", "time 04hr", "time 08hr", "time 12hr", "time 24hr"]
-var index = localStorage.getItem("covididx")
+var file_names = ["Fibroblast/TGFBeta", "ccRCC/Endothelial", "CD8-/IFNG-", "CD8-/IFNG+", "CD8+/IFNG+", "Eosinophils/Endothelial", "Brain/Neuro"]
+var index = localStorage.getItem("cptacidx")
+if(index == undefined || index == null){
+index = 0
+}
 var finalDataObj = null
-if(index==0 || index == undefined){finalDataObj = time00_network}
-else if(index==1){finalDataObj = time02_network}
-else if(index==2){finalDataObj = time04_network}
-else if(index==3){finalDataObj = time08_network}
-else if(index==4){finalDataObj = time12_network}
-else if(index==5){finalDataObj = time24_network}
+
+if(index==0){finalDataObj = fib_tgf }
+else if(index==1){finalDataObj = ccrc_endothelial}
+else if(index==2){finalDataObj = cnin}
+else if(index==3){finalDataObj = cnip}
+else if(index==4){finalDataObj = cpip}
+else if(index==5){finalDataObj = eosino_endo}
+else{finalDataObj = brain_neuro}
 
 function thresholdDecider(DataObj){ // may consider adding rectangleCollide = d3.bboxCollide here
 
@@ -533,7 +538,7 @@ const Graph = ForceGraph()
         .graphData(finalDataObj);
 
         Graph.d3Force('collide', rectangleCollide);
-        Graph.d3Force('charge').strength(-70);
+        Graph.d3Force('charge').strength(-8);
         Graph.zoom(1.2)
   
         elementResizeDetectorMaker().listenTo(
@@ -807,7 +812,7 @@ tab.pages[0].addSeparator();
 tab.pages[0].addSeparator();
 
 tab.pages[0].addButton({title: 'Switch to 3D'}).on('click',()=>{
-  window.location.href = 'covid-vis.html'
+  window.location.href = 'cptac-vis.html'
 });
 
 const f2 = tab.pages[1].addFolder({
@@ -856,7 +861,7 @@ function updateBackground() {
 
 function changeState(){
 let new_file_name = PARAMS.Network
-localStorage.setItem('idx',file_names.indexOf(new_file_name))
+localStorage.setItem('cptacidx',file_names.indexOf(new_file_name))
 location.reload();
 }
 
