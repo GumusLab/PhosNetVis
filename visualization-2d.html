@@ -378,15 +378,21 @@ for (let i = 0; i < userData.length; i++) {
     dict["nodes"].push({'id': targetID, "type": 2, "kinaseActivity":0, "nodeSize": targetSize, "nodeColors": currentNodeColors, "partitionIDs": currentNodePartitions, "pValues": currentpValues})
   }
 
-  else{ // target id occurs again (must need partitions!!!), need to append diffPhos to nodecolors and PhosphoSiteID to partitionIDs
+  else{ // target id occurs again (may have partitions!!!), if so we need to append diffPhos to nodecolors and PhosphoSiteID to partitionIDs
         // no need to update its type as target !!!!!!!!
       nonDirtyNodeList = dict["nodes"].map(el => el.id)
       nodeIndex = nonDirtyNodeList.indexOf(targetID)
+
       if(PhosphoSiteID != undefined && !(dict['nodes'][nodeIndex]['partitionIDs'].includes(PhosphoSiteID))){
         dict['nodes'][nodeIndex]['partitionIDs'].push(PhosphoSiteID)
         if(diffPhos!=undefined){dict['nodes'][nodeIndex]['nodeColors'].push(diffPhos)}
         if(pValue!=undefined){ dict['nodes'][nodeIndex]['pValues'].push(pValue)}
       }
+      else if (dict['nodes'][nodeIndex]['nodeColors'].length == 0) // if target id reoccurs again because it is a phosphorylated kinase
+      {
+        if(diffPhos!=undefined){dict['nodes'][nodeIndex]['nodeColors'].push(diffPhos)}
+        if(pValue!=undefined){ dict['nodes'][nodeIndex]['pValues'].push(pValue)}
+      } 
   }
 
   sourceTargetTuples = dict["links"].map(el => [el.source,el.target])
