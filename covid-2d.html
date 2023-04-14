@@ -331,7 +331,7 @@ function hideShowMenu(val) {
 ///////////////////////////////////////
 
 var file_names = ["time 00hr - control", "time 02hr", "time 04hr", "time 08hr", "time 12hr", "time 24hr"]
-var index = localStorage.getItem("covididx")
+var index = sessionStorage.getItem("covididx")
 var finalDataObj = null
 if(index==0 || index == undefined){finalDataObj = time00_network}
 else if(index==1){finalDataObj = time02_network}
@@ -856,7 +856,7 @@ function updateBackground() {
 
 function changeState(){
 let new_file_name = PARAMS.Network
-localStorage.setItem('idx',file_names.indexOf(new_file_name))
+sessionStorage.setItem('covididx',file_names.indexOf(new_file_name))
 location.reload();
 }
 

@@ -336,7 +336,7 @@ function hideShowMenu(val) {
 const CAMERA_DISTANCE2NODES_FACTOR = 170;
 
  var file_names = ["Fibroblast/TGFBeta", "ccRCC/Endothelial", "CD8-/IFNG-", "CD8-/IFNG+", "CD8+/IFNG+", "Eosinophils/Endothelial", "Brain/Neuro"]
- var index = localStorage.getItem("cptacidx")
+ var index = sessionStorage.getItem("cptacidx")
  if(index == undefined || index == null){
   index = 0
  }
@@ -1112,7 +1112,7 @@ a.click(); //Downloaded file
 
 function changeState(){
   var new_file_name = PARAMS.Network
-  localStorage.setItem('cptacidx',file_names.indexOf(new_file_name))
+  sessionStorage.setItem('cptacidx',file_names.indexOf(new_file_name))
   location.reload();
 }
 /////////////////////////////////////////////////
