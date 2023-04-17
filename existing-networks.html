@@ -124,7 +124,7 @@ text {
       <td>
       <div class="imgContainer">
 				<div>
-                    <img id="toyImg" onclick="window.location.href = 'toy-vis.html'" style = "cursor: pointer" src="./img/p1.png" width="400px" class="left"/>
+                    <img id="toyImg" onclick="toyVisualization()" style = "cursor: pointer" src="./img/p1.png" width="400px" class="left"/>
 				</div>
                 <div>
                     <svg id="textDesc" xmlns="http://www.w3.org/2000/svg" width="380" height="135" viewBox="0 0 380 135">
@@ -152,6 +152,11 @@ function covidVisualization(){
 function cptacVisualization(){
   sessionStorage.setItem('cptacidx', 0)
   window.location.href = 'cptac-vis.html';
+}
+
+function toyVisualization(){
+  sessionStorage.setItem('toyidx', 0)
+  window.location.href = 'toy-vis.html';
 }
 </script>
 
