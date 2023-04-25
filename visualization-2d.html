@@ -429,6 +429,20 @@ for(let nodeIndex = 0 ; nodeIndex<dict['nodes'].length; nodeIndex++){
     dict['nodes'][nodeIndex]['pValues'] = [...dict['nodes'][nodeIndex]['pValues'].slice(0,5), ...dict['nodes'][nodeIndex]['pValues'].slice(-5)]
   }
 
+    let tempPartitions = dict['nodes'][nodeIndex]['partitionIDs']
+
+    if(tempPartitions.length > 0){  // sorting partitions by number
+      try{
+        phindices = Array.from(tempPartitions.keys()).sort((a,b) => parseFloat(tempPartitions[b].replace(/^\D+/g, ''))-parseFloat(tempPartitions[a].replace(/^\D+/g, '')))
+        dict['nodes'][nodeIndex]['partitionIDs'] = phindices.map(i => dict['nodes'][nodeIndex]['partitionIDs'][i])
+        dict['nodes'][nodeIndex]['nodeColors'] = phindices.map(i => dict['nodes'][nodeIndex]['nodeColors'][i])
+        dict['nodes'][nodeIndex]['pValues'] = phindices.map(i => dict['nodes'][nodeIndex]['pValues'][i])
+      }
+        catch(err) {
+        console.log("no numerical attributes in phosphosites to order!")
+        }
+    }
+
 }
 
 dict['ids'] = dict["nodes"].map(el => el.id)
@@ -488,7 +502,7 @@ finalDataObj.links.forEach(link => {
 var thresholds = thresholdDecider(finalDataObj)
 var [nodeSizes, nodeColors, nodeSizeRange, nodeColorRange, nodeColorThreshold, edgeWeights, edgeColors, edgeWeightRange, edgeColorRange] = [thresholds["nodeSizes"], thresholds["nodeColors"], thresholds["nodeSizeRange"], thresholds["nodeColorRange"], thresholds["nodeColorThreshold"], thresholds["edgeWeights"],thresholds["edgeColors"],thresholds["edgeWeightRange"],thresholds["edgeColorRange"]]
 var nodesList = finalDataObj["ids"]
-var rectangleCollide = d3.bboxCollide([[-13,-18],[13,18]]) // need to update with max nodsize!
+var rectangleCollide = d3.bboxCollide([[-13,-18],[13,18]]) // need to update with max nodesize!
 
 const searchNodes = new Set();
 const searchLinks = new Set();

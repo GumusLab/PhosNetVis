@@ -419,12 +419,25 @@ for(let nodeIndex = 0 ; nodeIndex<dict['nodes'].length; nodeIndex++){
     dict['nodes'][nodeIndex]['nodeColors'] = indices.map(i => dict['nodes'][nodeIndex]['nodeColors'][i])
     dict['nodes'][nodeIndex]['pValues'] = indices.map(i => dict['nodes'][nodeIndex]['pValues'][i])
 
-    if(dict['nodes'][nodeIndex]['nodeColors'].length>10){ // only getting top 5 (may update it with pvalues if exist)
+    if(dict['nodes'][nodeIndex]['nodeColors'].length>10){ // only getting top 10
     dict['nodes'][nodeIndex]['partitionIDs'] = [...dict['nodes'][nodeIndex]['partitionIDs'].slice(0,5), ...dict['nodes'][nodeIndex]['partitionIDs'].slice(-5)]
     dict['nodes'][nodeIndex]['nodeColors'] = [...dict['nodes'][nodeIndex]['nodeColors'].slice(0,5), ...dict['nodes'][nodeIndex]['nodeColors'].slice(-5)]
     dict['nodes'][nodeIndex]['pValues'] = [...dict['nodes'][nodeIndex]['pValues'].slice(0,5), ...dict['nodes'][nodeIndex]['pValues'].slice(-5)]
   }
 
+    let tempPartitions = dict['nodes'][nodeIndex]['partitionIDs']
+
+    if(tempPartitions.length > 0){ // sorting partitions by number
+      try{
+        phindices = Array.from(tempPartitions.keys()).sort((a,b) => parseFloat(tempPartitions[b].replace(/^\D+/g, ''))-parseFloat(tempPartitions[a].replace(/^\D+/g, '')))
+        dict['nodes'][nodeIndex]['partitionIDs'] = phindices.map(i => dict['nodes'][nodeIndex]['partitionIDs'][i])
+        dict['nodes'][nodeIndex]['nodeColors'] = phindices.map(i => dict['nodes'][nodeIndex]['nodeColors'][i])
+        dict['nodes'][nodeIndex]['pValues'] = phindices.map(i => dict['nodes'][nodeIndex]['pValues'][i])
+      }
+        catch(err) {
+        console.log("no numerical attributes in phosphosites to order!")
+        }
+    }
 }
 
 dict['ids'] = dict["nodes"].map(el => el.id)
