@@ -417,16 +417,16 @@ for(let nodeIndex = 0 ; nodeIndex<dict['nodes'].length; nodeIndex++){
  
     let tempColors = dict['nodes'][nodeIndex]['nodeColors']
     
-    indices = Array.from(tempColors.keys()).sort( (a,b) => tempColors[b]-tempColors[a])
+    indices = Array.from(tempColors.keys()).sort( (a,b) => Math.abs(tempColors[b])-Math.abs(tempColors[a]))
         
     dict['nodes'][nodeIndex]['partitionIDs'] = indices.map(i => dict['nodes'][nodeIndex]['partitionIDs'][i])
     dict['nodes'][nodeIndex]['nodeColors'] = indices.map(i => dict['nodes'][nodeIndex]['nodeColors'][i])
     dict['nodes'][nodeIndex]['pValues'] = indices.map(i => dict['nodes'][nodeIndex]['pValues'][i])
 
     if(dict['nodes'][nodeIndex]['nodeColors'].length>10){
-    dict['nodes'][nodeIndex]['partitionIDs'] = [...dict['nodes'][nodeIndex]['partitionIDs'].slice(0,5), ...dict['nodes'][nodeIndex]['partitionIDs'].slice(-5)]
-    dict['nodes'][nodeIndex]['nodeColors'] = [...dict['nodes'][nodeIndex]['nodeColors'].slice(0,5), ...dict['nodes'][nodeIndex]['nodeColors'].slice(-5)]
-    dict['nodes'][nodeIndex]['pValues'] = [...dict['nodes'][nodeIndex]['pValues'].slice(0,5), ...dict['nodes'][nodeIndex]['pValues'].slice(-5)]
+    dict['nodes'][nodeIndex]['partitionIDs'] = [...dict['nodes'][nodeIndex]['partitionIDs'].slice(0,5)]
+    dict['nodes'][nodeIndex]['nodeColors'] = [...dict['nodes'][nodeIndex]['nodeColors'].slice(0,5)]
+    dict['nodes'][nodeIndex]['pValues'] = [...dict['nodes'][nodeIndex]['pValues'].slice(0,5)]
   }
 
     let tempPartitions = dict['nodes'][nodeIndex]['partitionIDs']
@@ -453,6 +453,16 @@ return dict;
 var file_names = JSON.parse(localStorage.getItem("file_names"))
 var index = localStorage.getItem("idx")
 var finalDataObj = parseCSV(localStorage.getItem(file_names[index]))
+
+
+    // var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(finalDataObj));
+    // var downloadAnchorNode = document.createElement('a');
+    // downloadAnchorNode.setAttribute("href",     dataStr);
+    // downloadAnchorNode.setAttribute("download", file_names[index] + ".json");
+    // document.body.appendChild(downloadAnchorNode); // required for firefox
+    // downloadAnchorNode.click();
+    // downloadAnchorNode.remove();
+
 
 function thresholdDecider(DataObj){ // may consider adding rectangleCollide = d3.bboxCollide here
 
