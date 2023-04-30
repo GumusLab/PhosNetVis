@@ -433,7 +433,7 @@ for(let nodeIndex = 0 ; nodeIndex<dict['nodes'].length; nodeIndex++){
 
     if(tempPartitions.length > 0){  // sorting partitions by number
       try{
-        phindices = Array.from(tempPartitions.keys()).sort((a,b) => parseFloat(tempPartitions[b].replace(/^\D+/g, ''))-parseFloat(tempPartitions[a].replace(/^\D+/g, '')))
+        phindices = Array.from(tempPartitions.keys()).sort((a,b) => parseFloat(tempPartitions[a].replace(/^\D+/g, ''))-parseFloat(tempPartitions[b].replace(/^\D+/g, '')))
         dict['nodes'][nodeIndex]['partitionIDs'] = phindices.map(i => dict['nodes'][nodeIndex]['partitionIDs'][i])
         dict['nodes'][nodeIndex]['nodeColors'] = phindices.map(i => dict['nodes'][nodeIndex]['nodeColors'][i])
         dict['nodes'][nodeIndex]['pValues'] = phindices.map(i => dict['nodes'][nodeIndex]['pValues'][i])
@@ -580,7 +580,19 @@ const Graph = ForceGraph()
         for (var i = 0; i < arrayLength; i++) {
             ctx.fillStyle = nodeColoring(node.nodeColors[i]);
             ctx.fillRect(node.x - 5 - nsize, (node.y - 1.5 - nsize) + i*(3+nsize*2), 10 + nsize*2, 3 + nsize*2);
+            if (PARAMS.Labels == "On" || searchNodes.has(node)){
+            var partitionLabel = node.partitionIDs[i];
+            const fontSize = 2.5 + nsize;
+            ctx.font = `${fontSize}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = "white";
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 0.25;
+            ctx.strokeText(partitionLabel, node.x, node.y + i*(3+nsize*2))
+            ctx.fillText(partitionLabel, node.x, node.y + i*(3+nsize*2));
           }
+        }
         }
 
         if (PARAMS.Labels == "On" || searchNodes.has(node)){
