@@ -1058,7 +1058,6 @@ function linkColoring (value, color1, color2, color3, color4, color5) {
 function linkHighlightColoring(link){
   var highlightVal = link.source.kinaseActivity
   if(highlightVal != undefined){
-  console.log(nodeColoring(highlightVal), "#"+nodeColoring(highlightVal).substring(2))
   return "#"+nodeColoring(highlightVal).substring(2)
   
   }
