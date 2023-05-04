@@ -546,7 +546,7 @@ const Graph = ForceGraph()
           }
 
         })
-        .linkColor(link => (searchLinks.has(link)) ? "#ff3b3b": (link.edgeColor === undefined) ? "#cccccc" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
+        .linkColor(link => (searchLinks.has(link)) ? linkHighlightColoring(link): (link.edgeColor === undefined) ? "#cccccc" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
         .linkCurvature('curvature')
         .linkWidth(link => (searchLinks.has(link)) ? 2 : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0.5,3]) : .8) // subject to change
         .linkDirectionalArrowRelPos(0.5)
@@ -651,6 +651,17 @@ function linkColoring (value, color1, color2, color3, color4, color5) {
     rainbow.setSpectrum(color1, color2, color3, color4, color5)
     let hexColour = '#' + rainbow.colourAt(value);
     return hexColour
+  }
+}
+
+function linkHighlightColoring(link){
+  var highlightVal = link.source.kinaseActivity
+  if(highlightVal != undefined){
+  return nodeColoring(highlightVal)
+  
+  }
+  else{
+    return "#fcba03"
   }
 }
 
