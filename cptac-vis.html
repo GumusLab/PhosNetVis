@@ -744,7 +744,7 @@ var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer : true}})
   .linkWidth(link => (searchLinks.has(link)) ? 1 : animationActive === true ? linkWidthAnimation(link) : (edgeWeightRange[0]!= undefined && link.edgeWeight != undefined) ? normalized(link.edgeWeight, edgeWeightRange, [0,1])+.5 : .8) // subject to change
   .linkDirectionalArrowLength(directed => (directed) ? 5 : 0)        
   .linkDirectionalArrowRelPos(0.5)
-  .linkColor(link => (searchLinks.has(link)) ? "#ff3b3b" : animationActive === true ? linkColorAnimation(link) : (link.edgeColor === undefined) ? "#cccccc" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
+  .linkColor(link => (searchLinks.has(link)) ? linkHighlightColoring(link) : animationActive === true ? linkColorAnimation(link) : (link.edgeColor === undefined) ? "#cccccc" : linkColoring(link.edgeColor, '2c8d5c', '97b8a0', 'd7d6d2', 'bc9bef', '743ed4'))
   .linkDirectionalParticleWidth(1.5)
   .linkOpacity(0.6)
   .linkDirectionalParticles(link => (searchLinks.has(link)) ? 4 : 0)
@@ -895,6 +895,17 @@ function linkColoring (value, color1, color2, color3, color4, color5) {
     rainbow.setSpectrum(color1, color2, color3, color4, color5)
     let hexColour = rainbow.colourAt(value);
     return parseInt(hexColour, 16)
+  }
+}
+
+function linkHighlightColoring(link){
+  var highlightVal = link.source.kinaseActivity
+  if(highlightVal != undefined){
+  return "#"+nodeColoring(highlightVal).substring(2)
+  
+  }
+  else{
+    return "#fcba03"
   }
 }
 
