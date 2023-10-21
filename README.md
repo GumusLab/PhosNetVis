@@ -1,12 +1,12 @@
 
 ![Logo](https://i.hizliresim.com/l6cau2g.png)
 
-## [PhosNetVis](https://phosnetvis.app) is web-based kinase enrichment analyses and interactive 3D network visualizations of phosphoproteomics datasets.
+## [PhosNetVis](https://gumuslab.github.io/PhosNetVis/) is web-based kinase enrichment analyses and interactive 3D network visualizations of phosphoproteomics datasets.
 
 <p align="center">
   <img src="https://i.hizliresim.com/5uvbaww.gif" />
   <br>
-  <b> Link to the platform: <a href="https://phosnetvis.app">phosnetvis.app</a></b>
+  <b> Link to the platform: <a href="https://gumuslab.github.io/PhosNetVis/">phosnetvis.app</a></b>
 </p>
 
 ## Developers
@@ -29,6 +29,6 @@ All data is free to use for non-commercial purposes. For commercial use please c
 
 ## Feedback
 
-If you have any feedback, please reach out to us at zeynep.gumus AT mssm.edu or you can fill the "Contact Us" form available at [phosnetvis.app/contact-us.html](https://phosnetvis.app/contact-us.html)
+If you have any feedback, please reach out to us at zeynep.gumus AT mssm.edu or you can fill the "Contact Us" form available at [phosnetvis.app/contact-us.html](https://gumuslab.github.io/PhosNetVis/contact-us.html)
 
-### [© Gumus Lab](https://gumuslab.github.io) 2023 | [phosnetvis.app](https://phosnetvis.app)
+### [© Gumus Lab](https://gumuslab.github.io) 2023 | [phosnetvis.app](https://gumuslab.github.io/PhosNetVis/)
