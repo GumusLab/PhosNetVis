@@ -6,7 +6,7 @@
 <p align="center">
   <img src="https://i.hizliresim.com/5uvbaww.gif" />
   <br>
-  <b> Link to the platform: <a href="https://gumuslab.github.io/PhosNetVis/">phosnetvis.app</a></b>
+  <b> Link to the platform: <a href="https://gumuslab.github.io/PhosNetVis/">gumuslab.github.io/PhosNetVis</a></b>
 </p>
 
 ## Developers
@@ -29,6 +29,6 @@ All data is free to use for non-commercial purposes. For commercial use please c
 
 ## Feedback
 
-If you have any feedback, please reach out to us at zeynep.gumus AT mssm.edu or you can fill the "Contact Us" form available at [phosnetvis.app/contact-us.html](https://gumuslab.github.io/PhosNetVis/contact-us.html)
+If you have any feedback, please reach out to us at zeynep.gumus AT mssm.edu or you can fill the "Contact Us" form available at [gumuslab.github.io/PhosNetVis/contact-us.html](https://gumuslab.github.io/PhosNetVis/contact-us.html)
 
-### [© Gumus Lab](https://gumuslab.github.io) 2023 | [phosnetvis.app](https://gumuslab.github.io/PhosNetVis/)
+### [© Gumus Lab](https://gumuslab.github.io) 2023 | [gumuslab.github.io/PhosNetVis](https://gumuslab.github.io/PhosNetVis/)
