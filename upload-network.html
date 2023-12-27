@@ -934,8 +934,8 @@ To visualize your network data, at a minimum, you need a .csv file" transform="t
       <input type="number" id="state_number" value="1" min="1" max="10" onchange="state_num()" autocomplete="off" style="width:20%;"/>
       <span class="input-group-btn" style="width:2%;"></span>
       <input type="file" id="hidden-file-upload" autocomplete="off" multiple/>
-      <!-- <span class="input-group-btn"></span> -->
-      <!-- <button id="load-sample-data">Load Sample Data</button> -->
+      <span class="input-group-btn"></span>
+      <button id="load-sample-data">Upload Sample Data</button>
 
     </div>
 
@@ -996,67 +996,12 @@ To visualize your network data, at a minimum, you need a .csv file" transform="t
       });
       }
       
-      // d3.select("#load-sample-data").on("change", function(){
-      // sessionStorage.setItem("vis_perm",false)
-      // localStorage.clear(); 
-
-      // if (window.File && window.FileReader && window.FileList && window.Blob) {
-      //   let files = this.files;
-      //   console.log(files)
-      //   let readers = [];
-      //   let file_names = [];
-      //   let all_files = [];
-      //   // Abort if there were no files selected
-      //   if(!files.length) return;
-      //   if(files.length.toString()!=sessionStorage.getItem('state_num') && sessionStorage.getItem('state_num')=="1"){alert("Please select a single file or change the number of datasets to upload!"); this.value=null; return;}
-      //   if(files.length.toString()!=sessionStorage.getItem('state_num')){alert("Please select "+sessionStorage.getItem("state_num")+" file or change the number of datasets to upload!"); this.value=null; return;}
-      //   // Store promises in array
-      //   for(let i = 0;i < files.length;i++){
-      //       readers.push(readFileAsText(files[i]));
-      //       localStorage.setItem(files.item(i).name,('dataFrame'+i.toString()))
-      //       file_names.push(files.item(i).name);
-      //   }
-      //   localStorage.setItem('file_names',JSON.stringify(file_names))
-      //   localStorage.setItem('idx', 0)
-      //   // Trigger Promises
-      //   Promise.all(readers).then((values) => {
-      //       // Values will be an array that contains an item
-      //       // with the text of every selected file
-      //       // ["File1 Content", "File2 Content" ... "FileN Content"]
-      //       for (var i = 0; i < values.length; i++) {
-      //         var parser = d3.csv(',')
-      //       try{
-      //       var jsonObj = d3.csv.parse(values[i]);
-      //       window.localStorage.setItem(('dataFrame'+i.toString()), JSON.stringify(jsonObj));
-      //       all_files.push(jsonObj)
-      //       }
-      //       catch(err){
-      //       window.alert("Error parsing uploaded file\nerror message: " + err.message);
-      //       return;
-      //       }
-            
-      //       }
-      //       window.localStorage.setItem('all_files',JSON.stringify(all_files))
-      //       sessionStorage.setItem("vis_perm",true)
-      //       sessionStorage.setItem("state_num",1)
-      //       //console.log(JSON.parse(localStorage.getItem('all_files')))
-      //   });
-      
-      // }
-      
-      // else {
-      //   alert("Your browser won't let you save this graph -- try upgrading your browser to IE 10+ or Chrome or Firefox.");
-      // }
-      
-      // });
-
       d3.select("#hidden-file-upload").on("change", function(){
       sessionStorage.setItem("vis_perm",false)
       localStorage.clear(); 
 
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         let files = this.files;
-        console.log(files)
         let readers = [];
         let file_names = [];
         let all_files = [];
@@ -1072,6 +1017,7 @@ To visualize your network data, at a minimum, you need a .csv file" transform="t
         }
         localStorage.setItem('file_names',JSON.stringify(file_names))
         localStorage.setItem('idx', 0)
+
         // Trigger Promises
         Promise.all(readers).then((values) => {
             // Values will be an array that contains an item
@@ -1091,9 +1037,10 @@ To visualize your network data, at a minimum, you need a .csv file" transform="t
             
             }
             window.localStorage.setItem('all_files',JSON.stringify(all_files))
+
             sessionStorage.setItem("vis_perm",true)
             sessionStorage.setItem("state_num",1)
-            //console.log(JSON.parse(localStorage.getItem('all_files')))
+
         });
       
       }
@@ -1119,24 +1066,23 @@ To visualize your network data, at a minimum, you need a .csv file" transform="t
             .then(data => {
                 // Check if data is successfully loaded
                 if (data) {
-                    // Parse the CSV data using PapaParse
-                    Papa.parse(data, {
-                        header: true, // Assuming the first row contains column headers
-                        dynamicTyping: true, // Automatically detect numeric values
-                        complete: function (results) {
-                            // Store the parsed data in local storage
-                            localStorage.setItem('sample_data', JSON.stringify(results.data));
-                            // localStorage.setItem('dataFrame0')
-                            localStorage.setItem('file_names','customized-network.csv')
-                            localStorage.setItem('idx', 0)
-                            // Set flags or perform any other necessary actions
-                            sessionStorage.setItem("vis_perm", true);
-                            sessionStorage.setItem("state_num", 1);
-                        },
-                        error: function (error) {
-                            console.error('Error parsing sample data:', error);
-                        }
-                    });
+                  localStorage.setItem('idx', 0)
+                  localStorage.setItem('file_names',JSON.stringify(['customized-network.csv']))
+                  localStorage.setItem('customized-network.csv',('dataFrame0'))
+
+
+                  var parser = d3.csv(',')
+                  var jsonObj = d3.csv.parse(data);
+
+                  window.localStorage.setItem(('dataFrame0'), JSON.stringify(jsonObj));
+                  all_files.push(jsonObj)
+
+                  window.localStorage.setItem('all_files',JSON.stringify(all_files))
+                  sessionStorage.setItem("vis_perm",true)
+                  sessionStorage.setItem("state_num",1)
+
+                  data_upload_check()
+
                 } else {
                     alert("Failed to load sample data.");
                 }
@@ -1146,59 +1092,8 @@ To visualize your network data, at a minimum, you need a .csv file" transform="t
             });
     }
 
-        // // Add an event listener to the "Load Sample Data" button
-        // document.getElementById('load-sample-data').addEventListener('click', loadSampleDataAndStore);
-
-
-
-            // Function to load sample data from a predefined file
-      function loadSampleData() {
-          // Replace 'data/sample.json' with the actual path to your sample data file
-          var fileURL = 'data/customized-network.csv'; // Adjust the path as needed
-
-           // Create a new XMLHttpRequest to fetch the file
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', fileURL, true);
-
-          // Define a callback function to handle the response
-          xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-              // The file has been successfully loaded
-              var fileContent = xhr.responseText;
-              console.log(fileContent); // Do something with the file content
-            }
-          };
-
-          // Send the request
-          xhr.send();
-          // fetch('data/customized-network.csv')
-          //     .then(response => response.text())
-          //     .then(data => {
-          //         // Do something with the loaded sample data
-          //         console.log('Sample Data:', data);
-
-          //         // You can update your visualization or perform any other actions with the loaded data here
-
-          //         // Set a flag or perform any necessary actions to indicate that sample data has been loaded
-          //         sessionStorage.setItem("vis_perm", true);
-          //         sessionStorage.setItem("state_num", 1);
-          //     })
-          //     .catch(error => {
-          //         console.error('Error loading sample data:', error);
-          //     });
-      }
-
       // Add an event listener to the "Load Sample Data" button
-      // document.getElementById('load-sample-data').addEventListener('click', loadSampleDataAndStore);
-
-      document.getElementById("load-sample-data").addEventListener("click", function() {
-        // Set the value of the file input element to the path of your sample file
-        document.getElementById("hidden-file-upload").value = "data/customized-network.csv";
-        
-        // Trigger the change event on the file input element to simulate user selection
-        var event = new Event("change", { bubbles: true });
-        document.getElementById("hidden-file-upload").dispatchEvent(event);
-});
+      document.getElementById('load-sample-data').addEventListener('click', loadSampleDataAndStore);
 
       
       </script>
