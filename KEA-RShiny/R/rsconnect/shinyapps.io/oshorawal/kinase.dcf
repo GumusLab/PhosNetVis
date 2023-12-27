@@ -1,0 +1,10 @@
+name: kinase
+title:
+username: oshorawal
+account: oshorawal
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10847264
+bundleId: 8085714
+url: https://oshorawal.shinyapps.io/kinase/
+version: 1

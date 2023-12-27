@@ -37,7 +37,6 @@ shinyApp(
       tags$head(tags$style(HTML('.bttn-jelly.bttn-danger {background: #e93e8b;}'))),
       tags$head(tags$style(HTML('.bttn-stretch.bttn-danger {color: #e93e8b;}'))),
       tags$head(tags$style(HTML('#upload>.form-group{margin-bottom: 0rem !important;}'))),
-      
       fluidRow(
         
         column(width = 2),
@@ -98,10 +97,21 @@ shinyApp(
                box(
                  title = "Upload Data & Run Analysis", width = NULL, solidHeader = TRUE, status = "pink", collapsible = F,
                  fluidRow(style="margin-top:-7px;", 
-                          column( id = "upload", width = 4, fileInput("inputFile", "Upload your .csv file", multiple = FALSE, accept = c("text/csv","text/comma-separated-values,text/plain",".csv"))),
-                          column(width = 2, fluidRow(style = "margin-top:26px;padding-left:15px",actionBttn(inputId = "runanalysis", label = HTML(paste0("<b>Run</b>")), style = "jelly", color = "danger"))),
+                          column( id = "upload", width = 4, 
+                            fileInput("inputFile", "Upload your .csv file", multiple = FALSE, accept = c("text/csv","text/comma-separated-values,text/plain",".csv")),
+                            #style = "margin-top:10px;margin-left:0px",
+                            #div(style = "text-align: center; margin-bottom: 20px;", "OR"),  # Add the "OR" text with styling
+                            actionButton(inputId = "runOnSample", label = "Run on Sample Data" ,style="margin-left:25%")  # New button for running on sample data
+                        ),
+                          column(width = 2, 
+                                 #fluidRow(
+                                  style = "margin-top:12px;padding-left:15px",
+                                   actionBttn(inputId = "runanalysis", label = HTML(paste0("<b>Run</b>")), style = "jelly", color = "danger"),
+                                   actionLink(inputId = "opentutorial", label = img(src = "image.png", width = "75px", height = "75px"),onclick = "window.open('https://gumuslab.github.io/phosnetvis-docs/docs/tutorials', '_blank'); return false;")
+                                # )
+                          ),
                           column(width = 2, fluidRow(style="margin-top:26px;margin-left:-15px", hidden(downloadButton('download',"Download")))),
-                          column(width = 4, fluidRow(style="margin-top:26px;margin-left:0px", hidden(actionButton(inputId = "gotovis", onclick="window.top.location.href='https://gumuslab.github.io/PhosNetVis/upload-network.html';", label = HTML(paste0("Go to visualization &#10148;")), color = "danger"))))
+                          column(width = 4, fluidRow(style="margin-top:26px;margin-left:0px", hidden(actionButton(inputId = "gotovis", onclick="window.top.location.href='https://gumuslab.github.io/PhosNetVis/upload-network.html';", label = HTML(paste0("Go to visualization &#10148;")), color = "danger")))),
                  )
                ),
         ),
@@ -120,45 +130,25 @@ shinyApp(
       datatable(x, options = list(dom = 't', columnDefs = list(list(className = 'dt-center', targets = "_all"))), rownames= FALSE)
     })
     
-      inputFile <- reactive({
-      inFile <- input$inputFile
+    # Define a function that takes a data frame as an argument
+    runAnalysis <- function(results) {
       
-      if (is.null(inFile))
-        return(NULL)
-      
-      df <- tryCatch({
-        read.csv(inFile$datapath, header = TRUE, sep = ",")
-      }, error = function(e) {
-        return(NULL)
-      })
-      
-      column_names <- colnames(df)
-      required_columns <- c('ProteinAccession', 'log2FC')
-      
-      if(!all(required_columns %in% column_names))
-        return(NULL)
-      
-      return(df)
-    })
-    
-    observeEvent(input$runanalysis, {
-      results <- inputFile()
-      
+      # You can add your analysis logic here
       if(is.null(results)){ 
         sendSweetAlert(session = session, title = "Warning!", text = "Please upload your data or check your data format!", type = "warning")
         req(results)
       }
       else{
         
-       if(any(duplicated(results$ProteinAccession)) & !("PhosphoSiteID" %in% colnames(results))){
-         sendSweetAlert(session = session, title = "Warning!", text = "Protein Accession column has duplicates. Only one protein ID allowed if no phosphosite IDs are provided for each protein!", type = "warning")
-         req(FALSE)
-       }
+        if(any(duplicated(results$ProteinAccession)) & !("PhosphoSiteID" %in% colnames(results))){
+          sendSweetAlert(session = session, title = "Warning!", text = "Protein Accession column has duplicates. Only one protein ID allowed if no phosphosite IDs are provided for each protein!", type = "warning")
+          req(FALSE)
+        }
         
         w <- Waiter$new(
           html = spin_dots(), 
           color = transparent(.8)
-          )
+        )
         
         w$show()
         
@@ -188,7 +178,7 @@ shinyApp(
         {
           results <- results[which(results$pValue<=input$input_pvalue),]
         }
-
+        
         
         l2fc <- results[which(is.finite(results$log2FC)), "log2FC"]
         l2fc_names <- results[which(is.finite(results$log2FC)), "ProteinAccession"]
@@ -293,8 +283,45 @@ shinyApp(
         shinyjs::show("download")
         
         shinyjs::show("gotovis")
-
+        
       }
+    }
+    
+    # Logic to run analysis when the "Run on Sample Data" button is clicked
+    observeEvent(input$runOnSample, {
+      results <- read.csv("sample.csv", header = TRUE, sep = ",")  # Load the sample dataset
+    
+      # For demonstration purposes, let's just print the summary of the sample dataset
+      sample_results <- summary(results)
+      print(sample_results)
+      
+      runAnalysis(results)
+    })
+    
+      inputFile <- reactive({
+      inFile <- input$inputFile
+      
+      if (is.null(inFile))
+        return(NULL)
+      
+      df <- tryCatch({
+        read.csv(inFile$datapath, header = TRUE, sep = ",")
+      }, error = function(e) {
+        return(NULL)
+      })
+      
+      column_names <- colnames(df)
+      required_columns <- c('ProteinAccession', 'log2FC')
+      
+      if(!all(required_columns %in% column_names))
+        return(NULL)
+      
+      return(df)
+    })
+    
+    observeEvent(input$runanalysis, {
+      results <- inputFile()
+      runAnalysis(results)
     })
   }
 )
