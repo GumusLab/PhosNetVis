@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7ETP8E6M3Y"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7ETP8E6M3Y');
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<script src="https://d3js.org/d3.v3.js" charset="utf-8"></script>  
+<script src="backendApi/plumber_api.js"></script>
+  <meta charset="utf-8">
+  <title>Kinase Enrichment Analysis</title>
+  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-PpVBp3Ztsn5pe4y8IeNiS+DZl5klA8ufhOLWhT9KaYJ8tWAyxlLFZzvAr2D5nlJdyv6JvLSZv34zBSi2J4nH/w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script src="js/upload.js"></script>
+
+  <style type="text/css">
+body {
+    margin: 0;
+}
+
+iframe {
+    display: block;       
+    background: rgb(255, 255, 255);
+    border: none;        
+    height: 100vh;       
+    width: 100vw;
+    background:url("https://i.hizliresim.com/gueeapo.gif") center center no-repeat; 
+}
+
+@font-face {
+    font-family: "helveticaBold";
+    src: url("fonts/helvetica-bold-webfont.woff") format("woff");
+    }
+    /* Center the spinner */
+    .spinner-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999; /* Ensure it's above other content */
+    }
+    /* Custom margin-top in percentage */
+    .custom-mt {
+    margin-top: 50%; /* Adjust the percentage as needed */
+    }
+    .zero-padding {
+        padding: 0;
+    }
+
+    .zero-margin {
+        margin: 0
+    }
+
+    tr.odd, tr.even {
+    border-top: 1px solid #dddddd; /* Add top border */
+    border-bottom: 1px solid #dddddd; /* Add bottom border */
+    }
+
+    tr.even:hover {
+        background-color: #f2f2f2; /* Change background color on hover */
+    }
+
+    tr.odd {
+        background-color: #f2f2f2; /* Change background color on hover */
+    }
+
+    .btn {
+        border: 1px solid rgba(0, 0, 0, 0.1); /* Very light black boundary */
+        background-color: #f2f2f2; /* Grey color */
+        color: #333; /* Text color */
+        /* padding: 8px;  */
+        border-radius: 4px; /* Rounded corners */
+        cursor: pointer; /* Cursor style */
+    }
+
+    /* html, body {
+  height: 100%;
+}
+
+body {
+  align-items: center;
+  background-color: #1D1F20;
+  display: flex;
+  justify-content: center;
+} */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Ensure the overlay is above other content */
+  display: none;
+}
+
+.loader  {
+  display: block;
+  animation: rotate 1.5s infinite;  
+  height: 50px;
+  width: 50px;
+  justify-content: center;
+
+}
+
+.loader:before,
+.loader:after {   
+  border-radius: 50%;
+  content: '';
+  display: block;
+  height: 20px;  
+  width: 20px;
+}
+.loader:before {
+  animation: ball1 1s infinite;  
+  background-color: #cb2025;
+  box-shadow: 30px 0 0 #f8b334;
+  margin-bottom: 10px;
+}
+.loader:after {
+  animation: ball2 1s infinite; 
+  background-color: #00a096;
+  box-shadow: 30px 0 0 #97bf0d;
+}
+
+@keyframes rotate {
+  0% { 
+    -webkit-transform: rotate(0deg) scale(0.8); 
+    -moz-transform: rotate(0deg) scale(0.8);
+  }
+  50% { 
+    -webkit-transform: rotate(360deg) scale(1.2); 
+    -moz-transform: rotate(360deg) scale(1.2);
+  }
+  100% { 
+    -webkit-transform: rotate(720deg) scale(0.8); 
+    -moz-transform: rotate(720deg) scale(0.8);
+  }
+}
+
+@keyframes ball1 {
+  0% {
+    box-shadow: 30px 0 0 #f8b334;
+  }
+  50% {
+    box-shadow: 0 0 0 #f8b334;
+    margin-bottom: 0;
+    -webkit-transform: translate(15px,15px);
+    -moz-transform: translate(15px, 15px);
+  }
+  100% {
+    box-shadow: 30px 0 0 #f8b334;
+    margin-bottom: 10px;
+  }
+}
+
+@keyframes ball2 {
+  0% {
+    box-shadow: 30px 0 0 #97bf0d;
+  }
+  50% {
+    box-shadow: 0 0 0 #97bf0d;
+    margin-top: -20px;
+    -webkit-transform: translate(15px,15px);
+    -moz-transform: translate(15px, 15px);
+  }
+  100% {
+    box-shadow: 30px 0 0 #97bf0d;
+    margin-top: 0;
+  }
+}
+
+  </style>
+
+</head>
+
+<body>
+<!-- <script src="js/upload.js"></script> -->
+<div >
+<svg xmlns="http://www.w3.org/2000/svg" onclick="window.location.href = 'index.html'" width = "200px" style="top:2%;left:1%;position:absolute;cursor: pointer;" viewBox="0 0 1825.27 541.31"><g id="Layer_1"><g id="path5"><rect x="180.02" y="297.98" width="136.46" height="2.72" transform="translate(-120.24 423.61) rotate(-68.97)" style="fill:#424a60;"/></g><rect id="path4" x="301.21" y="115.36" width="177.31" height="16.72" transform="translate(1.47 251.98) rotate(-35.88)" style="fill:#424a60;"/><g id="path3"><rect x="35.42" y="243.17" width="244.41" height="24.72" transform="translate(-90.21 86.06) rotate(-23.97)" style="fill:#424a60;"/></g><g id="path2"><rect x="236.27" y="33.28" width="10.72" height="124.03" transform="translate(-17.88 106.37) rotate(-23.97)" style="fill:#424a60;"/></g><rect id="path1" x="324.5" y="211.86" width="16.72" height="177.31" transform="translate(-93.37 161.12) rotate(-23.97)" style="fill:#424a60;"/><circle id="circle6" cx="479.52" cy="66.16" r="41.79" style="fill:#dc298d;"/><circle id="circle5" cx="215.25" cy="385.15" r="41.79" style="fill:#7383bf;"/><circle id="circle4" cx="41.8" cy="300.55" r="41.79" style="fill:#dc298d;"/><circle id="circle3" cx="210.42" cy="25.08" r="25.08" style="fill:#969696;"/><circle id="circle2" cx="364.07" cy="370.74" r="25.08" style="fill:#ebba16;"/><circle id="circle1" cx="286.99" cy="197.33" r="71.54" style="fill:#06abeb;"/></g><g id="Layer_2"><text id="phostype" transform="translate(404.28 257.57) rotate(-.2)" style="font-family:helveticaBold, Helvetica; font-size:156.77px;"><tspan x="0" y="0">Kinase Enrichment</tspan><tspan x="387.59" y="208.34">Analysis</tspan></text></g></svg>
+</div>
+<!-- <div class="spinner-container" id="spinner-container" style="display: none;">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div> -->
+
+<div class="content-wrapper" style="min-height: 920px;">
+    <section class="content">
+      <div class="row" style="font-family:Helvetica; margin-top: 15px;">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+          <h1 style="margin-top:7px;margin-bottom:20px;font-family:Helvetica; font-size:20px">
+            <b>Welcome!</b>
+             Here you can perform kinase enrichment analysis (KEA)  to identify putative upstream kinases of your differentially phosphorylated protein set. Kinase-substrate interactions are from PhosphoSitePlus [1] and enrichment is performed using fgsea [2].
+            <br><h style="font-size:13px;margin-top:-5px">[1] Retrieved from <a href="https://www.phosphosite.org" target="_blank"> phosphosite.org </a> - version Fri Nov 17 08:50:20 EST 2023<br>[2] Korotkevich G, Sukhov V, Sergushichev A (2019). “Fast gene set enrichment analysis.” bioRxiv. <a href="https://www.biorxiv.org/content/10.1101/060012v3" target="_blank">doi: 10.1101/060012</a> - version 1.18.0</h>
+          </h1>
+
+          <div style="margin-bottom: 10px;">
+            <div class="card bs4Dash card-gray">
+              <div class="card-header" style="height:30px; display:flex; align-items: center; background-color: #606060; color: white;">
+                <h5 class="card-title zero-padding zero-margin">Input File Format</h5>
+              </div>
+              <div class="card-body">
+                <h6 style="font-size:15px;margin-top:0px;">
+                  Upload a .csv file in the format below for enrichment and then to build your interactive 3D phosphoproteomics network!
+                  <b>*optional</b>
+                </h6>
+                    <div class="container-fluid" style="height: 130px; overflow-y: scroll; overflow-x: scroll; margin-top:10px;">
+                        <table class="display dataTable no-footer" id="DataTables_Table_0" style="width:100%; height:100%; text-align: center;">
+                        <thead>
+                            <tr>
+                                <th class="dt-center sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="ProteinAccession: activate to sort column ascending">ProteinAccession</th>
+                                <th class="dt-center sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="PhosphoSiteID*: activate to sort column ascending">PhosphoSiteID*</th>
+                                <th class="dt-center sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="log2FC: activate to sort column ascending">log2FC</th>
+                                <th class="dt-center sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="pValue*: activate to sort column ascending">pValue*</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd">
+                                <td class="  dt-center">P54646</td>
+                                <td class="  dt-center">ph181</td>
+                                <td class="  dt-center">1.2</td>
+                                <td class="  dt-center">0.002</td>
+                            </tr>
+                            <tr class="even">
+                                <td class="  dt-center">P54646</td>
+                                <td class="  dt-center">ph14</td>
+                                <td class="  dt-center">3</td>
+                                <td class="  dt-center">0.04</td>
+                            </tr>
+                            <tr class="odd">
+                                <td class="  dt-center">Q9Y243</td>
+                                <td class="  dt-center">ph1525</td>
+                                <td class="  dt-center">-6.55</td>
+                                <td class="  dt-center">0.66</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div style="margin-bottom: 10px;">
+            <div class="card bs4Dash card-lightblue">
+              <div class="card-header" style="height:30px; display:flex; align-items: center; background-color:#4682B4; color: white;">
+                <h5 class="card-title zero-padding zero-margin">Adjust Parameters</h5>
+              </div>
+              <div class="card-body zero-margin zero-padding">
+                <h6 style="font-size:15px; font-weight:bold; padding: 5px;">Input / Output Parameters</h6>
+                <div class="row" style="margin-top:-15px;margin-left:-10px;">
+                  <div class="col-sm-4">
+                    <div label="Rows with greater p-values than this cutoff will be eliminated before analysis!
+(if p value column does not exist in data, cutoff does not effect anything)" class="form-group hint--bottom" style="width:200px;">
+                      <label class="control-label" id="input_pvalue-label" for="input_pvalue"><b style="font-size:13px">Input p-value cutoff</b></label>
+                      <input id="input_pvalue" type="number"  class="form-control" value="0.05" min="0" max="1" step="0.01">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div aria-label="Kinase-substrate interactions from analysis output having greater p-values than this cutoff
+will be eliminated in the phosphoproteomics network!" class="form-group" style="width:200px;">
+                      <label class="control-label" id="output_pvalue-label" for="output_pvalue"><b style="font-size:13px">Output p-value cutoff</b></label>
+                      <input id="output_pvalue" type="number" class="form-control" value="0.05" min="0" max="1" step="0.01">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div aria-label="Choose the labeling method of the nodes in the network
+that will be build with the analysis!" class="form-group shiny-input-container shiny-input-radiogroup shiny-input-container-inline hint--bottom shinyjs-resettable" data-shinyjs-resettable-type="RadioButtons" data-shinyjs-resettable-value="gene name">
+                      <label class="control-label" id="nameaccession-label" for="nameaccession"><b style="font-size:13px">Output network node labels</b></label>
+                      <br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="nameaccession" id="geneNameRadio" value="gene name" checked>
+                                <label class="form-check-label mr-5" for="geneNameRadio">
+                                    gene name
+                                </label>
+
+                                <input class="form-check-input" type="radio" name="nameaccession" id="accessionIdRadio" value="accession id">
+                                <label class="form-check-label" for="accessionIdRadio">
+                                    accession id
+                                </label>
+                            </div>
+                    </div>
+                  </div>
+                </div>
+                <hr style="margin-top:-10px">
+
+                <h6 style="font-size:15px; font-weight:bold;margin-top:-10px;margin-left:5px;">Enrichment Analysis Parameters</h6>
+
+                <div class="row" style="margin-top:-15px; margin-left:-10px;">
+
+                  <div class="col-sm-4">
+                    <div class="form-group" style="width:200px;">
+                        <label class="control-label" id="minSize-label" for="minSize"><b style="font-size: 13px;">minSize</b></label>
+                        <input id="minSize" type="number" class="form-control" value="15" min="0">
+                    </div>
+                </div>
+
+                  <div class="col-sm-4">
+                    <div  class="form-group" style="width:200px;">
+                      <label class="control-label" id="maxSize-label" for="maxSize"><b style="font-size:13px">maxSize</b></label>
+                      <input id="maxSize" type="number" class="form-control" value="100" min="0">
+                    </div>
+                  </div>
+    
+                  <div class="col-sm-4">
+                    <div class="form-group" style="width:200px;">
+                      <label class="control-label" id="eps-label" for="eps"><b style="font-size:13px">eps</b></label>
+                      <input id="eps" type="number" class="form-control" value="0" min="0" max="1" step="1e-10">
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row" style="margin-top:-10px; margin-left:5px">
+                  <a style="font-size:12px" href="https://bioconductor.org/packages/devel/bioc/manuals/fgsea/man/fgsea.pdf" target="_blank">
+                    <i class="far fa-circle-question" role="presentation" aria-label="circle-question icon"></i>
+                    Click here for more information about fgsea library's analysis parameters
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div>
+            <div class="card bs4Dash card-pink">
+                <div class="card-header" style="height:30px; display:flex; align-items: center; background:#d94496; color: white;">
+                    <h5 class="card-title zero-padding zero-margin">Upload Data &amp; Run Analysis</h5>
+                </div>
+              <div class="card-body zero-margin zero-padding">
+                <h6 style="font-size:15px; font-weight:bold; padding: 5px;">Upload your .csv file</h6>
+                <div class="row" style="margin-top:-7px; margin-left:0px;">
+
+                <div class="col-sm-4" id="upload">
+                        <div class="custom-file">
+                            <input type="file" id="hidden-file-upload" class="form-control" accept=".csv" />
+                            <div class="progress" style="margin-top: 5px;display: none;" id="progress-container">
+                                <!-- <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="file-upload-progress">0%</div> -->
+                              </div>
+
+                        </div>
+                    <button id="runOnSample" type="button" class="btn mx-auto d-block" style="margin-top: 10px;" onclick="runSample()">Run on Sample Data</button>
+                </div>
+                
+                  <div class="col-sm-2" style="padding-left:15px">
+                    <button class="btn" id="runanalysis" type="button" style="background-color:#d94496; color:white; border-radius: 15px;" onclick="runKEA()"><b>Run</b></button>
+                  </div>
+
+                  <div class="col-sm-2" id="donloadButton" style="display: none;">
+                      <a class="btn" download="" href="" id="download" target="_blank" aria-live="polite" >
+                        <i class="fas fa-download" role="presentation" aria-label="download icon"></i>
+                        Download
+                      </a>
+                  </div>
+                  <div class="col-sm-4" id="visualizeButton" style="display: none;">
+                    <button class="btn" color="danger" id="gotovis" onclick="loadData()" type="button">Visualize Network ➤</button>
+                </div>
+          
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="col-sm-2"></div>
+      </div>
+
+      <div class="row" style="margin-top: 10px; text-align: center;">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-1" style="margin-top: 0px;margin-right:20px;margin-left:80px;">
+          <a id="opentutorial1" href="#" class="action-button shiny-bound-input" onclick="window.open('https://gumuslab.github.io/phosnetvis-docs/docs/tutorials', '_blank'); return false;">
+            <img src="./img/img1.png" width="95px">
+          </a>
+        </div>
+        <div class="col-sm-1" style="margin-top: 0px;margin-right:20px;">
+          <a id="opentutorial2" href="#" class="action-button shiny-bound-input" onclick="window.open('https://gumuslab.github.io/phosnetvis-docs/docs/tutorials', '_blank'); return false;">
+            <img src="./img/img2.png" width="95px">
+          </a>
+        </div>
+        <div class="col-sm-1" style="margin-top: 0px;margin-right:20px;">
+          <a id="opentutorial3" href="#" class="action-button shiny-bound-input" onclick="window.open('https://gumuslab.github.io/PhosNetVis/contact-us.html', '_blank'); return false;">
+            <img src="./img/img3.png" width="95px">
+          </a>
+        </div>
+        <div class="col-sm-4"></div>
+      </div>
+    </section>
+  </div>
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document" style="max-width:40%; max-height: 30%;">
+      <div class="modal-content">
+        <!-- <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div> -->
+        <div style="margin-bottom: 10px;">
+            <div class="container d-flex flex-column justify-content-center">
+                <!-- Modal content goes here -->
+              <img src="./img/tick.png " class="rounded mx-auto d-block" style="width:400px; height: 400px;">
+              <p class="text-center"><h2 class="text-center">Network is created successfully</h2></p>
+              <p class="text-center">You can download the network.</p>
+              <button type="button" class="btn btn-primary btn-sm rounded mx-auto" data-dismiss="modal" style="width: 100px;">OK</button>
+
+            </div>
+        </div>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="loader-class">
+    <div class="loader"></div>
+  </div>
+  <!-- Your modal markup -->
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Hello, this is a Bootstrap modal!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+
+
+
+
+
+
+  <script>
+
+    document.getElementById('download').addEventListener('click', function() {
+    // Retrieve the CSV data from sessionStorage
+    const csvData = sessionStorage.getItem('csvData');
+    
+    // Check if the CSV data exists
+    if (csvData) {
+        // Create a Blob object from the CSV data
+        const blob = new Blob([csvData], { type: 'text/csv' });
+        
+        // Set the href attribute of the download link to the URL of the Blob object
+        this.href = URL.createObjectURL(blob);
+
+        // Set a custom filename for the downloaded file
+        this.setAttribute('download', 'KEA_Analysis.csv');
+    } else {
+        // If the CSV data doesn't exist, prevent the default action of the link (i.e., don't navigate)
+        event.preventDefault();
+        // Show an alert to inform the user
+        alert('No CSV data found.');
+    }
+});
+
+
+document.getElementById('hidden-file-upload').addEventListener('change', function(event) {
+
+    // // document.getElementById('progress-container').style.display = 'block';
+
+    // const file = event.target.files[0]; // Get the selected file
+
+    // if (file) {
+    //     const fileSize = file.size; // Get the size of the file
+    //     const progressBar = document.getElementById('file-upload-progress');
+        
+    //     const reader = new FileReader();
+    //     reader.onload = function(event) {
+    //         // File reading completed
+    //         const fileContent = event.target.result;
+            
+    //         // Calculate the progress percentage based on the size of the file
+    //         const progressPercentage = Math.round((fileContent.length / fileSize) * 100);
+            
+    //         // Update the width of the progress bar
+    //         progressBar.style.width = progressPercentage + "%";
+    //         progressBar.setAttribute("aria-valuenow", progressPercentage);
+    //         progressBar.textContent = progressPercentage + "%";
+    //         // Change the color of the progress bar based on the progress
+    //         if (progressPercentage === 100) {
+    //             // If upload is complete, change the color to green
+    //             progressBar.classList.remove("bg-info");
+    //             progressBar.classList.add("bg-success");
+    //             progressBar.textContent = "Upload Complete";
+    //         } else {
+    //             // If upload is in progress, change the color to blue
+    //             progressBar.classList.remove("bg-success");
+    //             progressBar.classList.add("bg-info");
+    //         }
+    //     };
+        
+    //     // Read the file as text
+    //     reader.readAsText(file);
+    //     document.getElementById('progress-container').style.display = 'block';
+
+    // }
+
+    const file = event.target.files[0]; // Get the selected file
+
+    if (file) {
+        const fileSize = file.size; // Get the size of the file
+        
+        const progressContainer = document.getElementById('progress-container');
+        progressContainer.innerHTML = ''; // Clear any previous progress bar
+        
+        const progressBar = document.createElement('div');
+        progressBar.classList.add('progress');
+        progressBar.innerHTML = `
+            <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                Upload Complete
+            </div>`;
+        
+        // Append the progress bar to the progress container
+        progressContainer.appendChild(progressBar);
+
+        // Show the progress container
+        progressContainer.style.display = 'block';
+    }
+});
+
+
+function runSample() {
+    // document.getElementById('spinner-container').style.display = 'block';
+    $('#loader-class').css('display', 'flex');
+
+    // Define the URL of the sample file location
+    const sampleFileUrl = 'data/sample.csv';
+
+    // Fetch the sample file
+    fetch(sampleFileUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch sample file.');
+            }
+            return response.text();
+        })
+        .then(fileContent => {
+            // Parse CSV data using PapaParse
+            Papa.parse(fileContent, {
+                header: true,
+                complete: function(results) {
+                    const jsonData = JSON.stringify(results.data); // CSV data parsed as JSON array of objects
+                    const inputData = {
+                        input_pvalue: 0.05,
+                        minSize: 15,
+                        maxSize: 100,
+                        eps: 0,
+                        output_pvalue: 0.05,
+                        nameaccession: "gene name"
+                    };
+
+                    // Define the URL of your Plumber API endpoint
+                    const apiUrl = 'https://rstudio-connect.hpc.mssm.edu/content/bb0ba84e-68fd-4fd4-a48d-ece2e0089c48/runEnrichment';
+
+                    // Send a POST request to the API endpoint
+                    fetch(apiUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                file: jsonData,
+                                input_data: inputData
+                            })
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                // If the response is successful, parse the JSON data
+                                return response.json();
+                            } else {
+                                // If there's an error, throw an error
+                                throw new Error('Failed to fetch data from the API.');
+                            }
+                        })
+                        .then(data => {
+                            // Process the data returned from the API
+                            console.log(data);
+                            const csvData = convertToCSV(data);
+                            // Store the CSV data in session storage
+                            sessionStorage.setItem('csvData', csvData);
+
+                            // You can perform further actions here, such as updating the UI
+                        })
+                        .catch(error => {
+                            // Handle any errors that occurred during the fetch
+                            console.error(error);
+                        });
+                }
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        })
+        .finally(() => {
+            // Hide the spinner
+            // document.getElementById('spinner-container').style.display = 'none';
+            $('#loader-class').css('display', 'none');
+            $('#exampleModal').modal('show');
+            $('#donloadButton').css('display', 'block');
+            $('#visualizeButton').css('display', 'block');
+
+        });
+}
+
+    function loadData() {
+    sessionStorage.setItem("vis_perm", false);
+    localStorage.clear();
+
+    let readers = [];
+    let file_names = [];
+    let all_files = [];
+
+    // Get the CSV data from session storage
+    const csvData = sessionStorage.getItem('csvData');
+
+    // Check if data is successfully retrieved
+    if (csvData) {
+        // Parse CSV data
+        var parser = d3.csv(',')
+        var jsonObj = d3.csv.parse(csvData);
+
+        // Store the parsed data in local storage
+        localStorage.setItem('idx', 0);
+        localStorage.setItem('file_names', JSON.stringify(['KEAnetwork.csv']));
+        localStorage.setItem('KEAnetwork.csv', 'dataFrame0');
+        localStorage.setItem('dataFrame0', JSON.stringify(jsonObj));
+
+        // Store parsed data in an array
+        all_files.push(jsonObj);
+        localStorage.setItem('all_files', JSON.stringify(all_files));
+
+        // Set session storage flags
+        sessionStorage.setItem("vis_perm", true);
+        sessionStorage.setItem("state_num", 1);
+
+        // Call data_upload_check function
+        data_upload_check();
+    } else {
+        alert("Failed to load sample data from session storage.");
+    }
+}
+
+  </script>
+  
+
+</body>
+
+</html>
