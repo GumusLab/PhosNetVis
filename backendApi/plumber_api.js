@@ -103,9 +103,8 @@ function runKEA() {
         // Read the file as text
         reader.readAsText(file);
     } else {
-        console.log('********** file input is as follows **************** ',fileInput)
-
-        console.error('No file selected.');
+        $('#loader-class').css('display', 'none');
+        $('#runWithoutFile').modal('show');
     }
     // Hide the spinner
     // document.getElementById('spinner-container').style.display = 'none';
