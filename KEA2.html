@@ -15,11 +15,10 @@
 <script src="https://d3js.org/d3.v3.js" charset="utf-8"></script>  
 <script src="backendApi/plumber_api.js"></script>
   <meta charset="utf-8">
-  <title>Kinase Enrichment Analysis</title>
+  <title>fast Kinase-Substrate Enrichment Analysis</title>
   <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-PpVBp3Ztsn5pe4y8IeNiS+DZl5klA8ufhOLWhT9KaYJ8tWAyxlLFZzvAr2D5nlJdyv6JvLSZv34zBSi2J4nH/w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
   <script src="js/upload.js"></script>
@@ -189,10 +188,43 @@ body {
 </head>
 
 <body>
+
+    <!-- <div>
+        <svg version="1.1" id="Layer_1" onclick="window.location.href = 'index.html'" xmlns="http://www.w3.org/2000/svg" width = "10%" style="top:2%;left:1%;position:absolute;cursor: pointer;" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 710.3 222.4" xml:space="preserve"> <style type="text/css"> .st0b{fill:#424A60;} .st1b{fill:#DC298D;} .st2b{fill:#7383BF;} .st3b{fill:#969696;} .st4b{fill:#EBBA16;} .st5b{fill:#06ABEB;} .st6b{font-family:'helveticaBold';} .st7b{font-size:84.3397px;} .st8b{letter-spacing:-1;} </style> <g id="Layer_1_00000056390415183483724190000009750584087129516189_"> <g id="path5"> <rect x="92.8" y="154.2" transform="matrix(0.3589 -0.9334 0.9334 0.3589 -62.6169 220.6174)" class="st0b" width="72.9" height="3.3"/> </g> <rect id="path4" x="156.9" y="60.1" transform="matrix(0.8102 -0.5861 0.5861 0.8102 0.7614 131.2305)" class="st0b" width="92.3" height="8.7"/> <g id="path3"> <rect x="19" y="127.2" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -46.9835 44.8278)" class="st0b" width="126.2" height="11.8"/> </g> <g id="path2"> <rect x="122.6" y="16.9" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -9.3065 55.4032)" class="st0b" width="6.4" height="65.4"/> </g> <rect id="path1" x="169" y="110.3" transform="matrix(0.9138 -0.4063 0.4063 0.9138 -48.6296 83.9257)" class="st0b" width="8.7" height="92.3"/> <circle id="circle6" class="st1b" cx="249.7" cy="34.5" r="21.8"/> <circle id="circle5" class="st2b" cx="112.1" cy="200.6" r="21.8"/> <circle id="circle4" class="st1b" cx="21.8" cy="156.5" r="21.8"/> <circle id="circle3" class="st3b" cx="109.6" cy="13.1" r="13.1"/> <circle id="circle2" class="st4b" cx="189.6" cy="193.1" r="13.1"/> <circle id="circle1" class="st5b" cx="149.5" cy="102.8" r="37.3"/> </g> <g id="Layer_2_00000013871697503241264390000008040421359665832584_"> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 243.0089 140.7256)" class="st6b st7b">PhosNet</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 585.1035 139.5315)" class="st6b st7b st8b">V</text> <text transform="matrix(1 -3.490651e-03 3.490651e-03 1 639.8698 139.3403)" class="st6b st7b">is</text> </g> </svg>
+        </div> -->
 <!-- <script src="js/upload.js"></script> -->
-<div >
-<svg xmlns="http://www.w3.org/2000/svg" onclick="window.location.href = 'index.html'" width = "200px" style="top:2%;left:1%;position:absolute;cursor: pointer;" viewBox="0 0 1825.27 541.31"><g id="Layer_1"><g id="path5"><rect x="180.02" y="297.98" width="136.46" height="2.72" transform="translate(-120.24 423.61) rotate(-68.97)" style="fill:#424a60;"/></g><rect id="path4" x="301.21" y="115.36" width="177.31" height="16.72" transform="translate(1.47 251.98) rotate(-35.88)" style="fill:#424a60;"/><g id="path3"><rect x="35.42" y="243.17" width="244.41" height="24.72" transform="translate(-90.21 86.06) rotate(-23.97)" style="fill:#424a60;"/></g><g id="path2"><rect x="236.27" y="33.28" width="10.72" height="124.03" transform="translate(-17.88 106.37) rotate(-23.97)" style="fill:#424a60;"/></g><rect id="path1" x="324.5" y="211.86" width="16.72" height="177.31" transform="translate(-93.37 161.12) rotate(-23.97)" style="fill:#424a60;"/><circle id="circle6" cx="479.52" cy="66.16" r="41.79" style="fill:#dc298d;"/><circle id="circle5" cx="215.25" cy="385.15" r="41.79" style="fill:#7383bf;"/><circle id="circle4" cx="41.8" cy="300.55" r="41.79" style="fill:#dc298d;"/><circle id="circle3" cx="210.42" cy="25.08" r="25.08" style="fill:#969696;"/><circle id="circle2" cx="364.07" cy="370.74" r="25.08" style="fill:#ebba16;"/><circle id="circle1" cx="286.99" cy="197.33" r="71.54" style="fill:#06abeb;"/></g><g id="Layer_2"><text id="phostype" transform="translate(404.28 257.57) rotate(-.2)" style="font-family:helveticaBold, Helvetica; font-size:156.77px;"><tspan x="0" y="0">Kinase Enrichment</tspan><tspan x="387.59" y="208.34">Analysis</tspan></text></g></svg>
-</div>
+
+<!-- <div> -->
+<!-- <svg xmlns="http://www.w3.org/2000/svg" onclick="window.location.href = 'index.html'" width = "200px" style="top:2%;left:1%;position:absolute;cursor: pointer;" viewBox="0 0 1825.27 541.31"><g id="Layer_1"><g id="path5"><rect x="180.02" y="297.98" width="136.46" height="2.72" transform="translate(-120.24 423.61) rotate(-68.97)" style="fill:#424a60;"/></g><rect id="path4" x="301.21" y="115.36" width="177.31" height="16.72" transform="translate(1.47 251.98) rotate(-35.88)" style="fill:#424a60;"/><g id="path3"><rect x="35.42" y="243.17" width="244.41" height="24.72" transform="translate(-90.21 86.06) rotate(-23.97)" style="fill:#424a60;"/></g><g id="path2"><rect x="236.27" y="33.28" width="10.72" height="124.03" transform="translate(-17.88 106.37) rotate(-23.97)" style="fill:#424a60;"/></g><rect id="path1" x="324.5" y="211.86" width="16.72" height="177.31" transform="translate(-93.37 161.12) rotate(-23.97)" style="fill:#424a60;"/><circle id="circle6" cx="479.52" cy="66.16" r="41.79" style="fill:#dc298d;"/><circle id="circle5" cx="215.25" cy="385.15" r="41.79" style="fill:#7383bf;"/><circle id="circle4" cx="41.8" cy="300.55" r="41.79" style="fill:#dc298d;"/><circle id="circle3" cx="210.42" cy="25.08" r="25.08" style="fill:#969696;"/><circle id="circle2" cx="364.07" cy="370.74" r="25.08" style="fill:#ebba16;"/><circle id="circle1" cx="286.99" cy="197.33" r="71.54" style="fill:#06abeb;"/></g><g id="Layer_2"><text id="phostype" transform="translate(404.28 257.57) rotate(-.2)" style="font-family:helveticaBold, Helvetica; font-size:156.77px;"><tspan x="0" y="0">Kinase Enrichment</tspan><tspan x="387.59" y="208.34">Analysis</tspan></text></g></svg> -->
+<!-- <svg id="mySVG" xmlns="http://www.w3.org/2000/svg" width="300px" style="top:2%;left:1%;position:absolute;cursor: pointer;" viewBox="0 0 1825.27 541.31">
+    <g id="Layer_1">
+      <g id="path5">
+        <rect x="180.02" y="297.98" width="136.46" height="2.72" transform="translate(-120.24 423.61) rotate(-68.97)" style="fill:#424a60;"/>
+      </g>
+      <rect id="path4" x="301.21" y="115.36" width="177.31" height="16.72" transform="translate(1.47 251.98) rotate(-35.88)" style="fill:#424a60;"/>
+      <g id="path3">
+        <rect x="35.42" y="243.17" width="244.41" height="24.72" transform="translate(-90.21 86.06) rotate(-23.97)" style="fill:#424a60;"/>
+      </g>
+      <g id="path2">
+        <rect x="236.27" y="33.28" width="10.72" height="124.03" transform="translate(-17.88 106.37) rotate(-23.97)" style="fill:#424a60;"/>
+      </g>
+      <rect id="path1" x="324.5" y="211.86" width="16.72" height="177.31" transform="translate(-93.37 161.12) rotate(-23.97)" style="fill:#424a60;"/>
+      <circle id="circle6" cx="479.52" cy="66.16" r="41.79" style="fill:#dc298d;"/>
+      <circle id="circle5" cx="215.25" cy="385.15" r="41.79" style="fill:#7383bf;"/>
+      <circle id="circle4" cx="41.8" cy="300.55" r="41.79" style="fill:#dc298d;"/>
+      <circle id="circle3" cx="210.42" cy="25.08" r="25.08" style="fill:#969696;"/>
+      <circle id="circle2" cx="364.07" cy="370.74" r="25.08" style="fill:#ebba16;"/>
+      <circle id="circle1" cx="286.99" cy="197.33" r="71.54" style="fill:#06abeb;"/>
+    </g>
+    <g id="Layer_2" transform="translate(400, 200)">
+      <text id="phostype" style="font-family:helveticaBold, Helvetica; font-size:100px;">
+        <tspan x="0" y="50">Fast Kinase-Substrate</tspan>
+        <tspan x="40" y="150">Enrichment Analysis</tspan>
+      </text>
+    </g>
+  </svg>
+</div> -->
+
 <!-- <div class="spinner-container" id="spinner-container" style="display: none;">
     <div class="spinner-border text-primary" role="status">
       <span class="sr-only">Loading...</span>
@@ -202,18 +234,50 @@ body {
 <div class="content-wrapper" style="min-height: 920px;">
     <section class="content">
       <div class="row" style="font-family:Helvetica; margin-top: 15px;">
-        <div class="col-sm-2"></div>
+        <div class="col-sm-2">
+           <svg onclick="window.location.href = 'index.html'" xmlns="http://www.w3.org/2000/svg" width="95%" style="top:2%;left:10%;position:absolute;cursor: pointer;" viewBox="0 0 1825.27 541.31">
+                <g id="Layer_1">
+                <g id="path5">
+                    <rect x="180.02" y="297.98" width="136.46" height="2.72" transform="translate(-120.24 423.61) rotate(-68.97)" style="fill:#424a60;"/>
+                </g>
+                <rect id="path4" x="301.21" y="115.36" width="177.31" height="16.72" transform="translate(1.47 251.98) rotate(-35.88)" style="fill:#424a60;"/>
+                <g id="path3">
+                    <rect x="35.42" y="243.17" width="244.41" height="24.72" transform="translate(-90.21 86.06) rotate(-23.97)" style="fill:#424a60;"/>
+                </g>
+                <g id="path2">
+                    <rect x="236.27" y="33.28" width="10.72" height="124.03" transform="translate(-17.88 106.37) rotate(-23.97)" style="fill:#424a60;"/>
+                </g>
+                <rect id="path1" x="324.5" y="211.86" width="16.72" height="177.31" transform="translate(-93.37 161.12) rotate(-23.97)" style="fill:#424a60;"/>
+                <circle id="circle6" cx="479.52" cy="66.16" r="41.79" style="fill:#dc298d;"/>
+                <circle id="circle5" cx="215.25" cy="385.15" r="41.79" style="fill:#7383bf;"/>
+                <circle id="circle4" cx="41.8" cy="300.55" r="41.79" style="fill:#dc298d;"/>
+                <circle id="circle3" cx="210.42" cy="25.08" r="25.08" style="fill:#969696;"/>
+                <circle id="circle2" cx="364.07" cy="370.74" r="25.08" style="fill:#ebba16;"/>
+                <circle id="circle1" cx="286.99" cy="197.33" r="71.54" style="fill:#06abeb;"/>
+                </g>
+                <g id="Layer_2" transform="translate(400, 200)">
+                <text id="phostype" style="font-family:helveticaBold, Helvetica; font-size:100px;">
+                    <tspan x="0" y="50">Fast Kinase-Substrate</tspan>
+                    <tspan x="40" y="150">Enrichment Analysis</tspan>
+                </text>
+                </g>
+            </svg>
+        </div>
         <div class="col-sm-8">
-          <h1 style="margin-top:7px;margin-bottom:20px;font-family:Helvetica; font-size:20px">
+          <h1 style="margin-top:7px;margin-bottom:20px;font-family:Helvetica; font-size:18px">
             <b>Welcome!</b>
-             Here you can perform kinase enrichment analysis (KEA)  to identify putative upstream kinases of your differentially phosphorylated protein set. Kinase-substrate interactions are from PhosphoSitePlus [1] and enrichment is performed using fgsea [2].
-            <br><h style="font-size:13px;margin-top:-5px">[1] Retrieved from <a href="https://www.phosphosite.org" target="_blank"> phosphosite.org </a> - version Fri Nov 17 08:50:20 EST 2023<br>[2] Korotkevich G, Sukhov V, Sergushichev A (2019). “Fast gene set enrichment analysis.” bioRxiv. <a href="https://www.biorxiv.org/content/10.1101/060012v3" target="_blank">doi: 10.1101/060012</a> - version 1.18.0</h>
+             Here you can perform fast kinase-substrate enrichment analysis (fKSEA)  to identify putative upstream kinases of your differentially phosphorylated protein set. Kinase-substrate interactions are from PhosphoSitePlus [1] and enrichment is performed using fgsea [2].
+            <br>
+            <h style="font-size:13px;margin-top:-5px;">
+                <p style="margin-bottom:0px;margin-top: 5px;">[1] Retrieved from <a href="https://www.phosphosite.org" target="_blank">phosphosite.org</a> - version Fri Nov 17 08:50:20 EST 2023</p>
+                <p>[2] Korotkevich G, Sukhov V, Sergushichev A (2019). “Fast gene set enrichment analysis.” bioRxiv. <a href="https://www.biorxiv.org/content/10.1101/060012v3" target="_blank">doi: 10.1101/060012</a> - version 1.18.0 </p>
+            </h>        
           </h1>
 
           <div style="margin-bottom: 10px;">
             <div class="card bs4Dash card-gray">
               <div class="card-header" style="height:30px; display:flex; align-items: center; background-color: #606060; color: white;">
-                <h5 class="card-title zero-padding zero-margin">Input File Format</h5>
+                <h5 class="card-title zero-padding zero-margin" style="font-weight: bold;">Input File Format</h5>
               </div>
               <div class="card-body">
                 <h6 style="font-size:15px;margin-top:0px;">
@@ -260,7 +324,7 @@ body {
           <div style="margin-bottom: 10px;">
             <div class="card bs4Dash card-lightblue">
               <div class="card-header" style="height:30px; display:flex; align-items: center; background-color:#4682B4; color: white;">
-                <h5 class="card-title zero-padding zero-margin">Adjust Parameters</h5>
+                <h5 class="card-title zero-padding zero-margin" style="font-weight: bold;">Adjust Parameters</h5>
               </div>
               <div class="card-body zero-margin zero-padding">
                 <h6 style="font-size:15px; font-weight:bold; padding: 5px;">Input / Output Parameters</h6>
@@ -344,7 +408,7 @@ that will be build with the analysis!" class="form-group shiny-input-container s
           <div>
             <div class="card bs4Dash card-pink">
                 <div class="card-header" style="height:30px; display:flex; align-items: center; background:#d94496; color: white;">
-                    <h5 class="card-title zero-padding zero-margin">Upload Data &amp; Run Analysis</h5>
+                    <h5 class="card-title zero-padding zero-margin" style="font-weight: bold;">Upload Data &amp; Run Analysis</h5>
                 </div>
               <div class="card-body zero-margin zero-padding">
                 <h6 style="font-size:15px; font-weight:bold; padding: 5px;">Upload your .csv file</h6>
@@ -362,7 +426,7 @@ that will be build with the analysis!" class="form-group shiny-input-container s
                 </div>
                 
                   <div class="col-sm-2" style="padding-left:15px">
-                    <button class="btn" id="runanalysis" type="button" style="background-color:#d94496; color:white; border-radius: 15px;" onclick="runKEA()"><b>Run</b></button>
+                    <button class="btn" id="runanalysis" type="button" style="background-color:#d94496; color:white; border-radius: 15px;" onclick="runKEA()"><b style="padding:0px; margin: 0px; font-size: 20px;">Run</b></button>
                   </div>
 
                   <div class="col-sm-2" id="donloadButton" style="display: none;">
@@ -408,7 +472,7 @@ that will be build with the analysis!" class="form-group shiny-input-container s
   </div>
   <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-md" role="document" style="max-width:40%; max-height: 30%;">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document" style="max-width:30%; max-height:10%;">
       <div class="modal-content">
         <!-- <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -418,7 +482,7 @@ that will be build with the analysis!" class="form-group shiny-input-container s
         <div style="margin-bottom: 10px;">
             <div class="container d-flex flex-column justify-content-center">
                 <!-- Modal content goes here -->
-              <img src="./img/tick.png " class="rounded mx-auto d-block" style="width:400px; height: 400px;">
+              <img src="./img/tick.png " class="rounded mx-auto d-block" style="width:200px; height: 200px;">
               <p class="text-center"><h2 class="text-center">Network is created successfully</h2></p>
               <p class="text-center">You can download the network.</p>
               <button type="button" class="btn btn-primary btn-sm rounded mx-auto" data-dismiss="modal" style="width: 100px;">OK</button>
@@ -571,14 +635,30 @@ function runSample() {
                 header: true,
                 complete: function(results) {
                     const jsonData = JSON.stringify(results.data); // CSV data parsed as JSON array of objects
+                    var inputpValue = parseFloat($('#input_pvalue').val());
+                    var outputpValue = parseFloat($('#output_pvalue').val());
+                    var minsize = parseFloat($('#minSize').val());
+                    var maxsize = parseFloat($('#maxSize').val());
+                    var eps = parseFloat($('#eps').val());
+                    var selectedValue = $("input[name='nameaccession']:checked").val();
+
+
                     const inputData = {
-                        input_pvalue: 0.05,
-                        minSize: 15,
-                        maxSize: 100,
-                        eps: 0,
-                        output_pvalue: 0.05,
-                        nameaccession: "gene name"
+                        input_pvalue: inputpValue,
+                        minSize: minsize,
+                        maxSize: maxsize,
+                        eps: eps,
+                        output_pvalue: outputpValue,
+                        nameaccession: selectedValue
                     };
+                    // const inputData = {
+                    //     input_pvalue: 0.05,
+                    //     minSize: 15,
+                    //     maxSize: 100,
+                    //     eps: 0,
+                    //     output_pvalue: 0.05,
+                    //     nameaccession: "gene name"
+                    // };
 
                     // Define the URL of your Plumber API endpoint
                     const apiUrl = 'https://rstudio-connect.hpc.mssm.edu/content/bb0ba84e-68fd-4fd4-a48d-ece2e0089c48/runEnrichment';
