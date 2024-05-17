@@ -1212,11 +1212,20 @@ function CreateNode(node)
     }
   }
 
+ ////// Line for changing the 2d text ///////
   if (searchNodes.has(node) || PARAMS.Labels === "On"){
+
   const sprite = new SpriteText(node.id);
-  sprite.color = 'rgb(0,0,0)';
+  sprite.color = 'rgb(0,0,0)'; // Set the inside color to white
   sprite.textHeight = 7;
-  sprite.fontFace = "CenturyGothicPro-Bold"
+  sprite.fontFace = "CenturyGothicPro-Bold";
+  sprite.strokeWidth	= 1.5
+  sprite.strokeColor = 'rgb(255,255,255)'
+
+  // const sprite = new SpriteText(node.id);
+  // sprite.color = 'rgb(0,0,0)';
+  // sprite.textHeight = 7;
+  // sprite.fontFace = "CenturyGothicPro-Bold"
   mesh.add(sprite);
   }
 

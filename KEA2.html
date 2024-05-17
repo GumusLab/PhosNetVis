@@ -519,31 +519,7 @@ that will be build with the analysis!" class="form-group shiny-input-container s
   <div class="overlay" id="loader-class">
     <div class="loader"></div>
   </div>
-  <!-- Your modal markup -->
-<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Hello, this is a Bootstrap modal!
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-
-
-
-
+ 
 
 
   <script>
@@ -572,45 +548,6 @@ that will be build with the analysis!" class="form-group shiny-input-container s
 
 
 document.getElementById('hidden-file-upload').addEventListener('change', function(event) {
-
-    // // document.getElementById('progress-container').style.display = 'block';
-
-    // const file = event.target.files[0]; // Get the selected file
-
-    // if (file) {
-    //     const fileSize = file.size; // Get the size of the file
-    //     const progressBar = document.getElementById('file-upload-progress');
-        
-    //     const reader = new FileReader();
-    //     reader.onload = function(event) {
-    //         // File reading completed
-    //         const fileContent = event.target.result;
-            
-    //         // Calculate the progress percentage based on the size of the file
-    //         const progressPercentage = Math.round((fileContent.length / fileSize) * 100);
-            
-    //         // Update the width of the progress bar
-    //         progressBar.style.width = progressPercentage + "%";
-    //         progressBar.setAttribute("aria-valuenow", progressPercentage);
-    //         progressBar.textContent = progressPercentage + "%";
-    //         // Change the color of the progress bar based on the progress
-    //         if (progressPercentage === 100) {
-    //             // If upload is complete, change the color to green
-    //             progressBar.classList.remove("bg-info");
-    //             progressBar.classList.add("bg-success");
-    //             progressBar.textContent = "Upload Complete";
-    //         } else {
-    //             // If upload is in progress, change the color to blue
-    //             progressBar.classList.remove("bg-success");
-    //             progressBar.classList.add("bg-info");
-    //         }
-    //     };
-        
-    //     // Read the file as text
-    //     reader.readAsText(file);
-    //     document.getElementById('progress-container').style.display = 'block';
-
-    // }
 
     const file = event.target.files[0]; // Get the selected file
 
@@ -707,11 +644,13 @@ function runSample() {
                         })
                         .then(data => {
                             // Process the data returned from the API
-                            console.log(data);
                             const csvData = convertToCSV(data);
                             // Store the CSV data in session storage
                             sessionStorage.setItem('csvData', csvData);
-
+                            $('#loader-class').css('display', 'none');
+                            $('#exampleModal').modal('show');
+                            $('#donloadButton').css('display', 'block');
+                            $('#visualizeButton').css('display', 'block');
                             // You can perform further actions here, such as updating the UI
                         })
                         .catch(error => {
@@ -724,20 +663,19 @@ function runSample() {
         .catch(error => {
             console.error(error);
         })
-        .finally(() => {
-            // Hide the spinner
-            // document.getElementById('spinner-container').style.display = 'none';
-            $('#loader-class').css('display', 'none');
-            $('#exampleModal').modal('show');
-            $('#donloadButton').css('display', 'block');
-            $('#visualizeButton').css('display', 'block');
+        // .finally(() => {
+        //     // Hide the spinner
+        //     $('#loader-class').css('display', 'none');
+        //     $('#exampleModal').modal('show');
+        //     $('#donloadButton').css('display', 'block');
+        //     $('#visualizeButton').css('display', 'block');
 
-        });
+        // });
 }
 
     function loadData() {
     sessionStorage.setItem("vis_perm", false);
-    localStorage.clear();
+    // localStorage.clear();
 
     let readers = [];
     let file_names = [];
