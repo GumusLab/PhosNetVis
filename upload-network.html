@@ -851,6 +851,7 @@ or Residue ID" transform="translate(753.5 607)" fill="#707070" font-size="10" fo
         let file_names = [];
         let all_files = [];
 
+        console.log('*************** I am in load sample data function ***************')
         // Replace 'data/sample.csv' with the actual path to your sample data file
         fetch('data/customized-network.csv')
             .then(response => response.text())
@@ -858,6 +859,8 @@ or Residue ID" transform="translate(753.5 607)" fill="#707070" font-size="10" fo
                 // Check if data is successfully loaded
                 if (data) {
 
+                  console.log('***** sample data is as follows *****')
+                  console.log(data)
                   localStorage.setItem('idx', 0)
                   localStorage.setItem('file_names',JSON.stringify(['customized-network.csv']))
                   localStorage.setItem('customized-network.csv',('dataFrame0'))

@@ -343,13 +343,15 @@ function parseCSV(file_name) {
 let dict = {"nodes": [], "links": []}
 
 var userData = JSON.parse(window.localStorage.getItem(file_name));
+console.log('****** user data is as follows *******')
+console.log(userData)
 for (let i = 0; i < userData.length; i++) {
   dataLine = userData[i]
   kinaseID =  dataLine['KinaseID']
   kinaseSize = dataLine['KinaseSize']
   kinaseActivity = dataLine['KinaseActivity']
   edgeWeight = dataLine['EdgeWeight']
-  edgeColor = dataLine['EdgeColor']
+  edgeColor = dataLine['EdgeHue']
   targetID = dataLine['TargetID']
   targetSize = dataLine['TargetSize']
   diffPhos = dataLine['log2FC']
@@ -450,6 +452,7 @@ const CAMERA_DISTANCE2NODES_FACTOR = 170;
 var file_names = JSON.parse(localStorage.getItem("file_names"))
 var index = localStorage.getItem("idx")
 var finalDataObj = parseCSV(localStorage.getItem(file_names[index]))
+console.log('******* Hola ********')
 console.log(finalDataObj)
 
     // var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(finalDataObj));

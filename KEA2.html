@@ -269,7 +269,7 @@ body {
              Here you can perform fast kinase-substrate enrichment analysis (fKSEA)  to identify putative upstream kinases of your differentially phosphorylated protein set. Kinase-substrate interactions are from PhosphoSitePlus [1] and enrichment is performed using fgsea [2].
             <br>
             <h style="font-size:13px;margin-top:-5px;">
-                <p style="margin-bottom:0px;margin-top: 5px;">[1] Retrieved from <a href="https://www.phosphosite.org" target="_blank">phosphosite.org</a> - version Fri Nov 17 08:50:20 EST 2023</p>
+                <p style="margin-bottom:0px;margin-top: 5px;">[1] Retrieved from <a href="https://www.phosphosite.org" target="_blank">phosphosite.org</a> - version Thu Oct 17 11:21:06 EDT 2024</p>
                 <p>[2] Korotkevich G, Sukhov V, Sergushichev A (2019). “Fast gene set enrichment analysis.” bioRxiv. <a href="https://www.biorxiv.org/content/10.1101/060012v3" target="_blank">doi: 10.1101/060012</a> - version 1.18.0 </p>
             </h>        
           </h1>
@@ -282,20 +282,26 @@ body {
               <div class="card-body">
                 <h6 style="font-size:15px;margin-top:0px;">
                   Upload a .csv file in the format below for enrichment and then to build your interactive 3D phosphoproteomics network!
-                  <b>*optional</b>
+                  <!-- <b>*optional</b> -->
                 </h6>
                     <div class="container-fluid" style="height: 130px; overflow-y: scroll; overflow-x: scroll; margin-top:10px;">
                         <table class="display dataTable no-footer" id="DataTables_Table_0" style="width:100%; height:100%; text-align: center;">
                         <thead>
                             <tr>
+                              <th style="width: 25%;">ProteinAccession<br><span style="color:#c60000; font-size:13px; position:relative; top:-5px;">(Required)</span></th>
+                              <th style="width: 25%;">log2FC<br><span style="color:#c60000; font-size:13px; position:relative; top:-5px;">(Required)</span></th>
+                              <th style="width: 25%;">PhosphoSiteID<br><span style="color:#5e6365; font-size:13px; position:relative; top:-5px; font-weight:300;">(PhosphositePlusID or Residue ID)(Optional)</span></th>
+                              <th style="width: 25%;">pValue<br><span style="color:#5e6365; font-size:13px; position:relative; top:-5px; font-weight:300;">(Optional)</span></th>
+<!-- 
                                 <th class="dt-center sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="ProteinAccession: activate to sort column ascending">ProteinAccession</th>
                                 <th class="dt-center sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="PhosphoSiteID*: activate to sort column ascending">PhosphoSiteID*</th>
                                 <th class="dt-center sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="log2FC: activate to sort column ascending">log2FC</th>
-                                <th class="dt-center sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="pValue*: activate to sort column ascending">pValue*</th>
+                                <th class="dt-center sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="pValue*: activate to sort column ascending">pValue*</th> -->
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="odd">
+
+                            <!-- <tr class="odd">
                                 <td class="  dt-center">P54646</td>
                                 <td class="  dt-center">ph181</td>
                                 <td class="  dt-center">1.2</td>
@@ -312,7 +318,26 @@ body {
                                 <td class="  dt-center">ph1525</td>
                                 <td class="  dt-center">-6.55</td>
                                 <td class="  dt-center">0.66</td>
-                            </tr>
+                            </tr> -->
+                            <tr class="odd">
+                              <td class="  dt-center">P08183</td>
+                              <td class="  dt-center">0.25</td>
+                              <td class="  dt-center">S671</td>
+                              <td class="  dt-center">0.66</td>
+                          </tr>
+                          <tr class="even">
+                              <td class="  dt-center">P08183</td>
+                              <td class="  dt-center">1.24</td>
+                              <td class="  dt-center">S683</td>
+                              <td class="  dt-center">0.015</td>
+                          </tr>
+                          <tr class="odd">
+                              <td class="  dt-center">Q9UEY8</td>
+                              <td class="  dt-center">-2.12</td>
+                              <td class="  dt-center">S693</td>
+                              <td class="  dt-center">0.02</td>
+                          </tr>
+
                         </tbody>
                         </table>
                     </div>
