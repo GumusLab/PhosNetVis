@@ -16,11 +16,15 @@
   <script src="js/hgnc_dict.js"></script>
   <script src="js/recordScript.js"></script>
   <script src="js/animation.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.6.2/dist/fetch.umd.min.js"></script>
+  <script src="backendApi/unitProtGeneMapping.js"></script>
+  <script src="backendApi/enrich.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.3/underscore-umd-min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/@tweakpane/plugin-essentials@0.1.5/dist/tweakpane-plugin-essentials.min.js"></script>
   <script src="js/fstdropdown.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="//unpkg.com/element-resize-detector/dist/element-resize-detector.min.js"></script>
   <link rel="stylesheet" href="css/fstdropdown.css">
   <link rel="stylesheet" href="css/visualization.css">
@@ -53,6 +57,96 @@
     font-family: "helveticaBold";
     src: url("fonts/helvetica-bold-webfont.woff") format("woff");
     }
+
+  .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Ensure the overlay is above other content */
+  display: none;
+}
+
+.loader  {
+  display: block;
+  animation: rotate 1.5s infinite;  
+  height: 50px;
+  width: 50px;
+  justify-content: center;
+
+}
+
+.loader:before,
+.loader:after {   
+  border-radius: 50%;
+  content: '';
+  display: block;
+  height: 20px;  
+  width: 20px;
+}
+.loader:before {
+  animation: ball1 1s infinite;  
+  background-color: #cb2025;
+  box-shadow: 30px 0 0 #f8b334;
+  margin-bottom: 10px;
+}
+.loader:after {
+  animation: ball2 1s infinite; 
+  background-color: #00a096;
+  box-shadow: 30px 0 0 #97bf0d;
+}
+
+@keyframes rotate {
+  0% { 
+    -webkit-transform: rotate(0deg) scale(0.8); 
+    -moz-transform: rotate(0deg) scale(0.8);
+  }
+  50% { 
+    -webkit-transform: rotate(360deg) scale(1.2); 
+    -moz-transform: rotate(360deg) scale(1.2);
+  }
+  100% { 
+    -webkit-transform: rotate(720deg) scale(0.8); 
+    -moz-transform: rotate(720deg) scale(0.8);
+  }
+}
+
+@keyframes ball1 {
+  0% {
+    box-shadow: 30px 0 0 #f8b334;
+  }
+  50% {
+    box-shadow: 0 0 0 #f8b334;
+    margin-bottom: 0;
+    -webkit-transform: translate(15px,15px);
+    -moz-transform: translate(15px, 15px);
+  }
+  100% {
+    box-shadow: 30px 0 0 #f8b334;
+    margin-bottom: 10px;
+  }
+}
+
+@keyframes ball2 {
+  0% {
+    box-shadow: 30px 0 0 #97bf0d;
+  }
+  50% {
+    box-shadow: 0 0 0 #97bf0d;
+    margin-top: -20px;
+    -webkit-transform: translate(15px,15px);
+    -moz-transform: translate(15px, 15px);
+  }
+  100% {
+    box-shadow: 30px 0 0 #97bf0d;
+    margin-top: 0;
+  }
+}
 
 </style>
 </head>
@@ -93,6 +187,9 @@
     <tbody id = "tbody">
     </tbody>
 </table>
+</div>
+<div class="overlay" id="loader-class">
+  <div class="loader"></div>
 </div>
 
 <div id="guiplace"> </div>
@@ -314,7 +411,6 @@ function hideShowMenu(val) {
     document.getElementById("openbutton-button").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 13 13"> <g id="Rectangle_1582" data-name="Rectangle 1582" fill="#fff" stroke="#2e3137" stroke-width="1"> <rect width="13" height="13" stroke="none"/> <rect x="0.5" y="0.5" width="12" height="12" fill="none"/> </g> <line id="Line_201" data-name="Line 201" x2="6.5" transform="translate(3.25 4.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> <line id="Line_202" data-name="Line 202" x2="6.5" transform="translate(3.25 6.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> <line id="Line_203" data-name="Line 203" x2="6.5" transform="translate(3.25 8.5)" fill="none" stroke="#2e3137" stroke-width="1.2"/> </svg> '
     document.getElementById("openbutton").value = 1;
     document.getElementById("guiplace").style.display = "none";
-    
   }
   else{
     // document.getElementById("nqText").style.display = "block";
@@ -343,8 +439,6 @@ function parseCSV(file_name) {
 let dict = {"nodes": [], "links": []}
 
 var userData = JSON.parse(window.localStorage.getItem(file_name));
-console.log('****** user data is as follows *******')
-console.log(userData)
 for (let i = 0; i < userData.length; i++) {
   dataLine = userData[i]
   kinaseID =  dataLine['KinaseID']
@@ -452,8 +546,6 @@ const CAMERA_DISTANCE2NODES_FACTOR = 170;
 var file_names = JSON.parse(localStorage.getItem("file_names"))
 var index = localStorage.getItem("idx")
 var finalDataObj = parseCSV(localStorage.getItem(file_names[index]))
-console.log('******* Hola ********')
-console.log(finalDataObj)
 
     // var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(finalDataObj));
     // var downloadAnchorNode = document.createElement('a');
@@ -738,9 +830,61 @@ tab.pages[0].addButton({title: 'Switch to 2D'}).on('click',()=>{
   window.location.href = 'visualization-2d.html'
 });
 
+// Add a new section to your pane for the hyperlink
+const geneEnrichSection = tab.pages[0].addFolder({
+title: 'Gene Enrichment',
+expanded: true
+});
+
+const enrichButton = geneEnrichSection.addButton({title: 'Send genes to enrichr', disabled: false})
+const nodeIDS = finalDataObj["ids"]
+let status = checkIDType(nodeIDS)
+
+enrichButton.on('click', async () => {
+    try {
+      $('#loader-class').css('display', 'flex');
+
+      if(status == "protein"){
+        const geneMappings = await getGeneIDs(nodeIDS);
+            // Call the enrich function with the collected genes
+        const genes = geneMappings.map(mapping => mapping.geneID);
+        const geneList = genes.join('\n');        
+
+        enrich({
+            list: geneList,
+            description: 'Gene Enrichment Analysis',
+            popup: true
+        });
+      }
+      else{
+        const geneList = nodeIDS.join('\n');        
+
+        enrich({
+            list: geneList,
+            description: 'Gene Enrichment Analysis',
+            popup: true
+        });
+      }
+
+        // Open Enrichr in a new tab
+        // window.open('https://maayanlab.cloud/Enrichr/', '_blank');
+        $('#loader-class').css('display', 'none');
+
+        console.log('Enrichr button clicked');
+    } catch (error) {
+        console.error('Error fetching gene IDs:', error);
+    }
+});
+// geneEnrichSection.add({ link: 'Send Genes to Enrichr' }, 'link')
+//   .on('click', () => {
+//     window.open('https://your-enrichment-url.com', '_blank');
+//   });
+
+
 const f1 = tab.pages[1].addFolder({
   title: 'Animation',
 });
+
 
 const startAnimation = f1.addButton({title: 'Start Animation ▶', disabled: false})
 
@@ -1343,7 +1487,6 @@ function animate(){
 
   }
 
-  console.log("all good let's animate!!!!!!!!!!")
   animationActive = true
   animator()
   animationInterval =  setInterval(animator, 2000);
