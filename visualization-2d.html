@@ -1059,11 +1059,11 @@ tab.pages[0].addButton({title: 'Switch to 3D'}).on('click',()=>{
 
 // Add a new section to your pane for the hyperlink
 const geneEnrichSection = tab.pages[0].addFolder({
-title: 'Gene Enrichment',
+title: 'Gene Enrichment Analysis',
 expanded: true
 });
 
-const enrichButton = geneEnrichSection.addButton({title: 'Send genes to enrichr', disabled: false})
+const enrichButton = geneEnrichSection.addButton({title: 'Send genes to Enrichr', disabled: false})
 const nodeIDS = finalDataObj["ids"]
 let status = checkIDType(nodeIDS)
 
