@@ -20,8 +20,7 @@
 
 
 ## License
-
-[![AGPL-3.0]([https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode](https://www.gnu.org/graphics/agplv3-155x51.png))
+![AGPL-3.0](https://www.gnu.org/graphics/agplv3-155x51.png)
 [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html)
 
 All data is free to use for non-commercial purposes. For commercial use please contact [MSIP](https://ip.mountsinai.org/).
