@@ -4,7 +4,7 @@
 ## [PhosNetVis](https://gumuslab.github.io/PhosNetVis/) is web-based kinase enrichment analyses and interactive 3D network visualizations of phosphoproteomics datasets.
 
 <p align="center">
-  <img src="https://i.hizliresim.com/5uvbaww.gif" />
+  <img src="https://github.com/GumusLab/PhosNetVis/blob/main/img/pnv-rotate.gif?raw=true" />
   <br>
   <b> Link to the platform: <a href="https://gumuslab.github.io/PhosNetVis/">gumuslab.github.io/PhosNetVis</a></b>
 </p>
