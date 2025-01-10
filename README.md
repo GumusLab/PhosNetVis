@@ -30,4 +30,4 @@ All data is free to use for non-commercial purposes. For commercial use please c
 
 If you have any feedback, please reach out to us at zeynep.gumus AT mssm.edu or you can fill the "Contact Us" form available at [gumuslab.github.io/PhosNetVis/contact-us.html](https://gumuslab.github.io/PhosNetVis/contact-us.html)
 
-### [© Gumus Lab](https://gumuslab.github.io) 2024 | [gumuslab.github.io/PhosNetVis](https://gumuslab.github.io/PhosNetVis/)
+### [© Gumus Lab](https://gumuslab.github.io) 2025 | [gumuslab.github.io/PhosNetVis](https://gumuslab.github.io/PhosNetVis/)
