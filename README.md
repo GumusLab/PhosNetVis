@@ -1,5 +1,5 @@
 
-![Logo](https://i.hizliresim.com/l6cau2g.png)
+![Logo](https://raw.githubusercontent.com/GumusLab/PhosNetVis/refs/heads/main/img/pnv-logo.png)
 
 ## [PhosNetVis](https://gumuslab.github.io/PhosNetVis/) is web-based kinase enrichment analyses and interactive 3D network visualizations of phosphoproteomics datasets.
 
